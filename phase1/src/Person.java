@@ -1,14 +1,15 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
+
     public abstract class Person {
-        private String username;
-        private String Id;
-        private String password;
-        private String email;
-        private String fullName;
-        private ArrayList<String> contactList;
-        private ArrayList<UUID> chatId;
+        protected String username;
+        protected String Id;
+        protected String password;
+        protected String email;
+        protected String fullName;
+        protected ArrayList<String> contactList;
+        protected ArrayList<String> chatId;
 
         /**
          * this allows for access to the persons; username
@@ -65,6 +66,15 @@ import java.util.UUID;
          */
         public ArrayList<String> getContactList() {
             return this.contactList;
+        }
+
+        /**
+         *allows for access to the chat Id's
+         * @return ArrayList returns the list of string corresponding to the chat Ids
+         */
+
+        public ArrayList<String> getChatId() {
+            return chatId;
         }
 
         /**
