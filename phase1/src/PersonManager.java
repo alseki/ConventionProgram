@@ -1,9 +1,18 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public abstract class PersonManager {
+
+    List<Person> allPersons;   // creating a list of people would probably be easiest and straightforward -Allen
+
+    public PersonManager() {   // constructor that creates the list
+        allPersons = new ArrayList<>();
+    }
+
+
+
 
     /**
      *  This creates a dictionary for Persons, where the key is the person's id, and the value linked to key

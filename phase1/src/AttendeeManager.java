@@ -1,6 +1,6 @@
 
 
-public class AttendeeManager extends PersonManager {
+public class AttendeeManager { // extends PersonManager
 
     /**
      * This calls doubleBooking below and then adds Attendee to person's event list. I will add the person id to event

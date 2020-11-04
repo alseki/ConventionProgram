@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Attendee extends Person implements Signupable{
+public class Attendee extends Person { //implements Signupable
 
     private ArrayList<String> eventsSignedUp;
 
