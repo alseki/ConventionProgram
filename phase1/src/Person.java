@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Person {
     protected String username;
@@ -7,7 +8,7 @@ public abstract class Person {
     protected String email;
     protected String fullName;
     protected ArrayList<String> contactList;
-    protected ArrayList<String> chatID;
+    protected ArrayList<String> chatList;
 
     /**
      * this allows for access to the persons; username
@@ -32,6 +33,7 @@ public abstract class Person {
      *
      * @return returns this person's email
      */
+
     public String getEmail() {
         return this.email;
     }
@@ -41,6 +43,7 @@ public abstract class Person {
      *
      * @return returns this person's full name
      */
+
     public String getFullName() {
         return this.fullName;
     }
@@ -50,6 +53,7 @@ public abstract class Person {
      *
      * @return returns this person's password
      */
+
     public String getPassword() {
         return this.password;
     }
@@ -64,11 +68,12 @@ public abstract class Person {
     }
 
     /**
-     *allows for access to the chat Id's
+     *allows for access to the list of Chat IDs
      * @return ArrayList returns the list of string corresponding to the chat Ids
      */
-    public ArrayList<String> getChatId() {
-        return chatID;
+
+    public ArrayList<String> getChatList() {
+        return chatList;
     }
 
     /**
@@ -76,6 +81,7 @@ public abstract class Person {
      *
      * @param email the email of the person
      */
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -85,6 +91,7 @@ public abstract class Person {
      *
      * @param username the username of the person
      */
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -94,6 +101,7 @@ public abstract class Person {
      *
      * @param password the password of the person
      */
+
     public void setPassword(String password) {
         this.password = password;
     }
