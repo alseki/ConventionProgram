@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Person {
     protected String username;
@@ -6,8 +7,12 @@ public abstract class Person {
     protected String password;
     protected String email;
     protected String fullName;
+    //contactlist and chatlist should not be in the person class as it doesn't apply to speaker.
+    // If we need this information for stage two, we will do it then. The problem is having variables in an object which
+    // are not relevant to the obejct is a problem.
+
     protected ArrayList<String> contactList;
-    protected ArrayList<String> chatID;
+    protected ArrayList<String> chatList;
 
     /**
      * this allows for access to the persons; username
@@ -64,11 +69,11 @@ public abstract class Person {
     }
 
     /**
-     *allows for access to the chat Id's
+     *allows for access to the list of Chat IDs
      * @return ArrayList returns the list of string corresponding to the chat Ids
      */
-    public ArrayList<String> getChatId() {
-        return chatID;
+    public ArrayList<String> getChatList() {
+        return chatList;
     }
 
     /**
