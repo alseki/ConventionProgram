@@ -16,8 +16,8 @@ public class AttendeeManager {
 
     public ArrayList<String> getEventList(String userID) {
         for(Attendee a: allAttendees) {
-            if((Attendee.id).equals(userID)) {    // no idea what's up with the red text...
-                return Attendee.eventsSignedUp;
+            if((a.id).equals(userID)) {    // no idea what's up with the red text...
+                return a.eventsSignedUp;
             }
         }
     }

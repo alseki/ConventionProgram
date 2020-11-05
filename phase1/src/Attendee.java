@@ -41,7 +41,7 @@ public class Attendee extends Person implements Signupable {
      * returns the contacts that Attendee has in list
      * @return ArrayList<String> of person's id
      */
-    public ArrayList<String> contactList() {
+    public ArrayList<String> getContactList() {
         return contactList;
     }
 
