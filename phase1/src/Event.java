@@ -1,8 +1,11 @@
+import java.util.UUID;
+
 public abstract class Event {
 
     private String name;
     private int room;
     private int duration;
+    private String ID;
 
     // implement messages + attendees once messageManager and attendeeManager exist
 
@@ -10,6 +13,7 @@ public abstract class Event {
         this.name = name;
         this.room = room;
         this.duration = duration;
+        ID = UUID.randomUUID().toString();
     }
 
     /**
@@ -67,4 +71,13 @@ public abstract class Event {
     public String getDescription() {
         return name + ", in Room " + room;
     }
+
+    /**
+     * Getter for the ID of this Event
+     * @return the ID of the event
+     */
+    public String getID() {
+        return ID;
+    };
 }
+
