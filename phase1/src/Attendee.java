@@ -5,10 +5,10 @@ public class Attendee extends Person { //implements Signupable
 
     private ArrayList<String> eventsSignedUp;
 
-    public Attendee (String username, String password, String fullName, String email){
+    public Attendee (String fullName, String username, String password, String email){
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
         this.email = email;
         this.id = UUID.randomUUID().toString();
     }

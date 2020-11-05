@@ -11,7 +11,9 @@ public abstract class PersonManager {
         allPersons = new ArrayList<>();
     }
 
-
+    public boolean createAccount(String name, String username, String password, String email) {
+        Person newPerson = new Person()
+    }
 
 
     /**

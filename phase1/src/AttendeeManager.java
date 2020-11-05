@@ -1,6 +1,22 @@
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttendeeManager { // extends PersonManager
+
+    protected List<Attendee> allAttendees;
+
+    public AttendeeManager() {
+        allAttendees = new ArrayList<>();
+    }
+
+    public boolean createAccount(String name, String username, String password, String email) {
+        Attendee newAtt = new Attendee(name, username, password, email);
+        allAttendees.add(newAtt);
+    }
+
+
+    // BELOW IS PAUL'S STUFF... delete?
+
 // please do not have variable names that are the same name as a person, it makes the code difficult to read.
     /**
      * This calls doubleBooking below and then adds Attendee to person's event list. I will add the person id to event
