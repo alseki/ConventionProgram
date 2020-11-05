@@ -4,14 +4,14 @@ import java.util.UUID;
 
 public class Message {
     private String Id;
-    private Person sender;
-    private Person recipient;
+    private String senderId;
+    private String recipientId;
     private LocalDateTime dateTime;
     private String content;
 
-    Message(Person sender, Person recipient, String content){
-        this.sender = sender;
-        this.recipient = recipient;
+    Message(String senderId, String recipientId, String content){
+        this.senderId = senderId;
+        this.recipientId = recipientId;
         this.content = content;
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
@@ -31,8 +31,8 @@ public class Message {
      *
      * @return the sender of this Message.
      */
-    public Person getSender(){
-        return this.sender;
+    public String getSenderId(){
+        return this.senderId;
     }
 
     /**
@@ -40,8 +40,8 @@ public class Message {
      *
      * @return the recipient of this Message.
      */
-    public Person getRecipient(){
-        return this.recipient;
+    public String getRecipientId(){
+        return this.recipientId;
     }
 
     /**
