@@ -14,11 +14,12 @@ public class AttendeeManager extends PersonManager {
     public boolean createAccount(String name, String username, String password, String email) {
         Attendee newAtt = new Attendee(name, username, password, email);
         allAttendees.add(newAtt);
+        return true;
     }
 
     public ArrayList<String> getEventList(String userID) {
         for(Attendee a: allAttendees) {
-            if((a.id).equals(userID)) {    // no idea what's up with the red text...
+            if((a.id).equals(userID)) {
                 return a.eventsSignedUp;
             }
         }
