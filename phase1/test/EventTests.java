@@ -1,3 +1,4 @@
+import Events.Talk;
 import org.junit.*;
 
 import static org.junit.Assert.*;

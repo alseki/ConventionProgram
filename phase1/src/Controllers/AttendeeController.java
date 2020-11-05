@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     // private AttendeeManager aManager = new AttendeeManager();
-    // private EventManager eManager = new EventManager(); ??
+    // private Events.EventManager eManager = new Events.EventManager(); ??
     // private ChatManager cManager = new ChatManager();
     // private MessageManager mManager = new MessageManager();
     Scanner input = new Scanner(System.in);

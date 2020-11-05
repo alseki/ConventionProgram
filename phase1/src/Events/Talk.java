@@ -1,4 +1,11 @@
-public class Talk extends Event{
+package Events;
+
+import Events.Event;
+
+// Contributors: Sarah Kronenfeld
+// Last edit: Nov 2 2020
+
+public class Talk extends Event {
 
     private String speaker;
     private String description;

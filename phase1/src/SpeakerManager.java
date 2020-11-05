@@ -1,3 +1,5 @@
+import Events.Event;
+
 public class SpeakerManager extends PersonManager {
 
     /**
@@ -6,7 +8,7 @@ public class SpeakerManager extends PersonManager {
      * @param pers
      */
 
-    public void addToEventsList(Speaker pers,Event event) {
+    public void addToEventsList(Speaker pers, Event event) {
         if(!doubleBooking(pers, event)) {
             pers.getEventsSignedUp().add(pers.getId());
         }
