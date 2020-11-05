@@ -15,8 +15,8 @@ public class SpeakerManager extends PersonManager {
     }
 
     public void cancelEvent(Speaker pers, Event event) {
-        if(pers.getEventsSignedUp().contains(event.getId())) {
-            pers.getEventsSignedUp().remove(event.getId());
+        if(pers.getEventsSignedUp().contains(event.getID())) {
+            pers.getEventsSignedUp().remove(event.getID());
 
         }
     }
@@ -40,7 +40,7 @@ public class SpeakerManager extends PersonManager {
      */
     public boolean doubleBooking(Speaker pers, Event event) {
 
-        return pers.getEventsSignedUp().contains(event.getId());
+        return pers.getEventsSignedUp().contains(event.getID());
 
     }
 

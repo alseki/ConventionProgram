@@ -39,7 +39,7 @@ public class AttendeeManager extends PersonManager {
      */
     public boolean doubleBooking(Attendee pers, Event event) {
 
-        return pers.getEventsSignedUp().contains(event.id);
+        return pers.getEventsSignedUp().contains(event.getID());
 
     }
 
@@ -51,6 +51,6 @@ public class AttendeeManager extends PersonManager {
      */
     public boolean doubleContact(Attendee pers, Person contact) {
 
-        return pers.getContactList().contains(contact.id);
+        return pers.getContactList().contains(contact.getId());
     }
 }
