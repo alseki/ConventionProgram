@@ -7,6 +7,8 @@ public abstract class Person {
     protected String password;
     protected String email;
     protected String fullName;
+    //contactlist and chatlist should not be in the person class as it doesn't apply to speaker.
+
     protected ArrayList<String> contactList;
     protected ArrayList<String> chatList;
 

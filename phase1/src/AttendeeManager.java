@@ -1,16 +1,16 @@
 
 
 public class AttendeeManager { // extends PersonManager
-
+// please do not have variable names that are the same name as a person, it makes the code difficult to read.
     /**
      * This calls doubleBooking below and then adds Attendee to person's event list. I will add the person id to event
      * object's attendee list soon
-     * @param person
+     * @param pers
      */
 
-    public void addToEventsList(Attendee person,Event event) {
-        if(doubleBooking(person, event) == false) {
-            person.getEventsSignedUp().add(person.getId());
+    public void addToEventsList(Attendee pers,Event event) {
+        if(!doubleBooking(pers, event)) {
+            pers.getEventsSignedUp().add(pers.getId());
         }
     }
 
@@ -23,35 +23,35 @@ public class AttendeeManager { // extends PersonManager
 
     /**
      * This calls doubleContact below and adds a contact id to person's contactList
-     * @param person
+     * @param pers
      * @param contact
      */
-    public void addToContactsList(Attendee person, Person contact ) {
-        if(doubleContact(person, contact) == false) {
-            person.getContactList().add(contact.getId());
+    public void addToContactsList(Attendee pers, Person contact ) {
+        if(!doubleContact(pers, contact)) {
+            pers.getContactList().add(contact.getId());
         }
     }
 
     /**
      * This checks that the user is not already signed for two events
-     * @param person
+     * @param pers
      * @param event
      * @return
      */
-    public boolean doubleBooking(Attendee person, Event event) {
+    public boolean doubleBooking(Attendee pers, Event event) {
 
-        return person.getEventsSignedUp().contains(event.id);
+        return pers.getEventsSignedUp().contains(event.id);
 
     }
 
     /**
      * This checks that the user does not already have this contact in contactList
-     * @param person
+     * @param pers
      * @param contact
      * @return
      */
-    public boolean doubleContact(Attendee person, Person contact) {
+    public boolean doubleContact(Attendee pers, Person contact) {
 
-        return person.getContactList().contains(contact.id);
+        return pers.getContactList().contains(contact.id);
     }
 }

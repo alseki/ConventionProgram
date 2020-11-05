@@ -6,7 +6,7 @@ import java.util.Map;
 public abstract class PersonManager {
 
     List<Person> allPersons;   // creating a list of people would probably be easiest and straightforward -Allen
-
+    // what is the access to this variable. Please follow the design from the slides.
     public PersonManager() {   // constructor that creates the list
         allPersons = new ArrayList<>();
     }
@@ -42,10 +42,7 @@ public abstract class PersonManager {
      */
     public boolean checkUsernamePasswordAtLogin(String id, String userName, String password){
         ArrayList listPersonInformation = personMap.get(id);
-        if(listPersonInformation.contains(userName) && listPersonInformation.contains(password)){
-            return true;
-        }
-        return false;
+        return listPersonInformation.contains(userName) && listPersonInformation.contains(password);
     }
 
 
