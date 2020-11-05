@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendeeManager { // extends PersonManager
+public class AttendeeManager {
 
-    protected List<Attendee> allAttendees;
+    private List<Attendee> allAttendees;
 
     public AttendeeManager() {
         allAttendees = new ArrayList<>();
@@ -14,39 +14,20 @@ public class AttendeeManager { // extends PersonManager
         allAttendees.add(newAtt);
     }
 
+    public ArrayList<String> getEventList(String userID) {
+        for(Attendee a: allAttendees) {
+            if((Attendee.id).equals(userID)) {    // no idea what's up with the red text...
+                return Attendee.eventsSignedUp;
+            }
+        }
+    }
+
+
+
 
     // BELOW IS PAUL'S STUFF... delete?
 
 // please do not have variable names that are the same name as a person, it makes the code difficult to read.
-    /**
-     * This calls doubleBooking below and then adds Attendee to person's event list. I will add the person id to event
-     * object's attendee list soon
-     * @param pers
-     */
-
-    public void addToEventsList(Attendee pers,Event event) {
-        if(!doubleBooking(pers, event)) {
-            pers.getEventsSignedUp().add(pers.getId());
-        }
-    }
-
-    public void cancelEvent(Attendee person, Event event) {
-        if(person.getEventsSignedUp().contains(event.id)) {
-            person.getEventsSignedUp().remove(event.id);
-
-        }
-    }
-
-    /**
-     * This calls doubleContact below and adds a contact id to person's contactList
-     * @param pers
-     * @param contact
-     */
-    public void addToContactsList(Attendee pers, Person contact ) {
-        if(!doubleContact(pers, contact)) {
-            pers.getContactList().add(contact.getId());
-        }
-    }
 
     /**
      * This checks that the user is not already signed for two events
