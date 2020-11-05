@@ -3,7 +3,7 @@ import Events.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendeeManager {
+public class AttendeeManager extends PersonManager {
 
     private List<Attendee> allAttendees;
 
