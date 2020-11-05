@@ -3,9 +3,9 @@ package Controllers;
 // Programmer: Cara McNeil
 // Description: The central Controller of the Convention System. Calls all other Controllers.
 // Date Created: 01/11/2020
-// Date Modified: 04/11/2020
+// Date Modified: 05/11/2020
 
-import java.util.Scanner;
+import Controllers.OrganizerController;
 
 public class ConventionPlanningSystem {
 
@@ -44,13 +44,17 @@ public class ConventionPlanningSystem {
 
         switch (choice) {
             case 1:
-                PC = (AttendeeController) new AttendeeController();
+                AttendeeManager am = new AttendeeManager();
+                PC = (AttendeeController) new AttendeeController(am);
                 break;
             case 2:
-                PC = (OrganizerController) new OrganizerController();
+                OrganizerManager om = new OrganizerManager();
+                SpeakerManager sm = new SpeakerManager();
+                PC = (OrganizerController) new OrganizerController(om, sm);
                 break;
             case 3:
-                PC = (SpeakerController) new SpeakerController();
+                SpeakerManager sman = new SpeakerManager();
+                PC = (SpeakerController) new SpeakerController(sman);
                 break;
         }
     }
