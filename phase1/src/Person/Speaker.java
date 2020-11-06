@@ -1,7 +1,11 @@
+package Person;
+
+import Person.Person;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Speaker extends Person { //implements Signupable
+public class Speaker extends Person { //implements Person.Signupable
     //private ArrayList<String> eventsSignedUp;
     private ArrayList<String> eventSpeakingAt;
 
@@ -14,7 +18,7 @@ public class Speaker extends Person { //implements Signupable
     }
 //
 //    /**
-//     * returns the events that the Speaker has signed up for in the capacity of an attendee
+//     * returns the events that the Person.Speaker has signed up for in the capacity of an attendee
 //     * @return ArrayList<String> eventsSignedUp the events that the person has signed up for.
 //     */
 //    public ArrayList<String> getEventsSignedUp(){
@@ -23,8 +27,8 @@ public class Speaker extends Person { //implements Signupable
     // notice that a speaker cannot sign up for an event.
 
     /**
-     * returns the events where the Speaker is to give a Talk
-     * @return ArrayList<String> eventsSpeakingAt the events where the Speaker has been signed up for (by event organizers)
+     * returns the events where the Person.Speaker is to give a Talk
+     * @return ArrayList<String> eventsSpeakingAt the events where the Person.Speaker has been signed up for (by event organizers)
      */
 
     public ArrayList<String> getEventSpeakingAt() {
@@ -32,7 +36,7 @@ public class Speaker extends Person { //implements Signupable
     }
 
     /**
-     * returns the contacts that Speaker has in list
+     * returns the contacts that Person.Speaker has in list
      * @return ArrayList<String> of person's id
      */
     protected ArrayList<String> contactList() {

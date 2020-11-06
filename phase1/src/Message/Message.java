@@ -1,3 +1,5 @@
+package Message;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,49 +20,49 @@ public class Message {
     }
 
     /**
-     * This gives access to the Id of this Message.
+     * This gives access to the Id of this Message.Message.
      *
-     * @return the Id of this Message.
+     * @return the Id of this Message.Message.
      */
     public String getMessageId(){
         return this.Id;
     }
 
     /**
-     * This gives access to the sender of this Message.
+     * This gives access to the sender of this Message.Message.
      *
-     * @return the sender of this Message.
+     * @return the sender of this Message.Message.
      */
     public String getSenderId(){
         return this.senderId;
     }
 
     /**
-     * This gives access to the recipient of this Message.
+     * This gives access to the recipient of this Message.Message.
      *
-     * @return the recipient of this Message.
+     * @return the recipient of this Message.Message.
      */
     public String getRecipientId(){
         return this.recipientId;
     }
 
     /**
-     * This gives access to the datetime of this Message.
+     * This gives access to the datetime of this Message.Message.
      *
      * In case we need the function of searching messages by datetime in the future.
      *
-     * @return the datetime of this Message.
+     * @return the datetime of this Message.Message.
      */
     public LocalDateTime getDateTime(){
         return this.dateTime;
     }
 
     /**
-     * This gives access to the content of this Message.
+     * This gives access to the content of this Message.Message.
      *
      * In case we need the function of searching messages by keywords in the future.
      *
-     * @return the content of this Message.
+     * @return the content of this Message.Message.
      */
     public String getContent(){
         return this.content;

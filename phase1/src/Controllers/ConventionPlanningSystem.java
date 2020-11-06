@@ -6,6 +6,7 @@ package Controllers;
 // Date Modified: 05/11/2020
 
 import Controllers.OrganizerController;
+import Person.*;
 
 public class ConventionPlanningSystem {
 
@@ -29,9 +30,9 @@ public class ConventionPlanningSystem {
         Scanner input = new Scanner(System.in);
         System.out.println("~Welcome to ConventionSystem~" + "\n");
         System.out.println("Please select from the following options:");
-        System.out.println("To Login or create an account as an Attendee, Enter '1';");
-        System.out.println("To Login or create an account as an Organizer, Enter '2';");
-        System.out.println("To Login or create an account as a Speaker, Enter '3';");
+        System.out.println("To Login or create an account as an Person.Person.Attendee, Enter '1';");
+        System.out.println("To Login or create an account as an Person.Person.Organizer, Enter '2';");
+        System.out.println("To Login or create an account as a Person.Speaker, Enter '3';");
         return input.nextInt();
     }*/
 

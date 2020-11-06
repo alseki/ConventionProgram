@@ -1,14 +1,16 @@
 package Controllers;// Programmer: Cara McNeil
-// Description: Controllers.Main menu for Entities.Attendee users.
+// Description: Controllers.Main menu for Entities.Person.Person.Attendee users.
 // Date Created: 01/11/2020
 // Date Modified: 05/11/2020
+
+import Person.AttendeeManager;
 
 import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     // private EventManager eManager = new EventManager(); ??
-    // private ChatManager cManager = new ChatManager();
-    // private MessageManager mManager = new MessageManager();
+    // private Message.Message.ChatManager cManager = new Message.Message.ChatManager();
+    // private Message.MessageManager mManager = new Message.MessageManager();
     Scanner input = new Scanner(System.in);
     int currentRequest;
     private String username;
@@ -49,7 +51,7 @@ public class AttendeeController extends PersonController {
     }
 
     /**
-     * Get's the list of Events the Attendee user is signed up for
+     * Get's the list of Events the Person.Person.Attendee user is signed up for
      * @return true iff the presenter has been updated woith a list of events
      */
     public boolean getUserEventList() {
@@ -65,7 +67,7 @@ public class AttendeeController extends PersonController {
     public boolean signupForEvent(String eventID) {
         // if eManager.signup(currentUerID, eventID)
         // aManager.addEvent(currentUserID, eventID)
-        // update the presenter to say the Attendee user's been added to the event
+        // update the presenter to say the Person.Person.Attendee user's been added to the event
         return false;
     }
 
@@ -76,7 +78,7 @@ public class AttendeeController extends PersonController {
     public boolean cancelEvent(String eventID) {
         // if eManager.remove(currentUserID, eventID)
         // aManager.cancelEvent(currentUserID, eventID)
-        // update the presenter to say the Attendee user's been added to the event
+        // update the presenter to say the Person.Person.Attendee user's been added to the event
         return false;
     }
 

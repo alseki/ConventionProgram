@@ -1,3 +1,7 @@
+package Message;
+
+import Message.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +13,7 @@ public class MessageManager {
     }
 
     /**
-     * Create new Message and add it to the MessageList.
+     * Create new Message.Message and add it to the MessageList.
      *
      * @return true iff succeed.
      */
@@ -20,9 +24,9 @@ public class MessageManager {
     }
 
     /**
-     * Get Message by the Id.
+     * Get Message.Message by the Id.
      *
-     * @return the Message.
+     * @return the Message.Message.
      */
     public Message getMessageId(String MessageId){
         Message curMessage = null;

@@ -1,14 +1,17 @@
 package Controllers;// Programmer: Cara McNeil
-// Description: Controllers.Main menu for Organizer users.
+// Description: Controllers.Main menu for Person.Person.Organizer users.
 // Date Created: 01/11/2020
 // Date Modified: 04/11/2020
+
+import Person.OrganizerManager;
+import Person.SpeakerManager;
 
 import java.util.Scanner;
 
 public class OrganizerController extends PersonController {
     // private EventManager eManager = new EventManager(); ??
-    // private ChatManager cManager = new ChatManager();
-    // private MessageManager mManager = new MessageManager();
+    // private Message.Message.ChatManager cManager = new Message.Message.ChatManager();
+    // private Message.MessageManager mManager = new Message.MessageManager();
     Scanner input = new Scanner(System.in);
     int currentRequest;
     private String username;
@@ -46,7 +49,7 @@ public class OrganizerController extends PersonController {
     }
 
     /**
-     * Get's the list of Events the Organizer user is signed up for
+     * Get's the list of Events the Person.Person.Organizer user is signed up for
      * @return true iff the presenter has been updated woith a list of events
      */
     public boolean getUserEventList() {
@@ -62,7 +65,7 @@ public class OrganizerController extends PersonController {
     public boolean signupForEvent(String eventID) {
         // if eManager.signup(currentUerID, eventID)
         // oManager.addEvent(currentUserID, eventID)
-        // update the presenter to say the Organizer user's been added to the event
+        // update the presenter to say the Person.Person.Organizer user's been added to the event
         return false;
     }
 
@@ -73,7 +76,7 @@ public class OrganizerController extends PersonController {
     public boolean cancelEvent(String eventID) {
         // if eManager.remove(currentUserID, eventID)
         // oManager.cancelEvent(currentUserID, eventID)
-        // update the presenter to say the Organizer user's been added to the event
+        // update the presenter to say the Person.Person.Organizer user's been added to the event
         return false;
     }
 
@@ -87,12 +90,12 @@ public class OrganizerController extends PersonController {
     }
 
     /**
-     * Creates a new Speaker account and adds it to the system.
+     * Creates a new Person.Speaker account and adds it to the system.
      * @param name
      * @param username
      * @param password
      * @param email
-     * @return true iff a new Speaker object was created.
+     * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
         return false;
@@ -106,7 +109,7 @@ public class OrganizerController extends PersonController {
      * @return
      */
     public boolean scheduleSpeaker(String speakerUsername, String room) {
-        return false
+        return false;
     }
     
 

@@ -5,6 +5,8 @@ package Controllers;// Programmer: Cara McNeil
 
 import java.util.Scanner;
 
+import Person.PersonManager;
+
 abstract public class PersonController {
     Scanner input = new Scanner(System.in);
     private String username;
@@ -27,7 +29,7 @@ abstract public class PersonController {
         System.out.println("To logout, Enter '1';");
         System.out.println("To view Contact List, Enter '2';");
         System.out.println("To add to Contact List, Enter '3';");
-        System.out.println("To view Chat list, Enter '4';");
+        System.out.println("To view Message.Message.Chat list, Enter '4';");
         return 0;
     }*/
 
@@ -52,7 +54,7 @@ abstract public class PersonController {
 
     /**
      * Prompts user to input username and password.
-     * @return true iff login info corresponds with an existing Person account.
+     * @return true iff login info corresponds with an existing Person.Person account.
      */
     public boolean login() {
         System.out.println("Enter your username: ");
@@ -65,7 +67,7 @@ abstract public class PersonController {
     }
 
     /**
-     * Prompts user for relevant information and uses it to create a new Person account.
+     * Prompts user for relevant information and uses it to create a new Person.Person account.
      * @return true iff new account has been created
      */
     public boolean createAccount() {
@@ -82,7 +84,7 @@ abstract public class PersonController {
     }
 
     /**
-     * Get's the Person user's contactList
+     * Get's the Person.Person user's contactList
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean getContactList() {
@@ -93,7 +95,7 @@ abstract public class PersonController {
     }
 
     /**
-     * Add a contact to the Person user's contactList
+     * Add a contact to the Person.Person user's contactList
      * @param contactUsername
      * @return true iff the presenter printed a formatted contactList
      */
@@ -105,7 +107,7 @@ abstract public class PersonController {
     }
 
     /**
-     * Get's the Person user's Chats
+     * Get's the Person.Person user's Chats
      * @return true iff the presenter printed a formatted list of Chats
      */
     public boolean getChats() {
@@ -119,24 +121,24 @@ abstract public class PersonController {
     }
 
     /**
-     * Creates new Chat if contact is on contactList
+     * Creates new Message.Message.Chat if contact is on contactList
      * @param contactUsername
-     * @return true iff new Chat was created and added to user's Chat list and contact's contactList
+     * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
     public boolean createChat(String contactUsername) {
         // contactID = manager.getID(contactUsername)
         // if manager.checkContact(contactID)
         // String chatID = cManager.createChat(currentUserID, contactID)
         // if manager.addChat(currentUserID, chatID) and manager.addChat(contactID, chatID)
-        // update presenter to say Chat was created
+        // update presenter to say Message.Message.Chat was created
         return false;
     }
     
     /**
-     * Creates new Message for existing Chat
+     * Creates new Message.Message for existing Message.Message.Chat
      * @param chatID
      * @param messageContent
-     * @return true iff new Message was created and added to Chat's messageList
+     * @return true iff new Message.Message was created and added to Message.Message.Chat's messageList
      */
     public boolean addMessage(String chatID, String messageContent) {
         // String messageID = mManager.createMessage(currentUser, messageContent);
@@ -146,9 +148,9 @@ abstract public class PersonController {
     }
 
     /**
-     * Get's the Person user's Chat messages
+     * Get's the Person.Person user's Message.Message.Chat messages
      * @param contactUsername
-     * @return true iff presenter was updated with a formatted list of Chat messages
+     * @return true iff presenter was updated with a formatted list of Message.Message.Chat messages
      */
     public boolean getMessages(String contactUsername) {
         // chatID = cManager.getChatID(currentUserID)

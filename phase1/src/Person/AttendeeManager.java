@@ -1,3 +1,5 @@
+package Person;
+
 import Events.Event;
 
 import java.util.ArrayList;
