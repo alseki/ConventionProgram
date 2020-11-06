@@ -5,12 +5,11 @@ import java.util.UUID;
 public class Chat {
     private String Id;
     private ArrayList<String> messageIds;
-    //private ArrayList<Person> senders;
-    //NOTE!! I commented out old codes containing Person and wrote a code for String personId instead.
-    //We can ask TA today if entities can contain entities as parameters, then decide which codes to use. -Karyn
     private ArrayList<String> personIds;
 
     Chat(){
+        messageIds = new ArrayList<>();
+        personIds = new ArrayList<>();
         this.Id = UUID.randomUUID().toString();
     }
 
@@ -29,9 +28,7 @@ public class Chat {
      *
      *
      */
-    //public void addPerson(Person newPerson){
-    //    this.senders.add(newPerson);
-    //}
+
 
     public void addPersonIds(String personId) {this.personIds.add(personId);}
     /**
@@ -57,8 +54,6 @@ public class Chat {
      *
      * @return the Persons in this Chat.
      */
-    //public ArrayList<Person> getSenders() {
-    //    return this.senders;
-    //}
+
     public ArrayList<String> getPersonIds(){return this.personIds;}
 }

@@ -4,7 +4,9 @@ import java.util.List;
 public class ChatManager {
     private List<Chat> ChatsList; // list for storing a collection of all Chat objects
 
-    public ChatManager(){ChatsList = new ArrayList<>();}
+    public ChatManager(){
+        ChatsList = new ArrayList<>();
+    }
 
     /**
      * Create new Chat object and add to the ChatsList
