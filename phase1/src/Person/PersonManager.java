@@ -11,12 +11,13 @@ public abstract class PersonManager {
 
     protected List<Person> allPersons;
 
+
     public PersonManager() {   // constructor that creates the list
         allPersons = new ArrayList<>();
     }
 
     public boolean createAccount(String name, String username, String password, String email) {
-        Person newPerson = new Person()
+        Person newPerson = new Person();
     }
 
 
@@ -38,6 +39,7 @@ public abstract class PersonManager {
     }
 
     /**
+     *
      *
      * @param id
      * @param userName
