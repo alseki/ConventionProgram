@@ -1,7 +1,7 @@
 package Controllers;// Programmer: Cara McNeil
 // Description: abstract main menu for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 04/11/2020
+// Date Modified: 09/11/2020
 
 import java.util.Scanner;
 
@@ -54,13 +54,11 @@ abstract public class PersonController {
 
     /**
      * Prompts user to input username and password.
+     * @param username The current user's inputted username
+     * @param password The current user's inputted password
      * @return true iff login info corresponds with an existing Person.Person account.
      */
-    public boolean login() {
-        System.out.println("Enter your username: ");
-        username = input.nextLine();
-        System.out.println("Enter your password: ");
-        password = input.nextLine();
+    public boolean login(String username, String password) {
         // if manager.findPerson(username, password) == true
         // currentUserID = manager.getPerson(username, password)
         return false;
@@ -68,17 +66,13 @@ abstract public class PersonController {
 
     /**
      * Prompts user for relevant information and uses it to create a new Person.Person account.
+     * @param name The current user's inputted name
+     * @param username The current user's inputted username
+     * @param password The current user's inputted password
+     * @param email The current user's inputted email
      * @return true iff new account has been created
      */
-    public boolean createAccount() {
-        System.out.println("Enter your full name: ");
-        String name = input.nextLine();
-        System.out.println("Enter a username for your account: ");
-        String username = input.nextLine();
-        System.out.println("Enter your password for your account: ");
-        String password = input.nextLine();
-        System.out.println("Enter your email: ");
-        String email = input.nextLine();
+    public boolean createAccount(String name, String username, String password, String email) {
         // manager.createAccount(name, username, password, email)
         return false;
     }
@@ -96,7 +90,7 @@ abstract public class PersonController {
 
     /**
      * Add a contact to the Person.Person user's contactList
-     * @param contactUsername
+     * @param contactUsername The username of the current user's requested contact addition
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean addContact(String contactUsername) {
@@ -122,7 +116,7 @@ abstract public class PersonController {
 
     /**
      * Creates new Message.Message.Chat if contact is on contactList
-     * @param contactUsername
+     * @param contactUsername The username of the current user's requested contact message
      * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
     public boolean createChat(String contactUsername) {
@@ -136,8 +130,8 @@ abstract public class PersonController {
     
     /**
      * Creates new Message.Message for existing Message.Message.Chat
-     * @param chatID
-     * @param messageContent
+     * @param chatID The chatID of the Chat the current user want's to send a Message to
+     * @param messageContent The contents of the message the current user wants to send
      * @return true iff new Message.Message was created and added to Message.Message.Chat's messageList
      */
     public boolean addMessage(String chatID, String messageContent) {
@@ -149,7 +143,7 @@ abstract public class PersonController {
 
     /**
      * Get's the Person.Person user's Message.Message.Chat messages
-     * @param contactUsername
+     * @param contactUsername The username of the current user's requested contact messages
      * @return true iff presenter was updated with a formatted list of Message.Message.Chat messages
      */
     public boolean getMessages(String contactUsername) {
