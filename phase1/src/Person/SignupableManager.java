@@ -1,3 +1,7 @@
+package Person;
+
+import Person.Signupable;
+
 public class SignupableManager {
     private Signupable pers;
 
@@ -22,7 +26,7 @@ public class SignupableManager {
     }
 
     /**
-     * changes the current pers in Signupable manger to the new pers in sighupable manager
+     * changes the current pers in Person.Signupable manger to the new pers in sighupable manager
      * @param pers a signupable object, which will become this singupbalemanager's new pers
      */
 

@@ -1,9 +1,11 @@
 package Controllers;// Programmer: Cara McNeil
 // Description: abstract main menu for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 04/11/2020
+// Date Modified: 09/11/2020
 
 import java.util.Scanner;
+
+import Person.PersonManager;
 
 abstract public class PersonController {
     Scanner input = new Scanner(System.in);
@@ -27,7 +29,7 @@ abstract public class PersonController {
         System.out.println("To logout, Enter '1';");
         System.out.println("To view Contact List, Enter '2';");
         System.out.println("To add to Contact List, Enter '3';");
-        System.out.println("To view Chat list, Enter '4';");
+        System.out.println("To view Message.Message.Chat list, Enter '4';");
         return 0;
     }*/
 
@@ -52,37 +54,31 @@ abstract public class PersonController {
 
     /**
      * Prompts user to input username and password.
-     * @return true iff login info corresponds with an existing Person account.
+     * @param username The current user's inputted username
+     * @param password The current user's inputted password
+     * @return true iff login info corresponds with an existing Person.Person account.
      */
-    public boolean login() {
-        System.out.println("Enter your username: ");
-        username = input.nextLine();
-        System.out.println("Enter your password: ");
-        password = input.nextLine();
+    public boolean login(String username, String password) {
         // if manager.findPerson(username, password) == true
         // currentUserID = manager.getPerson(username, password)
         return false;
     }
 
     /**
-     * Prompts user for relevant information and uses it to create a new Person account.
+     * Prompts user for relevant information and uses it to create a new Person.Person account.
+     * @param name The current user's inputted name
+     * @param username The current user's inputted username
+     * @param password The current user's inputted password
+     * @param email The current user's inputted email
      * @return true iff new account has been created
      */
-    public boolean createAccount() {
-        System.out.println("Enter your full name: ");
-        String name = input.nextLine();
-        System.out.println("Enter a username for your account: ");
-        String username = input.nextLine();
-        System.out.println("Enter your password for your account: ");
-        String password = input.nextLine();
-        System.out.println("Enter your email: ");
-        String email = input.nextLine();
+    public boolean createAccount(String name, String username, String password, String email) {
         // manager.createAccount(name, username, password, email)
         return false;
     }
 
     /**
-     * Get's the Person user's contactList
+     * Get's the Person.Person user's contactList
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean getContactList() {
@@ -93,8 +89,8 @@ abstract public class PersonController {
     }
 
     /**
-     * Add a contact to the Person user's contactList
-     * @param contactUsername
+     * Add a contact to the Person.Person user's contactList
+     * @param contactUsername The username of the current user's requested contact addition
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean addContact(String contactUsername) {
@@ -105,7 +101,7 @@ abstract public class PersonController {
     }
 
     /**
-     * Get's the Person user's Chats
+     * Get's the Person.Person user's Chats
      * @return true iff the presenter printed a formatted list of Chats
      */
     public boolean getChats() {
@@ -119,24 +115,24 @@ abstract public class PersonController {
     }
 
     /**
-     * Creates new Chat if contact is on contactList
-     * @param contactUsername
-     * @return true iff new Chat was created and added to user's Chat list and contact's contactList
+     * Creates new Message.Message.Chat if contact is on contactList
+     * @param contactUsername The username of the current user's requested contact message
+     * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
     public boolean createChat(String contactUsername) {
         // contactID = manager.getID(contactUsername)
         // if manager.checkContact(contactID)
         // String chatID = cManager.createChat(currentUserID, contactID)
         // if manager.addChat(currentUserID, chatID) and manager.addChat(contactID, chatID)
-        // update presenter to say Chat was created
+        // update presenter to say Message.Message.Chat was created
         return false;
     }
     
     /**
-     * Creates new Message for existing Chat
-     * @param chatID
-     * @param messageContent
-     * @return true iff new Message was created and added to Chat's messageList
+     * Creates new Message.Message for existing Message.Message.Chat
+     * @param chatID The chatID of the Chat the current user want's to send a Message to
+     * @param messageContent The contents of the message the current user wants to send
+     * @return true iff new Message.Message was created and added to Message.Message.Chat's messageList
      */
     public boolean addMessage(String chatID, String messageContent) {
         // String messageID = mManager.createMessage(currentUser, messageContent);
@@ -146,9 +142,9 @@ abstract public class PersonController {
     }
 
     /**
-     * Get's the Person user's Chat messages
-     * @param contactUsername
-     * @return true iff presenter was updated with a formatted list of Chat messages
+     * Get's the Person.Person user's Message.Message.Chat messages
+     * @param contactUsername The username of the current user's requested contact messages
+     * @return true iff presenter was updated with a formatted list of Message.Message.Chat messages
      */
     public boolean getMessages(String contactUsername) {
         // chatID = cManager.getChatID(currentUserID)

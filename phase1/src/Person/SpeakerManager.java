@@ -1,9 +1,12 @@
+package Person;
+
 import Events.Event;
+import Person.Person;
 
 public class SpeakerManager extends PersonManager {
 
     /**
-     * This calls doubleBooking below and then adds Speaker to person's event list. I will add the person id to event
+     * This calls doubleBooking below and then adds Person.Speaker to person's event list. I will add the person id to event
      * object's attendee list soon
      * @param pers
      */

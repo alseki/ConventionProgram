@@ -1,3 +1,5 @@
+package Person;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -14,7 +16,7 @@ public class Attendee extends Person implements Signupable {
     }
 
     /**
-     * adds an event ID to the Attendee's list of signed up Events
+     * adds an event ID to the Person.Person.Attendee's list of signed up Events
      * @param eventID takes in the ID of the event
      */
     public void signUp(String eventID) {
@@ -22,7 +24,7 @@ public class Attendee extends Person implements Signupable {
     }
 
     /**
-     * removes an event ID from the Attendee's list of signed up Events
+     * removes an event ID from the Person.Person.Attendee's list of signed up Events
      * @param eventID takes in the ID of the event
      */
     public void cancelSpot(String eventID) {
@@ -38,7 +40,7 @@ public class Attendee extends Person implements Signupable {
     }
 
     /**
-     * returns the contacts that Attendee has in list
+     * returns the contacts that Person.Person.Attendee has in list
      * @return ArrayList<String> of person's id
      */
     public ArrayList<String> getContactList() {

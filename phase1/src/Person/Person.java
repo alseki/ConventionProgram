@@ -1,3 +1,5 @@
+package Person;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -69,7 +71,7 @@ public abstract class Person {
     }
 
     /**
-     *allows for access to the list of Chat IDs
+     *allows for access to the list of Message.Message.Chat IDs
      * @return ArrayList returns the list of string corresponding to the chat Ids
      */
     public ArrayList<String> getChatList() {

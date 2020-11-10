@@ -48,7 +48,7 @@ public abstract class Event {
 
     /**
      * Getter for the announcements associated with this Events.Event
-     * @return a MessageManager object containing the aforementioned announcements
+     * @return a Message.MessageManager object containing the aforementioned announcements
      */
     public Object getAnnouncements() {
         return null;
@@ -56,7 +56,7 @@ public abstract class Event {
 
     /**
      * Getter for the attendees attending this Events.Event
-     * @return an AttendeeManager object containing the aforementioned attendees
+     * @return an Person.Person.AttendeeManager object containing the aforementioned attendees
      */
 
     public Object getAttendeeIDs() {
