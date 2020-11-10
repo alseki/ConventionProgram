@@ -47,11 +47,6 @@ public abstract class PersonManager {
         return listPersonInformation.contains(userName) && listPersonInformation.contains(password);
     }
 
-
-
-
-
-
 }
 
 
