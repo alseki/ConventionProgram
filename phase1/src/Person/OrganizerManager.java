@@ -9,7 +9,7 @@ public class OrganizerManager extends PersonManager {
     private Organizer currentOrganizer;
     private Map<String, Organizer> usernameToOrganizer;
 
-    OrganizerManager(){
+    public OrganizerManager(){
         super();
         usernameToOrganizer = new HashMap<>();
     }
@@ -40,6 +40,7 @@ public class OrganizerManager extends PersonManager {
      */
     @Override
     public boolean createAccount(String fullName, String username, String password, String email){
+        // will change this if we make some errors.
         if(!usernameToOrganizer.containsKey(username)) {
             Organizer og = new Organizer(fullName, username, password, email);
             updateAllPersons(og);
@@ -60,7 +61,8 @@ public class OrganizerManager extends PersonManager {
     }
 
     public boolean removeEvent(String eventId){
-        if (currentOrganizer.getEventsSignedUp().contains(eventId)){
+        if (currentOrganizer.getEventsSignedUp().contains(eventId)){ // does this make problems with extendability
+            // becauuse i'm using the fact that it's a list implemenation
             currentOrganizer.cancelSpot(eventId);
             return true;
         }
@@ -70,8 +72,12 @@ public class OrganizerManager extends PersonManager {
     public Organizer getCurrentOrganizer(){
         return currentOrganizer;
     }
-    public void updateContactList(String Username){
-        currentOrganizer.getContactList().add(Username);
+    public boolean  updateContactList(String username){
+        if(!currentOrganizer.getContactList().contains(username)) {
+            currentOrganizer.addContactList(username);
+            return true;
+        }
+        return false;
     }
     private void updateUsernameToOrganizer(String username, Organizer org){
         usernameToOrganizer.put(username,org);
@@ -79,5 +85,6 @@ public class OrganizerManager extends PersonManager {
     private void updateAllPersons(Organizer org){
         allPersons.add(org);
     }
+
 
 }
