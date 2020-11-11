@@ -69,6 +69,9 @@ public abstract class Person {
     public ArrayList<String> getContactList() {
         return this.contactList;
     }
+    public void addContactList(String username){
+        this.contactList.add(username);
+    }
 
     /**
      *allows for access to the list of Message.Message.Chat IDs
