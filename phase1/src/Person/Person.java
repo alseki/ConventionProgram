@@ -30,7 +30,7 @@ public abstract class Person {
      *
      * @return returns the string of the ID
      */
-    public String getId() {
+    public String getID() {
         return this.id;
     }
 
