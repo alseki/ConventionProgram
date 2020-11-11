@@ -22,7 +22,9 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
+
     // a helper method that returns the desired Attendee object (when searching)
+    // the commented-out code in each method is what the method contained before this helper method was created
     private Attendee searchPersonHelper(String username, String password, String userID) {
         for(Attendee a: allAttendees) {
             if(((a.getUsername()).equals(username) && (a.getPassword()).equals(password)) || (a.getID()).equals(userID)) {
@@ -47,7 +49,7 @@ public class AttendeeManager extends PersonManager {
          */
     }
 
-    public String getPersonID(String username, String password) {
+    public String getPerson(String username, String password) {
         Attendee curr = searchPersonHelper(username, password, "");
 
         if(curr != null) {
@@ -82,6 +84,34 @@ public class AttendeeManager extends PersonManager {
          */
     }
 
+    public boolean checkForContact(String contactID, String userID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            return curr.getContactList().contains(contactID);
+        }
+        return false;
+    }
+
+    public ArrayList<String> getChats(String userID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            return curr.getChatList();
+        }
+        return null;
+    }
+
+    public boolean addEventIDToPersonEventList(String userID, String eventID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            if(!(curr.getEventsSignedUp().contains(eventID))) {
+                curr.getEventsSignedUp().add(eventID);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public ArrayList<String> getEventsSignedUpFor(String userID) {
         Attendee curr = searchPersonHelper("", "", userID);
 
@@ -99,6 +129,5 @@ public class AttendeeManager extends PersonManager {
         return null;
          */
     }
-
 
 }
