@@ -13,47 +13,28 @@ public class AttendeeManager extends PersonManager {
         allAttendees = new ArrayList<>();
     }
 
+    public boolean findPerson(String username, String password) {
+        for(Attendee a: allAttendees) {
+            if((a.username).equals(username) && (a.password).equals(password)) {
+                return true;
+            }
+        }
+    }
+
     public boolean createAccount(String name, String username, String password, String email) {
         Attendee newAtt = new Attendee(name, username, password, email);
         allAttendees.add(newAtt);
         return true;
     }
 
-    public ArrayList<String> getEventList(String userID) {
+    public ArrayList<String> getAttendeeEventList(String userID) {
         for(Attendee a: allAttendees) {
             if((a.id).equals(userID)) {
                 return a.eventsSignedUp;
             }
         }
+        return null;
     }
 
 
-
-
-    // BELOW IS PAUL'S STUFF... delete?
-
-// please do not have variable names that are the same name as a person, it makes the code difficult to read.
-
-    /**
-     * This checks that the user is not already signed for two events
-     * @param pers
-     * @param event
-     * @return
-     */
-    public boolean doubleBooking(Attendee pers, Event event) {
-
-        return pers.getEventsSignedUp().contains(event.getID());
-
-    }
-
-    /**
-     * This checks that the user does not already have this contact in contactList
-     * @param pers
-     * @param contact
-     * @return
-     */
-    public boolean doubleContact(Attendee pers, Person contact) {
-
-        return pers.getContactList().contains(contact.getId());
-    }
 }
