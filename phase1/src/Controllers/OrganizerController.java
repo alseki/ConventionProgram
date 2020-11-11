@@ -55,6 +55,7 @@ public class OrganizerController extends AttendeeController {
      * @return true iff list was added to system.
      */
     public boolean addRoom(String room) {
+        // eManager.addRoom(room);
         return false;
     }
 
