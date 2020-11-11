@@ -13,22 +13,47 @@ public class AttendeeManager extends PersonManager {
         allAttendees = new ArrayList<>();
     }
 
+    // a helper method that returns the desired Attendee object
+    private Attendee searchPersonHelper(String username, String password, String userID) {
+        for(Attendee a: allAttendees) {
+            if(((a.getUsername()).equals(username) && (a.getPassword()).equals(password)) || (a.getID()).equals(userID)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public boolean findPerson(String username, String password) {
+
+        // return true if desired Attendee obj has been found (aka !null). Otherwise, return false
+        return searchPersonHelper(username, password, "") != null;
+
+        /*
         for(Attendee a: allAttendees) {
             if((a.username).equals(username) && (a.password).equals(password)) {
                 return true;
             }
         }
         return false;
+         */
+
     }
 
     public String getPerson(String username, String password) {
+        Attendee curr = searchPersonHelper(username, password, "");
+
+        if(curr != null) {
+            return curr.getID();
+        }
+        return null;
+
+        /*
         for(Attendee a: allAttendees) {
             if((a.username).equals(username) && (a.password).equals(password)) {
                 return a.getID();
             }
         }
-        return null;
+         */
     }
 
     public boolean createAccount(String name, String username, String password, String email) {
@@ -41,21 +66,39 @@ public class AttendeeManager extends PersonManager {
     }
 
     public ArrayList<String> getContactList(String userID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+
+        if(curr != null) {
+            return curr.getContactList();
+        }
+        return null;
+
+        /*
         for(Attendee a: allAttendees) {
             if((a.id).equals(userID)) {
                 return a.getContactList();
             }
         }
         return null;
+         */
     }
 
     public ArrayList<String> getEventsSignedUpFor(String userID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+
+        if(curr != null) {
+            return curr.getEventsSignedUp();
+        }
+        return null;
+
+        /*
         for(Attendee a: allAttendees) {
             if((a.id).equals(userID)) {
                 return a.getEventsSignedUp();
             }
         }
         return null;
+         */
     }
 
 
