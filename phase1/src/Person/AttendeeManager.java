@@ -100,18 +100,6 @@ public class AttendeeManager extends PersonManager {
         return null;
     }
 
-    public boolean addEventIDToPersonEventList(String userID, String eventID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(!(curr.getEventsSignedUp().contains(eventID))) {
-                curr.getEventsSignedUp().add(eventID);
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
     public ArrayList<String> getEventsSignedUpFor(String userID) {
         Attendee curr = searchPersonHelper("", "", userID);
 
@@ -128,6 +116,18 @@ public class AttendeeManager extends PersonManager {
         }
         return null;
          */
+    }
+
+    public boolean addEventIDToPersonEventList(String userID, String eventID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            if(!(curr.getEventsSignedUp().contains(eventID))) {
+                curr.getEventsSignedUp().add(eventID);
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
 }
