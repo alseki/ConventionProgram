@@ -9,9 +9,11 @@ public class Chat {
     private ArrayList<String> messageIds;
     private ArrayList<String> personIds;
 
-    public Chat(){
+    public Chat(String currentId, String friendId){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
+        personIds.add(currentId);
+        personIds.add(friendId);
         this.Id = UUID.randomUUID().toString();
     }
 
