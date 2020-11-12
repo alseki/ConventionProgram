@@ -32,7 +32,7 @@ public abstract class Person {
      *
      * @return returns the string of the ID
      */
-    public String getId() {
+    public String getID() {
         return this.id;
     }
 
@@ -70,6 +70,9 @@ public abstract class Person {
      */
     public ArrayList<String> getContactList() {
         return this.contactList;
+    }
+    public void addContactList(String username){
+        this.contactList.add(username);
     }
 
     /**
