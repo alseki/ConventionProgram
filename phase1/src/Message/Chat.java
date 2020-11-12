@@ -9,7 +9,7 @@ public class Chat {
     private ArrayList<String> messageIds;
     private ArrayList<String> personIds;
 
-    Chat(){
+    public Chat(){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
         this.Id = UUID.randomUUID().toString();
@@ -17,45 +17,45 @@ public class Chat {
 
 
     /**
-     * Add the Message.Message into this Message.Message.Chat by adding the Id of the Message.Message.
-     *
-     * @param messageId - the Id of this new Message.Message.
+     * Add the Id of the Message to messageIds list.
+     * @param messageId - the Id of the Message object that we want to add.
+     * @return True iff messageId was successfully added to messageIds.
      */
-    public void addMessageIds(String messageId){
+    public boolean addMessageIds(String messageId){
         this.messageIds.add(messageId);
+        return true;
     }
 
     /**
-     * Add a Person.Person into this Message.Message.Chat by adding the Person.Person instance into the senders ArrayList.
-     *
+     * Add the Id of the Message to messageIds list.
+     * @param personId - the Id of the Message object that we want to add.
+     * @return True iff messageId was successfully added to messageIds.
      *
      */
+    public boolean addPersonIds(String personId) {
+        this.personIds.add(personId);
+        return true;
+    }
 
-
-    public void addPersonIds(String personId) {this.personIds.add(personId);}
     /**
-     * This gives access to the Id of this Message.Message.Chat.
-     *
-     * @return the Id of this Message.Message.Chat.
+     * Gets ID of Chat.
+     * @return the Id of this Chat.
      */
     public String getId(){
         return this.Id;
     }
 
     /**
-     * This gives access to the Id of all the Messages in this Message.Message.Chat.
-     *
-     * @return the Ids of Messages in this Message.Message.Chat.
+     * Gets all Message IDs that are stored in this Chat.
+     * @return ArrayList of strings (Message IDs) stored in this Chat.
      */
     public ArrayList<String> getMessageIds() {
         return this.messageIds;
     }
 
     /**
-     * This gives access to the senders(Persons) in this Message.Message.Chat.
-     *
-     * @return the Persons in this Message.Message.Chat.
+     * Gets all Person IDs that are stored in this Chat.
+     * @return ArrayList of strings (Person IDs) stored in this Chat.
      */
-
     public ArrayList<String> getPersonIds(){return this.personIds;}
 }

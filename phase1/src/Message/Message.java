@@ -11,7 +11,7 @@ public class Message {
     private LocalDateTime dateTime;
     private String content;
 
-    Message(String senderId, String recipientId, String content){
+    public Message(String senderId, String recipientId, String content){
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
