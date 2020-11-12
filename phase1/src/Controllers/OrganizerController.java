@@ -54,7 +54,8 @@ public class OrganizerController extends AttendeeController {
      * @param room The name/number of a room in the convention
      * @return true iff list was added to system.
      */
-    public boolean addRoom(String room) {
+    public boolean addRoom(int room) {
+
         // eManager.addRoom(room);
         return false;
     }
@@ -68,6 +69,7 @@ public class OrganizerController extends AttendeeController {
      * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
+        // check if person is already existing, if not creat the person.
         return false;
     }
 
