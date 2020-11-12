@@ -7,11 +7,11 @@ import java.util.Map;
 public class OrganizerManager extends PersonManager {
     //private ArrayList<Organizer> organizerList;
     private Organizer currentOrganizer;
-    private Map<String, Organizer> usernameToOrganizer;
+    //private Map<String, Organizer> usernameToOrganizer;
 
     public OrganizerManager(){
         super();
-        usernameToOrganizer = new HashMap<>();
+        //usernameToOrganizer = new HashMap<>();
     }
 
     /**
@@ -21,8 +21,8 @@ public class OrganizerManager extends PersonManager {
      * @return True iff the current organizer is set to the organizer
      */
     public boolean setCurrentOrganizer(String userName){
-        if (usernameToOrganizer.containsKey(userName)){
-            currentOrganizer = usernameToOrganizer.get(userName);
+        if (usernameToPerson.containsKey(userName)){
+            currentOrganizer = (Organizer)usernameToPerson.get(userName);
             return true;
         }
         return false;
@@ -40,10 +40,10 @@ public class OrganizerManager extends PersonManager {
     @Override
     public boolean createAccount(String fullName, String username, String password, String email){
         // will change this if we make some errors.
-        if(!usernameToOrganizer.containsKey(username)) {
+        if(!usernameToPerson.containsKey(username)) {
             Organizer og = new Organizer(fullName, username, password, email);
-            updateAllPersons(og);
-            updateUsernameToOrganizer(og.getUsername(), og);
+            updateAllPersons(og); // see below
+            updateUsernameToPerson(og.getUsername(), og); // see below
             return true;
         }
 
@@ -72,8 +72,7 @@ public class OrganizerManager extends PersonManager {
      */
 
     public boolean removeEvent(String eventId){
-        if (currentOrganizer.getEventsSignedUp().contains(eventId)){ // does this make problems with extendability
-            // becauuse i'm using the fact that it's a list implemenation
+        if (currentOrganizer.getEventsSignedUp().contains(eventId)){ 
             currentOrganizer.cancelSpot(eventId);
             return true;
         }
@@ -107,12 +106,12 @@ public class OrganizerManager extends PersonManager {
      */
     @Override
     public ArrayList<String> getContactList(String organizerId){
-        Organizer og = usernameToOrganizer.get(organizerId);
+        Organizer og = (Organizer)usernameToPerson.get(organizerId);
         return og.getContactList();
     }
 
-    private void updateUsernameToOrganizer(String username, Organizer org){
-        usernameToOrganizer.put(username,org);
+    private void updateUsernameToPerson(String username, Organizer org){
+        usernameToPerson.put(username,org);
     }
     private void updateAllPersons(Organizer org){
         allPersons.add(org);

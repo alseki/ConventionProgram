@@ -12,10 +12,10 @@ public abstract class PersonManager {
     protected static List<Person> allPersons;
 
     // This is a dictionary that will pair username to Person object. This dictionary is used by methods below
-    private Map<String, Person> usernameToPerson = new HashMap<String, Person>();
+    protected Map<String, Person> usernameToPerson = new HashMap<String, Person>();
 
     // This is a dictionary that will pair username to Person object. This dictionary is used by methods below
-    private Map<String, Person> idToPerson = new HashMap<String, Person>();
+    protected Map<String, Person> idToPerson = new HashMap<String, Person>();
 
 
     public PersonManager() {   // constructor for this Manager that creates the list and the two dictionaries
