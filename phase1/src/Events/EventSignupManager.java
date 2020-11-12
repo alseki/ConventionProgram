@@ -2,6 +2,7 @@ package Events;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 12 2020
+// Architecture level - Use class
 // Part of the EventManager Facade pattern. Contains basic access methods used by Attendees.
 
 class EventSignupManager {
@@ -14,6 +15,9 @@ class EventSignupManager {
 
     protected boolean signUpForEvent(String personID, String eventID) {
         Event event = events.getEvent(eventID);
+
+        // check + update capacity!
+
         if (event != null) {
             event.addAttendee(personID);
             return true;
@@ -24,6 +28,9 @@ class EventSignupManager {
     }
 
     protected boolean removeFromEvent(String personID, String eventID) {
+
+        // update capacity!
+
         Event event = events.getEvent(eventID);
         if (event != null) {
             event.removeAttendee(personID);

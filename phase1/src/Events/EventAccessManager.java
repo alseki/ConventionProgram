@@ -2,6 +2,9 @@ package Events;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 12 2020
+
+// Architecture level - Use class
+
 // Part of the EventManager Facade pattern. Contains basic access methods used by multiple actors.
 
 class EventAccessManager {

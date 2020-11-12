@@ -2,22 +2,43 @@ package Events;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 12 2020
+
+// Architecture level - Use class
+
 // Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
 // which actors are going to be using which ones
 
-public class EventManager {
+public class RoomManager {
     EventSignupManager eventSignup;
     EventAccessManager eventAccess;
     EventAdminManager eventAdmin;
     EventDB events;
+    EventReader reader;
 
 
     /**
      * Creates a new EventManager with events read in by some sort of EventReader
      * @param reader The EventReader used to read in events
      */
-    public EventManager(EventReader reader) {
-        events = new EventDB(reader.readEvents());
+    public RoomManager(EventReader reader) {
+        Room thisRoom = new Room();
+        this.reader = reader;
+        this.rmBuilder(reader, thisRoom);
+    }
+
+    /**
+     * Creates a new EventManager with events read in by some sort of EventReader
+     * @param reader The EventReader used to read in events
+     * @param name The name of this room
+     */
+    public RoomManager(EventReader reader, String name) {
+        Room thisRoom = new Room(name);
+        this.reader = reader;
+        this.rmBuilder(reader, thisRoom);
+    }
+
+    private void rmBuilder(EventReader reader, Room room) {
+        events = new EventDB(reader.readEvents(), room);
         eventSignup = new EventSignupManager(events);
         eventAccess = new EventAccessManager(events);
         eventAdmin = new EventAdminManager(events);
@@ -74,5 +95,9 @@ public class EventManager {
      */
     public boolean addEvent(Event event) {
         return eventAdmin.addEvent(event);
+    }
+
+    public void saveRoom() {
+        reader.save(eventAccess.getEventList());
     }
 }

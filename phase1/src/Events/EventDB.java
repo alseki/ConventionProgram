@@ -2,6 +2,9 @@ package Events;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 12 2020
+
+// Architecture level - Use class
+
 // This contains the data used in the EventManager Facade pattern. It contains basic methods to access information
 // in Events
 
@@ -14,11 +17,13 @@ class EventDB {
     ArrayList<String> eventNames;
     ArrayList<Event> events;
 
+    Room room;
+
     /**
      * Creates an EventDB from an array of events
      * @param events The array
      */
-    protected EventDB (Event[] events) {
+    protected EventDB (Event[] events, Room room) {
         this.events = new ArrayList<Event>(Arrays.asList(events));
 
         this.eventNames = new ArrayList<String>();
@@ -28,6 +33,8 @@ class EventDB {
             eventNames.add(event.getName());
             eventIDs.add(event.getID());
         }
+
+        this.room = room;
     }
 
     /**
@@ -104,5 +111,13 @@ class EventDB {
      */
     protected ArrayList<Event> getEventList() {
         return events;
+    }
+
+    /**
+     * Returns the capacity of this Room
+     * @return This Room's capacity
+     */
+    protected int roomCapacity() {
+        return room.getCapacity();
     }
 }

@@ -8,24 +8,39 @@ import java.util.UUID;
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 12 2020
 
+// Architecture level - Entity
+
 public abstract class Event {
 
     private String name;
-    private int room;
+    private int startTime;
     private int duration;
     private String ID;
+    private String speakerID;
     private ArrayList<String> attendees;
     private ArrayList<String> messages;
 
-    // implement messages + attendees once messageManager and attendeeManager exist
-
-    protected Event(String name, int room, int duration) {
+    /**
+     * Constructer for Event objects
+     * @param name The Event's name
+     * @param startTime The time the Event starts
+     * @param duration The length of the Event
+     */
+    protected Event(String name, int startTime, int duration) {
         this.name = name;
-        this.room = room;
+        this.startTime = startTime;
         this.duration = duration;
         ID = UUID.randomUUID().toString();
         attendees = new ArrayList<String>();
         messages = new ArrayList<String>();
+    }
+
+    /**
+     * Getter for the ID of this Event
+     * @return the ID of the event
+     */
+    public String getID() {
+        return ID;
     }
 
     /**
@@ -36,13 +51,12 @@ public abstract class Event {
         return name;
     }
 
-
     /**
-     * Getter for the room ID of this Event
-     * @return the room ID of the Event (as an int)
+     * Getter for the start time (in hours) of this Event
+     * @return the duration of this Event (as an int)
      */
-    public  int getRoomID() {
-        return room;
+    public int getStartTime() {
+        return startTime;
     }
 
     /**
@@ -88,25 +102,37 @@ public abstract class Event {
     }
 
     /**
-     * Getter for the speaker(s) running this Event
+     * Getter for the speaker running this Event
      * @return an array of IDs corresponding to speakers in the system
      */
-    public abstract String[] getSpeakers();
+    public String getSpeaker() {
+        if (speakerID == null) {
+            return "";
+        }
+        else{
+            return speakerID;
+        }
+    }
+
+    /**
+     * Getter for the speaker running this Event
+     * @return an array of IDs corresponding to speakers in the system
+     */
+    public void setSpeakerID(String id) {
+        speakerID = id;
+    }
 
     /**
      * A textual representation of this event
      * @return a description of this event in the form of a String
      */
-    public String getDescription() {
-        return name + ", in Room " + room;
-    }
+    public abstract String getDescription();
 
     /**
-     * Getter for the ID of this Event
-     * @return the ID of the event
+     * Returns whether or not another Event conflicts with this one.
+     * @param event The other Event. (NOTE: the other event is presumed to be in the same Room.)
+     * @return True or false.
      */
-    public String getID() {
-        return ID;
-    }
+    public abstract boolean conflictsWith(Event event);
 }
 
