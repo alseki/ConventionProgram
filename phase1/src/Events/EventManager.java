@@ -1,13 +1,14 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 10 2020
+// Last edit: Nov 12 2020
 // Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
 // which actors are going to be using which ones
 
 public class EventManager {
     EventSignupManager eventSignup;
     EventAccessManager eventAccess;
+    EventAdminManager eventAdmin;
     EventDB events;
 
 
@@ -19,6 +20,7 @@ public class EventManager {
         events = new EventDB(reader.readEvents());
         eventSignup = new EventSignupManager(events);
         eventAccess = new EventAccessManager(events);
+        eventAdmin = new EventAdminManager(events);
     }
 
     /**
@@ -31,20 +33,20 @@ public class EventManager {
 
     /**
      * Signs an individual attendee up for an event
-     * @param person The attendee
-     * @param event The event
+     * @param personID The attendee
+     * @param eventID The event
      */
-    public void signUpForEvent(Object person, Object event) {
-        eventSignup.signUpForEvent(person, event);
+    public boolean signUpForEvent(String personID, String eventID) {
+        return eventSignup.signUpForEvent(personID, eventID);
     }
 
     /**
      * Takes an individual attendee off an event's attendee list
-     * @param person The attendee
-     * @param event The event
+     * @param personID The attendee
+     * @param eventID The event
      */
-    public void removeFromEvent(Object person, Object event) {
-        eventSignup.removeFromEvent(person, event);
+    public boolean removeFromEvent(String personID, String eventID) {
+        return eventSignup.removeFromEvent(personID, eventID);
     }
 
     /**
@@ -54,5 +56,23 @@ public class EventManager {
      */
     public String getEventID(String name) {
         return eventAccess.getEventID(name);
+    }
+
+    /**
+     * Deletes an event
+     * @param id The event's ID
+     * @return Whether the event has been successfully deleted
+     */
+    public boolean removeEvent(String id) {
+        return eventAdmin.removeEvent(id);
+    }
+
+    /**
+     * Adds an event
+     * @param event The event
+     * @return Whether the event has been successfully added
+     */
+    public boolean addEvent(Event event) {
+        return eventAdmin.addEvent(event);
     }
 }

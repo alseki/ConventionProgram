@@ -1,8 +1,8 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 10 2020
-// Part of the EventManager Facade pattern.
+// Last edit: Nov 12 2020
+// Part of the EventManager Facade pattern. Contains basic access methods used by multiple actors.
 
 class EventAccessManager {
 
@@ -12,11 +12,12 @@ class EventAccessManager {
         this.events = events;
     }
 
-    protected Object getEventList() {
-        return  null; //returns some sort of eventlist
+    protected Event[] getEventList() {
+        Event[] eventArray = {};
+        return events.getEventList().toArray(eventArray);
     }
 
     protected String getEventID(String name) {
-        return null; //returns ID of event
+        return events.getEventID(name);
     }
 }
