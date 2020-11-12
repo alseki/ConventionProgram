@@ -100,7 +100,29 @@ public class AttendeeManager extends PersonManager {
         return null;
     }
 
-    public ArrayList<String> getEventsSignedUpFor(String userID) {
+    public boolean addChat(String userID, String chatID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            if(!(curr.getChatList().contains(chatID))) {
+                curr.getChatList().add(chatID);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeChat(String userID, String chatID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            if(curr.getChatList().contains(chatID)) {
+                curr.getChatList().remove(chatID);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<String> getSignedUpEvents(String userID) {
         Attendee curr = searchPersonHelper("", "", userID);
 
         if(curr != null) {
@@ -118,14 +140,24 @@ public class AttendeeManager extends PersonManager {
          */
     }
 
-    public boolean addEventIDToPersonEventList(String userID, String eventID) {
+    public boolean signupForEvent(String userID, String eventID) {
         Attendee curr = searchPersonHelper("", "", userID);
         if(curr != null) {
             if(!(curr.getEventsSignedUp().contains(eventID))) {
                 curr.getEventsSignedUp().add(eventID);
                 return true;
             }
-            return false;
+        }
+        return false;
+    }
+
+    public boolean cancelSpotFromEvent(String userID, String eventID) {
+        Attendee curr = searchPersonHelper("", "", userID);
+        if(curr != null) {
+            if(curr.getEventsSignedUp().contains(eventID)) {
+                curr.getEventsSignedUp().remove(eventID);
+                return true;
+            }
         }
         return false;
     }
