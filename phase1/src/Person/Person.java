@@ -10,10 +10,6 @@ public abstract class Person {
     protected String email;
     protected String fullName;
 
-    //contactlist and chatlist should not be in the person class as it doesn't apply to speaker.
-    // If we need this information for stage two, we will do it then. The problem is having variables in an object which
-    // are not relevant to the obejct is a problem.
-
     protected ArrayList<String> contactList;
     protected ArrayList<String> chatList;
     protected ArrayList<String> eventList;
