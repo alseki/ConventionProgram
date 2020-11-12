@@ -9,16 +9,7 @@ public class Chat {
     private ArrayList<String> messageIds;
     private ArrayList<String> personIds;
 
-    //Chat constructor for two people. Input is ID of your friend that you want to have private chat with.
-    public Chat(String currentId, String friendId){
-        messageIds = new ArrayList<>();
-        personIds = new ArrayList<>();
-        personIds.add(currentId);
-        personIds.add(friendId);
-        this.Id = UUID.randomUUID().toString();
-    }
-
-    //Chat constructor for group of 3+. Input is arraylist of IDs of friends that you want to form group chat with.
+    //Chat constructor. Input is arraylist of ID(s) of friend(s) that you want to form group chat with.
     public Chat(String currentId, ArrayList <String> friendIds){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
