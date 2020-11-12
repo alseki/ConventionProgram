@@ -1,7 +1,9 @@
-package Controllers;// Programmer: Cara McNeil
+package Controllers;
+
+// Programmer: Cara McNeil
 // Description: abstract main menu for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 09/11/2020
+// Date Modified: 11/11/2020
 
 import java.util.Scanner;
 
@@ -18,20 +20,6 @@ abstract public class PersonController {
     public PersonController(PersonManager manager) {
         this.manager = manager;
     }
-
-    // This should be moved to a Presenter class
-    /**
-     * Prints the options that are available to the current user.
-     */
-    /*public int mainMenu() {
-        System.out.println("~Controllers.Main Menu~" + '\n');
-        System.out.println("Please select from the following options:");
-        System.out.println("To logout, Enter '1';");
-        System.out.println("To view Contact List, Enter '2';");
-        System.out.println("To add to Contact List, Enter '3';");
-        System.out.println("To view Message.Message.Chat list, Enter '4';");
-        return 0;
-    }*/
 
     /**
      * Allows user to login and see their account. Terminates if the user chooses to logout.
@@ -119,14 +107,14 @@ abstract public class PersonController {
      * @param contactUsername The username of the current user's requested contact message
      * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
-    public boolean createChat(String contactUsername) {
+    /*public boolean createChat(String contactUsername) {
         // contactID = manager.getID(contactUsername)
         // if manager.checkContact(contactID)
         // String chatID = cManager.createChat(currentUserID, contactID)
         // if manager.addChat(currentUserID, chatID) and manager.addChat(contactID, chatID)
         // update presenter to say Message.Message.Chat was created
         return false;
-    }
+    }*/
     
     /**
      * Creates new Message.Message for existing Message.Message.Chat

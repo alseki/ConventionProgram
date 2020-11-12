@@ -1,22 +1,20 @@
 package Person;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Person {
     protected String username;
-    public String id;
-    protected String currentUserID;
+    protected String id;
     protected String password;
     protected String email;
     protected String fullName;
-
     //contactlist and chatlist should not be in the person class as it doesn't apply to speaker.
     // If we need this information for stage two, we will do it then. The problem is having variables in an object which
     // are not relevant to the obejct is a problem.
 
     protected ArrayList<String> contactList;
     protected ArrayList<String> chatList;
-    protected ArrayList<String> eventList;
 
     /**
      * this allows for access to the persons; username
@@ -84,14 +82,6 @@ public abstract class Person {
     }
 
     /**
-     * allows for access to the list of events for Person.doubleBooking
-     * @return ArrayList return the ist of strings corresponding to the event IDs
-     */
-    public ArrayList<String> getEventList() {
-        return eventList;
-    }
-
-    /**
      * set's the email of the person. Should be in the format of __@__.com. The email should be a string
      *
      * @param email the email of the person
@@ -117,7 +107,5 @@ public abstract class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }
 

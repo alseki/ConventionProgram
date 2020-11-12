@@ -1,7 +1,7 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 5 2020
+// Last edit: Nov 10 2020
 // Part of the EventManager Facade pattern.
 
 class EventAccessManager {
@@ -14,5 +14,9 @@ class EventAccessManager {
 
     protected Object getEventList() {
         return  null; //returns some sort of eventlist
+    }
+
+    protected String getEventID(String name) {
+        return null; //returns ID of event
     }
 }

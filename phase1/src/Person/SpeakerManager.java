@@ -8,20 +8,24 @@ public class SpeakerManager extends PersonManager {
     /**
      * This calls doubleBooking below and then adds Person.Speaker to person's event list. I will add the person id to event
      * object's attendee list soon
-     * @param pers
      */
+
+    public boolean createAccount(String name, String username, String password, String email) {
+
+        return false;
+    }
 
     public void addToEventsList(Speaker pers, Event event) {
         if(!doubleBooking(pers, event)) {
-            pers.getEventsSignedUp().add(pers.getId());
+            //pers.getEventsSignedUp().add(pers.getId());
         }
     }
 
     public void cancelEvent(Speaker pers, Event event) {
-        if(pers.getEventsSignedUp().contains(event.getID())) {
-            pers.getEventsSignedUp().remove(event.getID());
+        //if(pers.getEventsSignedUp().contains(event.getID())) {
+        //    pers.getEventsSignedUp().remove(event.getID());
 
-        }
+        //}
     }
 
     /**
@@ -30,9 +34,9 @@ public class SpeakerManager extends PersonManager {
      * @param contact
      */
     public void addToContactsList(Speaker pers, Person contact ) {
-        if(!doubleContact(pers, contact)) {
-            pers.getContactList().add(contact.getId());
-        }
+        //if(!doubleContact(pers, contact)) {
+         //   pers.getContactList().add(contact.getId());
+        //}
     }
 
     /**
@@ -43,7 +47,8 @@ public class SpeakerManager extends PersonManager {
      */
     public boolean doubleBooking(Speaker pers, Event event) {
 
-        return pers.getEventsSignedUp().contains(event.getID());
+        //return pers.getEventsSignedUp().contains(event.getID());
+        return false;
 
     }
 
@@ -55,7 +60,8 @@ public class SpeakerManager extends PersonManager {
      */
     public boolean doubleContact(Speaker pers, Person contact) {
 
-        return pers.getContactList().contains(contact.getId());
+        //return pers.getContactList().contains(contact.getId());
+        return false;
     }
 
 }
