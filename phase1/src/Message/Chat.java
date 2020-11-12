@@ -9,14 +9,14 @@ public class Chat {
     private ArrayList<String> messageIds;
     private ArrayList<String> personIds;
 
-    public Chat(String currentId, String friendId){
+    //Chat constructor. Input is arraylist of ID(s) of friend(s) that you want to form group chat with.
+    public Chat(String currentId, ArrayList <String> friendIds){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
         personIds.add(currentId);
-        personIds.add(friendId);
+        personIds.addAll(friendIds);
         this.Id = UUID.randomUUID().toString();
     }
-
 
     /**
      * Add the Id of the Message to messageIds list.

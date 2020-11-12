@@ -3,13 +3,13 @@ package Person;
 import java.util.ArrayList;
 
 public abstract class Person {
-    // protected because we want to be able to access in child classes.
     protected String username;
     public String id;
     protected String currentUserID;
     protected String password;
     protected String email;
     protected String fullName;
+
     protected ArrayList<String> contactList;
     protected ArrayList<String> chatList;
     protected ArrayList<String> eventList;

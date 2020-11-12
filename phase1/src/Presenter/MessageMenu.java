@@ -8,12 +8,21 @@ package Presenter;
 public class MessageMenu {
 
     /**
+     * Prompts user to enter content of the new Message.
+     * @return true iff the new Message containing the entered content was created.
+     */
+    public boolean printMessage(){
+        System.out.println("Send to whom?\n Username: \n");
+        System.out.println("Enter the content of message: \n");
+        return true;
+    }
+
+    /**
      * Prompts user to print Message.
      * @return True iff the Message was properly formatted and printed.
      */
     public boolean printFormattedMessage(){
         System.out.println("Print Message: \n");
-
         return true;
     }
 

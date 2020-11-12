@@ -11,13 +11,13 @@ public class ChatManager {
     }
 
     /**
-     * Create new Message.Message.Chat object and add to the ChatsList
+     * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
      * @param currentId ID of current user
-     * @param friendId ID of friend
+     * @param friendIds Collection of IDs of (one or more) friends
      * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public boolean createChat(String currentId, String friendId){
-        Chat newC = new Chat(currentId, friendId);
+    public boolean createChat(String currentId, ArrayList <String> friendIds){
+        Chat newC = new Chat(currentId, friendIds);
         ChatsList.add(newC);
         return true;
     }
