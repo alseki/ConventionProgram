@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 10 2020
+// Last edit: Nov 12 2020
 
 public abstract class Event {
 
@@ -15,7 +15,7 @@ public abstract class Event {
     private int duration;
     private String ID;
     private ArrayList<String> attendees;
-    private ArrayList<Message> messages;
+    private ArrayList<String> messages;
 
     // implement messages + attendees once messageManager and attendeeManager exist
 
@@ -25,6 +25,7 @@ public abstract class Event {
         this.duration = duration;
         ID = UUID.randomUUID().toString();
         attendees = new ArrayList<String>();
+        messages = new ArrayList<String>();
     }
 
     /**
@@ -57,15 +58,33 @@ public abstract class Event {
      * @return a MessageManager object containing the aforementioned announcements
      */
     public Message[] getAnnouncements() {
-        return (Message[])messages.toArray();
+        Message[] messageArray = {};
+        return messages.toArray(messageArray);
     }
 
     /**
      * Getter for the attendees attending this Event
-     * @return an AttendeeManager object containing the aforementioned attendees
+     * @return An array of the aforementioned attendees
      */
     public String[] getAttendeeIDs() {
-        return (String[])attendees.toArray();
+        String[] attendeeArray = {};
+        return attendees.toArray(attendeeArray);
+    }
+
+    /**
+     * Adds an attendee to this event's attendee list
+     * @param id The ID of the attendee
+     */
+    public void addAttendee(String id) {
+        attendees.add(id);
+    }
+
+    /**
+     * Removes an attendee from this event's attendee list
+     * @param id The ID of the attendee
+     */
+    public void removeAttendee(String id) {
+        attendees.remove(id);
     }
 
     /**

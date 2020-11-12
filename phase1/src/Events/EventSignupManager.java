@@ -1,8 +1,8 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 5 2020
-// Part of the EventManager Facade pattern.
+// Last edit: Nov 12 2020
+// Part of the EventManager Facade pattern. Contains basic access methods used by Attendees.
 
 class EventSignupManager {
 
@@ -12,11 +12,25 @@ class EventSignupManager {
         this.events = events;
     }
 
-    protected void signUpForEvent(Object person, Object event) {
-        // signup code
+    protected boolean signUpForEvent(String personID, String eventID) {
+        Event event = events.getEvent(eventID);
+        if (event != null) {
+            event.addAttendee(personID);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    protected void removeFromEvent(Object person, Object event) {
-        // removal code
+    protected boolean removeFromEvent(String personID, String eventID) {
+        Event event = events.getEvent(eventID);
+        if (event != null) {
+            event.removeAttendee(personID);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
