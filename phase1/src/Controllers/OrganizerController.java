@@ -1,15 +1,14 @@
 package Controllers;// Programmer: Cara McNeil
 // Description: Controllers.Main menu for Person.Person.Organizer users.
 // Date Created: 01/11/2020
-// Date Modified: 09/11/2020
+// Date Modified: 04/11/2020
 
 import Person.OrganizerManager;
-import Person.PersonManager;
 import Person.SpeakerManager;
 
 import java.util.Scanner;
 
-public class OrganizerController extends AttendeeController {
+public class OrganizerController extends PersonController {
     // private EventManager eManager = new EventManager(); ??
     // private Message.Message.ChatManager cManager = new Message.Message.ChatManager();
     // private Message.MessageManager mManager = new Message.MessageManager();
@@ -18,12 +17,10 @@ public class OrganizerController extends AttendeeController {
     private String username;
     private String password;
     private String currentUserID;
-    private OrganizerManager manager;
     private SpeakerManager sManager;
 
-    public OrganizerController(PersonManager manager, SpeakerManager sManager) {
-        super(manager);
-        this.manager = (OrganizerManager) manager;
+    public OrganizerController(OrganizerManager oManager, SpeakerManager sManager) {
+        super(oManager);
         this.sManager = sManager;
     }
 
@@ -41,30 +38,63 @@ public class OrganizerController extends AttendeeController {
     // addMessage(String chatID, String messageContent)
     // getMessages(String contactUsername)
 
-    // getConventionEventList()
-    // getUserEventList()
-    // signupForEvent()
-    // cancelEvent()
+    /**
+     * Get's the list of Events happening at the convention
+     * @return true iff a formatted list of Events was displayed
+     */
+    public boolean getConventionEventList() {
+        // eManager.getEventList();
+        // update the presenter to show the list of Events
+        return false;
+    }
 
-    // NOTE: make all classes private except run?
+    /**
+     * Get's the list of Events the Person.Person.Organizer user is signed up for
+     * @return true iff the presenter has been updated woith a list of events
+     */
+    public boolean getUserEventList() {
+        // List Eventlist = oManager.getSignedUpForEvents();
+        // update the presenter with the list of events signed up for (if empty, say so)
+        return false;
+    }
 
+    /**
+     * Try to sign user up for an Event
+     * @return true iff user was signed up for the Event
+     */
+    public boolean signupForEvent(String eventID) {
+        // if eManager.signup(currentUerID, eventID)
+        // oManager.addEvent(currentUserID, eventID)
+        // update the presenter to say the Person.Person.Organizer user's been added to the event
+        return false;
+    }
+
+    /**
+     * Remove this user from Event
+     * @return true iff user was removed from the Event
+     */
+    public boolean cancelEvent(String eventID) {
+        // if eManager.remove(currentUserID, eventID)
+        // oManager.cancelEvent(currentUserID, eventID)
+        // update the presenter to say the Person.Person.Organizer user's been added to the event
+        return false;
+    }
 
     /**
      * Adds a room to the list of rooms in this Convention.
-     * @param room The name/number of a room in the convention
+     * @param room
      * @return true iff list was added to system.
      */
     public boolean addRoom(String room) {
-        // eManager.addRoom(room);
         return false;
     }
 
     /**
      * Creates a new Person.Speaker account and adds it to the system.
-     * @param name The name of the Speaker
-     * @param username The username of the Speaker
-     * @param password The password of the Speaker
-     * @param email The email of the Speaker
+     * @param name
+     * @param username
+     * @param password
+     * @param email
      * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
@@ -73,43 +103,15 @@ public class OrganizerController extends AttendeeController {
 
 
     /**
-     * Adds Speaker to an Event being held in a single room. At most one speaker speaks in each room at a given time
-     * @param speakerUsername The username of the Speaker the current user wishes to schedule
-     * @param room The name/number of a room in the convention
-     * @return true iff the Speaker was added to the Event
+     * 
+     * @param speakerUsername
+     * @param room
+     * @return
      */
-    private boolean scheduleSpeaker(String speakerUsername, String room) {
+    public boolean scheduleSpeaker(String speakerUsername, String room) {
         return false;
     }
-
-
-    /**
-     * Creates a new Event for the convention
-     * @param eventName The name of the Event the user has requested to create
-     * @return true iff the Event was created
-     */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int duration) {
-        return false;
-    }
-
-    /**
-     * Sends a Message to every user signed up for an event
-     * @param eventName The name of the Event
-     * @return true iff the Message was sent to every user on the event list
-     */
-    public boolean eventMessage(String eventName) {
-        return false;
-    }
-
-    /**
-     * Sends a Message to one Attendee signed up for an event
-     * @param eventName The name of the Event
-     * @param attendeeUsername Th username of the Attendee the user wishes to message
-     * @return true iff the message was sent to the corresponding Attendee
-     */
-    public boolean eventMessage(String eventName, String attendeeUsername) {
-        return false;
-    }
+    
 
 
 }

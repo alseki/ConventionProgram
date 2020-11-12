@@ -14,120 +14,46 @@ public class AttendeeManager extends PersonManager {
     }
 
     public boolean createAccount(String name, String username, String password, String email) {
-        if(!findPerson(username, password)) {
-            Attendee newAtt = new Attendee(name, username, password, email);
-            allAttendees.add(newAtt);
-            return true;
-        }
-        return false;
+        Attendee newAtt = new Attendee(name, username, password, email);
+        allAttendees.add(newAtt);
+        return true;
     }
 
-
-    // a helper method that returns the desired Attendee object (when searching)
-    // the commented-out code in each method is what the method contained before this helper method was created
-    private Attendee searchPersonHelper(String username, String password, String userID) {
-        for(Attendee a: allAttendees) {
-            if(((a.getUsername()).equals(username) && (a.getPassword()).equals(password)) || (a.getID()).equals(userID)) {
-                return a;
-            }
-        }
-        return null;
-    }
-
-    public boolean findPerson(String username, String password) {
-
-        // return true if desired Attendee obj has been found (aka !null). Otherwise, return false
-        return searchPersonHelper(username, password, "") != null;
-
-        /*
-        for(Attendee a: allAttendees) {
-            if((a.username).equals(username) && (a.password).equals(password)) {
-                return true;
-            }
-        }
-        return false;
-         */
-    }
-
-    public String getPerson(String username, String password) {
-        Attendee curr = searchPersonHelper(username, password, "");
-
-        if(curr != null) {
-            return curr.getID();
-        }
-        return null;
-
-        /*
-        for(Attendee a: allAttendees) {
-            if((a.username).equals(username) && (a.password).equals(password)) {
-                return a.getID();
-            }
-        }
-         */
-    }
-
-    public ArrayList<String> getContactList(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-
-        if(curr != null) {
-            return curr.getContactList();
-        }
-        return null;
-
-        /*
+    public ArrayList<String> getEventList(String userID) {
         for(Attendee a: allAttendees) {
             if((a.id).equals(userID)) {
-                return a.getContactList();
+                return a.eventsSignedUp;
             }
         }
-        return null;
-         */
     }
 
-    public boolean checkForContact(String contactID, String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            return curr.getContactList().contains(contactID);
-        }
-        return false;
+
+
+
+    // BELOW IS PAUL'S STUFF... delete?
+
+// please do not have variable names that are the same name as a person, it makes the code difficult to read.
+
+    /**
+     * This checks that the user is not already signed for two events
+     * @param pers
+     * @param event
+     * @return
+     */
+    public boolean doubleBooking(Attendee pers, Event event) {
+
+        return pers.getEventsSignedUp().contains(event.getID());
+
     }
 
-    public ArrayList<String> getChats(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            return curr.getChatList();
-        }
-        return null;
+    /**
+     * This checks that the user does not already have this contact in contactList
+     * @param pers
+     * @param contact
+     * @return
+     */
+    public boolean doubleContact(Attendee pers, Person contact) {
+
+        return pers.getContactList().contains(contact.getId());
     }
-
-    public ArrayList<String> getEventsSignedUpFor(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-
-        if(curr != null) {
-            return curr.getEventsSignedUp();
-        }
-        return null;
-
-        /*
-        for(Attendee a: allAttendees) {
-            if((a.id).equals(userID)) {
-                return a.getEventsSignedUp();
-            }
-        }
-        return null;
-         */
-    }
-
-    public boolean addEventIDToPersonEventList(String userID, String eventID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(!(curr.getEventsSignedUp().contains(eventID))) {
-                curr.getEventsSignedUp().add(eventID);
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
 }

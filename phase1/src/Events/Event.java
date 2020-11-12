@@ -1,12 +1,9 @@
 package Events;
 
-import Message.Message;
-
-import java.util.ArrayList;
 import java.util.UUID;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 10 2020
+// Last edit: Nov 5 2020
 
 public abstract class Event {
 
@@ -14,8 +11,6 @@ public abstract class Event {
     private int room;
     private int duration;
     private String ID;
-    private ArrayList<String> attendees;
-    private ArrayList<Message> messages;
 
     // implement messages + attendees once messageManager and attendeeManager exist
 
@@ -24,12 +19,11 @@ public abstract class Event {
         this.room = room;
         this.duration = duration;
         ID = UUID.randomUUID().toString();
-        attendees = new ArrayList<String>();
     }
 
     /**
-     * Getter for the name of this Event
-     * @return the name of the Event (as a string)
+     * Getter for the name of this Events.Event
+     * @return the name of the Events.Event (as a string)
      */
     public String getName() {
         return name;
@@ -37,39 +31,40 @@ public abstract class Event {
 
 
     /**
-     * Getter for the room ID of this Event
-     * @return the room ID of the Event (as an int)
+     * Getter for the room ID of this Events.Event
+     * @return the room ID of the Events.Event (as an int)
      */
     public  int getRoomID() {
         return room;
     }
 
     /**
-     * Getter for the time (in hours) that this Event will run
-     * @return the duration of this Event (as an int)
+     * Getter for the time (in hours) that this Events.Event will run
+     * @return the duration of this Events.Event (as an int)
      */
     public int getDuration() {
         return duration;
     }
 
     /**
-     * Getter for the announcements associated with this Event
-     * @return a MessageManager object containing the aforementioned announcements
+     * Getter for the announcements associated with this Events.Event
+     * @return a Message.MessageManager object containing the aforementioned announcements
      */
-    public Message[] getAnnouncements() {
-        return (Message[])messages.toArray();
+    public Object getAnnouncements() {
+        return null;
     }
 
     /**
-     * Getter for the attendees attending this Event
-     * @return an AttendeeManager object containing the aforementioned attendees
+     * Getter for the attendees attending this Events.Event
+     * @return an Person.Person.AttendeeManager object containing the aforementioned attendees
      */
-    public String[] getAttendeeIDs() {
-        return (String[])attendees.toArray();
+
+    public Object getAttendeeIDs() {
+        return null;
     }
 
     /**
-     * Getter for the speaker(s) running this Event
+     * Getter for the speaker(s) running this Events.Event
      * @return an array of IDs corresponding to speakers in the system
      */
     public abstract String[] getSpeakers();
@@ -83,11 +78,11 @@ public abstract class Event {
     }
 
     /**
-     * Getter for the ID of this Event
+     * Getter for the ID of this Events.Event
      * @return the ID of the event
      */
     public String getID() {
         return ID;
-    }
+    };
 }
 

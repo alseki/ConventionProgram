@@ -20,7 +20,7 @@ public class Attendee extends Person implements Signupable {
      * @param eventID takes in the ID of the event
      */
     public void signUp(String eventID) {
-        this.eventsSignedUp.add(eventID);
+        eventsSignedUp.add(eventID);
     }
 
     /**
@@ -28,7 +28,7 @@ public class Attendee extends Person implements Signupable {
      * @param eventID takes in the ID of the event
      */
     public void cancelSpot(String eventID) {
-        this.eventsSignedUp.remove(eventID);
+        eventsSignedUp.remove(eventID);
     }
 
     /**
@@ -36,7 +36,7 @@ public class Attendee extends Person implements Signupable {
      * @return ArrayList<String> eventsSignedup the events that the person has signed up for.
      */
     public ArrayList<String> getEventsSignedUp(){
-        return this.eventsSignedUp;
+        return eventsSignedUp;
     }
 
     /**
@@ -44,7 +44,7 @@ public class Attendee extends Person implements Signupable {
      * @return ArrayList<String> of person's id
      */
     public ArrayList<String> getContactList() {
-        return this.contactList;
+        return contactList;
     }
 
 }
