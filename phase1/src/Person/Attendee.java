@@ -43,7 +43,7 @@ public class Attendee extends Person implements Signupable {
      * returns the contacts that Person.Person.Attendee has in list
      * @return ArrayList<String> of person's id
      */
-    public ArrayList<String> getContactList() {
+    public ArrayList<String> getContactList() { // why does this need to be overriden shouldn't the one in person suffice?
         return this.contactList;
     }
 

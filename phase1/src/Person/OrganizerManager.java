@@ -100,6 +100,17 @@ public class OrganizerManager extends PersonManager {
         }
         return false;
     }
+
+    /**
+     * returns the current organizer's list of contancts
+     * @return ArrayList</String> representing the currentorganizer contact id's
+     */
+    @Override
+    public ArrayList<String> getContactList(String organizerId){
+        Organizer og = usernameToOrganizer.get(organizerId);
+        return og.getContactList();
+    }
+
     private void updateUsernameToOrganizer(String username, Organizer org){
         usernameToOrganizer.put(username,org);
     }
