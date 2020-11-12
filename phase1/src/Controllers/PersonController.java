@@ -100,6 +100,7 @@ abstract public class PersonController {
             // update presenter to say contact was added
             return false;
         }
+    }
 
 
 
@@ -112,7 +113,7 @@ abstract public class PersonController {
      * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
     public boolean createChat(String contactUsername) {
-        contactID = manager.getCurrentUserID(contactUsername);
+        String contactID = manager.getCurrentUserID(contactUsername);
         if (manager.doubleContact(username, contactID)) {
             // String chatID = cManager.createChat(currentUserID, contactID)
             if (manager.addChat(currentUserID, chatID) && manager.addChat(contactID, chatID)) {
