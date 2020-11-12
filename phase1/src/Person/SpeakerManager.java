@@ -11,7 +11,10 @@ public class SpeakerManager extends PersonManager {
      */
 
     public boolean createAccount(String name, String username, String password, String email) {
-
+        if(!usernameToPerson.containsKey(username)) {
+            Speaker s = new Speaker(name, username, password, email);
+            return true;
+        }
         return false;
     }
 

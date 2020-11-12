@@ -69,7 +69,8 @@ public class OrganizerController extends AttendeeController {
      * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
-        // check if person is already existing, if not creat the person.
+        // check if already exists
+        sManager.createAccount(name, username, password, email);
         return false;
     }
 
@@ -81,6 +82,7 @@ public class OrganizerController extends AttendeeController {
      * @return true iff the Speaker was added to the Event
      */
     private boolean scheduleSpeaker(String speakerUsername, String room) {
+
         return false;
     }
 

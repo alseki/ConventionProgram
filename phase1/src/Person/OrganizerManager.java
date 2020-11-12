@@ -113,6 +113,7 @@ public class OrganizerManager extends PersonManager {
     private void updateUsernameToPerson(String username, Organizer org){
         usernameToPerson.put(username,org);
     }
+
     private void updateAllPersons(Organizer org){
         allPersons.add(org);
     }
