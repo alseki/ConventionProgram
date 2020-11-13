@@ -8,6 +8,8 @@ package Events;
 // Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
 // which actors are going to be using which ones
 
+import Message.MessageManager;
+
 public class RoomManager {
     EventSignupManager eventSignup;
     EventAccessManager eventAccess;
@@ -99,5 +101,9 @@ public class RoomManager {
 
     public void saveRoom() {
         reader.save(eventAccess.getEventList());
+    }
+
+    public MessageManager getMessages(Event event) {
+        return eventSignup.getMessages(event);
     }
 }

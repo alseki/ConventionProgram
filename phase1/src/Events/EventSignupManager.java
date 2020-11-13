@@ -5,6 +5,8 @@ package Events;
 // Architecture level - Use class
 // Part of the EventManager Facade pattern. Contains basic access methods used by Attendees.
 
+import Message.MessageManager;
+
 class EventSignupManager {
 
     EventDB events;
@@ -39,5 +41,9 @@ class EventSignupManager {
         else {
             return false;
         }
+    }
+
+    protected MessageManager getMessages(Event event) {
+        return null; // return a MessageManager of this Event's messages
     }
 }
