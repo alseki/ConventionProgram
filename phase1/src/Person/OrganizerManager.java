@@ -6,27 +6,13 @@ import java.util.Map;
 
 public class OrganizerManager extends PersonManager {
     //private ArrayList<Organizer> organizerList;
-    private Organizer currentOrganizer;
+    //private Organizer currentOrganizer;
     //private Map<String, Organizer> usernameToOrganizer;
 
     public OrganizerManager(){
         super();
-        //usernameToOrganizer = new HashMap<>();
     }
 
-    /**
-     * sets the currentOrganizer to the organizer with the userName </userName>, if there exists an organizer
-     * with such a userName.
-     * @param userName a String representing the username of the organizer.
-     * @return True iff the current organizer is set to the organizer
-     */
-    public boolean setCurrentOrganizer(String userName){
-        if (usernameToPerson.containsKey(userName)){
-            currentOrganizer = (Organizer)usernameToPerson.get(userName);
-            return true;
-        }
-        return false;
-    }
 
     /**
      * checks to see if there exists an organizer with this username and if there doesn't creates a new organize object
@@ -57,44 +43,40 @@ public class OrganizerManager extends PersonManager {
      * @return true iff the currentorganizer gets signed up for the event.
      */
 
-    public boolean addEvent(String eventId){
-        if (!currentOrganizer.getEventsSignedUp().contains(eventId)){
-            currentOrganizer.signUp(eventId);
+    public boolean addEvent(String eventId, String userId){
+        Organizer og = (Organizer)idToPerson.get(userId);
+        if (!og.getEventsSignedUp().contains(eventId)){
+            og.signUp(eventId);
             return true;
         }
         return false;
     }
 
     /**
-     * if the currentorganizer is currently signedup for the event then they will be unsigned up for the event
+     * if the the organizer with </userId> is currently signedup for the event then they will be unsigned up for the event
      * @param eventId string representing the event ID
      * @return true iff they are removed from the event
      */
 
-    public boolean removeEvent(String eventId){
-        if (currentOrganizer.getEventsSignedUp().contains(eventId)){ 
-            currentOrganizer.cancelSpot(eventId);
+    public boolean cancelEvent(String userId, String eventId){
+        Organizer og = (Organizer)idToPerson.get(userId);
+        if (og.getEventsSignedUp().contains(eventId)){
+            og.cancelSpot(eventId);
             return true;
         }
         return false;
     }
 
-    /**
-     * getter for the current organizer
-     * @return currentorganizer an organizer object representing the current organizer
-     */
-    public Organizer getCurrentOrganizer(){
-        return currentOrganizer;
-    }
 
     /**
-     * adds the contact with username </username> to the currentorganizer contacts
-     * @param username a string representing the username of the contact to be added to the currentorganizer contactlist
+     * adds the contact with username </username> to the organizer with userId </userid> to ehir contanct
+     * @param contactId a string representing the contactId of the contact to be added to the userid contactlist
      * @return true iff username is not currently in the contact list
      */
-    public boolean  updateContactList(String username){
-        if(!currentOrganizer.getContactList().contains(username)) {
-            currentOrganizer.addContactList(username);
+    public boolean  updateContactList(String contactId, String userId){
+        Organizer og = (Organizer)idToPerson.get(userId);
+        if(!og.getContactList().contains(contactId)) {
+            og.addContactList(contactId);
             return true;
         }
         return false;
@@ -102,13 +84,18 @@ public class OrganizerManager extends PersonManager {
 
     /**
      * returns the current organizer's list of contancts
-     * @return ArrayList</String> representing the currentorganizer contact id's
+     * @return ArrayList</String> representing the organizer id contact list
      */
     @Override
     public ArrayList<String> getContactList(String organizerId){
         Organizer og = (Organizer)usernameToPerson.get(organizerId);
         return og.getContactList();
     }
+
+    public ArrayList<String> getSignedUpForEvents(String organizerId){
+        return idToPerson.get(organizerId).getEventList();
+    }
+
 
     private void updateUsernameToPerson(String username, Organizer org){
         usernameToPerson.put(username,org);

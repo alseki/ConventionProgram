@@ -67,8 +67,8 @@ public abstract class Person {
     public ArrayList<String> getContactList() {
         return this.contactList;
     }
-    public void addContactList(String username){
-        this.contactList.add(username);
+    public void addContactList(String userId){
+        this.contactList.add(userId);
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class Person {
 
     /**
      * set's the email of the person. Should be in the format of __@__.com. The email should be a string
-     *
+     * we can ensure this once we have a better grasp on regex
      * @param email the email of the person
      */
     public void setEmail(String email) {

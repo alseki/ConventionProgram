@@ -3,14 +3,16 @@ package Controllers;// Programmer: Cara McNeil
 // Date Created: 01/11/2020
 // Date Modified: 09/11/2020
 
+import Events.EventReader;
 import Person.OrganizerManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
+import Events.RoomManager;
 
 import java.util.Scanner;
 
 public class OrganizerController extends AttendeeController {
-    // private EventManager eManager = new EventManager(); ??
+    private RoomManager eManager;
     // private Message.Message.ChatManager cManager = new Message.Message.ChatManager();
     // private Message.MessageManager mManager = new Message.MessageManager();
     Scanner input = new Scanner(System.in);
@@ -21,10 +23,12 @@ public class OrganizerController extends AttendeeController {
     private OrganizerManager manager;
     private SpeakerManager sManager;
 
+
     public OrganizerController(PersonManager manager, SpeakerManager sManager) {
         super(manager);
         this.manager = (OrganizerManager) manager;
         this.sManager = sManager;
+        //eManager = New RoomManager();
     }
 
     @Override
@@ -69,8 +73,10 @@ public class OrganizerController extends AttendeeController {
      * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
-        // check if already exists
-        sManager.createAccount(name, username, password, email);
+        if (sManager.findPerson(username)) {
+            sManager.createAccount(name, username, password, email);
+            return true;
+        }
         return false;
     }
 
@@ -93,6 +99,7 @@ public class OrganizerController extends AttendeeController {
      * @return true iff the Event was created
      */
     public boolean createEvent(String eventName, String speakerUsername, String room, int duration) {
+        // once room manager is completed
         return false;
     }
 
@@ -102,13 +109,14 @@ public class OrganizerController extends AttendeeController {
      * @return true iff the Message was sent to every user on the event list
      */
     public boolean eventMessage(String eventName) {
+        // messages the event, if it is sent, then it is added.
         return false;
     }
 
     /**
      * Sends a Message to one Attendee signed up for an event
      * @param eventName The name of the Event
-     * @param attendeeUsername Th username of the Attendee the user wishes to message
+     * @param attendeeUsername The username of the Attendee the user wishes to message
      * @return true iff the message was sent to the corresponding Attendee
      */
     public boolean eventMessage(String eventName, String attendeeUsername) {

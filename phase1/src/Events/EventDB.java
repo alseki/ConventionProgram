@@ -16,7 +16,6 @@ class EventDB {
     ArrayList<String> eventIDs;
     ArrayList<String> eventNames;
     ArrayList<Event> events;
-
     Room room;
 
     /**

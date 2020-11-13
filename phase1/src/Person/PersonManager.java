@@ -118,16 +118,11 @@ public abstract class PersonManager {
     /**
      *
      * @param username
-     * @param password
      * returns a value that allows for account verificaton; whether accountUser exists or not
      * @return boolean, which allow user to login or not
      */
-    public boolean findPerson(String username, String password) {
-        Person findUser = getPerson(username, password);
-        if (findUser != null) {
-            return true;
-        }
-        return false;
+    public boolean findPerson(String username) {
+        return idToPerson.containsKey(username);
     }
 
     /**
