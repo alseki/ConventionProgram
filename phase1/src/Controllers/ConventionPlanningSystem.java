@@ -6,7 +6,7 @@ package Controllers;
 // Date Modified: 11/11/2020
 
 import Person.*;
-import Presenter.CPSPresenter;
+import Presenter.CPSMenu;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class ConventionPlanningSystem {
 
     private PersonController PC;
     private Scanner input = new Scanner(System.in);
-    private CPSPresenter presenter = new CPSPresenter();
+    private CPSMenu presenter = new CPSMenu();
 
     /**
     * Calls appropriate Controllers based on user input.

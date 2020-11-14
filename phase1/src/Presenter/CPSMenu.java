@@ -5,7 +5,7 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 11/11/2020
 
-public class CPSPresenter {
+public class CPSMenu {
 
     /**
      * Greets the user and prompts them to choose a login menu
@@ -17,6 +17,7 @@ public class CPSPresenter {
         System.out.println("To Login or create an account as an Attendee, Enter '1';");
         System.out.println("To Login or create an account as an Organizer, Enter '2';");
         System.out.println("To Login or create an account as a Speaker, Enter '3';");
+        System.out.println("To Quit the program and save any changes made, Enter '0'.");
         return true;
     }
 }
