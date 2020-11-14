@@ -11,6 +11,14 @@ import java.util.Collection;
 public class ContactMenu {
 
     /**
+     * Prints a list of options
+     * @return
+     */
+    public boolean options() {
+        return true;
+    }
+
+    /**
      * Prints a list of the user's contacts
      * @return true iff all contacts were printed
      */

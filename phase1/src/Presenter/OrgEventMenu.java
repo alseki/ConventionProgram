@@ -5,7 +5,15 @@ package Presenter;
 // Date Created: 13/11/2020
 // Date Modified: 13/11/2020
 
-public class OrganizerEventMenu {
+public class OrgEventMenu {
+
+    /**
+     *
+     * @return
+     */
+    public boolean addRoomPrompt() {
+        return true;
+    }
 
 
 }

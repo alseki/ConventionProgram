@@ -67,7 +67,7 @@ public class MainMenu {
      * @return true iff quit prompt was printed
      */
     public boolean returnToCPSM() {
-        System.out.println("To save any account changes and return to the start page, Enter 'QUIT'.");
+        System.out.println("To save any account changes and return to the start page, Enter '00'.");
         return true;
     }
 
