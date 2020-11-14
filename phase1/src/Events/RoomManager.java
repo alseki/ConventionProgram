@@ -6,7 +6,7 @@ package Events;
 // Architecture level - Use class
 
 // Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
-// which actors are going to be using which ones
+// which actors are going to be using which ones.
 
 import Message.MessageManager;
 
@@ -128,5 +128,9 @@ public class RoomManager {
 
     public MessageManager getMessages(Event event) {
         return null; //get messages
+    }
+
+    public boolean announceToEvent(Event event) {
+        return false; //get messages
     }
 }

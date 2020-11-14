@@ -13,9 +13,10 @@ import Person.Attendee;
 import java.util.*;
 
 class EventDB {
-    ArrayList<String> eventIDs;
-    ArrayList<String> eventNames;
-    ArrayList<Event> events;
+    //ArrayList<Event> events;
+    //Map<Room, ArrayList<String>> eventsByRoom;
+    Map<String, String> eventsByName;
+    Map<String, Event> events;
     Room room;
 
     /**
@@ -23,14 +24,14 @@ class EventDB {
      * @param events The array
      */
     protected EventDB (Event[] events, Room room) {
-        this.events = new ArrayList<Event>(Arrays.asList(events));
 
-        this.eventNames = new ArrayList<String>();
-        this.eventIDs = new ArrayList<String>();
+        this.events = new TreeMap<String, Event>();
 
-        for(Event event: events) {
-            eventNames.add(event.getName());
-            eventIDs.add(event.getID());
+        eventsByName = new TreeMap<String, String>();
+
+        for (Event event: events) {
+            this.events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
         }
 
         this.room = room;
@@ -42,32 +43,20 @@ class EventDB {
      * @return Whether the event was successfully added
      */
     protected boolean addEvent(Event event) {
-        events.add(event);
-        eventNames.add(event.getName());
-        eventIDs.add(event.getID());
-        if (events.indexOf(event) == eventIDs.indexOf(event.getID()) &&
-                events.indexOf(event) == eventNames.indexOf(event.getName())){
-            return true;
-        }
-        else {
-            events.remove(event);
-            eventNames.remove(event.getName());
-            eventIDs.remove(event.getID());
-            System.out.println("Arrays unbalanced in EventDB");
-            return false;
-        }
+        events.put(event.getID(), event);
+        eventsByName.put(event.getName(), event.getID());
+        return true;
     }
 
     /**
      * Removes an event from the EventDB
-     * @param event The event to be removed
+     * @param id The ID of the event to be removed
      * @return Whether the event was successfully revmoved
      */
-    protected boolean removeEvent(Event event) {
-        if (events.contains(event)) {
-            events.remove(event);
-            eventIDs.remove(event.getID());
-            eventIDs.remove(event.getName());
+    protected boolean removeEvent(String id) {
+        if (events.get(id) != null) {
+            eventsByName.remove(events.get(id).getName());
+            events.remove(id);
             return true;
         }
         else {
@@ -81,8 +70,8 @@ class EventDB {
      * @return The event
      */
     protected Event getEvent(String id) {
-        if (eventIDs.contains(id)) {
-            return events.get(eventIDs.indexOf(id));
+        if (events.get(id) != null) {
+            return events.get(id);
         }
         else
         {
@@ -96,8 +85,8 @@ class EventDB {
      * @return The event's ID
      */
     protected String getEventID(String name) {
-        if (eventNames.contains(name)) {
-            return eventIDs.get(eventNames.indexOf(name));
+        if (eventsByName.get(name) != null) {
+            return eventsByName.get(name);
         }
         else {
             return null;
@@ -108,8 +97,11 @@ class EventDB {
      * Returns all the events in the EventDB
      * @return The ArrayList of events
      */
-    protected ArrayList<Event> getEventList() {
-        return events;
+    protected Event[] getEventList() {
+
+        Event[] eventArray = {};
+        return events.entrySet().toArray(eventArray);
+
     }
 
     /**
