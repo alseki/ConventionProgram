@@ -10,15 +10,21 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
+import Presenter.OrgEventMenu;
+
+import java.util.Scanner;
 
 public class OrgEventController implements SubMenu {
 
     private String currentUserID;
+    private int currentRequest;
     private PersonManager personManager;
     private SpeakerManager speakerManager;
     private RoomManager roomManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private OrgEventMenu presenter = new OrgEventMenu();
+    Scanner input = new Scanner(System.in);
 
     public OrgEventController(String currentUserID, PersonManager personManager, SpeakerManager speakerManager,
                               RoomManager roomManager, MessageManager messageManager, ChatManager chatManager) {
@@ -36,8 +42,9 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // OrgEventMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -47,11 +54,11 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
 

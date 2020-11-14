@@ -13,6 +13,9 @@ public class LoginMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
+        System.out.println("----- Login Menu -----");
+        System.out.println("To return to start page, Enter '0'.");
+        // TODO add print statements for all the other menu options
         return true;
     }
 

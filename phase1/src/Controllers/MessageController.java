@@ -3,12 +3,17 @@ package Controllers;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import Presenter.MessageMenu;
+
+import java.util.Scanner;
 
 public class MessageController implements SubMenu {
+    private int currentRequest;
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private int choice;
+    private MessageMenu presenter = new MessageMenu();
+    Scanner input = new Scanner(System.in);
 
     public MessageController(PersonManager pManager, MessageManager mManager, ChatManager cManager) {
         this.personManager = pManager;
@@ -23,8 +28,9 @@ public class MessageController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // MessageMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -34,11 +40,11 @@ public class MessageController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
 

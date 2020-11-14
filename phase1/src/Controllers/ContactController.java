@@ -3,7 +3,7 @@ package Controllers;
 // Programmer: Cara McNeil
 // Description: All the methods that take user input in the Contact Menu
 // Date Created: 01/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 14/11/2020
 
 
 import Events.RoomManager;
@@ -11,11 +11,17 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
+import Presenter.ContactMenu;
+
+import java.util.Scanner;
 
 public class ContactController implements SubMenu {
 
     private String currentUserID;
+    private int currentRequest;
     private PersonManager personManager;
+    private ContactMenu presenter = new ContactMenu();
+    Scanner input = new Scanner(System.in);
 
     public ContactController(String currentUserID, PersonManager personManager) {
         this.currentUserID = currentUserID;
@@ -28,8 +34,9 @@ public class ContactController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // ContactMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -39,11 +46,11 @@ public class ContactController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
 
