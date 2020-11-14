@@ -3,11 +3,20 @@ package Presenter;
 // Programmers: Cara McNeil,
 // Description: Prints information pertaining to a user's attending Event information
 // Date Created: 11/11/2020
-// Date Modified: 12/11/2020
+// Date Modified: 13/11/2020
 
 import java.util.Collection;
 
-public class AttendeeEventMenu {
+public class AttEventMenu implements printSubMenu {
+
+    /**
+     * Prints the options for this menu.
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        return true;
+    }
 
     /**
      * Prints the list of Events happening at the convention

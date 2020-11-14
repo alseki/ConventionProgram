@@ -5,7 +5,16 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 12/11/2020
 
-public class MessageMenu {
+public class MessageMenu implements printSubMenu {
+
+    /**
+     * Prints the options for this menu.
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        return true;
+    }
 
     /**
      * Prompts user to enter content of the new Message.

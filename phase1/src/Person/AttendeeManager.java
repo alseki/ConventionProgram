@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AttendeeManager extends PersonManager {
 
-    private List<Attendee> allAttendees;
+    // private List<Attendee> allAttendees;
 
     public AttendeeManager() {
         super();
@@ -24,102 +24,43 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
-
-
-
-
-    public boolean findPerson(String username, String password) {
-
-        // return true if desired Attendee obj has been found (aka !null). Otherwise, return false
-        return searchPersonHelper(username, password, "") != null;
+    public boolean signupForEvent(String userID, String eventID) {
+        Attendee curr = (Attendee)idToPerson.get(userID);
+        if(!curr.getEventsSignedUp().contains(eventID)) {
+            curr.signUp(eventID);
+            return true;
+        }
+        return false;
     }
 
-    public String getPerson(String username, String password) {
-        Attendee curr = searchPersonHelper(username, password, "");
-
-        if(curr != null) {
-            return curr.getID();
+    public boolean removeSpotFromEvents(String userID, String eventID) {
+        Attendee curr = (Attendee)idToPerson.get(userID);
+        if(curr.getEventsSignedUp().contains(eventID)) {
+            curr.cancelSpot(eventID);
+            return true;
         }
-        return null;
-
+        return false;
     }
 
     public ArrayList<String> getContactList(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-
-        if(curr != null) {
-            return curr.getContactList();
-        }
-        return null;
+        return idToPerson.get(userID).getContactList();
     }
 
-    public boolean checkForContact(String contactID, String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            return curr.getContactList().contains(contactID);
+    public boolean checkForContact(String userID, String contactID) {
+        return idToPerson.get(userID).getContactList().contains(contactID);
+    }
+
+    public boolean addContactToPerson(String userID, String contactID) {
+        Attendee currAtt = (Attendee)idToPerson.get(userID);
+        if(!currAtt.getContactList().contains(contactID)) {
+            currAtt.addContact(contactID);
+            return true;
         }
         return false;
     }
 
-    public ArrayList<String> getChats(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            return curr.getChatList();
-        }
-        return null;
-    }
-
-    public boolean addChat(String userID, String chatID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(!(curr.getChatList().contains(chatID))) {
-                curr.getChatList().add(chatID);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean removeChat(String userID, String chatID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(curr.getChatList().contains(chatID)) {
-                curr.getChatList().remove(chatID);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public ArrayList<String> getSignedUpEvents(String userID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-
-        if(curr != null) {
-            return curr.getEventsSignedUp();
-        }
-        return null;
-    }
-
-    public boolean signupForEvent(String userID, String eventID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(!(curr.getEventsSignedUp().contains(eventID))) {
-                curr.getEventsSignedUp().add(eventID);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean cancelSpotFromEvent(String userID, String eventID) {
-        Attendee curr = searchPersonHelper("", "", userID);
-        if(curr != null) {
-            if(curr.getEventsSignedUp().contains(eventID)) {
-                curr.getEventsSignedUp().remove(eventID);
-                return true;
-            }
-        }
-        return false;
+    public List<String> getSignedUpEvents(String userID) {
+        return ((Attendee)idToPerson.get(userID)).getEventsSignedUp(); //gets the list from Attendee
     }
 
 }

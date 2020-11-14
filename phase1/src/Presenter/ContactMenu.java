@@ -8,7 +8,24 @@ package Presenter;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ContactMenu {
+public class ContactMenu implements printSubMenu {
+
+    /**
+     * Prints the options for this menu.
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        return true;
+    }
+
+    /**
+     * Prints a list of options
+     * @return
+     */
+    public boolean options() {
+        return true;
+    }
 
     /**
      * Prints a list of the user's contacts
