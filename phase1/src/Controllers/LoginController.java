@@ -46,25 +46,25 @@ public class LoginController implements SubMenu {
         return true;
     }
 
+    // TODO change, delete and/or add to the methods below
+
     /**
      * Prompts user to input username and password.
-     *
      * @return true iff login info corresponds with an existing Person.Person account.
      */
     public boolean login() {
         //if (manager.findPerson(username, password)) {
         //   currentUserID = PersonManager.getPerson(username, password).id;
         //}
-        return false;
+        return true;
     }
 
     /**
      * Prompts user for relevant information and uses it to create a new Person.Person account.
-     *
      * @return true iff new account has been created
      */
     public boolean createAccount() {
         //manager.createAccount(name, username, password, email);
-        return false;
+        return true;
     }
 }

@@ -54,6 +54,8 @@ public class AttEventController implements SubMenu {
         return true;
     }
 
+    // TODO change, delete and/or add to the methods below
+
     /**
      * Get's the list of Events happening at the convention
      * @return true iff a formatted list of Events was displayed

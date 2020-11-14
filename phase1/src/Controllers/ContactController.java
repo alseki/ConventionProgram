@@ -54,23 +54,23 @@ public class ContactController implements SubMenu {
         return true;
     }
 
+    // TODO change, delete and/or add to the methods below
+
     /**
-     * Get's the Person.Person user's contactList
-     *
+     * Get's the current user's contactList
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean getContactList() {
         //manager.getPerson(currentUserID).getContactList();
         // format list ? to what end ?
         // send the Presenter the formatted contactList to print (if empty, say so)
-        return false;
+        return true;
 
     }
 
     /**
-     * Add a contact to the Person.Person user's contactList
-     *
-     * @param contactUsername
+     * Add a contact to the current user's contactList
+     * @param contactUsername the username of the contact the current user wants to add to their contactList
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean addContact(String contactUsername) {
@@ -79,7 +79,7 @@ public class ContactController implements SubMenu {
         // update presenter to say contact was added
         //  return true;
         //}
-        return false;
+        return true;
     }
 
 }
