@@ -25,7 +25,7 @@ public class EventManager {
         this.room = room;
     }
 
-    
+
 
 
     /**
@@ -50,12 +50,28 @@ public class EventManager {
 
     /**
      * Adds an event
-     * @param event The event
+     * @param name The event
      * @return Whether the event has been successfully added
      */
-    public boolean addEvent(Event event) {
+    public boolean addEvent(String name, String speakerID, int startTime) {
 
-        // check conflicts! also possibly edit so as to create the event itself?
+        // check conflicts!
+
+        Event event = new Talk(name, speakerID, startTime);
+
+        return events.addEvent(event);
+    }
+
+    /**
+     * Adds an event
+     * @param name The event
+     * @return Whether the event has been successfully added
+     */
+    public boolean addEvent(String name, String speakerID, int startTime, String description) {
+
+        // check conflicts!
+
+        Event event = new Talk(name, speakerID, startTime, description);
 
         return events.addEvent(event);
     }

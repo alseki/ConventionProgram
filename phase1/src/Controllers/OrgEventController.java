@@ -1,9 +1,9 @@
 package Controllers;
 
-// Programmer: Cara McNeil
+// Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 14/11/2020
 
 import Events.RoomManager;
 import Message.ChatManager;
@@ -17,7 +17,6 @@ public class OrgEventController implements SubMenu {
     private PersonManager personManager;
     private SpeakerManager speakerManager;
     private RoomManager roomManager;
-    // EventManager??
     private MessageManager messageManager;
     private ChatManager chatManager;
 
@@ -61,10 +60,13 @@ public class OrgEventController implements SubMenu {
      * @param room The name/number of a room in the convention
      * @return true iff list was added to system.
      */
-    public boolean addRoom(int room) {
-
-        // eManager.addRoom(room);
-        return false;
+    public boolean addRoom(String room) {
+        if (roomManager.addRoom(room) != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -101,8 +103,22 @@ public class OrgEventController implements SubMenu {
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int duration) {
-        // once room manager is completed
+    public boolean createEvent(String eventName, String speakerUsername, String roomID, int startTime) {
+        String speakerID = ""; // add speaker ID
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
+        return false;
+    }
+
+
+    /**
+     * Creates a new Event for the convention
+     * @param eventName The name of the Event the user has requested to create
+     * @return true iff the Event was created
+     */
+    public boolean createEvent(String eventName, String speakerUsername, String roomID, int startTime,
+                               String description) {
+        String speakerID = ""; // add speaker ID
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
         return false;
     }
 

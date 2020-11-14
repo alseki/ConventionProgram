@@ -44,7 +44,7 @@ public class RoomManager {
      * @param name The name of the new Room
      * @return The ID of the new Room
      */
-    public String createRoom(String name) {
+    public String addRoom(String name) {
         Room thisRoom = new Room(name);
         roomList.put(thisRoom.getID(), new EventManager(thisRoom));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
@@ -57,7 +57,7 @@ public class RoomManager {
      * @param capacity The capacity of the new Room
      * @return The ID of the new Room
      */
-    public String createRoom(String name, int capacity) {
+    public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(capacity, name);
         roomList.put(thisRoom.getID(), new EventManager(thisRoom));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
