@@ -1,6 +1,7 @@
 package Message;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChatManager {
@@ -12,7 +13,7 @@ public class ChatManager {
 
     /**
      * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
-     * @param ownerId ID of the user owning this Message
+     * @param ownerId ID of the user owning this Chat object
      * @param guestIds Collection of IDs of (one or more) guests
      * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
      */
@@ -75,7 +76,7 @@ public class ChatManager {
      * @param personId the ID of the person
      * @return ArrayList of Chats containing the inputted person ID
      */
-    public ArrayList <Chat> getChats(String personId){
+    public ArrayList <Chat> searchChats(String personId){
         ArrayList <Chat> chats = new ArrayList<>();
         for (Chat c: ChatsList){
             if (c.getPersonIds().contains(personId)){
@@ -91,7 +92,7 @@ public class ChatManager {
      * @return Message.Message.Chat object corresponding to the Message.Message.Chat ID inputted
      *         null if ChatID invalid
      */
-    public Chat findChat(String chatId){
+    public Chat getChat(String chatId){
         Chat chat = null;
         for(Chat c: ChatsList){
             if (c.getId().equals(chatId)){
@@ -100,6 +101,41 @@ public class ChatManager {
         }
         return chat;
     }
+
+    /**
+     * Checks if there already exists a Chat object with same group members inputted
+     * @param currentId ID of the user
+     * @param guestsId ID of the chat members of the Chat
+     * @return True iff there exists a Chat with the exact same group members inputted
+     *         False iff there does not exist a Chat with the exact same group members inputted
+     */
+    public boolean existChat(String currentId, ArrayList <String> guestsId){
+        guestsId.add(currentId);
+        Collections.sort(guestsId);
+        for(Chat c: ChatsList) {
+            ArrayList <String> members = c.getPersonIds();
+            Collections.sort(members);
+            if (members.equals(guestsId)){return true;}
+        }
+        return false;
+    }
+
+    /**
+     * Find and return the chat ID of the Chat that has the exact same chat members inputted
+     * @param currentId ID of the user
+     * @param guestsId ID of the chat members of the Chat
+     * @return chat ID of the Chat with exact same group members inputted.
+     *         null otherwise.
+     */
+    public String findChat(String currentId, ArrayList <String> guestsId){
+        guestsId.add(currentId);
+        Collections.sort(guestsId);
+        for(Chat c: ChatsList) {
+            ArrayList <String> members = c.getPersonIds();
+            Collections.sort(members);
+            if (members.equals(guestsId)){return c.getId();}
+        }
+        return null;}
 }
 
 // CRC Card Definition
@@ -107,6 +143,6 @@ public class ChatManager {
 //Creates new Message.Message.Chat objects - DONE: createChat method
 //Can add Message.Message IDs to Chats - DONE: addMessage
 //Must update Person.Person list if new Person.Person is added to Message.Message.Chat - DONE: addPerson
-//Get ArrayList of all Chats containing Person.Person ID - DONE: getChats
+//Get ArrayList of all Chats containing Person.Person ID - DONE: searchChats
 //Getter for Message.Message list by Message.Message.Chat ID (Add to CRC Card maybe?) - DONE: getMessages
 

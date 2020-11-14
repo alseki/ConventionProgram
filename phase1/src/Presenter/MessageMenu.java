@@ -23,7 +23,7 @@ public class MessageMenu implements printSubMenu {
      * Prompts user to enter content of the new Message.
      * @return true iff the new Message containing the entered content was created.
      */
-    public boolean printMessage(){
+    public boolean printCreateMessage(){
         System.out.println("Send to whom?\n Username: \n");
         System.out.println("Enter the content of message: \n");
         return true;

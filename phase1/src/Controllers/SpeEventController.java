@@ -1,5 +1,6 @@
 package Controllers;
 
+import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -68,6 +69,8 @@ public class SpeEventController implements SubMenu {
      * @return true iff the Message was sent to every user on the event list
      */
     public boolean eventMessage(String eventName) {
+        String eventId = EventManager.;
+
         return false;
     }
 
