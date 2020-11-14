@@ -1,7 +1,7 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 12 2020
+// Last edit: Nov 14 2020
 
 // Architecture level - Use class
 
@@ -17,7 +17,6 @@ class EventDB {
     //Map<Room, ArrayList<String>> eventsByRoom;
     Map<String, String> eventsByName;
     Map<String, Event> events;
-    Room room;
 
     /**
      * Creates an EventDB from an array of events
@@ -33,8 +32,6 @@ class EventDB {
             this.events.put(event.getID(), event);
             eventsByName.put(event.getName(), event.getID());
         }
-
-        this.room = room;
     }
 
     /**
@@ -102,13 +99,5 @@ class EventDB {
         Event[] eventArray = {};
         return events.entrySet().toArray(eventArray);
 
-    }
-
-    /**
-     * Returns the capacity of this Room
-     * @return This Room's capacity
-     */
-    protected int roomCapacity() {
-        return room.getCapacity();
     }
 }

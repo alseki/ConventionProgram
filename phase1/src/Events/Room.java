@@ -1,7 +1,7 @@
 package Events;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 12 2020
+// Last edit: Nov 14 2020
 
 // Architecture level - Entity
 
@@ -9,8 +9,8 @@ import java.util.UUID;
 
 class Room {
     private int capacity;
-    String ID;
-    String name;
+    private String ID;
+    private String name;
 
     public Room () {
         this.capacity = 2;
@@ -38,5 +38,13 @@ class Room {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
     }
 }

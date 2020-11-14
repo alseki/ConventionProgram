@@ -1,136 +1,67 @@
 package Events;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 12 2020
+// Last edit: Nov 14 2020
 
 // Architecture level - Use class
-
-// Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
-// which actors are going to be using which ones.
-
-import Message.MessageManager;
-
 public class RoomManager {
-   // EventSignupManager eventSignup;
-   // EventAccessManager eventAccess;
-   // EventAdminManager eventAdmin;
-    EventDB events;
-    EventReader reader;
+    Map<String, EventManager> roomList;
+    Map<String, String> roomsByName;
 
 
     /**
-     * Creates a new EventManager with events read in by some sort of EventReader
-     * @param reader The EventReader used to read in events
+     * Creates a new RoomManager
      */
-    public RoomManager(EventReader reader) {
-        Room thisRoom = new Room();
-        this.reader = reader;
-        this.rmBuilder(reader, thisRoom);
+    public RoomManager() {
+        //make serializeable?
+        roomList = new TreeMap<String, EventManager>();
+        roomsByName = new TreeMap<String, String>();
     }
 
     /**
-     * Creates a new EventManager with events read in by some sort of EventReader
-     * @param reader The EventReader used to read in events
-     * @param name The name of this room
+     * Returns an EventManager for a specific Room's Events
+     * @param id The ID of the Room
+     * @return The Room's EventManager
      */
-    public RoomManager(EventReader reader, String name) {
+    public EventManager getRoom(String id) {
+        return roomList.get(id);
+    }
+
+    /**
+     * Finds the ID of a specific Room
+     * @param name The Room's name
+     * @return The Room's ID
+     */
+    public String getRoomId (String name) {
+        return roomsByName.get(name);
+    }
+
+    /**
+     * Creates a new Room of capacity 2
+     * @param name The name of the new Room
+     * @return The ID of the new Room
+     */
+    public String createRoom(String name) {
         Room thisRoom = new Room(name);
-        this.reader = reader;
-        this.rmBuilder(reader, thisRoom);
-    }
-
-    private void rmBuilder(EventReader reader, Room room) {
-        events = new EventDB(reader.readEvents(), room);
-        //eventSignup = new EventSignupManager(events);
-        //eventAccess = new EventAccessManager(events);
-        //eventAdmin = new EventAdminManager(events);
+        roomList.put(thisRoom.getID(), new EventManager(thisRoom));
+        roomsByName.put(thisRoom.getName(), thisRoom.getID());
+        return thisRoom.getID();
     }
 
     /**
-     * Returns information about the entire list of events
-     * @return The list of events
+     * Creates a new Room
+     * @param name The name of the new Room
+     * @param capacity The capacity of the new Room
+     * @return The ID of the new Room
      */
-    public Event[] getEventList() {
-        Event[] eventArray = {};
-        return events.getEventList().toArray(eventArray);
+    public String createRoom(String name, int capacity) {
+        Room thisRoom = new Room(capacity, name);
+        roomList.put(thisRoom.getID(), new EventManager(thisRoom));
+        roomsByName.put(thisRoom.getName(), thisRoom.getID());
+        return thisRoom.getID();
     }
 
-    /**
-     * Signs an individual attendee up for an event
-     * @param personID The attendee
-     * @param eventID The event
-     */
-    public boolean signUpForEvent(String personID, String eventID) {
-            Event event = events.getEvent(eventID);
-
-            // check + update capacity!
-
-            if (event != null) {
-                event.addAttendee(personID);
-                return true;
-            }
-            else {
-                return false;
-            }
-    }
-
-    /**
-     * Takes an individual attendee off an event's attendee list
-     * @param personID The attendee
-     * @param eventID The event
-     */
-    public boolean removeFromEvent(String personID, String eventID) {
-        // update capacity!
-
-        Event event = events.getEvent(eventID);
-        if (event != null) {
-            event.removeAttendee(personID);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    /**
-     * Returns the ID of an event given its name
-     * @param name The event's name
-     * @return The ID
-     */
-    public String getEventID(String name) {
-        return events.getEventID(name);
-    }
-
-    /**
-     * Deletes an event
-     * @param id The event's ID
-     * @return Whether the event has been successfully deleted
-     */
-    public boolean removeEvent(String id) {
-        return events.addEvent(events.getEvent(id));
-    }
-
-    /**
-     * Adds an event
-     * @param event The event
-     * @return Whether the event has been successfully added
-     */
-    public boolean addEvent(Event event) {
-
-        // check conflicts! also possibly edit so as to create the event itself?
-
-        return events.addEvent(event);
-    }
-
-    public void saveRoom() {
-        reader.save(getEventList());
-    }
-
-    public MessageManager getMessages(Event event) {
-        return null; //get messages
-    }
-
-    public boolean announceToEvent(Event event) {
-        return false; //get messages
-    }
 }
