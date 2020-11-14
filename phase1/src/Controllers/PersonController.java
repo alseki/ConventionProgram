@@ -47,13 +47,9 @@ abstract public class PersonController {
      */
 
     public boolean login() {
-        System.out.println("Enter your username: ");
-        username = input.nextLine();
-        System.out.println("Enter your password: ");
-        password = input.nextLine();
-        if (manager.findPerson(username, password)) {
-            currentUserID = PersonManager.getPerson(username, password).id;
-        }
+        //if (manager.findPerson(username, password)) {
+         //   currentUserID = PersonManager.getPerson(username, password).id;
+        //}
         return false;
     }
 
@@ -63,15 +59,7 @@ abstract public class PersonController {
      * @return true iff new account has been created
      */
     public boolean createAccount() {
-        System.out.println("Enter your full name: ");
-        String name = input.nextLine();
-        System.out.println("Enter a username for your account: ");
-        String username = input.nextLine();
-        System.out.println("Enter your password for your account: ");
-        String password = input.nextLine();
-        System.out.println("Enter your email: ");
-        String email = input.nextLine();
-        manager.createAccount(name, username, password, email);
+        //manager.createAccount(name, username, password, email);
         return false;
     }
 
@@ -81,7 +69,7 @@ abstract public class PersonController {
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean getContactList() {
-        manager.getPerson(currentUserID).getContactList();
+        //manager.getPerson(currentUserID).getContactList();
         // format list ? to what end ?
         // send the Presenter the formatted contactList to print (if empty, say so)
         return false;
@@ -95,11 +83,11 @@ abstract public class PersonController {
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean addContact(String contactUsername) {
-        String contactID = manager.getCurrentUserID(contactUsername);
-        if ((manager.addContact(currentUserID, contactID) && manager.addContact(contactID, currentUserID))) {
+        //String contactID = manager.getCurrentUserID(contactUsername);
+        //if ((manager.addContact(currentUserID, contactID) && manager.addContact(contactID, currentUserID))) {
             // update presenter to say contact was added
-            return true;
-        }
+          //  return true;
+        //}
         return false;
     }
 
@@ -114,14 +102,15 @@ abstract public class PersonController {
      * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
      */
     public boolean createChat(String contactUsername) {
-        String contactID = manager.getCurrentUserID(contactUsername);
-        if (manager.doubleContact(username, contactID)) {
+        //String contactID = manager.getCurrentUserID(contactUsername);
+        //if (manager.doubleContact(username, contactID)) {
             // String chatID = cManager.createChat(currentUserID, contactID)
-            if (manager.addChat(currentUserID, chatID) && manager.addChat(contactID, chatID)) {
+            //if (manager.addChat(currentUserID, chatID) && manager.addChat(contactID, chatID)) {
                 // update presenter to say Message.Message.Chat was created
-                return false;
-            }
-        }
+                //return true;
+            //}
+        //}
+        return false;
     }
 
     /**
