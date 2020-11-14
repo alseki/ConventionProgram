@@ -20,7 +20,7 @@ public class Talk extends Event {
 
     public Talk (String name, int room, String speaker, String description) {
         super(name, room, 1);
-        this.speakerID = speakerID;
+        this.speakerID = speaker;
         this.description = description;
     }
 

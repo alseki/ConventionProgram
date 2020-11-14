@@ -11,9 +11,9 @@ package Events;
 import Message.MessageManager;
 
 public class RoomManager {
-    EventSignupManager eventSignup;
-    EventAccessManager eventAccess;
-    EventAdminManager eventAdmin;
+   // EventSignupManager eventSignup;
+   // EventAccessManager eventAccess;
+   // EventAdminManager eventAdmin;
     EventDB events;
     EventReader reader;
 
@@ -41,17 +41,18 @@ public class RoomManager {
 
     private void rmBuilder(EventReader reader, Room room) {
         events = new EventDB(reader.readEvents(), room);
-        eventSignup = new EventSignupManager(events);
-        eventAccess = new EventAccessManager(events);
-        eventAdmin = new EventAdminManager(events);
+        //eventSignup = new EventSignupManager(events);
+        //eventAccess = new EventAccessManager(events);
+        //eventAdmin = new EventAdminManager(events);
     }
 
     /**
      * Returns information about the entire list of events
      * @return The list of events
      */
-    public Object getEventList() {
-        return eventAccess.getEventList();
+    public Event[] getEventList() {
+        Event[] eventArray = {};
+        return events.getEventList().toArray(eventArray);
     }
 
     /**
@@ -60,7 +61,17 @@ public class RoomManager {
      * @param eventID The event
      */
     public boolean signUpForEvent(String personID, String eventID) {
-        return eventSignup.signUpForEvent(personID, eventID);
+            Event event = events.getEvent(eventID);
+
+            // check + update capacity!
+
+            if (event != null) {
+                event.addAttendee(personID);
+                return true;
+            }
+            else {
+                return false;
+            }
     }
 
     /**
@@ -69,7 +80,16 @@ public class RoomManager {
      * @param eventID The event
      */
     public boolean removeFromEvent(String personID, String eventID) {
-        return eventSignup.removeFromEvent(personID, eventID);
+        // update capacity!
+
+        Event event = events.getEvent(eventID);
+        if (event != null) {
+            event.removeAttendee(personID);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -78,7 +98,7 @@ public class RoomManager {
      * @return The ID
      */
     public String getEventID(String name) {
-        return eventAccess.getEventID(name);
+        return events.getEventID(name);
     }
 
     /**
@@ -87,7 +107,7 @@ public class RoomManager {
      * @return Whether the event has been successfully deleted
      */
     public boolean removeEvent(String id) {
-        return eventAdmin.removeEvent(id);
+        return events.addEvent(events.getEvent(id));
     }
 
     /**
@@ -96,14 +116,17 @@ public class RoomManager {
      * @return Whether the event has been successfully added
      */
     public boolean addEvent(Event event) {
-        return eventAdmin.addEvent(event);
+
+        // check conflicts! also possibly edit so as to create the event itself?
+
+        return events.addEvent(event);
     }
 
     public void saveRoom() {
-        reader.save(eventAccess.getEventList());
+        reader.save(getEventList());
     }
 
     public MessageManager getMessages(Event event) {
-        return eventSignup.getMessages(event);
+        return null; //get messages
     }
 }
