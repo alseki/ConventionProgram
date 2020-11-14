@@ -9,12 +9,12 @@ public class Chat {
     private ArrayList<String> messageIds;
     private ArrayList<String> personIds;
 
-    //Chat constructor. Input is arraylist of ID(s) of friend(s) that you want to form group chat with.
-    public Chat(String currentId, ArrayList <String> friendIds){
+    //Chat constructor. Input is arraylist of ID(s) of guest(s) that you (owner) want to form group chat with.
+    public Chat(String ownerId, ArrayList <String> guestIds){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
-        personIds.add(currentId);
-        personIds.addAll(friendIds);
+        personIds.add(ownerId);
+        personIds.addAll(guestIds);
         this.Id = UUID.randomUUID().toString();
     }
 

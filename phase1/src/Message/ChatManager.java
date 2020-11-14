@@ -12,12 +12,12 @@ public class ChatManager {
 
     /**
      * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
-     * @param currentId ID of current user
-     * @param friendIds Collection of IDs of (one or more) friends
+     * @param ownerId ID of the user owning this Message
+     * @param guestIds Collection of IDs of (one or more) guests
      * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public boolean createChat(String currentId, ArrayList <String> friendIds){
-        Chat newC = new Chat(currentId, friendIds);
+    public boolean createChat(String ownerId, ArrayList <String> guestIds){
+        Chat newC = new Chat(ownerId, guestIds);
         ChatsList.add(newC);
         return true;
     }
