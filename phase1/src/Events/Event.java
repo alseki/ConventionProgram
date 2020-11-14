@@ -4,32 +4,34 @@ import Message.Message;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.Duration;
 
-// Contributors: Sarah Kronenfeld
-// Last edit: Nov 12 2020
+// Contributors: Sarah Kronenfeld, Eytan Weinstein
+// Last edit: Nov 14 2020
 
-// Architecture level - Entity
+// Architecture Level - Entity
 
 public abstract class Event {
 
     private String name;
-    private int startTime;
-    private int duration;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String ID;
     private String speakerID;
     private ArrayList<String> attendees;
     private ArrayList<String> messages;
 
     /**
-     * Constructer for Event objects
+     * Constructor for Event objects
      * @param name The Event's name
-     * @param startTime The time the Event starts
-     * @param duration The length of the Event
+     * @param startTime The time when the Event starts
+     * @param endTime The time when the Event ends
      */
-    protected Event(String name, int startTime, int duration) {
+    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime) {
         this.name = name;
         this.startTime = startTime;
-        this.duration = duration;
+        this.endTime = endTime;
         ID = UUID.randomUUID().toString();
         attendees = new ArrayList<String>();
         messages = new ArrayList<String>();
@@ -52,11 +54,43 @@ public abstract class Event {
     }
 
     /**
-     * Getter for the start time (in hours) of this Event
-     * @return the duration of this Event (as an int)
+     * Setter for the name of this Event
+     * @param name The new name of this Event
      */
-    public int getStartTime() {
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Getter for the start time of this Event
+     * @return the start time of this Event
+     */
+    public LocalDateTime getStartTime() {
         return startTime;
+    }
+
+    /**
+     * Setter for the start time of this Event
+     * @param startTime The new start time of this Event
+     */
+    protected void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * Getter for the end time of this Event
+     * @return the end time of this Event
+     */
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Setter for the end time of this Event
+     * @param endTime The new start time of this Event
+     */
+    protected void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     /**
@@ -64,12 +98,13 @@ public abstract class Event {
      * @return the duration of this Event (as an int)
      */
     public int getDuration() {
-        return duration;
+        Duration diff = Duration.between(this.startTime, this.endTime);
+        return (int) diff.toHours();
     }
 
     /**
      * Getter for the announcements associated with this Event
-     * @return a MessageManager object containing the aforementioned announcements
+     * @return an array of these announcements
      */
     public Message[] getAnnouncements() {
         Message[] messageArray = {};
@@ -78,7 +113,7 @@ public abstract class Event {
 
     /**
      * Getter for the attendees attending this Event
-     * @return An array of the aforementioned attendees
+     * @return an array of these attendees
      */
     public String[] getAttendeeIDs() {
         String[] attendeeArray = {};
@@ -87,7 +122,7 @@ public abstract class Event {
 
     /**
      * Adds an attendee to this event's attendee list
-     * @param id The ID of the attendee
+     * @param id The ID of the new attendee
      */
     public void addAttendee(String id) {
         attendees.add(id);
@@ -95,7 +130,7 @@ public abstract class Event {
 
     /**
      * Removes an attendee from this event's attendee list
-     * @param id The ID of the attendee
+     * @param id The ID of the attendee being removed
      */
     public void removeAttendee(String id) {
         attendees.remove(id);
@@ -115,10 +150,10 @@ public abstract class Event {
     }
 
     /**
-     * Getter for the speaker running this Event
-     * @return an array of IDs corresponding to speakers in the system
+     * Setter for the speaker running this Event
+     * @param id The ID of the new speaker
      */
-    public void setSpeakerID(String id) {
+    protected void setSpeakerID(String id) {
         speakerID = id;
     }
 
@@ -133,6 +168,7 @@ public abstract class Event {
      * @param event The other Event. (NOTE: the other event is presumed to be in the same Room.)
      * @return True or false.
      */
-    public abstract boolean conflictsWith(Event event);
+    protected abstract boolean conflictsWith(Event event);
 }
+
 
