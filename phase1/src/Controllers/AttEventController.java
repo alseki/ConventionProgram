@@ -10,12 +10,18 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
+import Presenter.AttEventMenu;
+
+import java.util.Scanner;
 
 public class AttEventController implements SubMenu {
 
     private String currentUserID;
+    private int currentRequest;
     private PersonManager personManager;
     // EventManager??
+    private AttEventMenu presenter = new AttEventMenu();
+    Scanner input = new Scanner(System.in);
 
     public AttEventController(String currentUserID, PersonManager personManager) {
         this.currentUserID = currentUserID;
@@ -24,12 +30,13 @@ public class AttEventController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
+     * @return true iff int was inputted and currentRequest was updated
      */
     @Override
     public boolean menuOptions() {
-        // AttEventMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -39,13 +46,15 @@ public class AttEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
+
+    // TODO change, delete and/or add to the methods below
 
     /**
      * Get's the list of Events happening at the convention

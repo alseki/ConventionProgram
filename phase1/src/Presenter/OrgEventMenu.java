@@ -13,6 +13,9 @@ public class OrgEventMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
+        System.out.println("----- Organizer Event Menu -----");
+        System.out.println("To return to Main Menu, Enter '0'.");
+        // TODO add print statements for all the other menu options
         return true;
     }
 

@@ -16,6 +16,9 @@ public class ContactMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
+        System.out.println("----- Contact Menu -----");
+        System.out.println("To return to Main Menu, Enter '0'.");
+        // TODO add print statements for all the other menu options
         return true;
     }
 

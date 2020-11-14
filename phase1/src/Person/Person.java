@@ -78,6 +78,7 @@ public abstract class Person {
     public ArrayList<String> getChatList() {
         return chatList;
     }
+    public void addChat(String chatID) {this.chatList.add(chatID); }
 
     /**
      * allows for access to the list of events for Person.doubleBooking

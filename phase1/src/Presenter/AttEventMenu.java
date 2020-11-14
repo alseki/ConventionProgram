@@ -3,7 +3,7 @@ package Presenter;
 // Programmers: Cara McNeil,
 // Description: Prints information pertaining to a user's attending Event information
 // Date Created: 11/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 14/11/2020
 
 import java.util.Collection;
 
@@ -15,6 +15,9 @@ public class AttEventMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
+        System.out.println("----- Attendee Event Menu -----");
+        System.out.println("To return to Main Menu, Enter '0'.");
+        // TODO add print statements for all the other menu options
         return true;
     }
 

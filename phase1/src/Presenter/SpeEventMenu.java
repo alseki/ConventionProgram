@@ -8,7 +8,10 @@ public class SpeEventMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
-        return false;
+        System.out.println("----- Speaker Event Menu -----");
+        System.out.println("To return to Main Menu, Enter '0'.");
+        // TODO add print statements for all the other menu options
+        return true;
     }
 
 }

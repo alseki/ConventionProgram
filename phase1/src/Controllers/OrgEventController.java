@@ -1,25 +1,30 @@
 package Controllers;
 
-// Programmer: Cara McNeil
+// Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 14/11/2020
 
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
+import Presenter.OrgEventMenu;
+
+import java.util.Scanner;
 
 public class OrgEventController implements SubMenu {
 
     private String currentUserID;
+    private int currentRequest;
     private PersonManager personManager;
     private SpeakerManager speakerManager;
     private RoomManager roomManager;
-    // EventManager??
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private OrgEventMenu presenter = new OrgEventMenu();
+    Scanner input = new Scanner(System.in);
 
     public OrgEventController(String currentUserID, PersonManager personManager, SpeakerManager speakerManager,
                               RoomManager roomManager, MessageManager messageManager, ChatManager chatManager) {
@@ -37,8 +42,9 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // OrgEventMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -48,11 +54,11 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
 
@@ -61,10 +67,13 @@ public class OrgEventController implements SubMenu {
      * @param room The name/number of a room in the convention
      * @return true iff list was added to system.
      */
-    public boolean addRoom(int room) {
-
-        // eManager.addRoom(room);
-        return false;
+    public boolean addRoom(String room) {
+        if (roomManager.addRoom(room) != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -101,8 +110,24 @@ public class OrgEventController implements SubMenu {
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int duration) {
-        // once room manager is completed
+    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
+        String roomID = roomManager.getRoomId(room);
+        String speakerID = ""; // add speaker ID
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
+        return false;
+    }
+
+
+    /**
+     * Creates a new Event for the convention
+     * @param eventName The name of the Event the user has requested to create
+     * @return true iff the Event was created
+     */
+    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime,
+                               String description) {
+        String roomID = roomManager.getRoomId(room);
+        String speakerID = ""; // add speaker ID
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
         return false;
     }
 

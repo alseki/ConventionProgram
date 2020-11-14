@@ -1,16 +1,16 @@
 package Events;
 
-// Contributors: Sarah Kronenfeld
-// Last edit: Nov 12 2020
+// Contributors: Sarah Kronenfeld, Eytan Weinstein
+// Last edit: Nov 14 2020
 
-// Architecture level - Entity
+// Architecture Level - Entity
 
 import java.util.UUID;
 
 class Room {
     private int capacity;
-    String ID;
-    String name;
+    private String ID;
+    private String name;
 
     public Room () {
         this.capacity = 2;
@@ -36,7 +36,28 @@ class Room {
         ID = UUID.randomUUID().toString();
     }
 
+    /**
+     * Getter for the capacity of this Room
+     * @return the capacity of the Room (as an int)
+     */
     public int getCapacity() {
         return capacity;
     }
+
+    /**
+     * Getter for the ID of this Room
+     * @return the ID of this Room
+     */
+    public String getID() {
+        return ID;
+    }
+
+    /**
+     * Getter for the name of this Room
+     * @return the name of the Room (as a string)
+     */
+    public String getName() {
+        return name;
+    }
 }
+

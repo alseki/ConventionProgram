@@ -3,12 +3,17 @@ package Controllers;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import Presenter.MessageMenu;
+
+import java.util.Scanner;
 
 public class MessageController implements SubMenu {
+    private int currentRequest;
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private int choice;
+    private MessageMenu presenter = new MessageMenu();
+    Scanner input = new Scanner(System.in);
 
     public MessageController(PersonManager pManager, MessageManager mManager, ChatManager cManager) {
         this.personManager = pManager;
@@ -23,8 +28,9 @@ public class MessageController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // MessageMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -34,72 +40,50 @@ public class MessageController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
+        return true;
+    }
+
+    // TODO change, delete and/or add to the methods below
+
+    /**
+     * Creates new Chat if contact is on contactList
+     * @param contactUsername the username of the contact the current user wants create a Chat with
+     * @return true iff new Chat was created and added to user's Chat list and contact's contactList
+     */
+    private boolean createChat(String contactUsername) {
         return true;
     }
 
     /**
-     * Creates new Message.Message.Chat if contact is on contactList
-     * @param contactUsername
-     * @return true iff new Message.Message.Chat was created and added to user's Message.Message.Chat list and contact's contactList
-     */
-    public boolean createChat(String contactUsername) {
-        //String contactID = manager.getCurrentUserID(contactUsername);
-        //if (manager.doubleContact(username, contactID)) {
-        // String chatID = cManager.createChat(currentUserID, contactID)
-        //if (manager.addChat(currentUserID, chatID) && manager.addChat(contactID, chatID)) {
-        // update presenter to say Message.Message.Chat was created
-        //return true;
-        //}
-        //}
-        return false;
-    }
-
-    /**
-     * Get's the Person.Person user's Chats
-     * @return true iff the presenter printed a formatted list of Chats
+     * Get's a list of contacts the user has Chats with
+     * @return true iff the presenter printed a list of contacts the user has Chats with
      */
     public boolean getChats() {
-        // List Chats = manager.getChatIDs(currentUserID);
-        // List formattedChats;
-        // for item in Chats:
-        // formattedChats.add(cManager.format(chatID))
-        // update presenter with the formatted Chats, i.e. contact usernames they have Chats with, to print
-        // (if empty, say so)
-        return false;
+        return true;
     }
 
 
     /**
-     * Creates new Message.Message for existing Message.Message.Chat
+     * Creates new Message for existing Chat
      * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
-     * @return true iff new Message.Message was created and added to Message.Message.Chat's messageList
+     * @return true iff new Message was created and added to Chat's messageList
      */
     public boolean addMessage(String chatID, String messageContent) {
-        // String messageID = mManager.createMessage(currentUser, messageContent);
-        // cManager.addMessage(chatID, messageID)
-        // update presenter to say message has been sent
-        return false;
+        return true;
     }
 
     /**
-     * Get's the Person.Person user's Message.Message.Chat messages
+     * Get's the current user's Chat messages between contactUsername
      * @param contactUsername The username of the current user's requested contact messages
      * @return true iff presenter was updated with a formatted list of Message.Message.Chat messages
      */
     public boolean getMessages(String contactUsername) {
-        // chatID = cManager.getChatID(currentUserID)
-        // if chatID in manager.getChats(currentUserID)
-        // List messageIDs = cManager.getMessages(chatID);
-        // List chatMessages;
-        // for item in messageIDs:
-        // chatMessages.add(mManager.getFormattedMessage(item))
-        // send the Presenter the formatted chatMessages to print
-        return false;
+        return true;
     }
 }

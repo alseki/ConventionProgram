@@ -6,9 +6,15 @@ package Controllers;
 // Date Modified: 13/11/2020
 
 import Person.PersonManager;
+import Presenter.LoginMenu;
+
+import java.util.Scanner;
 
 public class LoginController implements SubMenu {
+    private int currentRequest;
     private PersonManager manager;
+    private LoginMenu presenter = new LoginMenu();
+    Scanner input = new Scanner(System.in);
 
     public LoginController(PersonManager manager) {
         this.manager = manager;
@@ -20,8 +26,9 @@ public class LoginController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        // LoginMenu.menuOptions()
-        // choice = input.NextLine()
+        presenter.printMenuOptions();
+        // TODO update presenter class with a print statement for each option
+        currentRequest = input.nextInt();
         return true;
     }
 
@@ -31,33 +38,33 @@ public class LoginController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        // menuOptions();
-        // while (choice != 0)
-        // do {
-        // switch statement to decide method
-        // }
+        do {
+            menuOptions();
+            // TODO add switch statement to call the methods that correspond with currentRequest
+        }
+        while (currentRequest != 0);
         return true;
     }
 
+    // TODO change, delete and/or add to the methods below
+
     /**
      * Prompts user to input username and password.
-     *
      * @return true iff login info corresponds with an existing Person.Person account.
      */
     public boolean login() {
         //if (manager.findPerson(username, password)) {
         //   currentUserID = PersonManager.getPerson(username, password).id;
         //}
-        return false;
+        return true;
     }
 
     /**
      * Prompts user for relevant information and uses it to create a new Person.Person account.
-     *
      * @return true iff new account has been created
      */
     public boolean createAccount() {
         //manager.createAccount(name, username, password, email);
-        return false;
+        return true;
     }
 }
