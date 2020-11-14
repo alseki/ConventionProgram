@@ -23,6 +23,12 @@ public class Talk extends Event {
         description = "Talk: " + name;
     }
 
+    public Talk (String name, String speakerID, LocalDateTime startTime, String description) {
+        super(name, startTime,startTime.plusHours(1));
+        this.speakerID = speakerID;
+        this.description = description;
+    }
+
     /**
      * Getter for the description of this Talk
      * @return the description of this Talk (as a String)

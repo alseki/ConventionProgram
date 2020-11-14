@@ -10,19 +10,24 @@ package Events;
 
 import Message.MessageManager;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class EventManager {
    // EventSignupManager eventSignup;
    // EventAccessManager eventAccess;
    // EventAdminManager eventAdmin;
     EventDB events;
     Room room;
+    LocalDateTime conferenceStart;
 
     /**
      * Creates a new EventManager with events read in by some sort of EventReader
      * @param room The EventReader used to read in events
      */
-    public EventManager(Room room) {
+    public EventManager(Room room, LocalDateTime start) {
         this.room = room;
+        conferenceStart = start;
     }
 
 
@@ -57,7 +62,9 @@ public class EventManager {
 
         // check conflicts!
 
-        Event event = new Talk(name, speakerID, startTime);
+        LocalTime time = LocalTime.of(conferenceStart.getHour() + startTime, conferenceStart.getMinute());
+
+        Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time));
 
         return events.addEvent(event);
     }
@@ -71,7 +78,9 @@ public class EventManager {
 
         // check conflicts!
 
-        Event event = new Talk(name, speakerID, startTime, description);
+        LocalTime time = LocalTime.of(conferenceStart.getHour() + startTime, conferenceStart.getMinute());
+
+        Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time), description);
 
         return events.addEvent(event);
     }

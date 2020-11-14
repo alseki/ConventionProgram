@@ -1,7 +1,9 @@
 package Events;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
+import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 14 2020
@@ -10,6 +12,7 @@ import java.util.TreeMap;
 public class RoomManager {
     Map<String, EventManager> roomList;
     Map<String, String> roomsByName;
+    LocalDateTime conferenceStart;
 
 
     /**
@@ -46,7 +49,7 @@ public class RoomManager {
      */
     public String addRoom(String name) {
         Room thisRoom = new Room(name);
-        roomList.put(thisRoom.getID(), new EventManager(thisRoom));
+        roomList.put(thisRoom.getID(), new EventManager(thisRoom, conferenceStart));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
         return thisRoom.getID();
     }
@@ -59,7 +62,7 @@ public class RoomManager {
      */
     public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(capacity, name);
-        roomList.put(thisRoom.getID(), new EventManager(thisRoom));
+        roomList.put(thisRoom.getID(), new EventManager(thisRoom, conferenceStart));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
         return thisRoom.getID();
     }
