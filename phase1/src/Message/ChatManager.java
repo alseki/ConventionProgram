@@ -39,19 +39,11 @@ public class ChatManager {
         return false;
     }
 
-    //NOTE: Below is same method, except that it takes Message.Message.Chat object instead of its ID.
-    // I sort of got confused whether Message.Message.ChatManager should take in the actual Message.Message.Chat object or only its ID...
-    //public boolean addMessageIds(Message.Message.Chat chat, String messageId){
-    //    chat.addMessageIds(messageId);
-    //    return True;
-    //}
-
     /**
      * @param chatId of Message.Message.Chat object
      * @return ArrayList of messageIDs stored in the Message.Message.Chat with inputted chatID
      *         null iff no Message.Message.Chat in ChatList has the inputted chatId
      */
-    //Will ask TA if it is the best option return null when an invalid chatId is inputted...
     public ArrayList<String> getMessages(String chatId){
         for(Chat c: ChatsList){
             if (c.getId().equals(chatId)){
@@ -79,15 +71,20 @@ public class ChatManager {
     }
 
     /**
-     * @getter
-     * @param personId
-     * @return Message.Message.Chat corresponding to the Person.Person ID
+     * Return collection of all Chats where the inputted person ID is part of the member.
+     * @param personId the ID of the person
+     * @return ArrayList of Chats containing the inputted person ID
      */
-    //I think Person.Person class needs to be fixed before coding this method.
-    //-> Person.Person class shouldn't contain list of Message.Message.Chat as a private variable.
-    //public Message.Message.Chat getChats(String personId){}
+    public ArrayList <Chat> getChats(String personId){
+        ArrayList <Chat> chats = new ArrayList<>();
+        for (Chat c: ChatsList){
+            if (c.getPersonIds().contains(personId)){
+                chats.add(c);
+            }
+        }
+        return chats;
+    }
 
-    //WARNING: Will ask group member code below would be helpful to avoid redundant code.
     /**
      * Finds the Message.Message.Chat object with input Message.Message.Chat ID
      * @param chatId of the Message.Message.Chat object we are trying to find
@@ -110,6 +107,6 @@ public class ChatManager {
 //Creates new Message.Message.Chat objects - DONE: createChat method
 //Can add Message.Message IDs to Chats - DONE: addMessage
 //Must update Person.Person list if new Person.Person is added to Message.Message.Chat - DONE: addPerson
-//Getter for Message.Message.Chat by Person.Person ID - FIX BIT OF CODE IN PERSON CLASS BEFORE IMPLEMENTING THIS: getChats
+//Get ArrayList of all Chats containing Person.Person ID - DONE: getChats
 //Getter for Message.Message list by Message.Message.Chat ID (Add to CRC Card maybe?) - DONE: getMessages
 
