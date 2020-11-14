@@ -134,7 +134,7 @@ public abstract class PersonManager {
      * whether adding contact exceuted or not
      */
 
-    public boolean addContact(String currentUserID, String contactUsername) {
+    public boolean addContactToPerson(String currentUserID, String contactUsername) {
         String contactID = getCurrentUserID(contactUsername);
         if (!(doubleContact(currentUserID, contactID))) {
             getPerson(currentUserID).getContactList().add(contactUsername);

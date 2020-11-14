@@ -67,7 +67,7 @@ public abstract class Person {
     public ArrayList<String> getContactList() {
         return this.contactList;
     }
-    public void addContactList(String userId){
+    public void addContact(String userId){
         this.contactList.add(userId);
     }
 

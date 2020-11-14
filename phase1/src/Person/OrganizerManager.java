@@ -76,7 +76,7 @@ public class OrganizerManager extends PersonManager {
     public boolean  updateContactList(String contactId, String userId){
         Organizer og = (Organizer)idToPerson.get(userId);
         if(!og.getContactList().contains(contactId)) {
-            og.addContactList(contactId);
+            og.addContact(contactId);
             return true;
         }
         return false;
