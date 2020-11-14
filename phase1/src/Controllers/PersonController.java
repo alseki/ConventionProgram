@@ -29,17 +29,6 @@ abstract public class PersonController {
     // will use currentRequest to determine what methods to call
     // if any classes return false, needs to update the presenter accordingly
 
-    // This should be moved to a Presenter class
-    /**
-     * Prints the options that are available to the current user. Implements and extends Controllers.PersonController method.
-     */
-    /*public int mainMenu() {
-        super.mainMenu();
-        System.out.println("To view a list of Convention Events, Enter '5'");
-        System.out.println("To signup for an event, Enter '6'");
-        System.out.println("");
-    }*/
-
     /**
      * Prompts user to input username and password.
      *
