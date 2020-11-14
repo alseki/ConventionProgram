@@ -75,10 +75,10 @@ public abstract class PersonManager {
 
     public Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
-            if (usernameToPerson.get(username).getPassword() == password) {
+            if (usernameToPerson.get(username).getPassword().equals(password)) {
                 return usernameToPerson.get(username);
             }
-            usernameToPerson.get(username);
+            usernameToPerson.get(username); // shouldn't this be a return statement?
         }
         return null;
 
