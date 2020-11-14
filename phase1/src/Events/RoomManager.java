@@ -3,7 +3,6 @@ package Events;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
-import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld
 // Last edit: Nov 14 2020

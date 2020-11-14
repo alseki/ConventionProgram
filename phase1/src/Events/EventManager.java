@@ -58,7 +58,7 @@ public class EventManager {
      * @param name The event
      * @return Whether the event has been successfully added
      */
-    public boolean addEvent(String name, String speakerID, int startTime) {
+    public String addEvent(String name, String speakerID, int startTime) {
 
         // check conflicts!
 
@@ -66,7 +66,11 @@ public class EventManager {
 
         Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time));
 
-        return events.addEvent(event);
+        if (events.addEvent(event)) {
+            return event.getID();
+        }
+
+        return null;
     }
 
     /**
@@ -74,7 +78,7 @@ public class EventManager {
      * @param name The event
      * @return Whether the event has been successfully added
      */
-    public boolean addEvent(String name, String speakerID, int startTime, String description) {
+    public String addEvent(String name, String speakerID, int startTime, String description) {
 
         // check conflicts!
 
@@ -82,7 +86,11 @@ public class EventManager {
 
         Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time), description);
 
-        return events.addEvent(event);
+        if (events.addEvent(event)) {
+            return event.getID();
+        }
+
+        return null;
     }
 
     /**
@@ -92,6 +100,16 @@ public class EventManager {
      */
     public boolean removeEvent(String id) {
         return events.addEvent(events.getEvent(id));
+    }
+
+    /**
+     * Checks to see whether two events conflict
+     * @param event1ID The ID of the first event
+     * @param event2ID The ID of the second event
+     * @return Whether the two events conflict
+     */
+    public boolean getConflict(String event1ID, String event2ID) {
+        return false;
     }
 
 

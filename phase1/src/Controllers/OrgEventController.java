@@ -103,7 +103,8 @@ public class OrgEventController implements SubMenu {
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
-    public boolean createEvent(String eventName, String speakerUsername, String roomID, int startTime) {
+    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
+        String roomID = roomManager.getRoomId(room);
         String speakerID = ""; // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         return false;
@@ -115,8 +116,9 @@ public class OrgEventController implements SubMenu {
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
-    public boolean createEvent(String eventName, String speakerUsername, String roomID, int startTime,
+    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime,
                                String description) {
+        String roomID = roomManager.getRoomId(room);
         String speakerID = ""; // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
         return false;
