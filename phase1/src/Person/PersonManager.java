@@ -44,22 +44,20 @@ public abstract class PersonManager {
      * returns the contact list of the user
      * @return ArrayList<String> contactList the contacts with people that user has gotten
     */
-
     public ArrayList getContactList(String id) {
         return getPerson(id).getContactList();
     }
 
     /**
      *
-     * @param currentUserId
+     * @param currentUserID
      * 1 of the 2 overloaded methods under this method name
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-
-    public Person getPerson(String currentUserId) {
-        if (idToPerson.containsKey(currentUserId)) {
-            return idToPerson.get(currentUserId);
+    public Person getPerson(String currentUserID) {
+        if (idToPerson.containsKey(currentUserID)) {
+            return idToPerson.get(currentUserID);
         }
         return null;
     }
@@ -72,7 +70,6 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
      */
-
     public Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
             if (usernameToPerson.get(username).getPassword().equals(password)) {
@@ -81,7 +78,6 @@ public abstract class PersonManager {
             usernameToPerson.get(username); // shouldn't this be a return statement?
         }
         return null;
-
     }
 
     /**
@@ -90,7 +86,6 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username
      * @return Person; this is for methods in PersonController that which to get Person using username only
      */
-
     public Person getPersonByUsername(String username) {
         if (usernameToPerson.containsKey(username)) {
             return usernameToPerson.get(username);
@@ -105,14 +100,11 @@ public abstract class PersonManager {
      * @return String; this is for methods that need CurrentUserID, but only which to get CurrentUserID
      * using search by username only. Ex. public boolean addContract; see below
      */
-
-
     public String getCurrentUserID(String username) {
         if (usernameToPerson.containsKey(username)) {
             return usernameToPerson.get(username).getID();
         }
         return null;
-
     }
 
     /**
@@ -133,11 +125,10 @@ public abstract class PersonManager {
      * @return boolean, which indicates after checking for double contact (new or old contact)
      * whether adding contact exceuted or not
      */
-
     public boolean addContactToPerson(String currentUserID, String contactUsername) {
         String contactID = getCurrentUserID(contactUsername);
         if (!(doubleContact(currentUserID, contactID))) {
-            getPerson(currentUserID).getContactList().add(contactUsername);
+            getPerson(currentUserID).addContact(contactUsername);
             return true;
         }
         return false;
@@ -145,14 +136,13 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param currentId
+     * @param currentID
      * @param chatID
      * @ return void, this method does not return a boolean, because there is no "false" message per se.
      *          Any message object can be sent
      */
-
-    public void addChat(String currentId, String chatID) {
-        getPerson(currentId).getChatList().add(chatID);
+    public void addChat(String currentID, String chatID) {
+        getPerson(currentID).addChat(chatID);
 
     }
 
@@ -162,7 +152,7 @@ public abstract class PersonManager {
      * @return ArrayList<String>,of chatID of messages receieved by the User
      */
 
-    public List getChatIDs(String currentUserID) {
+    public List getChats(String currentUserID) {
         return getPerson(currentUserID).getChatList();
 
     }

@@ -50,7 +50,7 @@ public class AttendeeManager extends PersonManager {
         return idToPerson.get(userID).getContactList().contains(contactID);
     }
 
-    public boolean addContactToPerson(String userID, String contactID) {
+    public boolean addContact(String userID, String contactID) {
         Attendee currAtt = (Attendee)idToPerson.get(userID);
         if(!currAtt.getContactList().contains(contactID)) {
             currAtt.addContact(contactID);
