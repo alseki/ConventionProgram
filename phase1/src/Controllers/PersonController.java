@@ -98,8 +98,9 @@ abstract public class PersonController {
         String contactID = manager.getCurrentUserID(contactUsername);
         if ((manager.addContact(currentUserID, contactID) && manager.addContact(contactID, currentUserID))) {
             // update presenter to say contact was added
-            return false;
+            return true;
         }
+        return false;
     }
 
 
