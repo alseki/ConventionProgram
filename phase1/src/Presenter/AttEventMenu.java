@@ -7,7 +7,16 @@ package Presenter;
 
 import java.util.Collection;
 
-public class AttEventMenu {
+public class AttEventMenu implements printSubMenu {
+
+    /**
+     * Prints the options for this menu.
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        return true;
+    }
 
     /**
      * Prints the list of Events happening at the convention

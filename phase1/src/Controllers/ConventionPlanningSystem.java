@@ -7,12 +7,14 @@ package Controllers;
 
 import Person.*;
 import Presenter.CPSMenu;
+import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.Scanner;
 
 public class ConventionPlanningSystem {
 
     private PersonController PC;
+    private int accountChoice;
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
 
@@ -20,33 +22,40 @@ public class ConventionPlanningSystem {
     * Calls appropriate Controllers based on user input.
     */
     public void run() {
-        if (presenter.printIntroMessage()) {
-            int accountChoice = input.nextInt();
+        do {
+            if (presenter.printIntroMessage()) {
+                accountChoice = input.nextInt();
+            }
             setController(accountChoice);
         }
-        PC.run();
+        while (accountChoice != 0);
     }
 
 
-    // This method could potentially be made into a Factory class
     /**
      * Set the user's controller based on login selection.
      */
     private void setController(int choice) {
 
         switch (choice) {
+            case 0:
+                // SAVE FILES
+                break;
             case 1:
                 AttendeeManager am = new AttendeeManager();
                 PC = (AttendeeController) new AttendeeController(am);
+                PC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager();
                 SpeakerManager sm = new SpeakerManager();
                 PC = (OrganizerController) new OrganizerController(om, sm);
+                PC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager();
                 PC = (SpeakerController) new SpeakerController(sman);
+                PC.run();
                 break;
         }
     }

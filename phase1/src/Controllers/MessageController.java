@@ -4,10 +4,11 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 
-public class MessageController implements SubMenu{
+public class MessageController implements SubMenu {
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private int choice;
 
     public MessageController(PersonManager pManager, MessageManager mManager, ChatManager cManager) {
         this.personManager = pManager;
@@ -24,7 +25,6 @@ public class MessageController implements SubMenu{
     public boolean menuOptions() {
         // MessageMenu.menuOptions()
         // choice = input.NextLine()
-
         return true;
     }
 

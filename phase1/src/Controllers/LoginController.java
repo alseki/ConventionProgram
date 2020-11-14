@@ -20,7 +20,9 @@ public class LoginController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        return false;
+        // LoginMenu.menuOptions()
+        // choice = input.NextLine()
+        return true;
     }
 
     /**
@@ -29,7 +31,12 @@ public class LoginController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        return false;
+        // menuOptions();
+        // while (choice != 0)
+        // do {
+        // switch statement to decide method
+        // }
+        return true;
     }
 
     /**

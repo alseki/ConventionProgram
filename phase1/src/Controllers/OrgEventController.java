@@ -5,7 +5,31 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 13/11/2020
 
+import Events.RoomManager;
+import Message.ChatManager;
+import Message.MessageManager;
+import Person.PersonManager;
+import Person.SpeakerManager;
+
 public class OrgEventController implements SubMenu {
+
+    private String currentUserID;
+    private PersonManager personManager;
+    private SpeakerManager speakerManager;
+    private RoomManager roomManager;
+    // EventManager??
+    private MessageManager messageManager;
+    private ChatManager chatManager;
+
+    public OrgEventController(String currentUserID, PersonManager personManager, SpeakerManager speakerManager,
+                              RoomManager roomManager, MessageManager messageManager, ChatManager chatManager) {
+        this.currentUserID = currentUserID;
+        this.personManager = personManager;
+        this.speakerManager = speakerManager;
+        this.roomManager = roomManager;
+        this.messageManager = messageManager;
+        this.chatManager = chatManager;
+    }
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
@@ -13,7 +37,9 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        return false;
+        // OrgEventMenu.menuOptions()
+        // choice = input.NextLine()
+        return true;
     }
 
     /**
@@ -22,7 +48,12 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        return false;
+        // menuOptions();
+        // while (choice != 0)
+        // do {
+        // switch statement to decide method
+        // }
+        return true;
     }
 
     /**
@@ -72,6 +103,34 @@ public class OrgEventController implements SubMenu {
      */
     public boolean createEvent(String eventName, String speakerUsername, String room, int duration) {
         // once room manager is completed
+        return false;
+    }
+
+    /**
+     * Prompts user to input the room they wish to add
+     * @return true iff room adding prompt was printed
+     */
+    public boolean addRoomPrompt() {
+        return true;
+    }
+
+    /**
+     * Sends a Message to every user signed up for an event
+     * @param eventName The name of the Event
+     * @return true iff the Message was sent to every user on the event list
+     */
+    public boolean eventMessage(String eventName) {
+        // messages the event, if it is sent, then it is added.
+        return false;
+    }
+
+    /**
+     * Sends a Message to one Attendee signed up for an event
+     * @param eventName The name of the Event
+     * @param attendeeUsername The username of the Attendee the user wishes to message
+     * @return true iff the message was sent to the corresponding Attendee
+     */
+    public boolean eventMessage(String eventName, String attendeeUsername) {
         return false;
     }
 

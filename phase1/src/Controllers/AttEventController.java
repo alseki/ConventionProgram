@@ -5,7 +5,22 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 13/11/2020
 
+import Events.RoomManager;
+import Message.ChatManager;
+import Message.MessageManager;
+import Person.PersonManager;
+import Person.SpeakerManager;
+
 public class AttEventController implements SubMenu {
+
+    private String currentUserID;
+    private PersonManager personManager;
+    // EventManager??
+
+    public AttEventController(String currentUserID, PersonManager personManager) {
+        this.currentUserID = currentUserID;
+        this.personManager = personManager;
+    }
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
@@ -13,7 +28,9 @@ public class AttEventController implements SubMenu {
      */
     @Override
     public boolean menuOptions() {
-        return false;
+        // AttEventMenu.menuOptions()
+        // choice = input.NextLine()
+        return true;
     }
 
     /**
@@ -22,7 +39,12 @@ public class AttEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-        return false;
+        // menuOptions();
+        // while (choice != 0)
+        // do {
+        // switch statement to decide method
+        // }
+        return true;
     }
 
     /**

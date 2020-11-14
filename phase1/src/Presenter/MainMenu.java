@@ -12,8 +12,9 @@ public class MainMenu {
      * Prints the main menu options available to every user
      * @return true iff 'Person' main menu options were printed
      */
-    private boolean personMM() {
+    private boolean printPersonMM() {
         System.out.println("----- Main Menu -----");
+        System.out.println("To save any account changes and return to the start page, Enter '0'.");
         System.out.println("For Contact List options (view, edit) Enter '1'.");
         System.out.println("For Message options (view current messages, send replies) Enter '2'.");
         return true;
@@ -23,8 +24,8 @@ public class MainMenu {
      * Prints the main menu options available to Attendees
      * @return true iff 'Attendee' main menu options were printed
      */
-    public boolean attendeeMM() {
-        personMM();
+    public boolean printAttendeeMM() {
+        printPersonMM();
         System.out.println("For Event Attending options (view conventions events, view your events, edit your events) " +
                 "Enter '3'.");
         return true;
@@ -34,8 +35,8 @@ public class MainMenu {
      * Prints the main menu options available to Organizers
      * @return true iff 'Organizer' main menu options were printed
      */
-    public boolean organizerMM() {
-        attendeeMM();
+    public boolean printOrganizerMM() {
+        printAttendeeMM();
         System.out.println("For Event Organizing options (edit Event list, create Speaker accounts, add rooms) " +
                 "Enter '4.");
         System.out.println("For Event Messaging options (message Event Attendees, message Event Speakers) Enter '5'.");
@@ -46,28 +47,10 @@ public class MainMenu {
      * Prints the main menu options available to Speakers
      * @return true iff 'Speaker' main menu options were printed
      */
-    public boolean speakerMM() {
-        personMM();
+    public boolean printSpeakerMM() {
+        printPersonMM();
         System.out.println("To view a list of Talks you're speaking at, Enter '3'.");
         System.out.println("For Event Messaging options (message Event Attendees) Enter '4'.");
-        return true;
-    }
-
-    /**
-     * Prints an option to return to the main menu
-     * @return true iff return to main menu propmt was printed
-     */
-    public boolean returnToMM() {
-        System.out.println("To return to the Main Menu, Enter '0'.");
-        return true;
-    }
-
-    /**
-     * Prints a prompt for the user to safely quit the program
-     * @return true iff quit prompt was printed
-     */
-    public boolean returnToCPSM() {
-        System.out.println("To save any account changes and return to the start page, Enter '00'.");
         return true;
     }
 

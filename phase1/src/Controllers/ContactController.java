@@ -6,7 +6,21 @@ package Controllers;
 // Date Modified: 13/11/2020
 
 
-public class ContactController implements SubMenu{
+import Events.RoomManager;
+import Message.ChatManager;
+import Message.MessageManager;
+import Person.PersonManager;
+import Person.SpeakerManager;
+
+public class ContactController implements SubMenu {
+
+    private String currentUserID;
+    private PersonManager personManager;
+
+    public ContactController(String currentUserID, PersonManager personManager) {
+        this.currentUserID = currentUserID;
+        this.personManager = personManager;
+    }
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
@@ -14,7 +28,9 @@ public class ContactController implements SubMenu{
      */
     @Override
     public boolean menuOptions() {
-        return false;
+        // ContactMenu.menuOptions()
+        // choice = input.NextLine()
+        return true;
     }
 
     /**
@@ -23,7 +39,12 @@ public class ContactController implements SubMenu{
      */
     @Override
     public boolean menuChoice() {
-        return false;
+        // menuOptions();
+        // while (choice != 0)
+        // do {
+        // switch statement to decide method
+        // }
+        return true;
     }
 
     /**

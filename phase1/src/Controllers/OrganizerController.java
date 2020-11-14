@@ -1,65 +1,68 @@
 package Controllers;// Programmer: Cara McNeil
-// Description: Controllers.Main menu for Person.Person.Organizer users.
+// Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
 // Date Modified: 09/11/2020
 
 import Events.EventReader;
+import Message.ChatManager;
+import Message.MessageManager;
 import Person.OrganizerManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Events.RoomManager;
+import Presenter.MainMenu;
 
 import java.util.Scanner;
 
-public class OrganizerController extends AttendeeController {
-    private RoomManager eManager;
-    // private Message.Message.ChatManager cManager = new Message.Message.ChatManager();
-    // private Message.MessageManager mManager = new Message.MessageManager();
-    Scanner input = new Scanner(System.in);
-    int currentRequest;
-    private String username;
-    private String password;
+public class OrganizerController extends PersonController {
+    private RoomManager roomManager;
+    private ChatManager chatManager = new ChatManager();
+    private MessageManager messageManager = new MessageManager();
+    private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private OrganizerManager manager;
-    private SpeakerManager sManager;
+    private SpeakerManager speakerManager;
+    private int currentRequest;
+    Scanner input = new Scanner(System.in);
 
 
-    public OrganizerController(PersonManager manager, SpeakerManager sManager) {
+    public OrganizerController(PersonManager manager, SpeakerManager speakerManager) {
         super(manager);
         this.manager = (OrganizerManager) manager;
-        this.sManager = sManager;
-        //eManager = New RoomManager();
+        this.speakerManager = speakerManager;
     }
 
     @Override
-    void run() {
+    public void run() {
+        super.run();
+        do {
+            mainMenu.printOrganizerMM();
+            currentRequest = input.nextInt();
 
+            switch (currentRequest) {
+                case 0:
+                    // SAVE FILES
+                    break;
+                case 1:
+                    ContactController contactController = new ContactController(currentUserID, manager);
+                    contactController.menuChoice();
+                    break;
+                case 2:
+                    MessageController messageController = new MessageController(manager, messageManager, chatManager);
+                    messageController.menuChoice();
+                    break;
+                case 3:
+                    AttEventController attEventController = new AttEventController(currentUserID, manager);
+                    attEventController.menuChoice();
+                    break;
+                case 4:
+                    OrgEventController orgEventController = new OrgEventController(currentUserID, manager,
+                            speakerManager, roomManager, messageManager, chatManager);
+                    orgEventController.menuChoice();
+                    break;
+            }
+        }
+        while (currentRequest != 0);
     }
-
-
-    // NOTE: make all classes private except run?
-
-
-
-    /**
-     * Sends a Message to every user signed up for an event
-     * @param eventName The name of the Event
-     * @return true iff the Message was sent to every user on the event list
-     */
-    public boolean eventMessage(String eventName) {
-        // messages the event, if it is sent, then it is added.
-        return false;
-    }
-
-    /**
-     * Sends a Message to one Attendee signed up for an event
-     * @param eventName The name of the Event
-     * @param attendeeUsername The username of the Attendee the user wishes to message
-     * @return true iff the message was sent to the corresponding Attendee
-     */
-    public boolean eventMessage(String eventName, String attendeeUsername) {
-        return false;
-    }
-
-
+    
 }

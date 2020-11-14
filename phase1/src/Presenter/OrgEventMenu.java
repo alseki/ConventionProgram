@@ -5,15 +5,25 @@ package Presenter;
 // Date Created: 13/11/2020
 // Date Modified: 13/11/2020
 
-public class OrgEventMenu {
+public class OrgEventMenu implements printSubMenu {
 
     /**
-     *
-     * @return
+     * Prints the options for this menu.
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        return true;
+    }
+
+    /**
+     * Prompts user to input the room they wish to add
+     * @return true iff room adding prompt was printed
      */
     public boolean addRoomPrompt() {
         return true;
     }
+
 
 
 }
