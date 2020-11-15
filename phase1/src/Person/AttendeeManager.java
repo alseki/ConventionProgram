@@ -13,6 +13,14 @@ public class AttendeeManager extends PersonManager {
         super();
     }
 
+    /**
+     * instantiates an Attendee object, and assigns it the attributes given by the client entering their info
+     * @param name the full name of the person who would like to create an account
+     * @param username the username that the person would like to use (will be checked if it exists already or not)
+     * @param password the password that the person will secure their account with
+     * @param email the email that the person wants to tie their account with
+     * @return returns true if an account has been successfully created; returns false if not
+     */
     @Override
     public boolean createAccount(String name, String username, String password, String email) {
         if(!usernameToPerson.containsKey(username)) {
@@ -24,6 +32,12 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     * adds the given eventID to the desired Attendee's "list of event IDs that they are attending"
+     * @param userID the ID of the user (not the same as a username)
+     * @param eventID the ID of the event the user wants to sign up for
+     * @return returns true if the eventID has successfully been added to the user's list of eventIDs, false if not
+     */
     public boolean signupForEvent(String userID, String eventID) {
         Attendee curr = (Attendee)idToPerson.get(userID);
         if(!curr.getEventsSignedUp().contains(eventID)) {
@@ -33,6 +47,12 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     * removes an eventID from the desired Attendee's list of eventIDs
+     * @param userID the ID of the user
+     * @param eventID the ID of the event the user wants to cancel their spot from
+     * @return returns true if the desired eventID has been removed from the user's list of eventIDs; otherwise false
+     */
     public boolean removeSpotFromEvents(String userID, String eventID) {
         Attendee curr = (Attendee)idToPerson.get(userID);
         if(curr.getEventsSignedUp().contains(eventID)) {
@@ -42,6 +62,11 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     *
+     * @param userID
+     * @return
+     */
     public ArrayList<String> getContactList(String userID) {
         return idToPerson.get(userID).getContactList();
     }
