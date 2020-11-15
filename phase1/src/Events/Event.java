@@ -161,7 +161,12 @@ public abstract class Event {
      * A textual representation of this event
      * @return a description of this event in the form of a String
      */
-    public abstract String getDescription();
+    protected abstract String getDescription();
+
+    @Override
+    public String toString() {
+        return getDescription();
+    }
 
     /**
      * Returns whether or not another Event conflicts with this one.

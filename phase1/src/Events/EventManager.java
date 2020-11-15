@@ -72,6 +72,31 @@ public class EventManager {
     }
 
     /**
+     * Returns a list of events stored in the EventManager
+     * @param eventsIn The IDs of the events you want returned
+     * @return The events, as an array of their String representations
+     */
+    public String[] getEventList(String[] eventsIn) {
+
+        String[] eventInfoArray = new String[eventsIn.length];
+        for (int i = 0; i < eventsIn.length; i++) {
+            eventInfoArray[i] = events.get(eventsIn[i]).toString();
+        }
+
+        return eventInfoArray;
+
+    }
+
+    /**
+     * Returns a textual representation of an event
+     * @param eventID The ID of the event
+     * @return The events, as a String
+     */
+    public String getEvent(String eventID) {
+        return events.get(eventID).toString();
+    }
+
+    /**
      * Returns the ID of an event given its name
      * @param name The event's name
      * @return The ID

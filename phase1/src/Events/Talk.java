@@ -20,13 +20,13 @@ public class Talk extends Event {
     public Talk (String name, String speakerID, LocalDateTime startTime) {
         super(name, startTime,startTime.plusHours(1));
         this.speakerID = speakerID;
-        description = "Talk: " + name;
+        description = name;
     }
 
     public Talk (String name, String speakerID, LocalDateTime startTime, String description) {
         super(name, startTime,startTime.plusHours(1));
         this.speakerID = speakerID;
-        this.description = description;
+        this.description = name + ": " + description;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Talk extends Event {
 
     /**
      * Setter for the description of this Talk
-     * @param String A new description for this Talk
+     * @param description A new description for this Talk
      */
     protected void setDescription(String description){
         this.description = description;
@@ -55,7 +55,7 @@ public class Talk extends Event {
 
     /**
      * Setter for the speaker of this Talk
-     * @param String The ID of a new speaker for this Talk
+     * @param speakerID The ID of a new speaker for this Talk
      */
     protected void setSpeakerID(String speakerID){
         this.speakerID = speakerID;
