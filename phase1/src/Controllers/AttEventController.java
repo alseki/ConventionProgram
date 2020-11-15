@@ -5,13 +5,17 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 13/11/2020
 
+import java.util.ArrayList;
+
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import Person.AttendeeManager;
 import Person.SpeakerManager;
 import Presenter.AttEventMenu;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AttEventController implements SubMenu {
@@ -19,6 +23,7 @@ public class AttEventController implements SubMenu {
     private String currentUserID;
     private int currentRequest;
     private PersonManager personManager;
+    private AttendeeManager aManager;
     // EventManager??
     private AttEventMenu presenter = new AttEventMenu();
     Scanner input = new Scanner(System.in);
@@ -71,7 +76,7 @@ public class AttEventController implements SubMenu {
      * @return true iff the presenter has been updated woith a list of events
      */
     public boolean getUserEventList() {
-        // List Eventlist = aManager.getSignedUpForEvents(currentUserID);
+        List<String> eventList = aManager.getSignedUpEvents(currentUserID);
         // update the presenter with the list of events signed up for (if empty, say so)
         return false;
     }
@@ -83,7 +88,7 @@ public class AttEventController implements SubMenu {
      */
     public boolean signupForEvent(String eventName) {
         // wanna add the event's chatId to the current user's list of chats.
-        // if eManager.signup(currentUerID, eventName)
+        // if eManager.signup(currentUserID, eventName)
         // aManager.addEvent(currentUserID, eventName)
         // update the presenter to say the Person.Person.Attendee user's been added to the event
         return false;
