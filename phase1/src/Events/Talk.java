@@ -37,6 +37,30 @@ public class Talk extends Event {
         return description;
     }
 
+    /**
+     * Setter for the description of this Talk
+     * @param String A new description for this Talk
+     */
+    protected void setDescription(String description){
+        this.description = description;
+    }
+
+    /**
+     * Getter for the speaker of this Talk
+     * @return the ID of the speaker of this Talk (as a String)
+     */
+    public String getSpeakerID() {
+        return speakerID;
+    }
+
+    /**
+     * Setter for the speaker of this Talk
+     * @param String The ID of a new speaker for this Talk
+     */
+    protected void setSpeakerID(String speakerID){
+        this.speakerID = speakerID;
+    }
+
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
     }
