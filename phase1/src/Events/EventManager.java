@@ -5,40 +5,70 @@ package Events;
 
 // Architecture level - Use class
 
-// Note that this is a Facade for event management methods, and the objects inside of it may change as we figure out
-// which actors are going to be using which ones.
-
 import Message.MessageManager;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class EventManager {
-   // EventSignupManager eventSignup;
-   // EventAccessManager eventAccess;
-   // EventAdminManager eventAdmin;
-    EventDB events;
-    Room room;
-    LocalDateTime conferenceStart;
+    Map<String, String> eventsByName;
+    Map<String, Event> events;
+    RoomPermissions permissionChecker;
 
     /**
-     * Creates a new EventManager with events read in by some sort of EventReader
-     * @param room The EventReader used to read in events
+     * Creates a new empty EventManager
+     * @param checker A RoomPermissions object based on the room in which these Events are being held
      */
-    public EventManager(Room room, LocalDateTime start) {
-        this.room = room;
-        conferenceStart = start;
+    public EventManager(RoomPermissions checker) {
+
+        events = new TreeMap<String, Event>();
+
+        eventsByName = new TreeMap<String, String>();
+
+        permissionChecker = checker;
+    }
+
+    /**
+     * Creates a new EventManager from an array of Events
+     * @param checker A RoomPermissions object based on the room in which these Events are being held
+     * @param events The array of Events to be read in
+     */
+    public EventManager(RoomPermissions checker, Event[] events) {
+
+        this.events = new TreeMap<String, Event>();
+
+        eventsByName = new TreeMap<String, String>();
+
+        for (Event event: events) {
+            this.events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
+        }
+
+        permissionChecker = checker;
     }
 
 
 
 
+    private Event[] getEvents() {
+        Event[] eventArray = {};
+        return events.entrySet().toArray(eventArray);
+    }
+
     /**
-     * Returns information about the entire list of events
-     * @return The list of events
+     * Returns all the events stored in the EventManager
+     * @return The events, as an array of their String representations
      */
-    public Event[] getEventList() {
-        return events.getEventList();
+    public String[] getEventList() {
+
+        Event[] eventArray = getEvents();
+        String[] eventInfoArray = new String[eventArray.length];
+        for (int i = 0; i < eventArray.length; i++) {
+            eventInfoArray[i] = eventArray[i].toString();
+        }
+
+        return eventInfoArray;
+
     }
 
     /**
@@ -47,7 +77,13 @@ public class EventManager {
      * @return The ID
      */
     public String getEventID(String name) {
-        return events.getEventID(name);
+        if (eventsByName.get(name) != null) {
+            return eventsByName.get(name);
+        }
+        else
+        {
+            return null;
+        }
     }
 
 
@@ -60,17 +96,14 @@ public class EventManager {
      */
     public String addEvent(String name, String speakerID, int startTime) {
 
-        // check conflicts!
+        Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime));
 
-        LocalTime time = LocalTime.of(conferenceStart.getHour() + startTime, conferenceStart.getMinute());
+        permissionChecker.checkConflicts(event, getEvents());
 
-        Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time));
+        events.put(event.getID(), event);
+        eventsByName.put(event.getName(), event.getID());
 
-        if (events.addEvent(event)) {
-            return event.getID();
-        }
-
-        return null;
+        return event.getID();
     }
 
     /**
@@ -80,17 +113,14 @@ public class EventManager {
      */
     public String addEvent(String name, String speakerID, int startTime, String description) {
 
-        // check conflicts!
+        Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime), description);
 
-        LocalTime time = LocalTime.of(conferenceStart.getHour() + startTime, conferenceStart.getMinute());
+        permissionChecker.checkConflicts(event, getEvents());
 
-        Event event = new Talk(name, speakerID, LocalDateTime.of(conferenceStart.toLocalDate(), time), description);
+        events.put(event.getID(), event);
+        eventsByName.put(event.getName(), event.getID());
 
-        if (events.addEvent(event)) {
-            return event.getID();
-        }
-
-        return null;
+        return event.getID();
     }
 
     /**
@@ -99,16 +129,26 @@ public class EventManager {
      * @return Whether the event has been successfully deleted
      */
     public boolean removeEvent(String id) {
-        return events.addEvent(events.getEvent(id));
+        if (events.get(id) != null) {
+            eventsByName.remove(events.get(id).getName());
+            events.remove(id);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
      * Checks to see whether two events conflict
      * @param event1ID The ID of the first event
-     * @param event2ID The ID of the second event
+     * @param event2ID The ID of the second event. We assume this event is held in this Room.
      * @return Whether the two events conflict
      */
     public boolean getConflict(String event1ID, String event2ID) {
+        if (events.get(event1ID) != null) {
+            return permissionChecker.checkConflicts(events.get(event1ID), events.get(event2ID));
+        }
         return false;
     }
 
@@ -118,10 +158,10 @@ public class EventManager {
     /**
      * Signs an individual attendee up for an event
      * @param personID The attendee
-     * @param eventID The event
+     * @param id The event
      */
-    public boolean signUpForEvent(String personID, String eventID) {
-            Event event = events.getEvent(eventID);
+    public boolean signUpForEvent(String personID, String id) {
+            Event event = events.get(id);
 
             // check + update capacity!
 
@@ -137,12 +177,11 @@ public class EventManager {
     /**
      * Takes an individual attendee off an event's attendee list
      * @param personID The attendee
-     * @param eventID The event
+     * @param id The event
      */
-    public boolean removeFromEvent(String personID, String eventID) {
-        // update capacity!
+    public boolean removeFromEvent(String personID, String id) {
 
-        Event event = events.getEvent(eventID);
+        Event event = events.get(id);
         if (event != null) {
             event.removeAttendee(personID);
             return true;
