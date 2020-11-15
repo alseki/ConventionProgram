@@ -122,11 +122,10 @@ public abstract class Event {
 
     /**
      * Getter for the attendees attending this Event
-     * @return an array of these attendees
+     * @return an ArrayLis</String> with the attendee ids
      */
-    public String[] getAttendeeIDs() {
-        String[] attendeeArray = {};
-        return attendees.toArray(attendeeArray);
+    public ArrayList<String> getAttendeeIDs() {
+        return attendees;
     }
 
     /**

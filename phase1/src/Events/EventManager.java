@@ -237,8 +237,14 @@ public class EventManager {
         return null; //get messages
     }
 
-    public String[] getSignUps(String eventid){
+    public ArrayList<String> getSignUps(String eventid){
         Event ev = events.get(eventid);
         return ev.getAttendeeIDs();
+    }
+    public boolean seteventChatId(String eventid, String chatId)
+    {
+        Event ev = events.get(eventid);
+        ev.setChatId(chatId);
+        return true;
     }
 }

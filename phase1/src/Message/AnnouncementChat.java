@@ -3,7 +3,7 @@ package Message;
 import java.util.ArrayList;
 import java.util.UUID;
 public class AnnouncementChat extends Chat{
-    private String password;
+    private final String password;
     public AnnouncementChat(String ownerId, ArrayList<String> guestIds){
         super(ownerId, guestIds);
         this.password = UUID.randomUUID().toString();

@@ -35,6 +35,18 @@ public class ChatManager {
         return true;
     }
 
+    /**
+     * creates and returns an annoucment chat with eventid and attendeeids
+     * @param eventid id representign the event for the annoucement
+     * @param attendeeids the id's of the attendess
+     * @return the AnnocuementChat made
+     */
+    public AnnouncementChat createAnnouncementChat(String eventid, ArrayList <String> attendeeids){
+        AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
+        ChatsList.add(ac);
+        return ac;
+    }
+
 
     /**
      * Add Message.Message ID to Message.Message.Chat, where Message.Message.Chat is referred by the Message.Message.Chat ID

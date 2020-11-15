@@ -112,19 +112,20 @@ public class OrgEventController implements SubMenu {
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         String id = roomManager.getRoom(roomID).getEventID(eventName);
-        String [] attendess = roomManager.getRoom(roomID).getSignUps(id);
-        // chatManager.createChat(id, ); problem is that there are some weird type mismatch's
-
+        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id);
+        AnnouncementChat ac = chatManager.createAnnouncementChat(id, attendees);
+        String acId = ac.getId();
+        roomManager.getRoom(roomID).seteventChatId(id, acId);
 
         return true;
     }
 
 
-    /**
+    /*
      * Creates a new Event for the convention
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
-     */
+
     public boolean createEvent(String eventName, String speakerUsername, String room, int startTime,
                                String description) {
         String roomID = roomManager.getRoomId(room);
@@ -132,6 +133,7 @@ public class OrgEventController implements SubMenu {
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
         return true;
     }
+     */
 
     /**
      * Prompts user to input the room they wish to add
