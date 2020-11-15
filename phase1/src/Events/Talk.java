@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 14 2020
+// Last edit: Nov 15 2020
 
 // Architecture Level - Entity
 
@@ -17,12 +17,25 @@ public class Talk extends Event {
     // A Talk differs from an event in that it is exactly one hour long, and cannot take place in the same room as
     // any other event while that event is occurring.
 
+    /**
+     * Constructor for Talk objects
+     * @param name The Talk's name
+     * @param speakerID The ID of the speaker at this Talk
+     * @param startTime The time when the Talk starts
+     */
     public Talk (String name, String speakerID, LocalDateTime startTime) {
         super(name, startTime,startTime.plusHours(1));
         this.speakerID = speakerID;
         description = name;
     }
 
+    /**
+     * Alternate constructor for Talk objects
+     * @param name The Talk's name
+     * @param speakerID The ID of the speaker at this Talk
+     * @param startTime The time when the Talk starts
+     * @param description A description of this Talk
+     */
     public Talk (String name, String speakerID, LocalDateTime startTime, String description) {
         super(name, startTime,startTime.plusHours(1));
         this.speakerID = speakerID;
@@ -64,4 +77,6 @@ public class Talk extends Event {
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
     }
+
 }
+
