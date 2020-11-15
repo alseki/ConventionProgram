@@ -12,6 +12,18 @@ public class ChatManager {
     }
 
     /**
+     * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
+     * @param ownerId ID of the user owning this Chat object
+     * @param guestId IDs of guest
+     * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
+     */
+    public boolean createChat(String ownerId, String guestId){
+        Chat newC = new Chat(ownerId, guestId);
+        ChatsList.add(newC);
+        return true;
+    }
+
+    /**
      * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestIds Collection of IDs of (one or more) guests
@@ -106,6 +118,26 @@ public class ChatManager {
     /**
      * Checks if there already exists a Chat object with same group members inputted
      * @param currentId ID of the user
+     * @param guestId ID of the other member of the Chat
+     * @return True iff there exists a Chat with the exact same group members inputted
+     *         False iff there does not exist a Chat with the exact same group members inputted
+     */
+    public boolean existChat(String currentId, String guestId){
+        ArrayList<String> personIds = new ArrayList<>();
+        personIds.add(currentId);
+        personIds.add(guestId);
+        Collections.sort(personIds);
+        for(Chat c: ChatsList) {
+            ArrayList <String> members = c.getPersonIds();
+            Collections.sort(members);
+            if (members.equals(personIds)){return true;}
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there already exists a Chat object with same group members inputted
+     * @param currentId ID of the user
      * @param guestsId ID of the chat members of the Chat
      * @return True iff there exists a Chat with the exact same group members inputted
      *         False iff there does not exist a Chat with the exact same group members inputted
@@ -116,9 +148,32 @@ public class ChatManager {
         for(Chat c: ChatsList) {
             ArrayList <String> members = c.getPersonIds();
             Collections.sort(members);
-            if (members.equals(guestsId)){return true;}
+            if (members.equals(guestsId)){
+                return true;}
         }
         return false;
+    }
+
+    /**
+     * Find and return the chat ID of the Chat that has the exact same chat members inputted
+     * @param currentId ID of the user
+     * @param guestId ID of the chat member of the Chat
+     * @return chat ID of the Chat with exact same group members inputted.
+     *         null otherwise.
+     */
+    public String findChat(String currentId, String guestId) {
+        ArrayList<String> personIds = new ArrayList<>();
+        personIds.add(currentId);
+        personIds.add(guestId);
+        Collections.sort(personIds);
+        for (Chat c : ChatsList) {
+            ArrayList<String> members = c.getPersonIds();
+            Collections.sort(members);
+            if (members.equals(personIds)) {
+                return c.getId();
+            }
+        }
+        return null;
     }
 
     /**
@@ -134,9 +189,12 @@ public class ChatManager {
         for(Chat c: ChatsList) {
             ArrayList <String> members = c.getPersonIds();
             Collections.sort(members);
-            if (members.equals(guestsId)){return c.getId();}
+            if (members.equals(guestsId)){
+                return c.getId();
+            }
         }
-        return null;}
+        return null;
+    }
 }
 
 // CRC Card Definition
