@@ -23,6 +23,7 @@ public class ChatManager {
         return true;
     }
 
+
     /**
      * Add Message.Message ID to Message.Message.Chat, where Message.Message.Chat is referred by the Message.Message.Chat ID
      * @param chatId of the Message.Message.Chat object that we want to add the messageID to

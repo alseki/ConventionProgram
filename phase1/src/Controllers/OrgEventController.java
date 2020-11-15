@@ -10,6 +10,8 @@ import Message.*;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 import Events.EventManager;
 import Events.Event;
@@ -109,6 +111,11 @@ public class OrgEventController implements SubMenu {
         String roomID = roomManager.getRoomId(room);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
+        String id = roomManager.getRoom(roomID).getEventID(eventName);
+        String [] attendess = roomManager.getRoom(roomID).getSignUps(id);
+        // chatManager.createChat(id, ); problem is that there are some weird type mismatch's
+
+
         return true;
     }
 
@@ -143,7 +150,7 @@ public class OrgEventController implements SubMenu {
         String roomId = getRoomId(roomName);
         EventManager emanager = getEventManager(roomId);
         String eventId = getEventId(eventName, emanager);
-        String ev = emanager.getAnnouncementChat(eventId);
+        String ev = emanager.getAnnouncementChat(eventId); // chatid
         AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
         Message m = messageManager.createMessage(eventId, messageContent);
         ch.addMessageIds(m.getMessageId());

@@ -7,6 +7,7 @@ package Events;
 
 import Message.MessageManager;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -234,5 +235,10 @@ public class EventManager {
 
     public MessageManager getMessages(Event event) {
         return null; //get messages
+    }
+
+    public String[] getSignUps(String eventid){
+        Event ev = events.get(eventid);
+        return ev.getAttendeeIDs();
     }
 }

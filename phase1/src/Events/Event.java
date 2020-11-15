@@ -36,7 +36,6 @@ public abstract class Event {
         ID = UUID.randomUUID().toString();
         attendees = new ArrayList<String>();
         messages = new ArrayList<String>();
-        this.chatId = UUID.randomUUID().toString();
     }
 
     /**
@@ -184,6 +183,16 @@ public abstract class Event {
      * @return True or false.
      */
     protected abstract boolean conflictsWith(Event event);
+
+    /**
+     * sets the chatid to id and returns true
+     * @param id a string representing the id for the chatid
+     * @return
+     */
+    public boolean setChatId(String id){
+        this.chatId = id;
+        return true;
+    }
 }
 
 

@@ -20,7 +20,7 @@ public class Message {
     }
     // this is for event announcements.
     public Message(String eventId, String content){
-        this.senderId = senderId;
+        this.senderId = eventId;
         this.content = content;
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
