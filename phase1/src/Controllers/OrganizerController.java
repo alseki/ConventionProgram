@@ -61,8 +61,10 @@ public class OrganizerController extends PersonController {
                     orgEventController.menuChoice();
                     break;
             }
+            while (currentRequest != 0);
+            return true;
         }
-        while (currentRequest != 0);
+
     }
     
 }
