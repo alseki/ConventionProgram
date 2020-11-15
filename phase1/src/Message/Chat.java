@@ -10,6 +10,13 @@ public class Chat {
     protected ArrayList<String> personIds;
 
     //Chat constructor. Input is arraylist of ID(s) of guest(s) that you (owner) want to form group chat with.
+    public Chat(String ownerId, String guestId){
+        messageIds = new ArrayList<>();
+        personIds = new ArrayList<>();
+        personIds.add(ownerId);
+        personIds.add(guestId);
+        this.Id = UUID.randomUUID().toString();
+    }
     public Chat(String ownerId, ArrayList <String> guestIds){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
