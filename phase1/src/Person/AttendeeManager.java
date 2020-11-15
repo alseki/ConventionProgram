@@ -102,7 +102,7 @@ public class AttendeeManager extends PersonManager {
      * @param userID the ID of the user whose list of events we would like to see
      * @return returns the list of eventIDs that represent the events the Attendee is signed up for
      */
-    public List<String> getSignedUpEvents(String userID) {
+    public ArrayList<String> getSignedUpEvents(String userID) {
         return ((Attendee)idToPerson.get(userID)).getEventsSignedUp(); //gets the list from Attendee
     }
 

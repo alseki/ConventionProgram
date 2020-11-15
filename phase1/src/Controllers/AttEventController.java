@@ -76,7 +76,7 @@ public class AttEventController implements SubMenu {
      * @return true iff the presenter has been updated woith a list of events
      */
     public boolean getUserEventList() {
-        List<String> eventList = aManager.getSignedUpEvents(currentUserID);
+        ArrayList<String> eventList = aManager.getSignedUpEvents(currentUserID);
         // update the presenter with the list of events signed up for (if empty, say so)
         return false;
     }
