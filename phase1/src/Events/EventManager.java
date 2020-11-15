@@ -215,6 +215,10 @@ public class EventManager {
             return false;
         }
     }
+    public String getAnnouncementChat(String eventId){
+        Event ev = events.get(eventId);
+        return ev.getChatId();
+    }
 
 
 

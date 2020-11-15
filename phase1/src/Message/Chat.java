@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Chat {
-    private String Id;
-    private ArrayList<String> messageIds;
-    private ArrayList<String> personIds;
+    protected String Id;
+    protected ArrayList<String> messageIds;
+    protected ArrayList<String> personIds;
 
     //Chat constructor. Input is arraylist of ID(s) of guest(s) that you (owner) want to form group chat with.
     public Chat(String ownerId, ArrayList <String> guestIds){

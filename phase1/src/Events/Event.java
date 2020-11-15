@@ -21,6 +21,7 @@ public abstract class Event {
     private String speakerID;
     private ArrayList<String> attendees;
     private ArrayList<String> messages;
+    private String chatId;
 
     /**
      * Constructor for Event objects
@@ -35,6 +36,15 @@ public abstract class Event {
         ID = UUID.randomUUID().toString();
         attendees = new ArrayList<String>();
         messages = new ArrayList<String>();
+        this.chatId = UUID.randomUUID().toString();
+    }
+
+    /**
+     * a getter for this event's chat IDr
+     * @return String representing the event Chat Id
+     */
+    public String getChatId(){
+        return this.chatId;
     }
 
     /**

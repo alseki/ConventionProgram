@@ -12,6 +12,8 @@ import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
 import java.util.Scanner;
+import Events.EventManager;
+import Events.Event;
 
 public class OrgEventController implements SubMenu {
 
@@ -136,13 +138,25 @@ public class OrgEventController implements SubMenu {
     /**
      * Sends a Message to every user signed up for an event
      * @param eventName The name of the Event
-     * @return true iff the Message was sent to every user on the event list
+     * @return true iff the Message was added to the event's chatlist
      */
-    public boolean eventMessage(String eventName) {
+    public boolean eventMessage(String eventName, String roomName, String messageContent){
+        String roomId = getRoomId(roomName);
+        EventManager emanager = getEventManager(roomName);
+        String eventId = getEventId(eventName, emanager);
+        String ev = emanager.getAnnouncementChat(eventId);
 
-        //chatManager.addMessage()
-        // messages the event, if it is sent, then it is added.
-        return false;
+        // chatManager.addMessage(chatId, messageContent)
+        return true;
+    }
+    private String getRoomId(String roomName){
+       return  roomManager.getRoomId(roomName);
+    }
+    private EventManager getEventManager(String roomId){
+        return roomManager.getRoom(roomId);
+    }
+    private String getEventId(String eventName, EventManager evmanager){
+        return evmanager.getEventID(eventName);
     }
 
     /**
