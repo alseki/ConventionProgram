@@ -74,6 +74,10 @@ public class Talk extends Event {
         this.speakerID = speakerID;
     }
 
+    /**
+     * Checks if the inputted Event conflicts in time with this Talk
+     * @param event The event which is being checked for conflicts with this Talk
+     */
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
     }
