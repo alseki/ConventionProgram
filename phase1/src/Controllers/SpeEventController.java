@@ -69,7 +69,7 @@ public class SpeEventController implements SubMenu {
      * @return true iff the Message was sent to every user on the event list
      */
     public boolean eventMessage(String eventName) {
-        String eventId = EventManager.;
+        // String eventId = EventManager.;
 
         return true;
     }

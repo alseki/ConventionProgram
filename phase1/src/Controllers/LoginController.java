@@ -14,6 +14,7 @@ public class LoginController implements SubMenu {
     private int currentRequest;
     private PersonManager manager;
     private LoginMenu presenter = new LoginMenu();
+    public String username;
     Scanner input = new Scanner(System.in);
 
     public LoginController(PersonManager manager) {
@@ -27,7 +28,6 @@ public class LoginController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        // TODO update presenter class with a print statement for each option
         currentRequest = input.nextInt();
         return true;
     }
@@ -40,22 +40,42 @@ public class LoginController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
+            switch (currentRequest) {
+                case 0:
+                    return false;
+                case 1:
+                    if (login()) {
+                        currentRequest = 0;
+                        break;
+                    }
+                    else {
+                        System.out.println("error loggin in"); // FIXME this should be some kind of exception
+                        break;
+                    }
+                case 2:
+                    if (createAccount()) {
+                        break;
+                    }
+                    else{
+                        System.out.println("error creating account"); // FIXME this should be some kind of exception
+                        break;
+                    }
+            }
         }
         while (currentRequest != 0);
         return true;
     }
 
-    // TODO change, delete and/or add to the methods below
-
     /**
      * Prompts user to input username and password.
      * @return true iff login info corresponds with an existing Person.Person account.
      */
-    public boolean login() {
-        //if (manager.findPerson(username, password)) {
-        //   currentUserID = PersonManager.getPerson(username, password).id;
-        //}
+    private boolean login() {
+        presenter.printLoginPrompt();
+        String username = input.nextLine();
+        presenter.printPasswordPrompt();
+        String password = input.nextLine();
+        // TODO call manager methods to verify username and password
         return true;
     }
 
@@ -63,8 +83,20 @@ public class LoginController implements SubMenu {
      * Prompts user for relevant information and uses it to create a new Person.Person account.
      * @return true iff new account has been created
      */
-    public boolean createAccount() {
-        //manager.createAccount(name, username, password, email);
-        return true;
+    private boolean createAccount() {
+        presenter.printCreateAccountPrompt();
+        presenter.printLoginPrompt();
+        username = input.nextLine();
+        presenter.printPasswordPrompt();
+        String password = input.nextLine();
+        presenter.printNamePrompt();
+        String name = input.nextLine();
+        presenter.printEmailPrompt();
+        String email = input.nextLine();
+        if (manager.createAccount(name, username, password, email)) {
+            presenter.printAccountCreationSuccessful();
+            return true;
+        }
+        return false;
     }
 }

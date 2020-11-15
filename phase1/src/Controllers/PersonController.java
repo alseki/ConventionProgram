@@ -25,8 +25,12 @@ abstract public class PersonController {
      */
     public void run() {
         loginController = new LoginController(manager);
-        loginController.menuChoice();
-        // currentUserID = ?
+        if (loginController.menuChoice()) {
+            currentUserID = manager.getCurrentUserID(loginController.username);
+        }
+        else {
+            
+        }
     }
 
 }
