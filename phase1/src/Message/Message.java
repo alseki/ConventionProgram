@@ -18,6 +18,14 @@ public class Message {
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
     }
+    // this is for event announcements.
+    public Message(String eventId, String content){
+        this.senderId = senderId;
+        this.content = content;
+        this.Id = UUID.randomUUID().toString();
+        this.dateTime = LocalDateTime.now();
+        this.recipientId = null;
+    }
 
     /**
      * This gives access to the Id of this Message.Message.

@@ -215,6 +215,12 @@ public class EventManager {
             return false;
         }
     }
+
+    /**
+     * gets the event chatID for event with eventId
+     * @param eventId a string reppign the event it
+     * @return a string representing the chatId for this event
+     */
     public String getAnnouncementChat(String eventId){
         Event ev = events.get(eventId);
         return ev.getChatId();

@@ -25,6 +25,19 @@ public class MessageManager {
     }
 
     /**
+     * this method is used for event messages.
+     * @param eventId an id representing the eventId
+     * @param content an string reprsenting the content
+     * @return a Message object of the representing the new message
+     */
+    public Message createMessage(String eventId, String content){
+        Message newMessage = new Message(eventId, content);
+        MessageList.add(newMessage);
+        return newMessage;
+
+    }
+
+    /**
      * Get Message.Message by the Id.
      * @param MessageId the ID of Message object that we are trying to retrieve.
      * @return the Message.Message.

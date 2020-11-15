@@ -6,8 +6,7 @@ package Controllers;
 // Date Modified: 14/11/2020
 
 import Events.RoomManager;
-import Message.ChatManager;
-import Message.MessageManager;
+import Message.*;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
@@ -136,17 +135,18 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * Sends a Message to every user signed up for an event
+     * adds a message with content message cotnent.  to the chat contained within the event with eventname.
      * @param eventName The name of the Event
      * @return true iff the Message was added to the event's chatlist
      */
     public boolean eventMessage(String eventName, String roomName, String messageContent){
         String roomId = getRoomId(roomName);
-        EventManager emanager = getEventManager(roomName);
+        EventManager emanager = getEventManager(roomId);
         String eventId = getEventId(eventName, emanager);
         String ev = emanager.getAnnouncementChat(eventId);
-
-        // chatManager.addMessage(chatId, messageContent)
+        AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
+        Message m = messageManager.createMessage(eventId, messageContent);
+        ch.addMessageIds(m.getMessageId());
         return true;
     }
     private String getRoomId(String roomName){

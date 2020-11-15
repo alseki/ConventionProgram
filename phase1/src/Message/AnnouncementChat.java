@@ -17,14 +17,7 @@ public class AnnouncementChat extends Chat{
         return password;
     }
 
-    /**
-     * checks if the user has the password
-     * @param pass a String representing what could be the password
-     * @return true iff pass is the password
-     */
-    public boolean checkPassword(String pass) {
-        return pass.equals(password);
-    }
+
 
     /**
      * adds the message id and returns true iff the pass matches the annoucement chat password
@@ -33,12 +26,16 @@ public class AnnouncementChat extends Chat{
      * @return true iff the messageId was added to the list of messageid's
      */
     @Override
-    public boolean addMessageId(String messageId, String pass){
+    public boolean addMessageIds(String messageId, String pass){
         if(checkPassword(pass)){
             messageIds.add(messageId);
             return true;
         }
         return false;
+    }
+
+    private boolean checkPassword(String pass) {
+        return pass.equals(password);
     }
 
 }
