@@ -31,31 +31,35 @@ public class SpeakerController extends PersonController {
 
     @Override
     public void run() {
-        super.run();
-        do {
-            mainMenu.printSpeakerMM();
-            currentRequest = input.nextInt();
+        this.currentUserID = super.currentUserID;
+        if (super.loggedIn) {
+            super.run();
+            do {
+                mainMenu.printSpeakerMM();
+                currentRequest = input.nextInt();
 
-            switch (currentRequest) {
-                case 0:
-                    // SAVE FILES
-                    break;
-                case 1:
-                    ContactController contactController = new ContactController(currentUserID, manager);
-                    contactController.menuChoice();
-                    break;
-                case 2:
-                    MessageController messageController = new MessageController(manager, messageManager, chatManager);
-                    messageController.menuChoice();
-                    break;
-                case 3:
-                    SpeEventController speEventController = new SpeEventController(currentUserID, manager,
-                            messageManager, chatManager);
-                    speEventController.menuChoice();
-                    break;
+                switch (currentRequest) {
+                    case 0:
+                        // SAVE FILES
+                        break;
+                    case 1:
+                        ContactController contactController = new ContactController(currentUserID, manager);
+                        contactController.menuChoice();
+                        break;
+                    case 2:
+                        MessageController messageController = new MessageController(currentUserID, manager, messageManager,
+                                chatManager);
+                        messageController.menuChoice();
+                        break;
+                    case 3:
+                        SpeEventController speEventController = new SpeEventController(currentUserID, manager,
+                                messageManager, chatManager);
+                        speEventController.menuChoice();
+                        break;
+                }
             }
+            while (currentRequest != 0);
         }
-        while (currentRequest != 0);
     }
 
 }

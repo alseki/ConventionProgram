@@ -15,7 +15,8 @@ public class LoginMenu implements printSubMenu {
     public boolean printMenuOptions() {
         System.out.println("----- Login Menu -----");
         System.out.println("To return to start page, Enter '0'.");
-        // TODO add print statements for all the other menu options
+        System.out.println("To Login, Enter '1'.");
+        System.out.println("To Create a new account, Enter '2'.");
         return true;
     }
 
@@ -33,6 +34,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff password prompt has been printed
      */
     public boolean printPasswordPrompt() {
+        System.out.println("Enter password: ");
         return true;
     }
 
@@ -41,6 +43,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff name prompt has been printed
      */
     public boolean printNamePrompt() {
+        System.out.println("Enter full name: ");
         return true;
     }
 
@@ -49,6 +52,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff email prompt has been printed
      */
     public boolean printEmailPrompt() {
+        System.out.println("Enter email address: ");
         return true;
     }
 
@@ -57,6 +61,17 @@ public class LoginMenu implements printSubMenu {
      * @return true if account creation instructions are printed
      */
     public boolean printCreateAccountPrompt() {
+        System.out.println("To create an account, select a username and password, then enter your full name and email " +
+                "address. ");
+        return true;
+    }
+
+    /**
+     * Prints confirmation that an account was created.
+     * @return true iff account creation successful statement was printed
+     */
+    public boolean printAccountCreationSuccessful() {
+        System.out.println("Account creation successful! Redirecting to Login Menu...");
         return true;
     }
 
@@ -65,6 +80,17 @@ public class LoginMenu implements printSubMenu {
      * @return true iff login instructions were printed
      */
     public boolean printLoginPrompt() {
+        System.out.println("To login, enter the following: ");
+        return true;
+    }
+
+
+    /**
+     * Prints confirmation that Login was successful
+     * @return true iff login successful statement was printed
+     */
+    public boolean printLoginSuccessful() {
+        System.out.println("Login Successful! Redirecting to account Main Menu...");
         return true;
     }
 }

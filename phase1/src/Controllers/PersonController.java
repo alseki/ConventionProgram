@@ -11,9 +11,10 @@ import java.util.Scanner;
 
 abstract public class PersonController {
     Scanner input = new Scanner(System.in);
-    private String currentUserID;
+    public String currentUserID;
     private PersonManager manager;
     private LoginController loginController;
+    public boolean loggedIn =  false;
 
 
     public PersonController(PersonManager manager) {
@@ -25,8 +26,10 @@ abstract public class PersonController {
      */
     public void run() {
         loginController = new LoginController(manager);
-        loginController.menuChoice();
-        // currentUserID = ?
+        if (loginController.menuChoice()) {
+            currentUserID = manager.getCurrentUserID(loginController.username);
+            loggedIn = true;
+        }
     }
 
 }

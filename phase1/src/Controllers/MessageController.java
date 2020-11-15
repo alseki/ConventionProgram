@@ -9,13 +9,16 @@ import java.util.Scanner;
 
 public class MessageController implements SubMenu {
     private int currentRequest;
+    private String currentUserID;
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
     private MessageMenu presenter = new MessageMenu();
     Scanner input = new Scanner(System.in);
 
-    public MessageController(PersonManager pManager, MessageManager mManager, ChatManager cManager) {
+    public MessageController(String currentUserID, PersonManager pManager, MessageManager mManager,
+                             ChatManager cManager) {
+        this.currentUserID = currentUserID;
         this.personManager = pManager;
         this.messageManager = mManager;
         this.chatManager = cManager;
@@ -59,8 +62,6 @@ public class MessageController implements SubMenu {
     // TODO: 2 steps have duplicated bodies
 
     private String createChat(String contactUsername) {
-        PersonController.run();
-        String currentUserID = PersonController.currentUserID;
         String contactID = this.personManager.getCurrentUserID(contactUsername);
         if (this.chatManager.existChat(currentUserID, contactID)){
             String chatID = this.chatManager.findChat(currentUserID, contactID);
