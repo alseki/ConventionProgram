@@ -41,19 +41,19 @@ public class ChatManager {
      * @param attendeeids the id's of the attendess
      * @return the AnnocuementChat made
      */
-    public AnnouncementChat createAnnouncementChat(String eventid, String[] attendeeids){
+    public String createAnnouncementChat(String eventid, String[] attendeeids){
         AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
         ChatsList.add(ac);
-        return ac;
+        return ac.Id;
     }
 
 
     /**
-     * Add Message.Message ID to Message.Message.Chat, where Message.Message.Chat is referred by the Message.Message.Chat ID
-     * @param chatId of the Message.Message.Chat object that we want to add the messageID to
-     * @param messageId of the Message.Message object to be added to the list in Message.Message.Chat object
-     * @return true iff the message ID was added to the Message.Message.Chat
-     *         false iff no Message.Message.Chat in ChatList has the inputted chatId
+     * Add Message ID to Chat, where Chat is referred by the Chat ID
+     * @param chatId of the Chat object that we want to add the messageID to
+     * @param messageId of the Message object to be added to the list in Chat object
+     * @return true iff the message ID was added to the Chat
+     *         false iff no Chat in ChatList has the inputted chatId
      */
     public boolean addMessage(String chatId, String messageId){
         for(Chat chat: ChatsList) {
@@ -63,6 +63,15 @@ public class ChatManager {
             }
         }
         return false;
+    }
+
+    /**
+     * Add Message ID to AnnouncementChat, where this AnnouncementChat and Message objects are referred by their ID
+     * @param acId ID of the AnnouncementChat
+     * @param messageId of the Message object to be added to the list in AnnouncementChat object
+     */
+    public boolean addMessageAChat(String acId, String messageId){
+
     }
 
     /**
@@ -101,7 +110,7 @@ public class ChatManager {
      * @param personId the ID of the person
      * @return ArrayList of Chats containing the inputted person ID
      */
-    public ArrayList <Chat> searchChats(String personId){
+    public ArrayList <Chat> searchChatsContaining(String personId){
         ArrayList <Chat> chats = new ArrayList<>();
         for (Chat c: ChatsList){
             if (c.getPersonIds().contains(personId)){

@@ -55,7 +55,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    public Person getPerson(String currentUserID) {
+    private Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -70,7 +70,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
      */
-    public Person getPerson(String username, String password) {
+    private Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
             if (usernameToPerson.get(username).getPassword().equals(password)) {
                 return usernameToPerson.get(username);
@@ -86,7 +86,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username
      * @return Person; this is for methods in PersonController that which to get Person using username only
      */
-    public Person getPersonByUsername(String username) {
+    private Person getPersonByUsername(String username) {
         if (usernameToPerson.containsKey(username)) {
             return usernameToPerson.get(username);
         }

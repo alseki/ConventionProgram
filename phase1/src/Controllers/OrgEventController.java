@@ -56,12 +56,31 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
+
         do {
             menuOptions();
+            switch (currentRequest) {
+                case 0:
+                    break;
+                case 1:
+                    addRoomPrompt();
+                    break;
+                case 2:
+                    addSpeakerPrompt();
+                    break;
+                case 3:
+                    createEventPrompt();
+                    break;
+                case 4:
+                    eventMessagePrompt();
+                    break;
+
+
+            }
+            while (currentRequest != 0) ;
+            return true;
             // TODO add switch statement to call the methods that correspond with currentRequest
         }
-        while (currentRequest != 0);
-        return true;
     }
 
     /**
@@ -114,11 +133,24 @@ public class OrgEventController implements SubMenu {
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         String id = roomManager.getRoom(roomID).getEventID(eventName);
         String[] attendees = roomManager.getRoom(roomID).getSignUps(id);
-        AnnouncementChat ac = chatManager.createAnnouncementChat(id, attendees);
-        String acId = ac.getId();
+        String acId = chatManager.createAnnouncementChat(id, attendees);
         roomManager.getRoom(roomID).setEventChatID(id, acId);
 
         return true;
+    }
+    public boolean createEventPrompt(){
+        presenter.printCreateEventPrompt();
+        presenter.printEventNamePrompt();
+        String name = input.nextLine();
+        presenter.printRoomNamePrompt();
+        String num = input.nextLine();
+        presenter.printSpeakerUsernamePrompt();
+        String speakername = input.nextLine();
+        presenter.printStartTimePrompt();
+        int start = input.nextInt();
+        createEvent(name, speakername, num, start);
+        return true;
+
     }
 
 
@@ -141,6 +173,22 @@ public class OrgEventController implements SubMenu {
      * @return true iff room adding prompt was printed
      */
     public boolean addRoomPrompt() {
+        presenter.printRoomPrompt();
+        String name = input.nextLine();
+        addRoom(name);
+        return true;
+    }
+    public boolean addSpeakerPrompt(){
+        presenter.printAddSpeakPrompt();
+        presenter.printAddNamePrompt();
+        String name = input.nextLine();
+        presenter.printAddEmailPrompt();
+        String email = input.nextLine();
+        presenter.printAddUsernamePrompt();
+        String username = input.nextLine();
+        presenter.printAddPasswordPrompt();
+        String pass = input.nextLine();
+        createSpeaker(name, username, pass, email);
         return true;
     }
 
@@ -156,8 +204,19 @@ public class OrgEventController implements SubMenu {
         String ev = emanager.getAnnouncementChat(eventId); // chatid
         AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
         String pass = ch.getPassword(); // the password for the announcemenchat
-        Message m = messageManager.createMessage(eventId, messageContent);
-        ch.addMessageIds(m.getMessageId(), pass);
+        String m = messageManager.createMessage(eventId, messageContent);
+        ch.addMessageIds(m, pass);
+        return true;
+    }
+    public boolean eventMessagePrompt(){
+        presenter.printEventMessageIntro();
+        presenter.printEventNamePrompt();
+        String name = input.nextLine();
+        presenter.printRoomNamePrompt();
+        String rname = input.nextLine();
+        presenter.printMessageContentPrompt();
+        String content = input.nextLine();
+        eventMessage(name, rname, content);
         return true;
     }
 

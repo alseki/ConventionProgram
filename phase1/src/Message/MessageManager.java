@@ -28,12 +28,12 @@ public class MessageManager {
      * this method is used for event messages.
      * @param eventId an id representing the eventId
      * @param content an string reprsenting the content
-     * @return a Message object of the representing the new message
+     * @return ID of the newly created Message object
      */
-    public Message createMessage(String eventId, String content){
+    public String createMessage(String eventId, String content){
         Message newMessage = new Message(eventId, content);
         MessageList.add(newMessage);
-        return newMessage;
+        return newMessage.getMessageId();
 
     }
 
@@ -42,7 +42,7 @@ public class MessageManager {
      * @param MessageId the ID of Message object that we are trying to retrieve.
      * @return the Message.Message.
      */
-    public Message getMessage(String MessageId){
+    private Message getMessage(String MessageId){
         Message curMessage = null;
         for (Message m : MessageList){
             if (m.getMessageId().equals(MessageId)){
