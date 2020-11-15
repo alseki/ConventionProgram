@@ -5,6 +5,7 @@ import Message.MessageManager;
 import Person.PersonManager;
 import Presenter.MessageMenu;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MessageController implements SubMenu {
@@ -91,6 +92,10 @@ public class MessageController implements SubMenu {
      * @return true iff new Message was created and added to Chat's messageList
      */
     public boolean addMessage(String chatID, String messageContent) {
+        ArrayList <String> chatMembers = chatManager.getChat(chatID).getPersonIds();
+
+        messageManager.createMessage()
+
         return true;
     }
 

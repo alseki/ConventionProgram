@@ -133,8 +133,7 @@ public class OrgEventController implements SubMenu {
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         String id = roomManager.getRoom(roomID).getEventID(eventName);
         String[] attendees = roomManager.getRoom(roomID).getSignUps(id);
-        AnnouncementChat ac = chatManager.createAnnouncementChat(id, attendees);
-        String acId = ac.getId();
+        String acId = chatManager.createAnnouncementChat(id, attendees);
         roomManager.getRoom(roomID).setEventChatID(id, acId);
 
         return true;
@@ -205,8 +204,8 @@ public class OrgEventController implements SubMenu {
         String ev = emanager.getAnnouncementChat(eventId); // chatid
         AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
         String pass = ch.getPassword(); // the password for the announcemenchat
-        Message m = messageManager.createMessage(eventId, messageContent);
-        ch.addMessageIds(m.getMessageId(), pass);
+        String m = messageManager.createMessage(eventId, messageContent);
+        ch.addMessageIds(m, pass);
         return true;
     }
     public boolean eventMessagePrompt(){

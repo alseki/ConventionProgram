@@ -2,12 +2,17 @@ package Controllers;
 
 import Events.EventManager;
 import Events.RoomManager;
+import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
+import Person.Attendee;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.SpeEventMenu;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class SpeEventController implements SubMenu {
@@ -15,18 +20,19 @@ public class SpeEventController implements SubMenu {
     private String currentUserID;
     private int currentRequest;
     private PersonManager personManager;
-    // EventManager??
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private EventManager eventManager;
     private SpeEventMenu presenter = new SpeEventMenu();
     Scanner input = new Scanner(System.in);
 
     public SpeEventController(String currentUserID, PersonManager personManager, MessageManager messageManager,
-                              ChatManager chatManager) {
+                              ChatManager chatManager, EventManager eventManager) {
         this.currentUserID = currentUserID;
         this.personManager = personManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
+        this.eventManager = eventManager;
     }
 
     /**
@@ -60,17 +66,22 @@ public class SpeEventController implements SubMenu {
      * @return true iff a list of talks has been gotten
      */
     public boolean getTalks() {
+
         return true;
     }
 
     /**
      * Sends a Message to every user signed up for an event
      * @param eventName The name of the Event
+     * @param messageContent Content of the Message to be sent
      * @return true iff the Message was sent to every user on the event list
      */
-    public boolean eventMessage(String eventName) {
-        // String eventId = EventManager.;
-
+    public boolean eventMessage(String eventName, String messageContent) {
+        String eventID = eventManager.getEventID(eventName);
+        String[] attIDs = eventManager.getSignUps(eventID);
+        String messageID = messageManager.createMessage(eventID, messageContent);
+        String acID = chatManager.createAnnouncementChat(eventID, attIDs);
+        chatManager.addMessageAChat(acID, messageID);
         return true;
     }
 
@@ -80,15 +91,26 @@ public class SpeEventController implements SubMenu {
      * @param attendeeUsername Th username of the Attendee the user wishes to message
      * @return true iff the message was sent to the corresponding Attendee
      */
-    public boolean eventMessage(String eventName, String attendeeUsername) {
+    public boolean eventMessage(String eventName, String messageContent, String attendeeUsername) {
+        String eventID = eventManager.getEventID(eventName);
+        String attID = personManager.getCurrentUserID(attendeeUsername);
+        String[] attendeeID = new String[]{attID};
+        //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
+        //if (!(attList.contains(attID))){
+            //throw new InvalidIDException();
+        //    return false;}
+        String messageID = messageManager.createMessage(eventID, messageContent);
+        String acID = chatManager.createAnnouncementChat(eventID, attendeeID);
+        chatManager.addMessageIds(messageID);
         return true;
-    }
+        }
 
     /**
      * Sends a Message to every user signed up for every event this user is speaking at
      * @return true iff the Message was sent to every user on the event list for every event this user is speaking at
      */
     public boolean allEventMessage() {
+
         return true;
     }
 }

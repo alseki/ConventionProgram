@@ -112,9 +112,6 @@ public class EventManager {
         }
     }
 
-
-
-
     /**
      * Adds an event
      * @param name The event
@@ -226,8 +223,6 @@ public class EventManager {
         Event ev = events.get(eventId);
         return ev.getChatID();
     }
-
-
 
     public boolean announceToEvent(Event event) {
         return false; //get messages
