@@ -25,7 +25,6 @@ public class AnnouncementChat extends Chat{
      * @param pass a string representing the password for annoucement chat
      * @return true iff the messageId was added to the list of messageid's
      */
-    @Override
     public boolean addMessageIds(String messageId, String pass){
         if(checkPassword(pass)){
             messageIds.add(messageId);

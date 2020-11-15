@@ -107,7 +107,7 @@ public class OrgEventController implements SubMenu {
      */
     public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
         String roomID = roomManager.getRoomId(room);
-        String speakerID = ""; // add speaker ID
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         return true;
     }
