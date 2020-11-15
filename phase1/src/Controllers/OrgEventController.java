@@ -11,7 +11,6 @@ import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
-
 import java.util.Scanner;
 
 public class OrgEventController implements SubMenu {
@@ -68,12 +67,7 @@ public class OrgEventController implements SubMenu {
      * @return true iff list was added to system.
      */
     public boolean addRoom(String room) {
-        if (roomManager.addRoom(room) != null) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return roomManager.addRoom(room) != null;
     }
 
     /**
@@ -126,7 +120,7 @@ public class OrgEventController implements SubMenu {
     public boolean createEvent(String eventName, String speakerUsername, String room, int startTime,
                                String description) {
         String roomID = roomManager.getRoomId(room);
-        String speakerID = ""; // add speaker ID
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
         return false;
     }
@@ -145,6 +139,8 @@ public class OrgEventController implements SubMenu {
      * @return true iff the Message was sent to every user on the event list
      */
     public boolean eventMessage(String eventName) {
+
+        //chatManager.addMessage()
         // messages the event, if it is sent, then it is added.
         return false;
     }

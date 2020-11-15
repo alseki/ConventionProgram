@@ -26,7 +26,7 @@ public class OrganizerManager extends PersonManager {
     @Override
     public boolean createAccount(String fullName, String username, String password, String email){
         // will change this if we make some errors.
-        if(!usernameToPerson.containsKey(username)) {
+        if(!usernameToPerson.containsKey(username)) { // check that there is not someone with that username
             Organizer og = new Organizer(fullName, username, password, email);
             updateAllPersons(og); // see below
             updateUsernameToPerson(og.getUsername(), og); // see below
@@ -45,7 +45,7 @@ public class OrganizerManager extends PersonManager {
 
     public boolean addEvent(String eventId, String userId){
         Organizer og = (Organizer)idToPerson.get(userId);
-        if (!og.getEventsSignedUp().contains(eventId)){
+        if (!og.getEventsSignedUp().contains(eventId)){ // checking that they are not currently signed up for the event
             og.signUp(eventId);
             return true;
         }
@@ -60,7 +60,7 @@ public class OrganizerManager extends PersonManager {
 
     public boolean cancelEvent(String userId, String eventId){
         Organizer og = (Organizer)idToPerson.get(userId);
-        if (og.getEventsSignedUp().contains(eventId)){
+        if (og.getEventsSignedUp().contains(eventId)){ // check that they are currently signed up fro the event
             og.cancelSpot(eventId);
             return true;
         }
@@ -75,22 +75,13 @@ public class OrganizerManager extends PersonManager {
      */
     public boolean  updateContactList(String contactId, String userId){
         Organizer og = (Organizer)idToPerson.get(userId);
-        if(!og.getContactList().contains(contactId)) {
+        if(!og.getContactList().contains(contactId)) { // checking if they are not currently a contact
             og.addContact(contactId);
             return true;
         }
         return false;
     }
 
-    /**
-     * returns the current organizer's list of contancts
-     * @return ArrayList</String> representing the organizer id contact list
-     */
-    @Override
-    public ArrayList<String> getContactList(String organizerId){
-        Organizer og = (Organizer)usernameToPerson.get(organizerId);
-        return og.getContactList();
-    }
 
     public ArrayList<String> getSignedUpForEvents(String organizerId){
         return idToPerson.get(organizerId).getEventList();

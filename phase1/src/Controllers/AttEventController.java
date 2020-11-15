@@ -82,6 +82,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was signed up for the Event
      */
     public boolean signupForEvent(String eventName) {
+        // wanna add the event's chatId to the current user's list of chats.
         // if eManager.signup(currentUerID, eventName)
         // aManager.addEvent(currentUserID, eventName)
         // update the presenter to say the Person.Person.Attendee user's been added to the event
@@ -94,6 +95,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was removed from the Event
      */
     public boolean cancelEvent(String eventName) {
+        // wanna remove the event's chatId to the current user's list of chats.
         // if eManager.remove(currentUserID, eventName)
         // aManager.cancelEvent(currentUserID, eventName)
         // update the presenter to say the Person.Person.Attendee user's been added to the event
