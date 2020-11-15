@@ -45,7 +45,8 @@ public class SpeakerController extends PersonController {
                     contactController.menuChoice();
                     break;
                 case 2:
-                    MessageController messageController = new MessageController(manager, messageManager, chatManager);
+                    MessageController messageController = new MessageController(currentUserID, manager, messageManager,
+                            chatManager);
                     messageController.menuChoice();
                     break;
                 case 3:
