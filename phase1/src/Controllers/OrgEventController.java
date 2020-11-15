@@ -104,6 +104,7 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Creates a new Event for the convention
+     * creates a new chat for the event and sets the event chatid to the id of this chat.
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
@@ -115,7 +116,7 @@ public class OrgEventController implements SubMenu {
         ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id);
         AnnouncementChat ac = chatManager.createAnnouncementChat(id, attendees);
         String acId = ac.getId();
-        roomManager.getRoom(roomID).seteventChatId(id, acId);
+        roomManager.getRoom(roomID).setEventChatId(id, acId);
 
         return true;
     }
@@ -144,29 +145,22 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * adds a message with content message cotnent.  to the chat contained within the event with eventname.
+     * adds a message with content message cotnent.  to the announcementchat contained within the event with eventname.
      * @param eventName The name of the Event
      * @return true iff the Message was added to the event's chatlist
      */
     public boolean eventMessage(String eventName, String roomName, String messageContent){
-        String roomId = getRoomId(roomName);
-        EventManager emanager = getEventManager(roomId);
-        String eventId = getEventId(eventName, emanager);
+        String roomId = roomManager.getRoomId(roomName);
+        EventManager emanager = roomManager.getRoom(roomId);
+        String eventId =  emanager.getEventID(eventName);
         String ev = emanager.getAnnouncementChat(eventId); // chatid
         AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
+        String pass = ch.getPassword(); // the password for the announcemenchat
         Message m = messageManager.createMessage(eventId, messageContent);
-        ch.addMessageIds(m.getMessageId());
+        ch.addMessageIds(m.getMessageId(), pass);
         return true;
     }
-    private String getRoomId(String roomName){
-       return  roomManager.getRoomId(roomName);
-    }
-    private EventManager getEventManager(String roomId){
-        return roomManager.getRoom(roomId);
-    }
-    private String getEventId(String eventName, EventManager evmanager){
-        return evmanager.getEventID(eventName);
-    }
+
 
     /**
      * Sends a Message to one Attendee signed up for an event
