@@ -1,20 +1,21 @@
 package Events;
 
-// Contributors: Sarah Kronenfeld
-// Last edit: Nov 14 2020
-
-// Architecture level - Use class
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+// Contributors: Sarah Kronenfeld, Eytan Weinstein
+// Last edit: Nov 15 2020
+
+// Architecture Level - Use Class
+
 public class RoomPermissions {
-    Room room;
-    LocalDateTime conferenceStart;
+
+    private LocalDateTime conferenceStart;
+    private Room room;
 
     protected RoomPermissions (LocalDateTime start, Room room) {
-        this.room = room;
         conferenceStart = start;
+        this.room = room;
     }
 
     protected LocalDateTime toEventTime(int hour) {
@@ -40,6 +41,5 @@ public class RoomPermissions {
     protected int spotsLeft(Event event) {
         return 0;
     }
-
 
 }

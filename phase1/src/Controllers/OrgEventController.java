@@ -1,9 +1,9 @@
 package Controllers;
 
-// Programmers: Cara McNeil, Sarah Kronenfeld
+// Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 14/11/2020
+// Date Modified: 15/11/2020
 
 import Events.RoomManager;
 import Message.*;
@@ -109,7 +109,7 @@ public class OrgEventController implements SubMenu {
      * @return true iff the Event was created
      */
     public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
-        String roomID = roomManager.getRoomId(room);
+        String roomID = roomManager.getRoomID(room);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         String id = roomManager.getRoom(roomID).getEventID(eventName);
@@ -150,7 +150,7 @@ public class OrgEventController implements SubMenu {
      * @return true iff the Message was added to the event's chatlist
      */
     public boolean eventMessage(String eventName, String roomName, String messageContent){
-        String roomId = roomManager.getRoomId(roomName);
+        String roomId = roomManager.getRoomID(roomName);
         EventManager emanager = roomManager.getRoom(roomId);
         String eventId =  emanager.getEventID(eventName);
         String ev = emanager.getAnnouncementChat(eventId); // chatid
