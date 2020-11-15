@@ -60,7 +60,7 @@ public class SpeEventController implements SubMenu {
      * @return true iff a list of talks has been gotten
      */
     public boolean getTalks() {
-        return false;
+        return true;
     }
 
     /**
@@ -71,7 +71,7 @@ public class SpeEventController implements SubMenu {
     public boolean eventMessage(String eventName) {
         String eventId = EventManager.;
 
-        return false;
+        return true;
     }
 
     /**
@@ -81,7 +81,7 @@ public class SpeEventController implements SubMenu {
      * @return true iff the message was sent to the corresponding Attendee
      */
     public boolean eventMessage(String eventName, String attendeeUsername) {
-        return false;
+        return true;
     }
 
     /**
@@ -89,6 +89,6 @@ public class SpeEventController implements SubMenu {
      * @return true iff the Message was sent to every user on the event list for every event this user is speaking at
      */
     public boolean allEventMessage() {
-        return false;
+        return true;
     }
 }

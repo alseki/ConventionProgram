@@ -84,7 +84,7 @@ public class OrgEventController implements SubMenu {
             //sManager.createAccount(name, username, password, email);
             //return true;
         //}
-        return false;
+        return true;
     }
 
 
@@ -96,7 +96,7 @@ public class OrgEventController implements SubMenu {
      */
     private boolean scheduleSpeaker(String speakerUsername, String room) {
 
-        return false;
+        return true;
     }
 
 
@@ -109,7 +109,7 @@ public class OrgEventController implements SubMenu {
         String roomID = roomManager.getRoomId(room);
         String speakerID = ""; // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
-        return false;
+        return true;
     }
 
 
@@ -123,7 +123,7 @@ public class OrgEventController implements SubMenu {
         String roomID = roomManager.getRoomId(room);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
-        return false;
+        return true;
     }
 
     /**
@@ -166,7 +166,7 @@ public class OrgEventController implements SubMenu {
      * @return true iff the message was sent to the corresponding Attendee
      */
     public boolean eventMessage(String eventName, String attendeeUsername) {
-        return false;
+        return true;
     }
 
 }
