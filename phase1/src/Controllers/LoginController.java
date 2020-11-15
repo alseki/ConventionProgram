@@ -42,10 +42,10 @@ public class LoginController implements SubMenu {
             menuOptions();
             switch (currentRequest) {
                 case 0:
-                    return false;
+                    return false; // The user has inputted 0
                 case 1:
                     if (login()) {
-                        currentRequest = 0;
+                        currentRequest = 0; // Login was successful,
                         break;
                     }
                     else {
@@ -72,7 +72,7 @@ public class LoginController implements SubMenu {
      */
     private boolean login() {
         presenter.printLoginPrompt();
-        String username = input.nextLine();
+        username = input.nextLine();
         presenter.printPasswordPrompt();
         String password = input.nextLine();
         // TODO call manager methods to verify username and password
