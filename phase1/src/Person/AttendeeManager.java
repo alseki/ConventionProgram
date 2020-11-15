@@ -63,18 +63,31 @@ public class AttendeeManager extends PersonManager {
     }
 
     /**
-     *
-     * @param userID
-     * @return
+     * gets the desired user's list of contacts. Uses the given userID to search for the user
+     * @param userID the user ID of the person whose contact list we want to get
+     * @return returns a list of other people's userIDs (Strings) if the desired user is found
      */
     public ArrayList<String> getContactList(String userID) {
         return idToPerson.get(userID).getContactList();
     }
 
+    /**
+     * checks a user's contact list to see if a certain contact is in their list
+     * @param userID the user ID of the person whose contact list we want to check for
+     * @param contactID the ID of the contact we want to check for inside the current user's list of contacts
+     * @return returns true if the contact is indeed found inside the current user's list of contacts, otherwise false
+     */
     public boolean checkForContact(String userID, String contactID) {
         return idToPerson.get(userID).getContactList().contains(contactID);
     }
 
+    /**
+     * adds a contact to a user's list of contacts, by their ID
+     * @param userID the user ID of the person whose contact list we want to add to
+     * @param contactID the ID of the contact we want to add to the user's list of contacts
+     * @return returns true if the contact has been successfully added; false if contact already exists inside
+     * the user's list of contacts
+     */
     public boolean addContact(String userID, String contactID) {
         Attendee currAtt = (Attendee)idToPerson.get(userID);
         if(!currAtt.getContactList().contains(contactID)) {
@@ -84,6 +97,11 @@ public class AttendeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     * accesses an Attendee object to retrieve a list of events (eventIDs) that the attendee has signed up for
+     * @param userID the ID of the user whose list of events we would like to see
+     * @return returns the list of eventIDs that represent the events the Attendee is signed up for
+     */
     public List<String> getSignedUpEvents(String userID) {
         return ((Attendee)idToPerson.get(userID)).getEventsSignedUp(); //gets the list from Attendee
     }
