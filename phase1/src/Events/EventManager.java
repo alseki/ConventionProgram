@@ -218,13 +218,13 @@ public class EventManager {
     }
 
     /**
-     * gets the event chatID for event with eventId
+     * Returns the Event chatID for event with eventId
      * @param eventId a string reppign the event it
      * @return a string representing the chatId for this event
      */
     public String getAnnouncementChat(String eventId){
         Event ev = events.get(eventId);
-        return ev.getChatId();
+        return ev.getChatID();
     }
 
 
@@ -242,21 +242,21 @@ public class EventManager {
      * @param eventid a string representing the event
      * @return an arraylist of strings with the id's of the attendees.
      */
-    public ArrayList<String> getSignUps(String eventid){
+    public String[] getSignUps(String eventid){
         Event ev = events.get(eventid);
         return ev.getAttendeeIDs();
     }
 
     /**
      *sets the eventchatid for the event with eventid
-     * @param eventid the id of the event for which we want to set the event
-     * @param chatId a string representing the chatid
+     * @param eventID the id of the event for which we want to set the event
+     * @param chatID a string representing the chatid
      * @return true
      */
-    public boolean setEventChatId(String eventid, String chatId)
+    public boolean setEventChatID(String eventID, String chatID)
     {
-        Event ev = events.get(eventid);
-        ev.setChatId(chatId);
+        Event ev = events.get(eventID);
+        ev.setChatID(chatID);
         return true;
     }
 }

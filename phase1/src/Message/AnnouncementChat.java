@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 public class AnnouncementChat extends Chat{
     private final String password;
-    public AnnouncementChat(String ownerId, ArrayList<String> guestIds){
+    public AnnouncementChat(String ownerId, String[] guestIds){
         super(ownerId, guestIds);
         this.password = UUID.randomUUID().toString();
     }

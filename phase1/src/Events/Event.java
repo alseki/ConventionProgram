@@ -1,14 +1,13 @@
 package Events;
 
 import Message.Message;
-
 import java.util.ArrayList;
 import java.util.UUID;
 import java.time.LocalDateTime;
 import java.time.Duration;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 14 2020
+// Last edit: Nov 15 2020
 
 // Architecture Level - Entity
 
@@ -20,8 +19,8 @@ public abstract class Event {
     private String ID;
     private String speakerID;
     private ArrayList<String> attendees;
-    private ArrayList<String> messages;
-    private String chatId;
+    private String chatID;
+    private String password;
 
     /**
      * Constructor for Event objects
@@ -34,24 +33,10 @@ public abstract class Event {
         this.startTime = startTime;
         this.endTime = endTime;
         ID = UUID.randomUUID().toString();
+        speakerID = null;
         attendees = new ArrayList<String>();
-        messages = new ArrayList<String>();
-    }
-
-    /**
-     * a getter for this event's chat IDr
-     * @return String representing the event Chat Id
-     */
-    public String getChatId(){
-        return this.chatId;
-    }
-
-    /**
-     * Getter for the ID of this Event
-     * @return the ID of the event
-     */
-    public String getID() {
-        return ID;
+        this.chatID = UUID.randomUUID().toString();
+        this.password = UUID.randomUUID().toString().replace("-", "");
     }
 
     /**
@@ -112,36 +97,11 @@ public abstract class Event {
     }
 
     /**
-     * Getter for the announcements associated with this Event
-     * @return an array of these announcements
+     * Getter for the ID of this Event
+     * @return the ID of the event
      */
-    public Message[] getAnnouncements() {
-        Message[] messageArray = {};
-        return messages.toArray(messageArray);
-    }
-
-    /**
-     * Getter for the attendees attending this Event
-     * @return an ArrayLis</String> with the attendee ids
-     */
-    public ArrayList<String> getAttendeeIDs() {
-        return attendees;
-    }
-
-    /**
-     * Adds an attendee to this event's attendee list
-     * @param id The ID of the new attendee
-     */
-    public void addAttendee(String id) {
-        attendees.add(id);
-    }
-
-    /**
-     * Removes an attendee from this event's attendee list
-     * @param id The ID of the attendee being removed
-     */
-    public void removeAttendee(String id) {
-        attendees.remove(id);
+    public String getID() {
+        return ID;
     }
 
     /**
@@ -166,6 +126,55 @@ public abstract class Event {
     }
 
     /**
+     * Getter for the attendees attending this Event
+     * @return an array of these attendees
+     */
+    public String[] getAttendeeIDs() {
+        String[] attendeeArray = {};
+        return attendees.toArray(attendeeArray);
+    }
+
+    /**
+     * Adds an attendee to this Event's attendee list
+     * @param ID The ID of the new attendee
+     */
+    public void addAttendee(String ID) {
+        attendees.add(ID);
+    }
+
+    /**
+     * Removes an attendee from this Event's attendee list
+     * @param ID The ID of the attendee being removed
+     */
+    public void removeAttendee(String ID) {
+        attendees.remove(ID);
+    }
+
+    /**
+     * Getter for this Event's chatID
+     * @return String representing the Event's chatID
+     */
+    public String getChatID(){
+        return this.chatID;
+    }
+
+    /**
+     * Setter for this Event's chatID
+     * @param ID The new chatID for this Event
+     */
+    public void setChatID(String ID){
+        this.chatID = ID;
+    }
+
+    /**
+     * Getter for this Event's password
+     * @return String representing the Event's password
+     */
+    public String getPassword(){
+        return this.password;
+    }
+
+    /**
      * A textual representation of this event
      * @return a description of this event in the form of a String
      */
@@ -183,15 +192,4 @@ public abstract class Event {
      */
     protected abstract boolean conflictsWith(Event event);
 
-    /**
-     * sets the chatid to id and returns true
-     * @param id a string representing the id for the chatid
-     * @return
-     */
-    public boolean setChatId(String id){
-        this.chatId = id;
-        return true;
-    }
 }
-
-

@@ -41,7 +41,7 @@ public class ChatManager {
      * @param attendeeids the id's of the attendess
      * @return the AnnocuementChat made
      */
-    public AnnouncementChat createAnnouncementChat(String eventid, ArrayList <String> attendeeids){
+    public AnnouncementChat createAnnouncementChat(String eventid, String[] attendeeids){
         AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
         ChatsList.add(ac);
         return ac;
