@@ -57,16 +57,23 @@ public class AttEventController implements SubMenu {
             switch(currentRequest) {
                 case 0:
                     // return to main menu
+                    break;
                 case 1:
                     getConventionEventList();
+                    break;
                 case 2:
                     presenter.printAddEventPrompt();
-                    //signupForEvent()
+                    String addingEventInput = input.nextLine();
+                    signupForEvent(addingEventInput);
+                    break;
                 case 3:
                     presenter.printRemoveEventPrompt();
-                    //cancelEvent()
+                    String removingEventInput = input.nextLine();
+                    cancelEvent(removingEventInput);
+                    break;
                 case 4:
                     getUserEventList();
+                    break;
             }
 
             // TODO add switch statement to call the methods that correspond with currentRequest
@@ -83,8 +90,7 @@ public class AttEventController implements SubMenu {
      */
     public boolean getConventionEventList() {
         String[] allEvents = eventManager.getEventList();
-        presenter.printConventionEventList(allEvents);
-        return false;                                         // should this return value change?
+        return presenter.printConventionEventList(allEvents);
     }
 
     /**
@@ -93,8 +99,7 @@ public class AttEventController implements SubMenu {
      */
     public boolean getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
-        presenter.printAttendeeEventList(userEventList);
-        return false;
+        return presenter.printAttendeeEventList(userEventList);
     }
 
     /**
@@ -104,9 +109,12 @@ public class AttEventController implements SubMenu {
      */
     public boolean signupForEvent(String eventName) {
         // wanna add the event's chatId to the current user's list of chats.
-        // if eManager.signup(currentUserID, eventName)
-        // aManager.addEvent(currentUserID, eventName)
-        // update the presenter to say the Person.Person.Attendee user's been added to the event
+        if(eventManager.signUpForEvent(currentUserID, eventName)) {
+            if(attendeeManager.signUpForEvent(currentUserID, eventName)) {
+                //hmmmm
+            }
+        }
+        presenter.printEventAdded();
         return false;
     }
 
@@ -119,7 +127,7 @@ public class AttEventController implements SubMenu {
         // wanna remove the event's chatId to the current user's list of chats.
         // if eManager.remove(currentUserID, eventName)
         // aManager.cancelEvent(currentUserID, eventName)
-        // update the presenter to say the Person.Person.Attendee user's been added to the event
+        presenter.printEventRemoved();
         return false;
     }
 
