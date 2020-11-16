@@ -1,6 +1,8 @@
 package Events;
 
 import Message.Message;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.time.LocalDateTime;
@@ -11,7 +13,7 @@ import java.time.Duration;
 
 // Architecture Level - Entity
 
-public abstract class Event {
+public abstract class Event implements Serializable {
 
     private String name;
     private LocalDateTime startTime;

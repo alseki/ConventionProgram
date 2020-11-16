@@ -1,5 +1,6 @@
 package Events;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
@@ -7,7 +8,7 @@ import java.util.UUID;
 
 // Architecture Level - Entity
 
-class Room {
+class Room implements Serializable {
 
     private int capacity;
     private String ID;

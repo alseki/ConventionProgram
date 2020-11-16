@@ -14,15 +14,29 @@ public class FileGateway<T> {
 
     public FileGateway() {
         String directoryString = System.getProperty("user.dir");
-        String[] parts = directoryString.split(Pattern.quote("\\"));
         String pathString = "";
-        if (parts.length > 1) {
-            for (int i = 0; i < parts.length - 1; i++) {
-                pathString = pathString + parts[i] + "\\";
+        if (directoryString.contains("Controllers")) {
+            String[] parts = directoryString.split(Pattern.quote("\\"));
+            if (parts.length > 1) {
+                for (int i = 0; i < parts.length - 2; i++) {
+                    pathString = pathString + parts[i] + "\\";
+                }
             }
-        }
-        else {
-            System.out.println("Whoops! Error constructing filepath");
+            pathString = pathString + "data\\";
+        } else if (directoryString.contains("src")) {
+            String[] parts = directoryString.split(Pattern.quote("\\"));
+            if (parts.length > 1) {
+                for (int i = 0; i < parts.length - 2; i++) {
+                    pathString = pathString + parts[i] + "\\";
+                }
+            }
+            pathString = pathString + "data\\";
+        } else if (directoryString.contains("phase1")) {
+            pathString = directoryString + "\\data\\";
+        } else if (directoryString.contains("group_0467")) {
+            pathString = directoryString + "\\phase1\\data\\";
+        } else {
+            System.out.println("Whoops! Error constructing path");
         }
         path = pathString;
 
@@ -36,7 +50,7 @@ public class FileGateway<T> {
     public T readFile(String filename) {
         try {
             ObjectInputStream loader = new ObjectInputStream(
-                    new FileInputStream(new File(path + "data\\" + filename)));
+                    new FileInputStream(new File(path + filename)));
             Object returnObject = loader.readObject();
             return (T)returnObject;
         }
@@ -53,12 +67,19 @@ public class FileGateway<T> {
      * @param filename The filename of the file
      * @return Whether the method completes
      */
-    public boolean writeRooms(T objIn, String filename) {
+    public boolean writeFile(T objIn, String filename) {
         try {
+            File toFile = new File(path + filename);
+            toFile.createNewFile();
             ObjectOutputStream saver = new ObjectOutputStream(
-                    new FileOutputStream(new File(path + "data\\" + filename)));
+                    new FileOutputStream(toFile));
             saver.writeObject(objIn);
             return true;
+        }
+        catch (FileNotFoundException f) {
+            System.out.println(f.toString());
+            System.out.println(path + "data\\" + filename);
+            return false;
         }
         catch (Exception f) {
             System.out.println(f.toString());

@@ -1,5 +1,6 @@
 package Events;
 
+import Message.MessageManager;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -203,7 +204,7 @@ public class EventManager {
      * @param eventID The Event we are interested in
      * @return an array list of the IDs of all Attendees
      */
-    public ArrayList<String> getSignUps(String eventID){
+    public String[] getSignUps(String eventID){
         Event ev = events.get(eventID);
         return ev.getAttendeeIDs();
     }

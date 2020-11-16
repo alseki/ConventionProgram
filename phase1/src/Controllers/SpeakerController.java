@@ -1,9 +1,9 @@
 package Controllers;
 
-// Programmer: Cara McNeil
+// Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: Main account page for Speaker users.
 // Date Created: 01/11/2020
-// Date Modified: 09/11/2020
+// Date Modified: 15/11/2020
 
 
 import Message.ChatManager;
@@ -40,6 +40,7 @@ public class SpeakerController extends PersonController {
 
                 switch (currentRequest) {
                     case 0:
+                        saveEvents();
                         // SAVE FILES
                         break;
                     case 1:
@@ -52,9 +53,9 @@ public class SpeakerController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        SpeEventController speEventController = new SpeEventController(currentUserID, manager,
-                                messageManager, chatManager);
-                        speEventController.menuChoice();
+                        //SpeEventController speEventController = new SpeEventController(currentUserID, manager,
+                        //        messageManager, chatManager);
+                        //speEventController.menuChoice();
                         break;
                 }
             }

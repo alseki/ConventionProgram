@@ -80,7 +80,7 @@ public class SpeEventController implements SubMenu {
         String eventID = eventManager.getEventID(eventName);
         ArrayList<String> attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = chatManager.createAnnouncementChat(eventID, attIDs);
+        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attIDs)));
         chatManager.addMessage(acID, messageID);
         return true;
     }
@@ -96,7 +96,7 @@ public class SpeEventController implements SubMenu {
         String attID = personManager.getCurrentUserID(attendeeUsername);
         String[] attendeeID = new String[]{attID};
         String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = chatManager.createAnnouncementChat(eventID, attendeeID);
+        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attendeeID)));
         chatManager.addMessage(acID, messageID);
         return true;
         }
