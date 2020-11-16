@@ -46,10 +46,10 @@ public class OrgEventMenu implements printSubMenu {
         return true;
     }
 
-    /**
-     * Prompts user to input the capacity of the room they wish to add
-     * @return true iff room capacity prompt was printed
-     */
+    //**
+     //* Prompts user to input the capacity of the room they wish to add
+     //* @return true iff room capacity prompt was printed
+     //*/
     /*public boolean roomCapacityPrompt() {
         System.out.println("\nWhat is this room's maximum capacity>");
         return true;
