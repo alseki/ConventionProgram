@@ -288,7 +288,7 @@ public class OrgEventController implements SubMenu {
         presenter.printEventNamePrompt();
         String name = input.nextLine();
         presenter.printRoomNamePrompt();
-        String rname = input.nextLine();
+        String rname = chooseRoom();
         presenter.printMessageContentPrompt();
         String content = input.nextLine();
         eventMessage(name, rname, content);

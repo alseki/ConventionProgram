@@ -91,7 +91,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printEventNamePrompt(){
-        System.out.println("\nWhat's the name of the event you want to create?");
+        System.out.println("\nWhat's the event's name??");
         return true;
     }
 
@@ -100,7 +100,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printRoomNamePrompt(){
-        System.out.println("\nWhat room do you want the event to be held in? (Enter 0 for options)");
+        System.out.println("\nWhich room is this event held in? (Enter 0 for options)");
         return true;
 
     }
@@ -147,7 +147,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddSpeakPrompt(){
-        System.out.println("To create a new speaker do the following: ");
+        System.out.println("\nTo create a new speaker account, please fill in the following information:");
         return true;
 
     }
@@ -157,7 +157,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddNamePrompt(){
-        System.out.println("please write the full name of the speaker");
+        System.out.println("\nWhat's the speaker's full name?");
         return true;
     }
 
@@ -166,7 +166,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddPasswordPrompt(){
-        System.out.println("please enter your password");
+        System.out.println("\nPlease enter a password for the speaker:");
         return true;
     }
 
@@ -175,7 +175,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddUsernamePrompt(){
-        System.out.println("please enter your username");
+        System.out.println("\nPlease enter a username for the speaker:");
         return true;
     }
 
@@ -184,7 +184,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddEmailPrompt(){
-        System.out.println("please enter your email");
+        System.out.println("\nWhat's the speaker's email address?");
         return true;
     }
 
@@ -197,7 +197,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printEventMessageIntro(){
-        System.out.println("Follow the instructions to send an event message");
+        System.out.println("\nTo make an announcement about an event, please fill in the following information:");
         return true;
     }
 
@@ -206,7 +206,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printMessageContentPrompt(){
-        System.out.println("Enter the message content");
+        System.out.println("\nPlease enter your announcement below");
         return true;
     }
 
