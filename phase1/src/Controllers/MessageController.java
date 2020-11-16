@@ -57,10 +57,11 @@ public class MessageController implements SubMenu {
     /**
      * Creates new Chat if contact is on contactList
      * @param contactUsername the username of the contact the current user wants create a Chat with
-     * @return true iff new Chat was created and added to user's Chat list and contact's contactList
+     * @return chatID iff new Chat was created and added to user's Chat list and contact's contactList
      */
     // TODO: here we make this in two steps: 1. check existence return boolean 2. find the chat return String
     // TODO: 2 steps have duplicated bodies
+    // TODO: "if contact is on contactlist."
 
     private String createChat(String contactUsername) {
         String contactID = this.personManager.getCurrentUserID(contactUsername);
@@ -71,6 +72,29 @@ public class MessageController implements SubMenu {
         } else {
             this.chatManager.createChat(currentUserID, contactID);
             String chatID = this.chatManager.findChat(currentUserID, contactID);
+            // presenter: the chat is created. chatID is:...
+            return chatID;
+        }
+    }
+
+    /**
+     * Create a new group chat if contacts are in this user's contactlist.
+     * @param contactsUsernames the ArrayList of contacts' usernames.
+     * @return the chatID.
+     */
+    private String createGroupChat(ArrayList<String> contactsUsernames){
+        ArrayList<String> contactIDs = new ArrayList<String>();
+        for (String receiver : contactsUsernames){
+            String contactID = this.personManager.getCurrentUserID(receiver);
+            contactIDs.add(contactID);
+        }
+        if (this.chatManager.existChat(currentUserID, contactIDs)){
+            String chatID = this.chatManager.findChat(currentUserID, contactIDs);
+            // presenter: the chat is already exist. chatID is:...
+            return chatID;
+        } else {
+            this.chatManager.createChat(currentUserID, contactIDs);
+            String chatID = this.chatManager.findChat(currentUserID, contactIDs);
             // presenter: the chat is created. chatID is:...
             return chatID;
         }

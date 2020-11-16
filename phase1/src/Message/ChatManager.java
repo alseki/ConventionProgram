@@ -15,36 +15,36 @@ public class ChatManager {
      * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestId IDs of guest
-     * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
+     * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public boolean createChat(String ownerId, String guestId){
+    public String createChat(String ownerId, String guestId){
         Chat newC = new Chat(ownerId, guestId);
         ChatsList.add(newC);
-        return true;
+        return newC.getId();
     }
 
     /**
      * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestIds Collection of IDs of (one or more) guests
-     * @return true iff new Message.Message.Chat object was successfully created and added to ChatList
+     * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public boolean createChat(String ownerId, ArrayList <String> guestIds){
+    public String createChat(String ownerId, ArrayList <String> guestIds){
         Chat newC = new Chat(ownerId, guestIds);
         ChatsList.add(newC);
-        return true;
+        return newC.getId();
     }
 
     /**
      * creates and returns an annoucment chat with eventid and attendeeids
      * @param eventid id representign the event for the annoucement
      * @param attendeeids the id's of the attendess
-     * @return the AnnocuementChat made
+     * @return the chatID of AnnocuementChat made
      */
-    public String createAnnouncementChat(String eventid, String[] attendeeids){
+    public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids){
         AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
         AChatsList.add(ac);
-        return ac.Id;
+        return ac.getId();
     }
 
 
@@ -60,11 +60,14 @@ public class ChatManager {
             if (chat.getId().equals(chatId)){
                 chat.addMessageIds(messageId);
                 return true;
-            }}
+            }
+        }
         for(AnnouncementChat aChat: AChatsList) {
             if (aChat.getId().equals(chatId)){
                 aChat.addMessageIds(messageId, aChat.getPassword());
-                return true;}}
+                return true;
+            }
+        }
         return false;
     }
 
