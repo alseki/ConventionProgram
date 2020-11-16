@@ -80,7 +80,7 @@ public class SpeEventController implements SubMenu {
         String eventID = eventManager.getEventID(eventName);
         ArrayList<String> attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attIDs)));
+        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(attIDs));
         chatManager.addMessage(acID, messageID);
         return true;
     }

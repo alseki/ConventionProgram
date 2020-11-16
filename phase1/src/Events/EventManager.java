@@ -204,7 +204,7 @@ public class EventManager {
      * @param eventID The Event we are interested in
      * @return an array list of the IDs of all Attendees
      */
-    public String[] getSignUps(String eventID){
+    public ArrayList<String> getSignUps(String eventID){
         Event ev = events.get(eventID);
         return ev.getAttendeeIDs();
     }
