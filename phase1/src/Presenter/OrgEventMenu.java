@@ -33,56 +33,112 @@ public class OrgEventMenu implements printSubMenu {
         System.out.println("To create a new room please enter the name of the room: ");
         return true;
     }
+
+    /**
+     * prompts to add aa speaker
+     * @return true
+     */
     public boolean printAddSpeakPrompt(){
         System.out.println("To create a new speaker do the following: ");
         return true;
 
     }
+
+    /**
+     * prompts to add a name
+     * @return true
+     */
     public boolean printAddNamePrompt(){
         System.out.println("please write the full name of the speaker");
         return true;
     }
+
+    /**
+     * prompts to add a password
+     * @return true
+     */
     public boolean printAddPasswordPrompt(){
         System.out.println("please enter your password");
         return true;
     }
+
+    /**
+     * prompts to add username
+     * @return true
+     */
     public boolean printAddUsernamePrompt(){
         System.out.println("please enter your username");
         return true;
     }
+
+    /**
+     * prompts to add an email
+     * @return true
+     */
     public boolean printAddEmailPrompt(){
         System.out.println("please enter your email");
         return true;
     }
-    public boolean printCreateAccountsuccesful(){
-        System.out.println("The account was succesfully made");
-        return true;
-    }
+
+    /**
+     * prompts to create an event
+     * @return true
+     */
     public boolean printCreateEventPrompt(){
         System.out.println("follorw the instructiosn to create an event");
         return true;
     }
+
+    /**
+     * prompts to name an event
+     * @return true
+     */
     public boolean printEventNamePrompt(){
         System.out.println("Enter the event name");
         return true;
     }
+
+    /**
+     * prompt to name a roome
+     * @return true
+     */
     public boolean printRoomNamePrompt(){
         System.out.println("Enter the room name");
         return true;
 
     }
+
+    /**
+     * prompts to add the speaker username
+     * @return true
+     */
     public boolean printSpeakerUsernamePrompt(){
         System.out.println("Enter the speaker username");
         return true;
     }
+
+    /**
+     * prompts to enter a start time
+     * @return true
+     */
     public boolean printStartTimePrompt(){
         System.out.println("Enter the start time");
         return true;
     }
+
+    /**
+     * prompts an introduction for an event message
+     * @return true
+     */
     public boolean printEventMessageIntro(){
         System.out.println("Follow the instructions to send an event message");
         return true;
     }
+
+    /**
+     * prompts for message content
+     * @return true
+     */
     public boolean printMessageContentPrompt(){
         System.out.println("Enter the message content");
         return true;

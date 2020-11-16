@@ -138,6 +138,11 @@ public class OrgEventController implements SubMenu {
 
         return true;
     }
+
+    /**
+     * allows for input to create an event
+     * @return true
+     */
     public boolean createEventPrompt(){
         presenter.printCreateEventPrompt();
         presenter.printEventNamePrompt();
@@ -178,6 +183,11 @@ public class OrgEventController implements SubMenu {
         addRoom(name);
         return true;
     }
+
+    /**
+     * allows for input to create a speaker
+     * @return true
+     */
     public boolean addSpeakerPrompt(){
         presenter.printAddSpeakPrompt();
         presenter.printAddNamePrompt();
@@ -208,6 +218,11 @@ public class OrgEventController implements SubMenu {
         ch.addMessageIds(m, pass);
         return true;
     }
+
+    /**
+     * allows for input to create an event message
+     * @return true
+     */
     public boolean eventMessagePrompt(){
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
