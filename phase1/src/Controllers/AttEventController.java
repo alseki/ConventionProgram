@@ -69,7 +69,7 @@ public class AttEventController implements SubMenu {
                 case 3:
                     presenter.printRemoveEventPrompt();
                     String removingEventInput = input.nextLine();
-                    cancelEvent(removingEventInput);
+                    cancelSpotFromEvent(removingEventInput);
                     break;
                 case 4:
                     getUserEventList();
@@ -108,13 +108,16 @@ public class AttEventController implements SubMenu {
      * @return true iff user was signed up for the Event
      */
     public boolean signupForEvent(String eventName) {
+
         // wanna add the event's chatId to the current user's list of chats.
-        if(eventManager.signUpForEvent(currentUserID, eventName)) {
-            if(attendeeManager.signUpForEvent(currentUserID, eventName)) {
-                //hmmmm
-            }
+
+        boolean isPersonAddedToEvent = eventManager.signUpForEvent(currentUserID, eventName);
+        boolean isEventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, eventName);
+
+        if(isPersonAddedToEvent && isEventAddedToPerson) {
+            presenter.printEventAdded();
+            return true;
         }
-        presenter.printEventAdded();
         return false;
     }
 
@@ -123,11 +126,17 @@ public class AttEventController implements SubMenu {
      * @param eventName The name of the Event the current user requested to cancel
      * @return true iff user was removed from the Event
      */
-    public boolean cancelEvent(String eventName) {
+    public boolean cancelSpotFromEvent(String eventName) {
+
         // wanna remove the event's chatId to the current user's list of chats.
-        // if eManager.remove(currentUserID, eventName)
-        // aManager.cancelEvent(currentUserID, eventName)
-        presenter.printEventRemoved();
+
+        boolean isPersonRemovedFromEvent = eventManager.removeFromEvent(currentUserID, eventName);
+        boolean isEventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, eventName);
+
+        if(isPersonRemovedFromEvent && isEventRemovedFromPerson) {
+            presenter.printEventRemoved();
+            return true;
+        }
         return false;
     }
 
