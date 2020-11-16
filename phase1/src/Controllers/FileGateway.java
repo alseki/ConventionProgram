@@ -22,6 +22,7 @@ public class FileGateway<T> {
                     pathString = pathString + parts[i] + "\\";
                 }
             }
+            System.out.println("Launched from Controllers folder");
             pathString = pathString + "data\\";
         } else if (directoryString.contains("src")) {
             String[] parts = directoryString.split(Pattern.quote("\\"));
@@ -30,13 +31,18 @@ public class FileGateway<T> {
                     pathString = pathString + parts[i] + "\\";
                 }
             }
+            System.out.println("Launched from src folder");
             pathString = pathString + "data\\";
         } else if (directoryString.contains("phase1")) {
+            System.out.println("Launched from phase1 folder");
             pathString = directoryString + "\\data\\";
         } else if (directoryString.contains("group_0467")) {
+            System.out.println("Launched from group_0467 folder");
             pathString = directoryString + "\\phase1\\data\\";
         } else {
+            String[] parts = directoryString.split(Pattern.quote("\\"));
             System.out.println("Whoops! Error constructing path");
+            System.out.println("Launched from "+ parts[parts.length - 1] +" folder");
         }
         path = pathString;
 
@@ -49,10 +55,20 @@ public class FileGateway<T> {
      */
     public T readFile(String filename) {
         try {
-            ObjectInputStream loader = new ObjectInputStream(
-                    new FileInputStream(new File(path + filename)));
-            Object returnObject = loader.readObject();
-            return (T)returnObject;
+            InputStream file = new FileInputStream(path + filename);
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+
+            T returnValue = (T)input.readObject();
+
+            input.close();
+            return returnValue;
+        }
+        catch (EOFException f) {
+            System.out.println(f.toString());
+            f.printStackTrace();
+            System.out.println("Sorry! No such object found.");
+            return null;
         }
         catch (Exception f) {
             System.out.println(f.toString());
@@ -69,16 +85,19 @@ public class FileGateway<T> {
      */
     public boolean writeFile(T objIn, String filename) {
         try {
-            File toFile = new File(path + filename);
-            toFile.createNewFile();
-            ObjectOutputStream saver = new ObjectOutputStream(
-                    new FileOutputStream(toFile));
-            saver.writeObject(objIn);
+            OutputStream file = new FileOutputStream(path + filename);
+            OutputStream buffer = new BufferedOutputStream(file);
+            ObjectOutput output = new ObjectOutputStream(buffer);
+
+
+            output.writeObject(objIn);
+            output.close();
+            System.out.println("Object successfully written!");
             return true;
         }
         catch (FileNotFoundException f) {
             System.out.println(f.toString());
-            System.out.println(path + "data\\" + filename);
+            System.out.println(path + filename);
             return false;
         }
         catch (Exception f) {

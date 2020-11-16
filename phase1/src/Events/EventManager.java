@@ -1,6 +1,8 @@
 package Events;
 
 import Message.MessageManager;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,7 +12,7 @@ import java.util.TreeMap;
 
 // Architecture Level - Use Class
 
-public class EventManager {
+public class EventManager implements Serializable {
 
     /** A mapping of Event names to their respective IDs. */
     private Map<String, String> eventsByName;
@@ -52,14 +54,6 @@ public class EventManager {
      */
     public int getEventManagerCapacity() {
         return this.permissionChecker.getRoomCapacity();
-    }
-
-    /**
-     * Getter for the name of the Room this Event is in
-     * @return the name of this Room (as a String)
-     */
-    public String getRoomName() {
-        return this.permissionChecker.getName();
     }
 
     /**
@@ -254,5 +248,36 @@ public class EventManager {
     public String getEventPassword(String eventID) {
         Event ev = events.get(eventID);
         return ev.getPassword();
+    }
+
+    /**
+     * Getter for the name of this Room
+     * @return the Name
+     */
+    public String getRoomName() {
+        return permissionChecker.getName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != EventManager.class) {
+            return false;
+        }
+        EventManager events2 = (EventManager) obj;
+        if(!events2.getRoomName().equals(this.getRoomName())) {
+            return false;
+        }
+        if (events2.getEventList().length == this.getEventList().length) {
+            for (Event event: this.getEvents()) {
+                if(events2.getEvent(event.getID()).equals(event.toString())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
