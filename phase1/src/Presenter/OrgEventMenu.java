@@ -19,11 +19,8 @@ public class OrgEventMenu implements printSubMenu {
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To create a new room, Enter 1");
         System.out.println("To create a new event, Enter 2");
-        System.out.println("To make an announcement to the attendees of an event, Enter 3");
-        System.out.println("To create a speaker account, Enter 4\n");
-
-
-        // TODO add print statements for all the other menu options
+        System.out.println("To create a speaker account, Enter 3");
+        System.out.println("To make an announcement to the attendees of an event, Enter 4\n");
         return true;
     }
 
@@ -49,10 +46,10 @@ public class OrgEventMenu implements printSubMenu {
         return true;
     }
 
-    /**
-     * Prompts user to input the capacity of the room they wish to add
-     * @return true iff room capacity prompt was printed
-     */
+    //**
+     //* Prompts user to input the capacity of the room they wish to add
+     //* @return true iff room capacity prompt was printed
+     //*/
     /*public boolean roomCapacityPrompt() {
         System.out.println("\nWhat is this room's maximum capacity>");
         return true;
@@ -94,7 +91,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printEventNamePrompt(){
-        System.out.println("\nWhat's the name of the event you want to create?");
+        System.out.println("\nWhat's the event's name??");
         return true;
     }
 
@@ -103,7 +100,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printRoomNamePrompt(){
-        System.out.println("\nWhat room do you want the event to be held in? (Enter 0 for options)");
+        System.out.println("\nWhich room is this event held in? (Enter 0 for options)");
         return true;
 
     }
@@ -146,33 +143,11 @@ public class OrgEventMenu implements printSubMenu {
     // OPTION 3
 
     /**
-     * prompts an introduction for an event message
-     * @return true
-     */
-    public boolean printEventMessageIntro(){
-        System.out.println("Follow the instructions to send an event message");
-        return true;
-    }
-
-    /**
-     * prompts for message content
-     * @return true
-     */
-    public boolean printMessageContentPrompt(){
-        System.out.println("Enter the message content");
-        return true;
-    }
-
-
-
-    // OPTION 4
-
-    /**
      * prompts to add aa speaker
      * @return true
      */
     public boolean printAddSpeakPrompt(){
-        System.out.println("To create a new speaker do the following: ");
+        System.out.println("\nTo create a new speaker account, please fill in the following information:");
         return true;
 
     }
@@ -182,7 +157,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddNamePrompt(){
-        System.out.println("please write the full name of the speaker");
+        System.out.println("\nWhat's the speaker's full name?");
         return true;
     }
 
@@ -191,7 +166,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddPasswordPrompt(){
-        System.out.println("please enter your password");
+        System.out.println("\nPlease enter a password for the speaker:");
         return true;
     }
 
@@ -200,7 +175,7 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddUsernamePrompt(){
-        System.out.println("please enter your username");
+        System.out.println("\nPlease enter a username for the speaker:");
         return true;
     }
 
@@ -209,7 +184,29 @@ public class OrgEventMenu implements printSubMenu {
      * @return true
      */
     public boolean printAddEmailPrompt(){
-        System.out.println("please enter your email");
+        System.out.println("\nWhat's the speaker's email address?");
+        return true;
+    }
+
+
+
+    // OPTION 4
+
+    /**
+     * prompts an introduction for an event message
+     * @return true
+     */
+    public boolean printEventMessageIntro(){
+        System.out.println("\nTo make an announcement about an event, please fill in the following information:");
+        return true;
+    }
+
+    /**
+     * prompts for message content
+     * @return true
+     */
+    public boolean printMessageContentPrompt(){
+        System.out.println("\nPlease enter your announcement below");
         return true;
     }
 

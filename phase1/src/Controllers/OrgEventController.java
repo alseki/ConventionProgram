@@ -70,10 +70,10 @@ public class OrgEventController implements SubMenu {
                     createEventPrompt();
                     break;
                 case 3:
-                    eventMessagePrompt();
+                    addSpeakerPrompt();
                     break;
                 case 4:
-                    addSpeakerPrompt();
+                    eventMessagePrompt();
                     break;
             }
         }
@@ -118,13 +118,13 @@ public class OrgEventController implements SubMenu {
      * @return true iff the Event was created
      */
     public boolean createTalk(String eventName, String speakerUsername, String room, int startTime) {
-        String roomID = roomManager.getRoomID(room);
+        String roomID = roomManager.getRoomID(room); // roomId
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
-        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
-        String id = roomManager.getRoom(roomID).getEventID(eventName);
-        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id);
-        String acId = chatManager.createAnnouncementChat(id, attendees);
-        roomManager.getRoom(roomID).setEventChatID(id, acId);
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
+        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
+        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
+        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
+        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
 
         return true;
     }
@@ -268,14 +268,14 @@ public class OrgEventController implements SubMenu {
      * @return true iff the Message was added to the event's chatlist
      */
     public boolean eventMessage(String eventName, String roomName, String messageContent){
-        String roomId = roomManager.getRoomID(roomName);
-        EventManager emanager = roomManager.getRoom(roomId);
-        String eventId =  emanager.getEventID(eventName);
+        String roomId = roomManager.getRoomID(roomName); // roomid
+        EventManager emanager = roomManager.getRoom(roomId); // eventmanager for events with roomid
+        String eventId =  emanager.getEventID(eventName); // eventId
         String ev = emanager.getAnnouncementChat(eventId); // chatid
-        AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev);
+        AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev); // the annoucement chat for the event
         String pass = ch.getPassword(); // the password for the announcemenchat
-        String m = messageManager.createMessage(eventId, messageContent);
-        ch.addMessageIds(m, pass);
+        String m = messageManager.createMessage(eventId, messageContent); // creating message for event
+        ch.addMessageIds(m, pass); // adding message to event chat
         return true;
     }
 
@@ -288,7 +288,7 @@ public class OrgEventController implements SubMenu {
         presenter.printEventNamePrompt();
         String name = input.nextLine();
         presenter.printRoomNamePrompt();
-        String rname = input.nextLine();
+        String rname = chooseRoom();
         presenter.printMessageContentPrompt();
         String content = input.nextLine();
         eventMessage(name, rname, content);

@@ -113,6 +113,15 @@ public class EventManager implements Serializable {
     }
 
     /**
+     * Returns the name of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The name of the Event, as a String
+     */
+    public String getEventName(String eventID) {
+        return events.get(eventID).getName();
+    }
+    
+    /**
      * Returns the ID of an Event given its name
      * @param name The Event's name
      * @return The ID
