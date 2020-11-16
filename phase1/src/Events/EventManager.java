@@ -25,7 +25,7 @@ public class EventManager {
      * Creates a new empty EventManager
      * @param checker A RoomPermissions object based on the room in which these Events are being held
      */
-    public EventManager(RoomPermissions checker) {
+    protected EventManager(RoomPermissions checker) {
         events = new TreeMap<String, Event>();
         eventsByName = new TreeMap<String, String>();
         permissionChecker = checker;
@@ -96,7 +96,7 @@ public class EventManager {
      * @return The ID
      */
     public String getEventID(String name) {
-            return eventsByName.get(name);
+        return eventsByName.get(name);
     }
 
     /**
@@ -227,5 +227,36 @@ public class EventManager {
     public String getEventPassword(String eventID) {
         Event ev = events.get(eventID);
         return ev.getPassword();
+    }
+
+    /**
+     * Getter for the name of this Room
+     * @return the Name
+     */
+    public String getRoomName() {
+        return permissionChecker.getName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != EventManager.class) {
+            return false;
+        }
+        EventManager events2 = (EventManager) obj;
+        if(events2.getRoomName() != this.getRoomName()) {
+            return false;
+        }
+        if (events2.getEventList().length == this.getEventList().length) {
+            for (Event event: this.getEvents()) {
+                if(events2.getEvent(event.getID()) != event.toString()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

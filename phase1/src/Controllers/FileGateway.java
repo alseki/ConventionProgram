@@ -53,12 +53,19 @@ public class FileGateway<T> {
      * @param filename The filename of the file
      * @return Whether the method completes
      */
-    public boolean writeRooms(T objIn, String filename) {
+    public boolean writeFile(T objIn, String filename) {
         try {
+            File toFile = new File(path + "data\\" + filename);
+            toFile.createNewFile();
             ObjectOutputStream saver = new ObjectOutputStream(
-                    new FileOutputStream(new File(path + "data\\" + filename)));
+                    new FileOutputStream(toFile));
             saver.writeObject(objIn);
             return true;
+        }
+        catch (FileNotFoundException f) {
+            System.out.println(f.toString());
+            System.out.println(path + "data\\" + filename);
+            return false;
         }
         catch (Exception f) {
             System.out.println(f.toString());

@@ -1,7 +1,7 @@
-package Controllers;// Programmer: Cara McNeil
+package Controllers;// Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
-// Date Modified: 09/11/2020
+// Date Modified: 15/11/2020
 
 import Events.EventReader;
 import Message.ChatManager;
@@ -43,6 +43,7 @@ public class OrganizerController extends PersonController {
 
                 switch (currentRequest) {
                     case 0:
+                        saveEvents();
                         // SAVE FILES
                         break;
                     case 1:

@@ -45,6 +45,7 @@ public class AttendeeController extends PersonController {
 
                 switch (currentRequest) {
                     case 0:
+                        saveEvents();
                         // SAVE FILES
                         break;
                     case 1:

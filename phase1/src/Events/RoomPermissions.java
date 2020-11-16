@@ -67,4 +67,8 @@ public class RoomPermissions {
         return room.getCapacity();
     }
 
+    protected String getName() {
+        return room.getName();
+    }
+
 }

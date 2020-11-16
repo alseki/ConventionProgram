@@ -12,6 +12,7 @@ import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import Events.EventManager;
 import Events.Event;
@@ -77,10 +78,9 @@ public class OrgEventController implements SubMenu {
 
 
             }
-            while (currentRequest != 0) ;
+        } while (currentRequest != 0);
             return true;
             // TODO add switch statement to call the methods that correspond with currentRequest
-        }
     }
 
     /**
@@ -133,7 +133,7 @@ public class OrgEventController implements SubMenu {
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
         String id = roomManager.getRoom(roomID).getEventID(eventName);
         String[] attendees = roomManager.getRoom(roomID).getSignUps(id);
-        String acId = chatManager.createAnnouncementChat(id, attendees);
+        String acId = chatManager.createAnnouncementChat(id, new ArrayList<String>(Arrays.asList(attendees)));
         roomManager.getRoom(roomID).setEventChatID(id, acId);
 
         return true;

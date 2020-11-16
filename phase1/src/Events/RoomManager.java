@@ -39,12 +39,29 @@ public class RoomManager implements Serializable {
     }
 
     /**
+     * Returns the number of Rooms this RoomManager contains
+     * @return ^
+     */
+    public int numRooms() {
+        return roomList.size();
+    }
+
+    /**
      * Finds the ID of a specific Room (by name)
      * @param name The Room's name
      * @return The Room's ID
      */
     public String getRoomID (String name) {
         return roomsByName.get(name);
+    }
+
+    /**
+     * Finds the name of a specific Room (by ID)
+     * @param ID The Room's ID
+     * @return The Room's name
+     */
+    public String getRoomName (String ID) {
+        return roomList.get(ID).getRoomName();
     }
 
     /**
@@ -74,4 +91,27 @@ public class RoomManager implements Serializable {
         return thisRoom.getID();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (obj.getClass() != RoomManager.class){
+            System.out.println("Wrong class!");
+            return false;
+        }
+        RoomManager rooms2 = (RoomManager) obj;
+        if (rooms2.numRooms() == this.numRooms()) {
+            String[] roomIDs = {};
+            roomIDs = roomList.keySet().toArray(roomIDs);
+            for(String id: roomIDs) {
+                EventManager thisRoom = this.getRoom(id);
+                if (!thisRoom.equals(rooms2.getRoom(rooms2.getRoomID(thisRoom.getRoomName())))) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }
