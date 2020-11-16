@@ -29,8 +29,8 @@ public class EventTests {
 
     @Test
     public void testEventManager() {
-        RoomManager rooms = new RoomManager();
-        RoomManager rooms2 = new RoomManager();
+        RoomManager rooms = new RoomManager(LocalDateTime.now());
+        RoomManager rooms2 = new RoomManager(LocalDateTime.now());
         String name = "Cool Room B)";
         rooms.addRoom(name, 200);
         rooms.addRoom("Sad Room :(");
@@ -40,10 +40,10 @@ public class EventTests {
 
     @Test
     public void testRoomManager() {
-        RoomManager rooms = new RoomManager();
+        RoomManager rooms = new RoomManager(LocalDateTime.now());
         rooms.addRoom("Cool Room B)", 200);
         rooms.addRoom("Sad Room :(");
-        RoomManager rooms2 = new RoomManager();
+        RoomManager rooms2 = new RoomManager(LocalDateTime.now());
         rooms2.addRoom("Cool Room B)", 200);
         rooms2.addRoom("Sad Room :(");
         assertTrue(rooms.equals(rooms2));
@@ -52,11 +52,11 @@ public class EventTests {
     @Test
     public void testGateway() {
         FileGateway<RoomManager> gateway = new FileGateway<RoomManager>();
-        RoomManager rooms = new RoomManager();
+        RoomManager rooms = new RoomManager(LocalDateTime.now());
         rooms.addRoom("Cool Room B)", 200);
         rooms.addRoom("Sad Room :(");
-        gateway.writeFile(rooms, "test.txt");
-        RoomManager rooms2 = gateway.readFile("test.txt");
+        gateway.writeFile(rooms, "test.ser");
+        RoomManager rooms2 = gateway.readFile("test.ser");
         assertTrue(rooms.equals(rooms2));
     }
 

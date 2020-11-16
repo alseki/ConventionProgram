@@ -24,7 +24,8 @@ public class RoomManager implements Serializable {
     /**
      * Constructor for RoomManager objects
      */
-    public RoomManager() {
+    public RoomManager(LocalDateTime conferenceStart) {
+        this.conferenceStart = conferenceStart;
         roomList = new TreeMap<String, EventManager>();
         roomsByName = new TreeMap<String, String>();
     }

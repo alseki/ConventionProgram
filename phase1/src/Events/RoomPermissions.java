@@ -1,5 +1,6 @@
 package Events;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -8,7 +9,7 @@ import java.time.LocalTime;
 
 // Architecture Level - Use Class
 
-public class RoomPermissions {
+public class RoomPermissions implements Serializable {
 
     private LocalDateTime conferenceStart;
     private Room room;

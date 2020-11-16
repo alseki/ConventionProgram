@@ -1,6 +1,8 @@
 package Events;
 
 import Message.MessageManager;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,7 +12,7 @@ import java.util.TreeMap;
 
 // Architecture Level - Use Class
 
-public class EventManager {
+public class EventManager implements Serializable {
 
     /** A mapping of Event names to their respective IDs. */
     private Map<String, String> eventsByName;
@@ -246,12 +248,12 @@ public class EventManager {
             return false;
         }
         EventManager events2 = (EventManager) obj;
-        if(events2.getRoomName() != this.getRoomName()) {
+        if(!events2.getRoomName().equals(this.getRoomName())) {
             return false;
         }
         if (events2.getEventList().length == this.getEventList().length) {
             for (Event event: this.getEvents()) {
-                if(events2.getEvent(event.getID()) != event.toString()) {
+                if(events2.getEvent(event.getID()).equals(event.toString())) {
                     return false;
                 }
             }
