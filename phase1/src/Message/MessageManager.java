@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageManager {
-    private List<Message> MessageList;
+    private ArrayList<Message> messageList;
 
     public MessageManager(){
-        MessageList = new ArrayList<>();
+        messageList = new ArrayList<>();
     }
 
     /**
@@ -20,7 +20,7 @@ public class MessageManager {
      */
     public boolean createMessage(String senderId, String recipientId, String content){
         Message newMessage = new Message(senderId, recipientId, content);
-        MessageList.add(newMessage);
+        messageList.add(newMessage);
         return true;
     }
 
@@ -32,7 +32,7 @@ public class MessageManager {
      */
     public String createMessage(String eventId, String content){
         Message newMessage = new Message(eventId, content);
-        MessageList.add(newMessage);
+        messageList.add(newMessage);
         return newMessage.getMessageId();
 
     }
@@ -44,7 +44,7 @@ public class MessageManager {
      */
     private Message getMessage(String MessageId){
         Message curMessage = null;
-        for (Message m : MessageList){
+        for (Message m : messageList){
             if (m.getMessageId().equals(MessageId)){
                 curMessage = m;
             }

@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class ChatManager {
-    private List<Chat> ChatsList; // list for storing a collection of all Message.Message.Chat objects
-    private List<AnnouncementChat> AChatsList; // list for storing a collection of all AnnouncementChat objects
+    private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
+    private ArrayList<AnnouncementChat> aChatsList; // list for storing a collection of all AnnouncementChat objects
     public ChatManager(){
-        ChatsList = new ArrayList<>();
+        chatsList = new ArrayList<>();
+        aChatsList = new ArrayList<>();
     }
 
     /**
@@ -19,7 +20,7 @@ public class ChatManager {
      */
     public String createChat(String ownerId, String guestId){
         Chat newC = new Chat(ownerId, guestId);
-        ChatsList.add(newC);
+        chatsList.add(newC);
         return newC.getId();
     }
 
@@ -31,7 +32,7 @@ public class ChatManager {
      */
     public String createChat(String ownerId, ArrayList <String> guestIds){
         Chat newC = new Chat(ownerId, guestIds);
-        ChatsList.add(newC);
+        chatsList.add(newC);
         return newC.getId();
     }
 
@@ -43,7 +44,7 @@ public class ChatManager {
      */
     public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids){
         AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
-        AChatsList.add(ac);
+        aChatsList.add(ac);
         return ac.getId();
     }
 
@@ -56,13 +57,13 @@ public class ChatManager {
      *         false iff no Chat in ChatList has the inputted chatId
      */
     public boolean addMessage(String chatId, String messageId){
-        for(Chat chat: ChatsList) {
+        for(Chat chat: chatsList) {
             if (chat.getId().equals(chatId)){
                 chat.addMessageIds(messageId);
                 return true;
             }
         }
-        for(AnnouncementChat aChat: AChatsList) {
+        for(AnnouncementChat aChat: aChatsList) {
             if (aChat.getId().equals(chatId)){
                 aChat.addMessageIds(messageId, aChat.getPassword());
                 return true;
@@ -77,7 +78,7 @@ public class ChatManager {
      *         null iff no Message.Message.Chat in ChatList has the inputted chatId
      */
     public ArrayList<String> getMessages(String chatId){
-        for(Chat c: ChatsList){
+        for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
                 return c.getMessageIds();
             }
@@ -93,7 +94,7 @@ public class ChatManager {
      */
     //The senders list and related methods in Message.Message.Chat class must be fixed so that it contains ID instead of Person.Person
     public boolean addPerson(String chatId, String personId){
-        for(Chat c: ChatsList){
+        for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
                 c.addPersonIds(personId);
                 return true;
@@ -109,7 +110,7 @@ public class ChatManager {
      */
     public ArrayList <Chat> searchChatsContaining(String personId){
         ArrayList <Chat> chats = new ArrayList<>();
-        for (Chat c: ChatsList){
+        for (Chat c: chatsList){
             if (c.getPersonIds().contains(personId)){
                 chats.add(c);
             }
@@ -125,7 +126,7 @@ public class ChatManager {
      */
     public Chat getChat(String chatId){
         Chat chat = null;
-        for(Chat c: ChatsList){
+        for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
                 chat = c;
             }
@@ -145,7 +146,7 @@ public class ChatManager {
         personIds.add(currentId);
         personIds.add(guestId);
         Collections.sort(personIds);
-        for(Chat c: ChatsList) {
+        for(Chat c: chatsList) {
             ArrayList <String> members = c.getPersonIds();
             Collections.sort(members);
             if (members.equals(personIds)){return true;}
@@ -163,7 +164,7 @@ public class ChatManager {
     public boolean existChat(String currentId, ArrayList <String> guestsId){
         guestsId.add(currentId);
         Collections.sort(guestsId);
-        for(Chat c: ChatsList) {
+        for(Chat c: chatsList) {
             ArrayList <String> members = c.getPersonIds();
             Collections.sort(members);
             if (members.equals(guestsId)){
@@ -184,7 +185,7 @@ public class ChatManager {
         personIds.add(currentId);
         personIds.add(guestId);
         Collections.sort(personIds);
-        for (Chat c : ChatsList) {
+        for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);
             if (members.equals(personIds)) {
@@ -204,7 +205,7 @@ public class ChatManager {
     public String findChat(String currentId, ArrayList <String> guestsId){
         guestsId.add(currentId);
         Collections.sort(guestsId);
-        for(Chat c: ChatsList) {
+        for(Chat c: chatsList) {
             ArrayList <String> members = c.getPersonIds();
             Collections.sort(members);
             if (members.equals(guestsId)){

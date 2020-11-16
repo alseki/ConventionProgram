@@ -70,8 +70,7 @@ public class MessageController implements SubMenu {
             // presenter: the chat is already exist. chatID is:...
             return chatID;
         } else {
-            this.chatManager.createChat(currentUserID, contactID);
-            String chatID = this.chatManager.findChat(currentUserID, contactID);
+            String chatID = this.chatManager.createChat(currentUserID, contactID);
             // presenter: the chat is created. chatID is:...
             return chatID;
         }
@@ -93,8 +92,7 @@ public class MessageController implements SubMenu {
             // presenter: the chat is already exist. chatID is:...
             return chatID;
         } else {
-            this.chatManager.createChat(currentUserID, contactIDs);
-            String chatID = this.chatManager.findChat(currentUserID, contactIDs);
+            String chatID = this.chatManager.createChat(currentUserID, contactIDs);
             // presenter: the chat is created. chatID is:...
             return chatID;
         }
