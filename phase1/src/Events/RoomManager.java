@@ -24,7 +24,6 @@ public class RoomManager {
      * Constructor for RoomManager objects
      */
     public RoomManager() {
-        //make serializeable?
         roomList = new TreeMap<String, EventManager>();
         roomsByName = new TreeMap<String, String>();
     }

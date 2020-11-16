@@ -4,7 +4,7 @@ import Events.Event;
 import java.time.LocalDateTime;
 import java.time.Duration;
 
-// Contributors: Eytan Weinstein
+// Contributors: Sarah Kronenfeld, Eytan Weinstein
 // Last edit: Nov 15 2020
 
 // Architecture Level - Entity
