@@ -148,7 +148,7 @@ public class OrgEventController implements SubMenu {
             int start = chooseStartTime();
             createTalk(name, speakername, roomName, start);
         } else {
-            // figure this out!
+            //TODO: add workshop option
         }
         return true;
 
