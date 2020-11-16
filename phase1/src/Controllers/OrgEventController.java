@@ -70,10 +70,10 @@ public class OrgEventController implements SubMenu {
                     createEventPrompt();
                     break;
                 case 3:
-                    eventMessagePrompt();
+                    addSpeakerPrompt();
                     break;
                 case 4:
-                    addSpeakerPrompt();
+                    eventMessagePrompt();
                     break;
             }
         }

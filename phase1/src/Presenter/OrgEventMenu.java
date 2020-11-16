@@ -19,11 +19,8 @@ public class OrgEventMenu implements printSubMenu {
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To create a new room, Enter 1");
         System.out.println("To create a new event, Enter 2");
-        System.out.println("To make an announcement to the attendees of an event, Enter 3");
-        System.out.println("To create a speaker account, Enter 4\n");
-
-
-        // TODO add print statements for all the other menu options
+        System.out.println("To create a speaker account, Enter 3");
+        System.out.println("To make an announcement to the attendees of an event, Enter 4\n");
         return true;
     }
 
@@ -146,28 +143,6 @@ public class OrgEventMenu implements printSubMenu {
     // OPTION 3
 
     /**
-     * prompts an introduction for an event message
-     * @return true
-     */
-    public boolean printEventMessageIntro(){
-        System.out.println("Follow the instructions to send an event message");
-        return true;
-    }
-
-    /**
-     * prompts for message content
-     * @return true
-     */
-    public boolean printMessageContentPrompt(){
-        System.out.println("Enter the message content");
-        return true;
-    }
-
-
-
-    // OPTION 4
-
-    /**
      * prompts to add aa speaker
      * @return true
      */
@@ -210,6 +185,28 @@ public class OrgEventMenu implements printSubMenu {
      */
     public boolean printAddEmailPrompt(){
         System.out.println("please enter your email");
+        return true;
+    }
+
+
+
+    // OPTION 4
+
+    /**
+     * prompts an introduction for an event message
+     * @return true
+     */
+    public boolean printEventMessageIntro(){
+        System.out.println("Follow the instructions to send an event message");
+        return true;
+    }
+
+    /**
+     * prompts for message content
+     * @return true
+     */
+    public boolean printMessageContentPrompt(){
+        System.out.println("Enter the message content");
         return true;
     }
 
