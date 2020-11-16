@@ -1,5 +1,6 @@
 package Events;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
@@ -9,7 +10,7 @@ import java.util.TreeMap;
 
 // Architecture Level - Use Class
 
-public class RoomManager {
+public class RoomManager implements Serializable {
 
     /** A mapping of Room IDs to their respective EventManager objects. */
     private Map<String, EventManager> roomList;
