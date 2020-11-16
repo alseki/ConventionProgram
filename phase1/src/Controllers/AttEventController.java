@@ -24,7 +24,7 @@ public class AttEventController implements SubMenu {
     private String currentUserID;
     private int currentRequest;
     private PersonManager personManager;
-    private AttendeeManager aManager;
+    private AttendeeManager attendeeManager;
     private EventManager eventManager;
     private AttEventMenu presenter = new AttEventMenu();
     Scanner input = new Scanner(System.in);
@@ -54,14 +54,19 @@ public class AttEventController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-
             switch(currentRequest) {
                 case 0:
                     // return to main menu
                 case 1:
-                    //view list of events
-                case 2:
                     getConventionEventList();
+                case 2:
+                    presenter.printAddEventPrompt();
+                    //signupForEvent()
+                case 3:
+                    presenter.printRemoveEventPrompt();
+                    //cancelEvent()
+                case 4:
+                    getUserEventList();
             }
 
             // TODO add switch statement to call the methods that correspond with currentRequest
@@ -84,11 +89,11 @@ public class AttEventController implements SubMenu {
 
     /**
      * Get's the list of Events the Person.Person.Attendee user is signed up for
-     * @return true iff the presenter has been updated woith a list of events
+     * @return true iff the presenter has been updated with a list of events
      */
     public boolean getUserEventList() {
-        ArrayList<String> eventList = aManager.getSignedUpEvents(currentUserID);
-        // update the presenter with the list of events signed up for (if empty, say so)
+        ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
+        presenter.printAttendeeEventList(userEventList);
         return false;
     }
 
