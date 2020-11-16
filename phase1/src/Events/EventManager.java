@@ -199,14 +199,6 @@ public class EventManager {
         return ev.getChatID();
     }
 
-    public boolean announceToEvent(Event event) {
-        return false; //get messages
-    }
-
-    public MessageManager getMessages(Event event) {
-        return null; //get messages
-    }
-
     /**
      * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
      * @param eventID The Event we are interested in
