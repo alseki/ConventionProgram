@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ChatManager {
     private List<Chat> ChatsList; // list for storing a collection of all Message.Message.Chat objects
-
+    private List<AnnouncementChat> AChatsList; // list for storing a collection of all AnnouncementChat objects
     public ChatManager(){
         ChatsList = new ArrayList<>();
     }
@@ -43,7 +43,7 @@ public class ChatManager {
      */
     public String createAnnouncementChat(String eventid, String[] attendeeids){
         AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
-        ChatsList.add(ac);
+        AChatsList.add(ac);
         return ac.Id;
     }
 
@@ -60,18 +60,12 @@ public class ChatManager {
             if (chat.getId().equals(chatId)){
                 chat.addMessageIds(messageId);
                 return true;
-            }
-        }
+            }}
+        for(AnnouncementChat aChat: AChatsList) {
+            if (aChat.getId().equals(chatId)){
+                aChat.addMessageIds(messageId, aChat.getPassword());
+                return true;}}
         return false;
-    }
-
-    /**
-     * Add Message ID to AnnouncementChat, where this AnnouncementChat and Message objects are referred by their ID
-     * @param acId ID of the AnnouncementChat
-     * @param messageId of the Message object to be added to the list in AnnouncementChat object
-     */
-    public boolean addMessageAChat(String acId, String messageId){
-
     }
 
     /**

@@ -94,7 +94,7 @@ public class MessageController implements SubMenu {
     public boolean addMessage(String chatID, String messageContent) {
         ArrayList <String> chatMembers = chatManager.getChat(chatID).getPersonIds();
 
-        messageManager.createMessage()
+        //messageManager.createMessage()
 
         return true;
     }

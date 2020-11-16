@@ -2,6 +2,7 @@ package Message;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 public class Chat {
@@ -22,6 +23,14 @@ public class Chat {
         personIds = new ArrayList<>();
         personIds.add(ownerId);
         personIds.addAll(guestIds);
+        this.Id = UUID.randomUUID().toString();
+    }
+
+    public Chat(String ownerId, String[] guestIds) {
+        messageIds = new ArrayList<>();
+        personIds = new ArrayList<>();
+        personIds.add(ownerId);
+        Collections.addAll(personIds,guestIds);
         this.Id = UUID.randomUUID().toString();
     }
 

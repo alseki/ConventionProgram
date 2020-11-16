@@ -81,7 +81,7 @@ public class SpeEventController implements SubMenu {
         String[] attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
         String acID = chatManager.createAnnouncementChat(eventID, attIDs);
-        chatManager.addMessageAChat(acID, messageID);
+        chatManager.addMessage(acID, messageID);
         return true;
     }
 
@@ -95,15 +95,15 @@ public class SpeEventController implements SubMenu {
         String eventID = eventManager.getEventID(eventName);
         String attID = personManager.getCurrentUserID(attendeeUsername);
         String[] attendeeID = new String[]{attID};
-        //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
-        //if (!(attList.contains(attID))){
-            //throw new InvalidIDException();
-        //    return false;}
         String messageID = messageManager.createMessage(eventID, messageContent);
         String acID = chatManager.createAnnouncementChat(eventID, attendeeID);
-        chatManager.addMessageIds(messageID);
+        chatManager.addMessage(acID, messageID);
         return true;
         }
+    //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
+    //if (!(attList.contains(attID))){
+    //throw new InvalidIDException();
+    //    return false;}
 
     /**
      * Sends a Message to every user signed up for every event this user is speaking at
