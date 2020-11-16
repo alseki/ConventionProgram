@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class ConventionPlanningSystem {
 
-    private PersonController PC;
     private int accountChoice;
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
@@ -43,19 +42,19 @@ public class ConventionPlanningSystem {
                 break;
             case 1:
                 AttendeeManager am = new AttendeeManager();
-                PC = (AttendeeController) new AttendeeController(am);
-                PC.run();
+                AttendeeController AC =  new AttendeeController(am);
+                AC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager();
                 SpeakerManager sm = new SpeakerManager();
-                PC = (OrganizerController) new OrganizerController(om, sm);
-                PC.run();
+                OrganizerController OC = new OrganizerController(om, sm);
+                OC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager();
-                PC = (SpeakerController) new SpeakerController(sman);
-                PC.run();
+                SpeakerController SC = new SpeakerController(sman);
+                SC.run();
                 break;
         }
     }

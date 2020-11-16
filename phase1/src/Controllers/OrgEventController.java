@@ -74,13 +74,11 @@ public class OrgEventController implements SubMenu {
                 case 4:
                     eventMessagePrompt();
                     break;
-
-
             }
-            while (currentRequest != 0) ;
-            return true;
-            // TODO add switch statement to call the methods that correspond with currentRequest
         }
+        while (currentRequest != 0);
+        return true;
+        // TODO add switch statement to call the methods that correspond with currentRequest
     }
 
     /**
