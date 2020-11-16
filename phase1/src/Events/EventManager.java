@@ -47,12 +47,40 @@ public class EventManager {
     }
 
     /**
+     * Getter for the capacity of this EventManager (how many total attendees can be signed up)
+     * @return the capacity of this EventManager (as an int)
+     */
+    public int getEventManagerCapacity() {
+        return this.permissionChecker.getRoomCapacity();
+    }
+
+    /**
+     * Getter for the name of the Room this Event is in
+     * @return the name of this Room (as a String)
+     */
+    public String getRoomName() {
+        return this.permissionChecker.getName();
+    }
+
+    /**
      * Helper getter for the all the Events in this EventManager
      * @return an array of all Events in this EventManager
      */
     private Event[] getEvents() {
         Event[] eventArray = {};
         return events.entrySet().toArray(eventArray);
+    }
+
+    /**
+     * Helper getter for the total number of attendees currently signed up for the Events in this EventManager
+     * @return the total number of attendees (as an int)
+     */
+    private int getNumAttendees() {
+        int total = 0;
+        for (Event ev : this.getEvents()) {
+            total = total + ev.getAttendeeIDs().size();
+        }
+        return total;
     }
 
     /**
@@ -162,8 +190,7 @@ public class EventManager {
      */
     public boolean signUpForEvent(String personID, String ID) {
             Event event = events.get(ID);
-            // check + update capacity!
-            if (event != null) {
+            if ((event != null) && (this.getNumAttendees() < this.getEventManagerCapacity())) {
                 event.addAttendee(personID);
                 return true;
             }

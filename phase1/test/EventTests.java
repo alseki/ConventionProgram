@@ -10,7 +10,6 @@ public class EventTests {
     public void testTalk() {
         Talk t = new Talk("The wonderful world of time management", "1", LocalDateTime.of(2017, 1, 14, 10, 34));
         assertTrue(t.getAnnouncements().length == 0);
-        assertTrue(t.getAttendeeIDs().length == 0);
         assertTrue(t.getName().equals("The wonderful world of time management"));
         String[] speakers = t.getSpeakers();
         assertTrue(speakers.length == 1);
