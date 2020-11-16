@@ -39,6 +39,14 @@ public class MessageMenu implements printSubMenu {
     }
 
     /**
+     * Let the presenter show the info from parameter, i.e. from MessageController.
+     * @param input info from MessageController, e.g. Chat/Message information.
+     */
+    public void showRequiredInfo(String input){
+        System.out.println(input);
+    }
+
+    /**
      * Prompts user to print Chat.
      * @return True iff the Chat was properly printed.
      */

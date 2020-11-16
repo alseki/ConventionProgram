@@ -1,5 +1,6 @@
 package Message;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -135,6 +136,17 @@ public class ChatManager {
     }
 
     /**
+     * @return the list of IDs of the chats stored in this ChatManager.
+     */
+    public ArrayList<String> getChatIDs(){
+        ArrayList<String> chatIDs = new ArrayList<>();
+        for (Chat c : chatsList){
+            chatIDs.add(c.getId());
+        }
+        return chatIDs;
+    }
+
+    /**
      * Checks if there already exists a Chat object with same group members inputted
      * @param currentId ID of the user
      * @param guestId ID of the other member of the Chat
@@ -214,6 +226,19 @@ public class ChatManager {
         }
         return null;
     }
+
+    /**
+     * Get chat formatted as: "[ID]: [ID of the chat]\new line
+     *                            [Participants]: [ID of the Participants]\newline
+     * @param chatID of the message that is to be formatted.
+     * @return Formatted string representation of the chat.
+     */
+    public String getFormattedChat(String chatID){
+        StringBuilder participants = new StringBuilder();
+        for (String participantID : this.getChat(chatID).getPersonIds()){
+            participants.append(participantID).append("\n");
+        }
+        return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";}
 }
 
 // CRC Card Definition
