@@ -14,7 +14,7 @@ public class Talk extends Event {
     private String speakerID;
     private String description;
 
-    // A Talk differs from an event in that it is exactly one hour long, and cannot take place in the same room as
+    // A Talk differs from an Event in that it is exactly one hour long, and cannot take place in the same room as
     // any other event while that event is occurring.
 
     /**
@@ -77,6 +77,7 @@ public class Talk extends Event {
     /**
      * Checks if the inputted Event conflicts in time with this Talk
      * @param event The event which is being checked for conflicts with this Talk
+     * @returns whether or not there is a conflict (true or false)
      */
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
