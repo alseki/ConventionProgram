@@ -17,7 +17,7 @@ abstract public class PersonController {
     private RoomManager rooms;
     private LoginController loginController;
     private FileGateway<RoomManager> roomSaver = new FileGateway<RoomManager>();
-    private static final String roomFileName = "events";
+    private static final String roomFileName = "events.ser";
     public boolean loggedIn =  false;
 
 
