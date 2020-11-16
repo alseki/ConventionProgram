@@ -40,6 +40,15 @@ public class RoomManager implements Serializable {
     }
 
     /**
+     * Returns a list of the names of all Rooms currently established at this conference
+     * @return The Room's EventManager
+     */
+    public String[] getRoomNames() {
+        String[] names = {};
+        return roomsByName.keySet().toArray(names);
+    }
+
+    /**
      * Returns the number of Rooms this RoomManager contains
      * @return ^
      */

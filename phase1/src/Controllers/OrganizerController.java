@@ -1,9 +1,8 @@
 package Controllers;// Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
-// Date Modified: 15/11/2020
+// Date Modified: 16/11/2020
 
-import Events.EventReader;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.OrganizerManager;

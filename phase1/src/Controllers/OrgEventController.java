@@ -5,6 +5,7 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 15/11/2020
 
+import Events.EventType;
 import Events.RoomManager;
 import Message.*;
 import Person.PersonManager;
@@ -66,28 +67,19 @@ public class OrgEventController implements SubMenu {
                     addRoomPrompt();
                     break;
                 case 2:
-                    addSpeakerPrompt();
-                    break;
-                case 3:
                     createEventPrompt();
                     break;
-                case 4:
+                case 3:
                     eventMessagePrompt();
+                    break;
+                case 4:
+                    addSpeakerPrompt();
                     break;
             }
         }
         while (currentRequest != 0);
         return true;
         // TODO add switch statement to call the methods that correspond with currentRequest
-    }
-
-    /**
-     * Adds a room to the list of rooms in this Convention.
-     * @param room The name/number of a room in the convention
-     * @return true iff list was added to system.
-     */
-    public boolean addRoom(String room) {
-        return roomManager.addRoom(room) != null;
     }
 
     /**
@@ -125,7 +117,7 @@ public class OrgEventController implements SubMenu {
      * @param eventName The name of the Event the user has requested to create
      * @return true iff the Event was created
      */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
+    public boolean createTalk(String eventName, String speakerUsername, String room, int startTime) {
         String roomID = roomManager.getRoomID(room);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
         roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime);
@@ -143,19 +135,79 @@ public class OrgEventController implements SubMenu {
      */
     public boolean createEventPrompt(){
         presenter.printCreateEventPrompt();
+        presenter.printEventTypePrompt();
+        EventType type = chooseEventType();
         presenter.printEventNamePrompt();
-        String name = input.nextLine();
+        String name = chooseRoom();
         presenter.printRoomNamePrompt();
-        String num = input.nextLine();
+        String roomName = input.nextLine();
         presenter.printSpeakerUsernamePrompt();
         String speakername = input.nextLine();
-        presenter.printStartTimePrompt();
-        int start = input.nextInt();
-        createEvent(name, speakername, num, start);
+        if (type == EventType.TALK) {
+            presenter.printStartTimePrompt();
+            int start = chooseStartTime();
+            createTalk(name, speakername, roomName, start);
+        } else {
+            //TODO: add workshop option
+        }
         return true;
 
     }
 
+    /**
+     * Restricts users to choosing an event type from a list of event types
+     * @return The type of event they have chosen
+     */
+    private EventType chooseEventType() {
+        String type = input.nextLine();
+        if (type.equals("0")) {
+            presenter.printEventTypes();
+            type = input.nextLine();
+        }
+        try {
+            return EventType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException f) {
+            presenter.printEventTypePrompt();
+            return chooseEventType();
+        }
+    }
+
+    /**
+     * Restricts users to choosing a room from a list of rooms
+     * @return The room they have chosen
+     */
+    private String chooseRoom() {
+        String name = input.nextLine();
+        if (name.equals("0")) {
+            presenter.printRoomNames(roomManager.getRoomNames());
+            name = input.nextLine();
+        }
+        if (roomManager.getRoomID(name) != null) {
+            return name;
+        } else {
+            presenter.printRoomNamePrompt();
+            return chooseRoom();
+        }
+    }
+
+    /**
+     * Restricts users to choosing a valid start time
+     * @return The start time
+     */
+    private int chooseStartTime() {
+        String time = input.nextLine();
+        try {
+            int value = Integer.valueOf(time);
+            if (value >= 0 && value <= 24) {
+                return value;
+            } else {
+                return chooseStartTime();
+            }
+        } catch (NumberFormatException f) {
+            presenter.printStartTimePrompt();
+            return chooseStartTime();
+        }
+    }
 
     /*
      * Creates a new Event for the convention
@@ -176,10 +228,20 @@ public class OrgEventController implements SubMenu {
      * @return true iff room adding prompt was printed
      */
     public boolean addRoomPrompt() {
-        presenter.printRoomPrompt();
+        presenter.addRoomPrompt();
+        presenter.addRoomNamePrompt();
         String name = input.nextLine();
         addRoom(name);
         return true;
+    }
+
+    /**
+     * Adds a room to the list of rooms in this Convention.
+     * @param room The name/number of a room in the convention
+     * @return true iff list was added to system.
+     */
+    public boolean addRoom(String room) {
+        return roomManager.addRoom(room) != null;
     }
 
     /**
