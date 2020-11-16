@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
+import Events.EventManager;
 import Person.PersonManager;
 import Person.AttendeeManager;
 import Person.SpeakerManager;
@@ -24,7 +25,7 @@ public class AttEventController implements SubMenu {
     private int currentRequest;
     private PersonManager personManager;
     private AttendeeManager aManager;
-    // EventManager??
+    private EventManager eventManager;
     private AttEventMenu presenter = new AttEventMenu();
     Scanner input = new Scanner(System.in);
 
@@ -53,6 +54,16 @@ public class AttEventController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
+
+            switch(currentRequest) {
+                case 0:
+                    // return to main menu
+                case 1:
+                    //view list of events
+                case 2:
+                    getConventionEventList();
+            }
+
             // TODO add switch statement to call the methods that correspond with currentRequest
         }
         while (currentRequest != 0);
@@ -66,9 +77,9 @@ public class AttEventController implements SubMenu {
      * @return true iff a formatted list of Events was displayed
      */
     public boolean getConventionEventList() {
-        // eManager.getEventList();
-        // update the presenter to show the list of Events
-        return false;
+        String[] allEvents = eventManager.getEventList();
+        presenter.printConventionEventList(allEvents);
+        return false;                                         // should this return value change?
     }
 
     /**

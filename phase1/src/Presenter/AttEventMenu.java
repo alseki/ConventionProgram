@@ -31,7 +31,10 @@ public class AttEventMenu implements printSubMenu {
      * @param EventList a collection of Event information to be printed
      * @return true iff all Events were printed
      */
-    public boolean printConventionEventList(Collection EventList) {
+    public boolean printConventionEventList(String[] EventList) {
+        for (String eventInfo: EventList) {
+            System.out.println(eventInfo);
+        }
         return true;
     }
 
