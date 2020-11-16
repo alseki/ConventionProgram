@@ -32,6 +32,14 @@ public class EventManager {
     }
 
     /**
+     * Getter for the name of the Room this Event is in
+     * @return the name of this Room (as a String)
+     */
+    public String getRoomName() {
+        return this.permissionChecker.getName();
+    }
+
+    /**
      * Creates a new EventManager from an array of Events
      * @param checker A RoomPermissions object based on the room in which these Events are being held
      * @param events The array of Events to be read in
