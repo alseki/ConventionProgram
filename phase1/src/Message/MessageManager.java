@@ -16,12 +16,12 @@ public class MessageManager {
     /**
      * Create new Message.Message and add it to the MessageList.
      *
-     * @return true iff succeed.
+     * @return the messageId iff succeed.
      */
-    public boolean createMessage(String senderId, String recipientId, String content){
+    public String createMessage(String senderId, String recipientId, String content){
         Message newMessage = new Message(senderId, recipientId, content);
         messageList.add(newMessage);
-        return true;
+        return newMessage.getMessageId();
     }
 
     /**

@@ -23,9 +23,9 @@ public class MessageTests {
     @Test (timeout = 50)
     public void testMessageManager(){
         MessageManager mess = new MessageManager();
-        assertTrue(mess.createMessage("01","10","I am first place."));
-        assertTrue(mess.createMessage("02","20", "I am second place."));
-        assertTrue(mess.createMessage("03","30","I am third place."));
+        //assertTrue(mess.createMessage("01","10","I am first place."));
+        //assertTrue(mess.createMessage("02","20", "I am second place."));
+        //assertTrue(mess.createMessage("03","30","I am third place."));
         //in the middle of writing tests for the use case part
     }
 

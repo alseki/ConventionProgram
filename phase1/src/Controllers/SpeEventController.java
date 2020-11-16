@@ -78,7 +78,7 @@ public class SpeEventController implements SubMenu {
      */
     public boolean eventMessage(String eventName, String messageContent) {
         String eventID = eventManager.getEventID(eventName);
-        String[] attIDs = eventManager.getSignUps(eventID);
+        ArrayList<String> attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
         String acID = chatManager.createAnnouncementChat(eventID, attIDs);
         chatManager.addMessage(acID, messageID);

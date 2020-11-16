@@ -1,5 +1,6 @@
 package Controllers;
 
+import Message.Chat;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
@@ -98,35 +99,24 @@ public class MessageController implements SubMenu {
         }
     }
 
-    /**
-     * Get's a list of contacts the user has Chats with
-     * @return true iff the presenter printed a list of contacts the user has Chats with
-     */
-    public boolean getChats() {
-        return true;
-    }
-
 
     /**
-     * Creates new Message for existing Chat
+     * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
      * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      * @return true iff new Message was created and added to Chat's messageList
      */
-    public boolean addMessage(String chatID, String messageContent) {
-        ArrayList <String> chatMembers = chatManager.getChat(chatID).getPersonIds();
-
-        //messageManager.createMessage()
-
+    public boolean sendMessage(String chatID, String messageContent) {
+        Chat currentChat = this.chatManager.getChat(chatID);
+        for (String receiverID : currentChat.getPersonIds()){
+            if (!receiverID.equals(currentUserID)){
+                String messageID = this.messageManager.createMessage(currentUserID, receiverID, messageContent);
+                currentChat.addMessageIds(messageID);
+            }
+        }
+        // presenter: message sent in chatID.
         return true;
     }
 
-    /**
-     * Get's the current user's Chat messages between contactUsername
-     * @param contactUsername The username of the current user's requested contact messages
-     * @return true iff presenter was updated with a formatted list of Message.Message.Chat messages
-     */
-    public boolean getMessages(String contactUsername) {
-        return true;
-    }
+
 }
