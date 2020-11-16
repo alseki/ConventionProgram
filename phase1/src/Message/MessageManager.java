@@ -53,6 +53,17 @@ public class MessageManager {
     }
 
     /**
+     * @return the list of IDs of the messages stored in this MessageManager.
+     */
+    public ArrayList<String> getMessageIDs(){
+        ArrayList<String> messageIDs = new ArrayList<>();
+        for (Message m : messageList){
+            messageIDs.add(m.getMessageId());
+        }
+        return messageIDs;
+    }
+
+    /**
      * Get message formatted as: "[From]: [ID of the sender]\new line
      *                            [To]: [ID of the recipient]\newline
      *                            [Time Sent]: [time that was sent]\newline

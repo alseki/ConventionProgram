@@ -118,5 +118,45 @@ public class MessageController implements SubMenu {
         return true;
     }
 
+    /**
+     * Show all the messages this user sent in presenter, **sorted by datetime.
+     * @return ArrayList of formatted messages.
+     */
+    private ArrayList<String> sentBox(){
+        ArrayList<String> sentMessages = new ArrayList<>();
+        for (String messageID: this.messageManager.getMessageIDs()){
+            String formattedMessage = this.messageManager.getFormattedMessage(messageID);
+            sentMessages.add(formattedMessage);
+        }
+        return sentMessages;
+        // Let presenter show the sent messages.
+    }
+
+    /**
+     * Show the chatList with its ID and participants' IDs.
+     * @return ArrayList of formatted chats
+     *              [ID]: [ID of the chat]\new line
+     *              [Participants]: [ID of the Participants]\newline
+     *              ...
+     */
+    private ArrayList<String> viewChats(){
+        ArrayList<String> chats = new ArrayList<>();
+        for (String chatID: this.chatManager.getChatIDs()){
+            String formattedChat = this.chatManager.getFormattedChat(chatID);
+            chats.add(formattedChat);
+        }
+        return chats;
+        // Let presenter show the chats.
+    }
+
+    /**
+     * Show the messages in one chat by chatID.
+     */
+    // TODO: we only have messageIDs in chat. How to get the Message????
+    private String viewMessageByChat(String chatID){
+
+        // Let presenter show the chat info.
+    }
+
 
 }
