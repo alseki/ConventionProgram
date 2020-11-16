@@ -38,7 +38,7 @@ public class AttendeeManager extends PersonManager {
      * @param eventID the ID of the event the user wants to sign up for
      * @return returns true if the eventID has successfully been added to the user's list of eventIDs, false if not
      */
-    public boolean signupForEvent(String userID, String eventID) {
+    public boolean signUpForEvent(String userID, String eventID) {
         Attendee curr = (Attendee)idToPerson.get(userID);
         if(!curr.getEventsSignedUp().contains(eventID)) {
             curr.signUp(eventID);
