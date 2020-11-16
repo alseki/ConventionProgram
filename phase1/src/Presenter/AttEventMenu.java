@@ -6,6 +6,7 @@ package Presenter;
 // Date Modified: 14/11/2020
 
 import java.util.Collection;
+import java.util.ArrayList;
 
 public class AttEventMenu implements printSubMenu {
 
@@ -32,9 +33,11 @@ public class AttEventMenu implements printSubMenu {
      * @return true iff all Events were printed
      */
     public boolean printConventionEventList(String[] EventList) {
+        System.out.println("-ALL EVENTS-");
         for (String eventInfo: EventList) {
             System.out.println(eventInfo);
         }
+        System.out.println("---");
         return true;
     }
 
@@ -43,7 +46,12 @@ public class AttEventMenu implements printSubMenu {
      * @param EventList a collection of Event information to be printed
      * @return true iff all Events were printed
      */
-    public boolean printAttendeeEventList(Collection EventList) {
+    public boolean printAttendeeEventList(ArrayList<String> EventList) {
+        System.out.println("-EVENTS YOU HAVE SIGNED UP FOR-");
+        for(String userEvent: EventList) {
+            System.out.println(userEvent);
+        }
+        System.out.println("---");
         return true;
     }
 
@@ -52,14 +60,16 @@ public class AttEventMenu implements printSubMenu {
      * @return true iff add Event prompt was printed
      */
     public boolean printAddEventPrompt() {
+        System.out.println("Enter the exact name of the event that you would like to sign up for: ");
         return true;
     }
 
     /**
      * Prints a confirmation that the user has been signed up for an Event
-     * @return trrue iff Event signed up for confirmation was printed
+     * @return true iff Event signed up for confirmation was printed
      */
     public boolean printEventAdded() {
+        System.out.println("Event sign-up successful.");
         return true;
     }
 
@@ -68,6 +78,7 @@ public class AttEventMenu implements printSubMenu {
      * @return true iff remove Event prompt was printed
      */
     public boolean printRemoveEventPrompt() {
+        System.out.println("Enter the exact name of the event that you would like to cancel your spot from: ");
         return true;
     }
 
@@ -76,6 +87,7 @@ public class AttEventMenu implements printSubMenu {
      * @return true iff Event removed confirmation was printed
      */
     public boolean printEventRemoved() {
+        System.out.println("Event spot cancellation successful.");
         return true;
     }
     
