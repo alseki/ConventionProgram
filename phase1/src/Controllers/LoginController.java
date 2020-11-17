@@ -78,8 +78,9 @@ public class LoginController implements SubMenu {
         presenter.printPasswordPrompt();
         String password = input.next();
         if (manager.getCurrentUserID(username) != null)  {
-            //TODO check password?
-            return true;
+            if(manager.confirmPassword(username, password)) {
+                return true;
+            }
         }
         presenter.printSkipLine();
         return false;

@@ -2,8 +2,10 @@ package Person;
 
 import Events.Event;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public abstract class PersonManager {
@@ -56,7 +58,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    protected Person getPerson(String currentUserID) {
+    private Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -80,6 +82,7 @@ public abstract class PersonManager {
         }
         return null;
     }
+
 
     /**
      *
@@ -106,6 +109,20 @@ public abstract class PersonManager {
             return usernameToPerson.get(username).getID();
         }
         return null;
+    }
+
+    /**
+     * This is a helper function for LoginController in the login() method
+     * @param username
+     * @param password
+     * @return true iff the password inputted by the user corresponds to username's password
+     */
+    public boolean confirmPassword(String username, String password) {
+        Person person = getPersonByUsername(username);
+        if (person.getPassword() == password) {
+            return true;
+        }
+        return false;
     }
 
     /**
