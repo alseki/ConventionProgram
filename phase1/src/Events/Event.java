@@ -1,7 +1,5 @@
 package Events;
 
-import Message.Message;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;

@@ -42,8 +42,7 @@ public class OrganizerController extends PersonController {
 
                 switch (currentRequest) {
                     case 0:
-                        saveEvents();
-                        // SAVE FILES
+                        saveEvents(); // SAVE FILES
                         break;
                     case 1:
                         ContactController contactController = new ContactController(currentUserID, manager);

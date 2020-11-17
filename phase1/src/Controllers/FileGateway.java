@@ -13,39 +13,33 @@ public class FileGateway<T> {
 
 
     public FileGateway() {
-        String directoryString = System.getProperty("user.dir");
-        String pathString = "";
-        if (directoryString.contains("Controllers")) {
-            String[] parts = directoryString.split(Pattern.quote("\\"));
-            if (parts.length > 1) {
-                for (int i = 0; i < parts.length - 2; i++) {
-                    pathString = pathString + parts[i] + "\\";
-                }
-            }
-            System.out.println("Launched from Controllers folder");
-            pathString = pathString + "data\\";
-        } else if (directoryString.contains("src")) {
-            String[] parts = directoryString.split(Pattern.quote("\\"));
-            if (parts.length > 1) {
-                for (int i = 0; i < parts.length - 2; i++) {
-                    pathString = pathString + parts[i] + "\\";
-                }
-            }
-            System.out.println("Launched from src folder");
-            pathString = pathString + "data\\";
-        } else if (directoryString.contains("phase1")) {
-            System.out.println("Launched from phase1 folder");
-            pathString = directoryString + "\\data\\";
-        } else if (directoryString.contains("group_0467")) {
-            System.out.println("Launched from group_0467 folder");
-            pathString = directoryString + "\\phase1\\data\\";
-        } else {
-            String[] parts = directoryString.split(Pattern.quote("\\"));
-            System.out.println("Whoops! Error constructing path");
-            System.out.println("Launched from "+ parts[parts.length - 1] +" folder");
-        }
-        path = pathString;
+        path = findPath();
 
+    }
+
+    public String findPath() {
+        try {
+            String directoryString = System.getProperty("user.dir");
+            String pathString = "";
+            String[] parts = directoryString.split(Pattern.quote("\\"));
+
+            if (parts.length < 1) {
+                pathString = directoryString + "\\";
+            }
+            else {
+                String part = parts[0];
+                int i = 0;
+                while (!part.equals("phase1")) {
+                    pathString += part + "\\";
+                    i++;
+                    part = parts[i];
+                }
+                pathString += part + "\\data\\";
+            }
+            return pathString;
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     /**
