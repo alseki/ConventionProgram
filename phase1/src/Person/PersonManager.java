@@ -55,7 +55,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    private Person getPerson(String currentUserID) {
+    public Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -70,12 +70,12 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
      */
-    private Person getPerson(String username, String password) {
+    public Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
             if (usernameToPerson.get(username).getPassword().equals(password)) {
                 return usernameToPerson.get(username);
             }
-            usernameToPerson.get(username); // shouldn't this be a return statement?
+            return usernameToPerson.get(username); // shouldn't this be a return statement?
         }
         return null;
     }
@@ -143,7 +143,7 @@ public abstract class PersonManager {
      */
     public void addChat(String currentID, String chatID) {
         getPerson(currentID).addChat(chatID);
-
+        // true;
     }
 
     /**
@@ -185,7 +185,6 @@ public abstract class PersonManager {
         String contactID = getCurrentUserID(contactUsername);
         return person.getContactList().contains(contactID);
     }
-
 
 
 

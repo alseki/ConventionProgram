@@ -5,17 +5,18 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 15/11/2020
 
+import Events.EventManager;
 import Events.EventType;
 import Events.RoomManager;
-import Message.*;
+import Message.AnnouncementChat;
+import Message.ChatManager;
+import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import Events.EventManager;
-import Events.Event;
 
 public class OrgEventController implements SubMenu {
 
@@ -91,24 +92,66 @@ public class OrgEventController implements SubMenu {
      * @return true iff a new Person.Speaker object was created.
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
-        //if (sManager.findPerson(username)) {
-            //sManager.createAccount(name, username, password, email);
-            //return true;
-        //}
+        if (speakerManager.findPerson(username)) {
+            speakerManager.createAccount(name, username, password, email);
+            return true;
+        }
         return true;
     }
+
+    /**
+     * This is a helper function for the method createEvent below
+     * @param chatId
+     * @param personID
+     * @return boolean; this is to update Speaker's chat list should OrgEvent Controller wish to do so in this class
+     */
+
+    private boolean updateSpeakerChat(String personID, String chatId) {
+        this.speakerManager.getPerson(personID).getChatList().add(chatId);
+        return true;
+    }
+
+    /**
+     * This is helper function for the method createEvent below
+     * @param acId
+     * @param personId
+     * @return boolean; this is to update Speaker's announcementChatIds (announcement chats created by Organizer pertaining to event)
+     */
+
+    private boolean updateSpeakerChatWithAnnouncement(String personId, String acId) {
+        this.speakerManager.addAnnouncementChats(personId, acId);
+        return true;
+    }
+
 
 
     /**
-     * Adds Speaker to an Event being held in a single room. At most one speaker speaks in each room at a given time
-     * @param speakerUsername The username of the Speaker the current user wishes to schedule
-     * @param room The name/number of a room in the convention
-     * @return true iff the Speaker was added to the Event
+     * Creates a new Event for the convention
+     * creates a new chat for the event and sets the event chatid to the id of this chat.
+     * @param eventName The name of the Event the user has requested to create
+     * @return true iff the Event was created
      */
-    private boolean scheduleSpeaker(String speakerUsername, String room) {
+    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
+        String roomID = roomManager.getRoomID(room); // roomId
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
+        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
+        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
+        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
+        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
+        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
 
+        // also setting up setEventChatID for speaker(s) of event as well
+        updateSpeakerChatWithAnnouncement(speakerID, acId);
+        // also setting upEventChatId for speaker(s) of event
+        updateSpeakerChat(speakerID, acId);
+        // addEventIDtoList(String personID, String eventID)
+        speakerManager.addTalkId(speakerID, id);
+        // addEventIDtoMap(String personID, String eventID, String eventName)
+        speakerManager.addTalkIdToDictionary(speakerID, id, eventName);
         return true;
     }
+
+
 
 
     /**
