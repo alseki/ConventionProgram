@@ -7,13 +7,9 @@ package Controllers;
 
 import Events.RoomManager;
 import Message.ChatManager;
-import Message.Message;
 import Message.MessageManager;
-import Person.Attendee;
 import Person.AttendeeManager;
-import Person.Person;
 import Person.PersonManager;
-import Presenter.ContactMenu;
 import Presenter.MainMenu;
 
 import java.util.Scanner;
@@ -58,7 +54,7 @@ public class AttendeeController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, manager);
+                        AttEventController attEventController = new AttEventController(currentUserID, manager, roomManager);
                         attEventController.menuChoice();
                         break;
                 }
