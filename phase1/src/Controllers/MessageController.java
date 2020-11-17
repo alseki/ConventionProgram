@@ -144,6 +144,22 @@ public class MessageController implements SubMenu {
     }
 
     /**
+     * Show all the messages this user received in presenter, **sorted by datetime.
+     * @return ArrayList of formatted messages.
+     */
+    private ArrayList<String> inBox(){
+        ArrayList<String> receivedMessages = new ArrayList<>();
+        for (Message message: this.messageManager.getMessageList()){
+            if (message.getRecipientId().equals(currentUserID)){
+                String formattedMessage = this.messageManager.getFormattedMessage(message.getSenderId());
+                receivedMessages.add(formattedMessage);
+            }
+        }
+        return receivedMessages;
+        // Let presenter show the sent messages.
+    }
+
+    /**
      * Show the chatList with its ID and participants' IDs.
      * @return ArrayList of formatted chats
      *              [ID]: [ID of the chat]\new line
