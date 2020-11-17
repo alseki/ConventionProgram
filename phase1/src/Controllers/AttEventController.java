@@ -1,6 +1,6 @@
 package Controllers;
 
-// Programmer: Cara McNeil
+// Programmers: Cara McNeil, Allen Kim
 // Description: All the methods that take user input in the Attendee Event Menu
 // Date Created: 01/11/2020
 // Date Modified: 13/11/2020

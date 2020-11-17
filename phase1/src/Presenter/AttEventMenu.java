@@ -1,6 +1,6 @@
 package Presenter;
 
-// Programmers: Cara McNeil,
+// Programmers: Cara McNeil, Allen Kim
 // Description: Prints information pertaining to a user's attending Event information
 // Date Created: 11/11/2020
 // Date Modified: 14/11/2020
