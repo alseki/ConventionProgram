@@ -197,15 +197,23 @@ public abstract class PersonManager {
     }
 
     /**
-     * Add chat ID to the Chat List contained in Person object represented by the inputted person ID
-     * @param personID ID of the Person object
-     * @param chatID ID of the Chat that is to be added to the collection of chat IDs in the Person
-     * @return true iff chatID was successfully added to the ChatList in Person object corresponding to the person ID
+     * Get list of all talks in a Speaker object, referred to by the Speaker's username.
+     * @param username username of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
      */
-    public boolean addChatId(String personID, String chatID){
-        this.getPerson(personID).getChatList().add(chatID);
-        return true;
+    public ArrayList<String> getSpeakerAllTalks(String username){
+        Speaker spe = (Speaker) getPerson(username);
+        return spe.getAllTalks();
     }
+
+    /**
+     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
+     * @param speakerID ID of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
+     */
+    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
+        Speaker spe = (Speaker) getPerson(speakerID);
+        return spe.getAllTalks();}
 }
 
 

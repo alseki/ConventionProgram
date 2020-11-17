@@ -123,8 +123,7 @@ public class SpeEventController implements SubMenu {
      * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
     public boolean allSpeakerEventsMessagingById(String speakerId, String messageContent) {
-        Speaker individual = (Speaker) personManager.getPerson(speakerId);
-        ArrayList allSpeakerEvents = individual.getAllTalks();
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerIdAllTalks(speakerId);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;
@@ -138,9 +137,7 @@ public class SpeEventController implements SubMenu {
      * @return
      */
     public boolean allSpeakerEventsMessagingByUsername(String username, String messageContent) {
-
-        Speaker individual = (Speaker) personManager.getPerson(username);
-        ArrayList allSpeakerEvents = individual.getAllTalks();
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(username);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;
