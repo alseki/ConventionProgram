@@ -117,13 +117,20 @@ public class AttEventController implements SubMenu {
      * @return true iff user was signed up for the Event
      */
     public boolean signupForEvent(String eventName) {
+        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
 
-        // wanna add the event's chatId to the current user's list of chats.
+        if (thisRoom == null) {
+            return false;
+        }
 
-        boolean isPersonAddedToEvent = eventManager.signUpForEvent(currentUserID, eventName);
-        boolean isEventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, eventName);
+        String event = thisRoom.getEventID(eventName);
 
-        if(isPersonAddedToEvent && isEventAddedToPerson) {
+        boolean personAddedToEvent = thisRoom.signUpForEvent(currentUserID, event);
+        boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
+
+        attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
+
+        if (personAddedToEvent && eventAddedToPerson) {
             presenter.printEventAdded();
             return true;
         }
@@ -137,12 +144,20 @@ public class AttEventController implements SubMenu {
      */
     public boolean cancelSpotFromEvent(String eventName) {
 
-        // wanna remove the event's chatId to the current user's list of chats.
+        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
 
-        boolean isPersonRemovedFromEvent = eventManager.removeFromEvent(currentUserID, eventName);
-        boolean isEventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, eventName);
+        if (thisRoom == null) {
+            return false;
+        }
 
-        if(isPersonRemovedFromEvent && isEventRemovedFromPerson) {
+        String event = thisRoom.getEventID(eventName);
+
+        boolean personRemovedFromEvent = thisRoom.removeFromEvent(currentUserID, event);
+        boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
+
+        attendeeManager.removeChat(currentUserID, thisRoom.getEventChat(event));
+
+        if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
             return true;
         }
