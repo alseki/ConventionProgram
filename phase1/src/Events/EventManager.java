@@ -135,12 +135,16 @@ public class EventManager implements Serializable {
      * @param name The Event
      * @return whether the Event has been successfully added
      */
-    public String addEvent(String name, String speakerID, int startTime) {
+    public boolean addEvent(String name, String speakerID, int startTime) {
         Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime));
-        permissionChecker.checkConflicts(event, getEvents());
-        events.put(event.getID(), event);
-        eventsByName.put(event.getName(), event.getID());
-        return event.getID();
+        if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
+            return false;
+        }
+        else {
+            events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
+            return true;
+        }
     }
 
     /**
@@ -148,12 +152,16 @@ public class EventManager implements Serializable {
      * @param name The Event
      * @return whether the Event has been successfully added
      */
-    public String addEvent(String name, String speakerID, int startTime, String description) {
+    public boolean addEvent(String name, String speakerID, int startTime, String description) {
         Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime), description);
-        permissionChecker.checkConflicts(event, getEvents());
-        events.put(event.getID(), event);
-        eventsByName.put(event.getName(), event.getID());
-        return event.getID();
+        if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
+            return false;
+        }
+        else {
+            events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
+            return true;
+        }
     }
 
     /**
