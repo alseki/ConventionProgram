@@ -16,7 +16,7 @@ public class AttEventMenu implements printSubMenu {
      */
     @Override
     public boolean printMenuOptions() {
-        System.out.println("----- Attendee Event Menu -----");
+        System.out.println("\n----- Attendee Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To view the list of events, Enter '1'.");
         System.out.println("To sign up for an event, Enter '2'.");
@@ -27,17 +27,37 @@ public class AttEventMenu implements printSubMenu {
         return true;
     }
 
+
+    public boolean printRoomChoicePrompt() {
+        System.out.println("\n Which room's schedule do you want to see? (Press 0 for options)");
+        return true;
+    }
+
+
+    public boolean printList (String[] list) {
+        System.out.println();
+        if (list != null) {
+            System.out.println("\n---");
+            for (String item : list) {
+                System.out.println(list);
+            }
+            System.out.println("---\n");
+        }
+        else {
+            System.out.println("Sorry! No items found");
+        }
+        return true;
+    }
+
     /**
-     * Prints the list of Events happening at the convention
-     * @param EventList a collection of Event information to be printed
+     * Prints the list of Events happening in a given room
+     * @param eventList a collection of Event information to be printed
+     * @param roomName the name of the room in which the Events are being held
      * @return true iff all Events were printed
      */
-    public boolean printConventionEventList(String[] EventList) {
-        System.out.println("-ALL EVENTS-");
-        for (String eventInfo: EventList) {
-            System.out.println(eventInfo);
-        }
-        System.out.println("---");
+    public boolean printRoomEventList(String[] eventList, String roomName) {
+        System.out.println("\nEVENTS IN ROOM " + roomName.toUpperCase() + "-");
+        printList(eventList);
         return true;
     }
 

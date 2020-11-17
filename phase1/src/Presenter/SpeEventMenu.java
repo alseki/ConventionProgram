@@ -23,7 +23,7 @@ public class SpeEventMenu implements printSubMenu {
      */
     public boolean printFormattedTalks(ArrayList<String> eventIds) {
         System.out.println("Print Talks: \n");
-        return true;}
+        return true;
 
         }
 

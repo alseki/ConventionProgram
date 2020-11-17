@@ -7,31 +7,26 @@ package Controllers;
 
 import java.util.ArrayList;
 
-import Events.RoomManager;
-import Message.ChatManager;
-import Message.MessageManager;
 import Events.EventManager;
-import Person.PersonManager;
+import Events.RoomManager;
 import Person.AttendeeManager;
-import Person.SpeakerManager;
 import Presenter.AttEventMenu;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class AttEventController implements SubMenu {
 
     private String currentUserID;
     private int currentRequest;
-    private PersonManager personManager;
     private AttendeeManager attendeeManager;
-    private EventManager eventManager;
+    private RoomManager roomManager;
     private AttEventMenu presenter = new AttEventMenu();
     Scanner input = new Scanner(System.in);
 
-    public AttEventController(String currentUserID, PersonManager personManager) {
+    public AttEventController(String currentUserID, AttendeeManager attendeeManager, RoomManager roomManager) {
         this.currentUserID = currentUserID;
-        this.personManager = personManager;
+        this.attendeeManager = attendeeManager;
+        this.roomManager = roomManager;
     }
 
     /**
@@ -88,13 +83,27 @@ public class AttEventController implements SubMenu {
      * Get's the list of Events happening at the convention
      * @return true iff a formatted list of Events was displayed
      */
-    public boolean getConventionEventList() {
-        String[] allEvents = eventManager.getEventList();
-        return presenter.printConventionEventList(allEvents);
+    public void getConventionEventList() {
+        String roomID = getRoomChoice();
+        presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
+    }
+
+    private String getRoomChoice() {
+        presenter.printRoomChoicePrompt();
+        String room = input.nextLine();
+        if (room.equals("0")) {
+            presenter.printList(roomManager.getRoomNames());
+            room = input.nextLine();
+        }
+        if (roomManager.getRoomID(room) != null) {
+            return roomManager.getRoomID(room);
+        } else {
+            return getRoomChoice();
+        }
     }
 
     /**
-     * Get's the list of Events the Person.Person.Attendee user is signed up for
+     * Gets the list of Events the Attendee user is signed up for
      * @return true iff the presenter has been updated with a list of events
      */
     public boolean getUserEventList() {

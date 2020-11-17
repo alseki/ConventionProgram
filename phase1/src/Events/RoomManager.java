@@ -101,6 +101,18 @@ public class RoomManager implements Serializable {
         return thisRoom.getID();
     }
 
+    public String getEventRoom(String eventName) {
+        if(getRoomNames().length > 0) {
+            for(String room: getRoomNames()) {
+                String id = getRoom(getRoomID(room)).getEventID(eventName);
+                if (id != null) {
+                    return id;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null){

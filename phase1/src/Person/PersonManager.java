@@ -136,15 +136,21 @@ public abstract class PersonManager {
     }
 
     /**
-     *
+     * Adds a chat
      * @param currentID
      * @param chatID
-     * @ return void, this method does not return a boolean, because there is no "false" message per se.
-     *          Any message object can be sent
      */
     public void addChat(String currentID, String chatID) {
         getPerson(currentID).addChat(chatID);
-        // true;
+    }
+
+    /**
+     * Removes a chat
+     * @param currentID
+     * @param chatID
+     */
+    public void removeChat(String currentID, String chatID) {
+        getPerson(currentID).removeChat(chatID);
     }
 
     /**

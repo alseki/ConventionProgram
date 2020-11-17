@@ -60,9 +60,9 @@ public abstract class Person {
     }
 
     /**
-     * this returns the names of the person's in the contact list
+     * this returns the names of the people in the contact list
      *
-     * @return this returns the names in the contact list will return and array list of string's
+     * @return this returns the names in the contact list will return and array list of strings
      */
     public ArrayList<String> getContactList() {
         return this.contactList;
@@ -78,7 +78,24 @@ public abstract class Person {
     public ArrayList<String> getChatList() {
         return chatList;
     }
-    public void addChat(String chatID) {this.chatList.add(chatID); }
+
+    /**
+     * Adds a Chat to the list of the user's chats
+     * @param chatID
+     */
+    public void addChat(String chatID) {
+        this.chatList.add(chatID);
+    }
+
+    /**
+     * Removes a Chat from the list of the user's chats
+     * @param chatID
+     */
+    public void removeChat(String chatID) {
+        if (this.chatList.contains(chatID)) {
+            this.chatList.remove(chatID);
+        }
+    }
 
     /**
      * allows for access to the list of events for Person.doubleBooking

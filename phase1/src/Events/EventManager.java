@@ -1,9 +1,6 @@
 package Events;
 
-import Message.MessageManager;
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -84,11 +81,14 @@ public class EventManager implements Serializable {
      */
     public String[] getEventList() {
         Event[] eventArray = getEvents();
-        String[] eventInfoArray = new String[eventArray.length];
-        for (int i = 0; i < eventArray.length; i++) {
-            eventInfoArray[i] = eventArray[i].toString();
+        if (eventArray != null) {
+            String[] eventInfoArray = new String[eventArray.length];
+            for (int i = 0; i < eventArray.length; i++) {
+                eventInfoArray[i] = eventArray[i].toString();
+            }
+            return eventInfoArray;
         }
-        return eventInfoArray;
+        return null;
     }
 
     /**

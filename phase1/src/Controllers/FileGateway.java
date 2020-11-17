@@ -81,12 +81,13 @@ public class FileGateway<T> {
                 System.out.println(i.toString());
                 return null;
             }
+        } catch (EOFException f) {
+            return null;
         } catch (IOException f) {
             System.out.println("Sorry! Couldn't read from file.");
             System.out.println(f.toString());
             return null;
-        }
-        catch (Exception f) {
+        } catch (Exception f) {
             System.out.println(f.toString());
             f.printStackTrace();
             return null;

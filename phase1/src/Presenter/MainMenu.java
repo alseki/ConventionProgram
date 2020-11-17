@@ -13,7 +13,7 @@ public class MainMenu {
      * @return true iff 'Person' main menu options were printed
      */
     private boolean printPersonMM() {
-        System.out.println("----- Main Menu -----");
+        System.out.println("\n----- Main Menu -----");
         System.out.println("To save any account changes and return to the start page, Enter '0'.");
         System.out.println("For Contact List options (view, edit) Enter '1'.");
         System.out.println("For Message options (view current messages, send replies) Enter '2'.");
@@ -26,7 +26,7 @@ public class MainMenu {
      */
     public boolean printAttendeeMM() {
         printPersonMM();
-        System.out.println("For Event Attending options (view conventions events, view your events, edit your events) " +
+        System.out.println("For Event options (view conventions events, view your events, edit your events) " +
                 "Enter '3'.");
         return true;
     }

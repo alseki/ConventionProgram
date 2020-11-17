@@ -1,4 +1,4 @@
-package Events;
+package Controllers;
 
 public class InvalidChoiceException extends Exception {
     String type;
