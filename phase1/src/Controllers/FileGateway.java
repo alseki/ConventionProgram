@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.regex.Pattern;
 
 // Contributors: Sarah Kronenfeld
-// Last edit: Nov 15 2020
+// Last edit: Nov 16 2020
 
 // Architecture Level - Gateway
 
@@ -12,8 +12,8 @@ public class FileGateway<T> {
     String path;
 
 
-    public FileGateway() {
-        path = findPath();
+    public FileGateway(String filename) {
+        path = findPath() + filename;
 
     }
 
@@ -44,12 +44,11 @@ public class FileGateway<T> {
 
     /**
      * Reads a file that contains a serialized Serializable of type T
-     * @param filename The filename of the file
      * @return The object contained in the file; null, if the method doesn't complete
      */
-    public T readFile(String filename) {
+    public T readFile() {
         try {
-            InputStream file = new FileInputStream(path + filename);
+            InputStream file = new FileInputStream(path);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
@@ -59,9 +58,8 @@ public class FileGateway<T> {
             return returnValue;
         }
         catch (EOFException f) {
+            System.out.println("Sorry! Couldn't read from file.");
             System.out.println(f.toString());
-            f.printStackTrace();
-            System.out.println("Sorry! No such object found.");
             return null;
         }
         catch (Exception f) {
@@ -74,12 +72,11 @@ public class FileGateway<T> {
     /**
      * Writes a Serializable of type T into a file
      * @param objIn The Serializable
-     * @param filename The filename of the file
      * @return Whether the method completes
      */
-    public boolean writeFile(T objIn, String filename) {
+    public boolean writeFile(T objIn) {
         try {
-            OutputStream file = new FileOutputStream(path + filename);
+            OutputStream file = new FileOutputStream(path);
             OutputStream buffer = new BufferedOutputStream(file);
             ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -89,9 +86,9 @@ public class FileGateway<T> {
             System.out.println("Object successfully written!");
             return true;
         }
-        catch (FileNotFoundException f) {
+        catch (EOFException f) {
+            System.out.println("Sorry! Couldn't write to file.");
             System.out.println(f.toString());
-            System.out.println(path + filename);
             return false;
         }
         catch (Exception f) {

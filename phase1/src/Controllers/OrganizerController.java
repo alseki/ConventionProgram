@@ -1,4 +1,4 @@
-package Controllers;// Programmers: Cara McNeil, Sarah Kronenfeld
+package Controllers;// Programmers: Cara McNeil,
 // Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
 // Date Modified: 16/11/2020
@@ -14,9 +14,7 @@ import Presenter.MainMenu;
 import java.util.Scanner;
 
 public class OrganizerController extends PersonController {
-    private RoomManager roomManager;
     private ChatManager chatManager = new ChatManager();
-    private MessageManager messageManager = new MessageManager();
     private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private OrganizerManager manager;
@@ -25,8 +23,9 @@ public class OrganizerController extends PersonController {
     Scanner input = new Scanner(System.in);
 
 
-    public OrganizerController(PersonManager manager, SpeakerManager speakerManager) {
-        super(manager);
+    public OrganizerController(PersonManager manager, SpeakerManager speakerManager,
+                               RoomManager rooms, MessageManager messages) {
+        super(manager, rooms, messages);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
     }
@@ -42,7 +41,6 @@ public class OrganizerController extends PersonController {
 
                 switch (currentRequest) {
                     case 0:
-                        saveEvents(); // SAVE FILES
                         break;
                     case 1:
                         ContactController contactController = new ContactController(currentUserID, manager);

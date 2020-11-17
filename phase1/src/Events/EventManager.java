@@ -289,4 +289,19 @@ public class EventManager implements Serializable {
         }
         return false;
     }
+
+    /**
+     * Getter for the ID of an event's chat
+     * @param id The event's ID
+     * @return The event's chat ID
+     */
+    public String getEventChat(String id) {
+        Event event = events.get(id);
+        if (event != null) {
+            return event.getChatID();
+        }
+        else {
+            return null;
+        }
+    }
 }
