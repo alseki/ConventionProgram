@@ -21,11 +21,18 @@ public class LoginMenu implements printSubMenu {
     }
 
     /**
+     * Prints \n
+     */
+    public void printSkipLine() {
+        System.out.println();
+    }
+
+    /**
      * Prompts user to enter username
      * @return true iff username prompt has been printed
      */
     public boolean printUsernamePrompt() {
-        System.out.println("Enter username: ");
+        System.out.print("Enter username: ");
         return true;
     }
 
@@ -34,7 +41,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff password prompt has been printed
      */
     public boolean printPasswordPrompt() {
-        System.out.println("Enter password: ");
+        System.out.print("Enter password: ");
         return true;
     }
 
@@ -43,7 +50,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff name prompt has been printed
      */
     public boolean printNamePrompt() {
-        System.out.println("Enter full name: ");
+        System.out.print("Enter full name: ");
         return true;
     }
 
@@ -52,7 +59,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff email prompt has been printed
      */
     public boolean printEmailPrompt() {
-        System.out.println("Enter email address: ");
+        System.out.print("Enter email address: ");
         return true;
     }
 
@@ -71,7 +78,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff account creation successful statement was printed
      */
     public boolean printAccountCreationSuccessful() {
-        System.out.println("Account creation successful! Redirecting to Login Menu...");
+        System.out.println("Account creation successful! Redirecting to Login Menu..." + '\n');
         return true;
     }
 
@@ -90,7 +97,7 @@ public class LoginMenu implements printSubMenu {
      * @return true iff login successful statement was printed
      */
     public boolean printLoginSuccessful() {
-        System.out.println("Login Successful! Redirecting to account Main Menu...");
+        System.out.println("Login Successful! Redirecting back to account Main Menu..." + '\n');
         return true;
     }
 }
