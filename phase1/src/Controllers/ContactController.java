@@ -14,18 +14,19 @@ import Person.SpeakerManager;
 import Presenter.ContactMenu;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ContactController implements SubMenu {
 
     private String currentUserID;
     private int currentRequest;
-    private PersonManager personManager;
+    private PersonManager pManager;
     private ContactMenu presenter = new ContactMenu();
     Scanner input = new Scanner(System.in);
 
     public ContactController(String currentUserID, PersonManager personManager) {
         this.currentUserID = currentUserID;
-        this.personManager = personManager;
+        this.pManager = personManager;
     }
 
     /**
@@ -61,11 +62,8 @@ public class ContactController implements SubMenu {
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean getContactList() {
-        //manager.getPerson(currentUserID).getContactList();
-        // format list ? to what end ?
-        // send the Presenter the formatted contactList to print (if empty, say so)
-        return true;
-
+        ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
+        return presenter.printContactList(listOfContacts);
     }
 
     /**
@@ -74,12 +72,14 @@ public class ContactController implements SubMenu {
      * @return true iff the presenter printed a formatted contactList
      */
     public boolean addContact(String contactUsername) {
-        //String contactID = manager.getCurrentUserID(contactUsername);
-        //if ((manager.addContact(currentUserID, contactID) && manager.addContact(contactID, currentUserID))) {
-        // update presenter to say contact was added
-        //  return true;
-        //}
-        return true;
+        String contactID = pManager.getCurrentUserID(contactUsername);
+        boolean a = pManager.addContactToPerson(currentUserID, contactID);
+        boolean b = pManager.addContactToPerson(contactID, currentUserID);
+
+        if(a && b) {
+            return presenter.printContactAdded();
+        }
+        return false;
     }
 
 }

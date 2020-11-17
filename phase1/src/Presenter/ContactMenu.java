@@ -35,6 +35,11 @@ public class ContactMenu implements printSubMenu {
      * @return true iff all contacts were printed
      */
     public boolean printContactList(ArrayList<String> contactList) {
+        System.out.println("-CONTACTS-");
+        for(String c: contactList) {
+            System.out.println(c);
+        }
+        System.out.println("---");
         return true;
     }
 
@@ -43,6 +48,7 @@ public class ContactMenu implements printSubMenu {
      * @return true iff add contact prompt was printed
      */
     public boolean printAddContactPrompt() {
+        System.out.println("Enter the username of the person you would like to add as a contact: ");
         return true;
     }
 
@@ -51,6 +57,7 @@ public class ContactMenu implements printSubMenu {
      * @return true iff successful contact addition statement was printed
      */
     public boolean printContactAdded() {
+        System.out.println("Contact has been successfully added.");
         return true;
     }
 
