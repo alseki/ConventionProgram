@@ -125,31 +125,31 @@ public class OrgEventController implements SubMenu {
 
 
 
-    /**
-     * Creates a new Event for the convention
-     * creates a new chat for the event and sets the event chatid to the id of this chat.
-     * @param eventName The name of the Event the user has requested to create
-     * @return true iff the Event was created
-     */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
-        String roomID = roomManager.getRoomID(room); // roomId
-        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
-        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
-        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
-        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
-        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
-        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
-
-        // also setting up setEventChatID for speaker(s) of event as well
-        updateSpeakerChatWithAnnouncement(speakerID, acId);
-        // also setting upEventChatId for speaker(s) of event
-        updateSpeakerChat(speakerID, acId);
-        // addEventIDtoList(String personID, String eventID)
-        speakerManager.addTalkId(speakerID, id);
-        // addEventIDtoMap(String personID, String eventID, String eventName)
-        speakerManager.addTalkIdToDictionary(speakerID, id, eventName);
-        return true;
-    }
+//    /**
+//     * Creates a new Event for the convention
+//     * creates a new chat for the event and sets the event chatid to the id of this chat.
+//     * @param eventName The name of the Event the user has requested to create
+//     * @return true iff the Event was created
+//     */
+//    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
+//        String roomID = roomManager.getRoomID(room); // roomId
+//        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
+//        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
+//        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
+//        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
+//        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
+//        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
+//
+//        // also setting up setEventChatID for speaker(s) of event as well
+//        updateSpeakerChatWithAnnouncement(speakerID, acId);
+//        // also setting upEventChatId for speaker(s) of event
+//        updateSpeakerChat(speakerID, acId);
+//        // addEventIDtoList(String personID, String eventID)
+//        speakerManager.addTalkId(speakerID, id);
+//        // addEventIDtoMap(String personID, String eventID, String eventName)
+//        speakerManager.addTalkIdToDictionary(speakerID, id, eventName);
+//        return true;
+//    }
 
 
 
