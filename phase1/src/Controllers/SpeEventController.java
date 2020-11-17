@@ -51,19 +51,28 @@ public class SpeEventController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
+            switch (currentRequest){
+                case 0:
+
+                case 1:
+
+            }
         }
         while (currentRequest != 0);
         return true;
     }
 
+
     /**
      * Get the list of talk the user is scheduled to speak at
-     * @return true iff a list of talks has been gotten
+     * @return String chunk of formatted Talks
      */
-    public boolean getTalks() {
-
-        return true;
+    public String getFormattedTalks() {
+        StringBuilder result = new StringBuilder();
+        ArrayList <String> events = personManager.getEventList(currentUserID);
+        for (String e: events){
+            result.append(eventManager.getFormattedEvent(e)).append("\n");}
+        return result.toString();
     }
 
     /**
@@ -119,8 +128,7 @@ public class SpeEventController implements SubMenu {
      * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
     public boolean allSpeakerEventsMessagingById(String speakerId, String messageContent) {
-        Speaker individual = (Speaker) personManager.getPerson(speakerId);
-        ArrayList allSpeakerEvents = individual.getAllTalks();
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerIdAllTalks(speakerId);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;
@@ -134,9 +142,7 @@ public class SpeEventController implements SubMenu {
      * @return
      */
     public boolean allSpeakerEventsMessagingByUsername(String username, String messageContent) {
-
-        Speaker individual = (Speaker) personManager.getPerson(username);
-        ArrayList allSpeakerEvents = individual.getAllTalks();
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(username);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;

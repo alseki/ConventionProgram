@@ -6,7 +6,6 @@ package Controllers;
 // Date Modified: 16/11/2020
 
 import Events.RoomManager;
-import Message.Message;
 import Message.MessageManager;
 import Person.*;
 import Presenter.CPSMenu;

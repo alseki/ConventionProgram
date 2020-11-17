@@ -2,6 +2,7 @@ package Person;
 
 import Events.Event;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -55,7 +56,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    public Person getPerson(String currentUserID) {
+    protected Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -70,7 +71,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
      */
-    public Person getPerson(String username, String password) {
+    private Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
             if (usernameToPerson.get(username).getPassword().equals(password)) {
                 return usernameToPerson.get(username);
@@ -186,8 +187,33 @@ public abstract class PersonManager {
         return person.getContactList().contains(contactID);
     }
 
+    /**
+     * Gets arraylist of event IDs contained by the Person object represented by the inputted person ID
+     * @param personID ID of the Person object we are retrieving Event List
+     * @return Arraylist of strings corresponding to Event IDs
+     */
+    public ArrayList <String> getEventList(String personID){
+        return this.getPerson(personID).getEventList();
+    }
 
+    /**
+     * Get list of all talks in a Speaker object, referred to by the Speaker's username.
+     * @param username username of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
+     */
+    public ArrayList<String> getSpeakerAllTalks(String username){
+        Speaker spe = (Speaker) getPerson(username);
+        return spe.getAllTalks();
+    }
 
+    /**
+     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
+     * @param speakerID ID of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
+     */
+    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
+        Speaker spe = (Speaker) getPerson(speakerID);
+        return spe.getAllTalks();}
 }
 
 

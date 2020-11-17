@@ -3,6 +3,7 @@ package Events;
 import Message.MessageManager;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -135,12 +136,16 @@ public class EventManager implements Serializable {
      * @param name The Event
      * @return whether the Event has been successfully added
      */
-    public String addEvent(String name, String speakerID, int startTime) {
+    public boolean addEvent(String name, String speakerID, int startTime) {
         Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime));
-        permissionChecker.checkConflicts(event, getEvents());
-        events.put(event.getID(), event);
-        eventsByName.put(event.getName(), event.getID());
-        return event.getID();
+        if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
+            return false;
+        }
+        else {
+            events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
+            return true;
+        }
     }
 
     /**
@@ -148,12 +153,16 @@ public class EventManager implements Serializable {
      * @param name The Event
      * @return whether the Event has been successfully added
      */
-    public String addEvent(String name, String speakerID, int startTime, String description) {
+    public boolean addEvent(String name, String speakerID, int startTime, String description) {
         Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime), description);
-        permissionChecker.checkConflicts(event, getEvents());
-        events.put(event.getID(), event);
-        eventsByName.put(event.getName(), event.getID());
-        return event.getID();
+        if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
+            return false;
+        }
+        else {
+            events.put(event.getID(), event);
+            eventsByName.put(event.getName(), event.getID());
+            return true;
+        }
     }
 
     /**
@@ -304,4 +313,20 @@ public class EventManager implements Serializable {
             return null;
         }
     }
+
+    /**
+     * Get Event formatted as: "[Event ID]: [ID of the Event]\new line
+     *                         [Event Name]: [Name of Event]\newline
+     *                         [Time] : [Start time to End time]\newline
+     *                         [Description]: [Textual Representation of Event]\newline
+     * @param eventID of the Event that is to be formatted.
+     * @return Formatted string representation of the Event.
+     */
+    public String getFormattedEvent(String eventID){
+        String eventName = getEventName(eventID);
+        String desc = events.get(eventID).getDescription();
+        String startToEnd = events.get(eventID).getStartTime().toString() + " to " +
+                events.get(eventID).getEndTime().toString();
+        return "Event ID: " + eventID + "\n" + "Event Name: " + eventName + "\n" +
+                "Time: " + startToEnd + "\n" + "Description: " + desc + "\n";}
 }

@@ -2,6 +2,7 @@ package Controllers;
 
 import Message.Chat;
 import Message.ChatManager;
+import Message.Message;
 import Message.MessageManager;
 import Person.PersonManager;
 import Presenter.MessageMenu;
@@ -48,6 +49,14 @@ public class MessageController implements SubMenu {
         do {
             menuOptions();
             // TODO add switch statement to call the methods that correspond with currentRequest
+            switch (currentRequest) {
+                case 0:
+                    return false; // The user has inputted 0
+                case 1:
+                    presenter.printChat(this.viewChats());
+                case 2:
+
+            }
         }
         while (currentRequest != 0);
         return true;
@@ -124,17 +133,37 @@ public class MessageController implements SubMenu {
      */
     private ArrayList<String> sentBox(){
         ArrayList<String> sentMessages = new ArrayList<>();
-        for (String messageID: this.messageManager.getMessageIDs()){
-            String formattedMessage = this.messageManager.getFormattedMessage(messageID);
-            sentMessages.add(formattedMessage);
+        for (Message message: this.messageManager.getMessageList()){
+            if (message.getSenderId().equals(currentUserID)){
+                String formattedMessage = this.messageManager.getFormattedMessage(message.getSenderId());
+                sentMessages.add(formattedMessage);
+            }
         }
         return sentMessages;
         // Let presenter show the sent messages.
     }
 
     /**
+     * Show all the messages this user received in presenter, **sorted by datetime.
+     * @return ArrayList of formatted messages.
+     */
+    private ArrayList<String> inBox(){
+        ArrayList<String> receivedMessages = new ArrayList<>();
+        for (Message message: this.messageManager.getMessageList()){
+            if (message.getRecipientId().equals(currentUserID)){
+                String formattedMessage = this.messageManager.getFormattedMessage(message.getSenderId());
+                receivedMessages.add(formattedMessage);
+            }
+        }
+        return receivedMessages;
+        // Let presenter show the sent messages.
+    }
+
+    /**
      * Show the chatList with its ID and participants' IDs.
      * @return ArrayList of formatted chats
+     *              [ID]: [ID of the chat]\new line
+     *              [Participants]: [ID of the Participants]\newline
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
      *              ...

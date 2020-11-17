@@ -1,5 +1,7 @@
 package Presenter;
 
+import java.util.ArrayList;
+
 public class SpeEventMenu implements printSubMenu {
 
     /**
@@ -13,5 +15,16 @@ public class SpeEventMenu implements printSubMenu {
         // TODO add print statements for all the other menu options
         return true;
     }
+
+    /**
+     * Prompts user to print Talks.
+     *
+     * @return True iff the Talk was properly formatted and printed.
+     */
+    public boolean printFormattedTalks(ArrayList<String> eventIds) {
+        System.out.println("Print Talks: \n");
+        return true;}
+
+        }
 
 }

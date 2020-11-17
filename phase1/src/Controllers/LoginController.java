@@ -3,7 +3,7 @@ package Controllers;
 // Programmer: Cara McNeil
 // Description: All the methods that take user input in the Login Menu
 // Date Created: 01/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 16/11/2020
 
 import Person.PersonManager;
 import Presenter.LoginMenu;
@@ -29,6 +29,7 @@ public class LoginController implements SubMenu {
     public boolean menuOptions() {
         presenter.printMenuOptions();
         currentRequest = input.nextInt();
+        presenter.printSkipLine();
         return true;
     }
 
@@ -72,27 +73,31 @@ public class LoginController implements SubMenu {
      */
     private boolean login() {
         presenter.printLoginPrompt();
-        username = input.nextLine();
+        presenter.printUsernamePrompt();
+        username = input.next();
         presenter.printPasswordPrompt();
-        String password = input.nextLine();
+        String password = input.next();
         // TODO call manager methods to verify username and password
+        presenter.printSkipLine();
         return true;
     }
 
     /**
-     * Prompts user for relevant information and uses it to create a new Person.Person account.
+     * Prompts user for relevant information and uses it to create a new account.
      * @return true iff new account has been created
      */
     private boolean createAccount() {
         presenter.printCreateAccountPrompt();
-        presenter.printLoginPrompt();
-        username = input.nextLine();
+        presenter.printUsernamePrompt();
+        username = input.next();
         presenter.printPasswordPrompt();
-        String password = input.nextLine();
+        String password = input.next();
         presenter.printNamePrompt();
-        String name = input.nextLine();
+        String name = input.next();
         presenter.printEmailPrompt();
         String email = input.nextLine();
+        input.nextLine();
+        presenter.printSkipLine();
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
             return true;
