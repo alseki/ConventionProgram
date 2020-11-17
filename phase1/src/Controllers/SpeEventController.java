@@ -62,12 +62,17 @@ public class SpeEventController implements SubMenu {
         return true;
     }
 
+
     /**
      * Get the list of talk the user is scheduled to speak at
-     * @return true iff a list of talks has been gotten
+     * @return String chunk of formatted Talks
      */
-    public ArrayList<String> getTalks() {
-        return personManager.getEventList(currentUserID);
+    public String getFormattedTalks() {
+        StringBuilder result = new StringBuilder();
+        ArrayList <String> events = personManager.getEventList(currentUserID);
+        for (String e: events){
+            result.append(eventManager.getFormattedEvent(e)).append("\n");}
+        return result.toString();
     }
 
     /**

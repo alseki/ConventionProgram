@@ -3,6 +3,7 @@ package Events;
 import Message.MessageManager;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -312,4 +313,20 @@ public class EventManager implements Serializable {
             return null;
         }
     }
+
+    /**
+     * Get Event formatted as: "[Event ID]: [ID of the Event]\new line
+     *                         [Event Name]: [Name of Event]\newline
+     *                         [Time] : [Start time to End time]\newline
+     *                         [Description]: [Textual Representation of Event]\newline
+     * @param eventID of the Event that is to be formatted.
+     * @return Formatted string representation of the Event.
+     */
+    public String getFormattedEvent(String eventID){
+        String eventName = getEventName(eventID);
+        String desc = events.get(eventID).getDescription();
+        String startToEnd = events.get(eventID).getStartTime().toString() + " to " +
+                events.get(eventID).getEndTime().toString();
+        return "Event ID: " + eventID + "\n" + "Event Name: " + eventName + "\n" +
+                "Time: " + startToEnd + "\n" + "Description: " + desc + "\n";}
 }
