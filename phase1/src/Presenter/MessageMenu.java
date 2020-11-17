@@ -5,6 +5,8 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 12/11/2020
 
+import java.util.ArrayList;
+
 public class MessageMenu implements printSubMenu {
 
     /**
@@ -48,10 +50,11 @@ public class MessageMenu implements printSubMenu {
 
     /**
      * Prompts user to print Chat.
-     * @return True iff the Chat was properly printed.
      */
-    public boolean printChat(){
-        return true;
+    public void printChat(ArrayList<String> chats){
+        for (String chat : chats){
+            System.out.println(chat);
+        }
     }
     //TO BE FIXED (Will clarify how we'd want to print the Chat. In what format etc.
 }
