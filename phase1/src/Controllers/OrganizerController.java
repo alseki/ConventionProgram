@@ -52,7 +52,7 @@ public class OrganizerController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, manager);
+                        AttEventController attEventController = new AttEventController(currentUserID, manager, roomManager);
                         attEventController.menuChoice();
                         break;
                     case 4:

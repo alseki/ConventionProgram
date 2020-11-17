@@ -25,8 +25,6 @@ public class AttendeeController extends PersonController {
     public AttendeeController(PersonManager manager, RoomManager rooms, MessageManager messages) {
         super(manager, rooms, messages);
         this.manager = (AttendeeManager) manager;
-        roomManager = rooms;
-        messageManager = messages;
     }
 
     /**
