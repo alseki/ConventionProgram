@@ -51,12 +51,12 @@ public class EventTests {
 
     @Test
     public void testGateway() {
-        FileGateway<RoomManager> gateway = new FileGateway<RoomManager>();
+        FileGateway<RoomManager> gateway = new FileGateway<RoomManager>("test.ser");
         RoomManager rooms = new RoomManager(LocalDateTime.now());
         rooms.addRoom("Cool Room B)", 200);
         rooms.addRoom("Sad Room :(");
-        gateway.writeFile(rooms, "test.ser");
-        RoomManager rooms2 = gateway.readFile("test.ser");
+        gateway.writeFile(rooms);
+        RoomManager rooms2 = gateway.readFile();
         assertTrue(rooms.equals(rooms2));
     }
 

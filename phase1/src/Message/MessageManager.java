@@ -2,11 +2,12 @@ package Message;
 
 import Message.Message;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageManager {
+public class MessageManager implements Serializable {
     private ArrayList<Message> messageList;
 
     public MessageManager(){

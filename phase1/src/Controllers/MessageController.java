@@ -156,6 +156,7 @@ public class MessageController implements SubMenu {
     private String viewMessageByChat(String chatID){
 
         // Let presenter show the chat info.
+        return null;
     }
 
 

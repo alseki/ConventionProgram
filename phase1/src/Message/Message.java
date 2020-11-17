@@ -1,10 +1,11 @@
 package Message;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Serializable {
     private String Id;
     private String senderId;
     private String recipientId;
