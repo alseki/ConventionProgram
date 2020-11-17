@@ -27,17 +27,30 @@ public class FileGateway<T> {
                 pathString = directoryString + "\\";
             }
             else {
-                String part = parts[0];
-                int i = 0;
-                while (!part.equals("phase1")) {
-                    pathString += part + "\\";
-                    i++;
-                    part = parts[i];
+                if (directoryString.contains("phase1")) {
+                    String part = parts[0];
+                    int i = 0;
+                    while (!part.equals("phase1")) {
+                        pathString += part + "\\";
+                        i++;
+                        part = parts[i];
+                    }
+                    pathString += part + "\\data\\";
                 }
-                pathString += part + "\\data\\";
+                else {
+                    String part = parts[0];
+                    int i = 0;
+                    while (!part.equals("group_0467")) {
+                        pathString += part + "\\";
+                        i++;
+                        part = parts[i];
+                    }
+                    pathString += part + "\\phase1\\data\\";
+                }
             }
             return pathString;
         } catch (Exception e) {
+            System.out.println(e.toString());
             return "";
         }
     }
@@ -57,7 +70,18 @@ public class FileGateway<T> {
             input.close();
             return returnValue;
         }
-        catch (EOFException f) {
+        catch (FileNotFoundException f) {
+            File file = new File(path);
+            try {
+                file.createNewFile();
+                return readFile();
+            }
+            catch (IOException i) {
+                System.out.println("Sorry! Couldn't read from file.");
+                System.out.println(i.toString());
+                return null;
+            }
+        } catch (IOException f) {
             System.out.println("Sorry! Couldn't read from file.");
             System.out.println(f.toString());
             return null;
