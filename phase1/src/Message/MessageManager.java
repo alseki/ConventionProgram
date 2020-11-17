@@ -39,6 +39,15 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * Get all the messages stored in this MessageManager.
+     *
+     * @return the Message.Message.messageList.
+     */
+    public ArrayList<Message> getMessageList(){
+        return this.messageList;
+    }
+
+    /**
      * Get Message.Message by the Id.
      * @param MessageId the ID of Message object that we are trying to retrieve.
      * @return the Message.Message.
