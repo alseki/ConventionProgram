@@ -1,8 +1,6 @@
 package Person;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OrganizerManager extends PersonManager {
     //private ArrayList<Organizer> organizerList;
@@ -30,6 +28,7 @@ public class OrganizerManager extends PersonManager {
             Organizer og = new Organizer(fullName, username, password, email);
             updateAllPersons(og); // see below
             updateUsernameToPerson(og.getUsername(), og); // see below
+            idToPerson.put(og.getID(), og);
             return true;
         }
 

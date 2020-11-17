@@ -1,18 +1,14 @@
 package Controllers;
 
 import Events.EventManager;
-import Events.RoomManager;
-import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
-import Person.Attendee;
 import Person.PersonManager;
-import Person.SpeakerManager;
+import Person.Speaker;
 import Presenter.SpeEventMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class SpeEventController implements SubMenu {
@@ -86,6 +82,68 @@ public class SpeEventController implements SubMenu {
     }
 
     /**
+     * This is to sent a message to all attendees of an event. It uses method eventMessage from below
+     * @param eventName
+     * @param messageContent
+     * @return boolean; returns true if sending message to all attendees is successful.
+     */
+    public boolean eventMessageForAttendees(String eventName, String messageContent) {
+        String eventID = eventManager.getEventID(eventName);
+        ArrayList<String> attendeeList = eventManager.getSignUps(eventID);
+        for (String attendee : attendeeList) {
+            eventMessage(eventName, messageContent, attendee);
+        }
+        return true;
+    }
+
+    /**
+     * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to announce, "download
+     * so and so application for the our talk today" to all talks, this method proves useful. This uses eventMessageForAttendees from above
+     * @param allSpeakerEvents
+     * @param messageContent
+     * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
+     */
+
+    public boolean allSpeakerEventsMessage(ArrayList<String> allSpeakerEvents, String messageContent) {
+            for (String eventID : allSpeakerEvents) {
+                String name = eventManager.getEventName(eventID);
+                eventMessageForAttendees(name, messageContent);
+            }
+            return true;
+    }
+
+    /**
+     * This is the same method from above, but only using speakerId as a parameter instead of the list of all Speaker talks
+     * @param speakerId
+     * @param messageContent
+     * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
+     */
+    public boolean allSpeakerEventsMessagingById(String speakerId, String messageContent) {
+        Speaker individual = (Speaker) personManager.getPerson(speakerId);
+        ArrayList allSpeakerEvents = individual.getAllTalks();
+        allSpeakerEventsMessage(allSpeakerEvents, messageContent);
+
+        return true;
+
+    }
+
+    /**
+     * This is the same method from above (allSpeakerEventsMessage), but only using speaker's username as a parameter instead of the list of all Speaker talks
+     * @param username
+     * @param messageContent
+     * @return
+     */
+    public boolean allSpeakerEventsMessagingByUsername(String username, String messageContent) {
+
+        Speaker individual = (Speaker) personManager.getPerson(username);
+        ArrayList allSpeakerEvents = individual.getAllTalks();
+        allSpeakerEventsMessage(allSpeakerEvents, messageContent);
+
+        return true;
+
+    }
+
+    /**
      * Sends a Message to one Attendee signed up for an event
      * @param eventName The name of the Event
      * @param attendeeUsername Th username of the Attendee the user wishes to message
@@ -105,12 +163,7 @@ public class SpeEventController implements SubMenu {
     //throw new InvalidIDException();
     //    return false;}
 
-    /**
-     * Sends a Message to every user signed up for every event this user is speaking at
-     * @return true iff the Message was sent to every user on the event list for every event this user is speaking at
-     */
-    public boolean allEventMessage() {
 
-        return true;
-    }
+
+
 }

@@ -25,6 +25,7 @@ public class AttendeeManager extends PersonManager {
     public boolean createAccount(String name, String username, String password, String email) {
         if(!usernameToPerson.containsKey(username)) {
             Attendee newAtt = new Attendee(name, username, password, email);
+            idToPerson.put(newAtt.getID(), newAtt);
             usernameToPerson.put(username, newAtt);
             allPersons.add(newAtt);
             return true;
