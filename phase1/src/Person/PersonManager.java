@@ -2,6 +2,7 @@ package Person;
 
 import Events.Event;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -55,7 +56,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    public Person getPerson(String currentUserID) {
+    protected Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -70,7 +71,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
      */
-    public Person getPerson(String username, String password) {
+    private Person getPerson(String username, String password) {
         if (usernameToPerson.containsKey(username)) {
             if (usernameToPerson.get(username).getPassword().equals(password)) {
                 return usernameToPerson.get(username);
@@ -186,8 +187,25 @@ public abstract class PersonManager {
         return person.getContactList().contains(contactID);
     }
 
+    /**
+     * Gets arraylist of event IDs contained by the Person object represented by the inputted person ID
+     * @param personID ID of the Person object we are retrieving Event List
+     * @return Arraylist of strings corresponding to Event IDs
+     */
+    public ArrayList <String> getEventList(String personID){
+        return this.getPerson(personID).getEventList();
+    }
 
-
+    /**
+     * Add chat ID to the Chat List contained in Person object represented by the inputted person ID
+     * @param personID ID of the Person object
+     * @param chatID ID of the Chat that is to be added to the collection of chat IDs in the Person
+     * @return true iff chatID was successfully added to the ChatList in Person object corresponding to the person ID
+     */
+    public boolean addChatId(String personID, String chatID){
+        this.getPerson(personID).getChatList().add(chatID);
+        return true;
+    }
 }
 
 

@@ -107,7 +107,7 @@ public class OrgEventController implements SubMenu {
      */
 
     private boolean updateSpeakerChat(String personID, String chatId) {
-        this.speakerManager.getPerson(personID).getChatList().add(chatId);
+        this.speakerManager.addChat(personID, chatId);
         return true;
     }
 

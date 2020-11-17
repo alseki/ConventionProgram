@@ -51,7 +51,12 @@ public class SpeEventController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
+            switch (currentRequest){
+                case 0:
+
+                case 1:
+
+            }
         }
         while (currentRequest != 0);
         return true;
@@ -61,9 +66,8 @@ public class SpeEventController implements SubMenu {
      * Get the list of talk the user is scheduled to speak at
      * @return true iff a list of talks has been gotten
      */
-    public boolean getTalks() {
-
-        return true;
+    public ArrayList<String> getTalks() {
+        return personManager.getEventList(currentUserID);
     }
 
     /**
