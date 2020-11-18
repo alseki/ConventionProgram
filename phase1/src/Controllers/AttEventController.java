@@ -58,6 +58,7 @@ public class AttEventController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
+                    input.nextLine();
                     String addingEventInput = input.nextLine();
                     try {
                         signupForEvent(addingEventInput);
@@ -68,6 +69,7 @@ public class AttEventController implements SubMenu {
                     break;
                 case 3:
                     presenter.printRemoveEventPrompt();
+                    input.nextLine();
                     String removingEventInput = input.nextLine();
                     try {
                          cancelSpotFromEvent(removingEventInput);
@@ -102,6 +104,7 @@ public class AttEventController implements SubMenu {
      */
     private String getRoomChoice() {
         presenter.printRoomChoicePrompt();
+        input.nextLine();
         String room = input.nextLine();
         if (room.equals("0")) {
             presenter.printList(roomManager.getRoomNames());

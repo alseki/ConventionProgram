@@ -69,11 +69,11 @@ public class AttEventMenu implements printSubMenu {
      * @param EventList a collection of Event information to be printed
      */
     public void printAttendeeEventList(ArrayList<String> EventList) {
-        System.out.println("-EVENTS YOU HAVE SIGNED UP FOR-");
+        System.out.println('\n' + "-EVENTS YOU HAVE SIGNED UP FOR-");
         for(String userEvent: EventList) {
             System.out.println(userEvent);
         }
-        System.out.println("---");
+        System.out.println("---" + '\n');
     }
 
     /**

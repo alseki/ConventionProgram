@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Attendee extends Person implements Signupable {
 
-    protected ArrayList<String> eventsSignedUp;
+    protected ArrayList<String> eventsSignedUp = new ArrayList<>();
 
     public Attendee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -13,7 +13,6 @@ public class Attendee extends Person implements Signupable {
         this.password = password;
         this.email = email;
         this.id = UUID.randomUUID().toString();
-        //this.eventsSignedUp = new ArrayList<>();
     }
 
     /**
