@@ -102,11 +102,13 @@ public class OrgEventController implements SubMenu {
      * Adds a room to the list of rooms in this convention
      * @param name The name of the new Room in the convention (likely its number)
      * @param capacity The capacity of the new Room in the convention
-     * @return true iff Room was added to the convention successfully 
+     * @return true iff Room was added to the convention successfully
      */
     public boolean addRoom(String name, int capacity) {
         return this.roomManager.addRoom(name, capacity) != null;
     }
+
+    // OPTION 2
 
 
 

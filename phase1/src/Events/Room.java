@@ -15,7 +15,7 @@ class Room implements Serializable {
     private String name;
 
     /**
-     * Constructor for a Room object, with name and ID automatically assigned
+     * Constructor for a Room object, with ID automatically assigned
      * @param name The Room's name
      * @param capacity The Room's capacity
      */

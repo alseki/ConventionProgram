@@ -56,7 +56,7 @@ public class OrgEventMenu implements printSubMenu {
     // OPTION 2
 
     /**
-     * prompts to create an event
+     * Prompts user to create an Event
      * @return true
      */
     public boolean printCreateEventPrompt(){
