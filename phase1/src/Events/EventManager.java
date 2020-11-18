@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
 // Last edit: Nov 17 2020
@@ -136,8 +137,8 @@ public class EventManager implements Serializable {
      * @param name The name of the Talk
      * @return whether the Talk has been successfully added
      */
-    public boolean addTalk(String name, String speakerID, int startTime, String description) {
-        Event event = new Talk(name, speakerID, permissionChecker.toEventTime(startTime), description);
+    public boolean addTalk(String name, String speakerID, LocalDateTime startTime, String description) {
+        Event event = new Talk(name, speakerID, startTime, description);
         if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
             return false;
         }
@@ -153,8 +154,8 @@ public class EventManager implements Serializable {
      * @param name The name of the Workshop
      * @return whether the Workshop has been successfully added
      */
-    public boolean addWorkshop(String name, String speakerID, int startTime, String description) {
-        Event event = new Workshop(name, speakerID, permissionChecker.toEventTime(startTime), description);
+    public boolean addWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
+        Event event = new Workshop(name, speakerID, startTime, description);
         events.put(event.getID(), event);
         eventsByName.put(event.getName(), event.getID());
         return true;
