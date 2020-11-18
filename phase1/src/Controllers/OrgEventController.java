@@ -3,7 +3,7 @@ package Controllers;
 // Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 17/11/2020
+// Date Modified: 18/11/2020
 
 import Events.EventManager;
 import Events.EventType;
@@ -58,7 +58,6 @@ public class OrgEventController implements SubMenu {
      */
     @Override
     public boolean menuChoice() {
-
         do {
             menuOptions();
             switch (currentRequest) {
@@ -82,6 +81,86 @@ public class OrgEventController implements SubMenu {
         return true;
         // TODO add switch statement to call the methods that correspond with currentRequest
     }
+
+    // OPTION 1
+
+    /**
+     * Prompts the user to input the Room they wish to add
+     * @return true iff addRoom prompt was printed
+     */
+    public boolean addRoomPrompt() {
+        presenter.addRoomPrompt();
+        presenter.roomNamePrompt();
+        String name = input.nextLine();
+        presenter.roomCapacityPrompt();
+        int capacity = Integer.parseInt(input.nextLine());
+        this.addRoom(name, capacity);
+        return true;
+    }
+
+    /**
+     * Adds a room to the list of rooms in this convention
+     * @param name The name of the new Room in the convention (likely its number)
+     * @param capacity The capacity of the new Room in the convention
+     * @return true iff Room was added to the convention successfully 
+     */
+    public boolean addRoom(String name, int capacity) {
+        return this.roomManager.addRoom(name, capacity) != null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Restricts users to choosing a Room from a list of existing Rooms
+     * @return The Room they have chosen
+     */
+    private String chooseRoom() {
+        String name = input.nextLine();
+        if (name.equals("0")) {
+            presenter.printRoomNames(roomManager.getRoomNames());
+            name = input.nextLine();
+        }
+        if (roomManager.getRoomID(name) != null) {
+            return name;
+        } else {
+            presenter.printRoomNamePrompt();
+            return this.chooseRoom();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Creates a new Person.Speaker account and adds it to the system.
@@ -213,23 +292,7 @@ public class OrgEventController implements SubMenu {
         }
     }
 
-    /**
-     * Restricts users to choosing a Room from a list of Rooms
-     * @return The Room they have chosen
-     */
-    private String chooseRoom() {
-        String name = input.nextLine();
-        if (name.equals("0")) {
-            presenter.printRoomNames(roomManager.getRoomNames());
-            name = input.nextLine();
-        }
-        if (roomManager.getRoomID(name) != null) {
-            return name;
-        } else {
-            presenter.printRoomNamePrompt();
-            return chooseRoom();
-        }
-    }
+
 
     /**
      * Restricts users to choosing a valid start time
@@ -264,26 +327,9 @@ public class OrgEventController implements SubMenu {
     }
      */
 
-    /**
-     * Prompts user to input the room they wish to add
-     * @return true iff room adding prompt was printed
-     */
-    public boolean addRoomPrompt() {
-        presenter.addRoomPrompt();
-        presenter.addRoomNamePrompt();
-        String name = input.nextLine();
-        addRoom(name);
-        return true;
-    }
 
-    /**
-     * Adds a room to the list of rooms in this Convention.
-     * @param room The name/number of a room in the convention
-     * @return true iff list was added to system.
-     */
-    public boolean addRoom(String room) {
-        return roomManager.addRoom(room) != null;
-    }
+
+
 
     /**
      * allows for input to create a speaker
@@ -335,7 +381,6 @@ public class OrgEventController implements SubMenu {
         eventMessage(name, rname, content);
         return true;
     }
-
 
     /**
      * Sends a Message to one Attendee signed up for an event

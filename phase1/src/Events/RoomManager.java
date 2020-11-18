@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 15 2020
+// Last edit: Nov 18 2020
 
 // Architecture Level - Use Class
 
@@ -75,12 +75,12 @@ public class RoomManager implements Serializable {
     }
 
     /**
-     * Creates a new Room with an automatic capacity of 2
-     * @param name The name of the new Room
+     * Creates a new Room with the inputted capacity
+     * @param capacity The name of the new Room
      * @return The ID of the new Room
      */
-    public String addRoom(String name) {
-        Room thisRoom = new Room(name);
+    public String addRoom(String name, int capacity) {
+        Room thisRoom = new Room(name, capacity);
         RoomPermissions thisPermissions = new RoomPermissions(this.conferenceStart, thisRoom);
         roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
@@ -88,25 +88,16 @@ public class RoomManager implements Serializable {
     }
 
     /**
-     * Creates a new Room with capacity entered manually
-     * @param name The name of the new Room
-     * @param capacity The capacity of the new Room
-     * @return The ID of the new Room
+     * Returns the EventManager for the Room in which a particular Event is held
+     * @param eventName The name of the Event for which we need to find the EventManager
+     * @return The EventManager
      */
-    public String addRoom(String name, int capacity) {
-        Room thisRoom = new Room(capacity, name);
-        RoomPermissions thisPermissions = new RoomPermissions(this.conferenceStart, thisRoom);
-        roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
-        roomsByName.put(thisRoom.getName(), thisRoom.getID());
-        return thisRoom.getID();
-    }
-
-    public String getEventRoom(String eventName) {
+    public EventManager getEventRoom(String eventName) {
         if(getRoomNames().length > 0) {
             for(String room: getRoomNames()) {
-                String id = getRoom(getRoomID(room)).getEventID(eventName);
-                if (id != null) {
-                    return id;
+                EventManager manager = this.getRoom(this.getRoomID(room));
+                if (manager.getEventID(eventName) != null) {
+                    return manager;
                 }
             }
         }

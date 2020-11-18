@@ -58,7 +58,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    private Person getPerson(String currentUserID) {
+    Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }

@@ -120,7 +120,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was signed up for the Event
      */
     public boolean signupForEvent(String eventName) {
-        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
+        EventManager thisRoom = this.roomManager.getEventRoom(eventName);
         if (thisRoom == null) {
             return false;
         }
@@ -128,7 +128,6 @@ public class AttEventController implements SubMenu {
         boolean personAddedToEvent = thisRoom.signUpForEvent(currentUserID, event);
         boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
         attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
-
         if (personAddedToEvent && eventAddedToPerson) {
             presenter.printEventAdded();
             return true;
@@ -146,9 +145,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was removed from the Event
      */
     public boolean cancelSpotFromEvent(String eventName) {
-
-        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
-
+        EventManager thisRoom = this.roomManager.getEventRoom(eventName);
         if (thisRoom == null) {
             return false;
         }
@@ -162,5 +159,4 @@ public class AttEventController implements SubMenu {
         }
         return false;
     }
-
 }

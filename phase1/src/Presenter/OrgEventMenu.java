@@ -1,9 +1,9 @@
 package Presenter;
 
-// Programmers: Cara McNeil,
+// Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an Organizer's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 18/11/2020
 
 import Events.EventType;
 
@@ -24,8 +24,6 @@ public class OrgEventMenu implements printSubMenu {
         return true;
     }
 
-
-
     // OPTION 1
 
     /**
@@ -38,24 +36,22 @@ public class OrgEventMenu implements printSubMenu {
     }
 
     /**
-     * Prompts user to input the name of the room they wish to add
-     * @return true iff room adding prompt was printed
+     * Prompts user to input the name of the Room they wish to add
+     * @return true iff room name prompt was printed
      */
-    public boolean addRoomNamePrompt() {
-        System.out.println("\nWhat's the name of the room you want to create?");
+    public boolean roomNamePrompt() {
+        System.out.println("\nWhat is the name of the room you want to create?");
         return true;
     }
 
-    //**
-     //* Prompts user to input the capacity of the room they wish to add
-     //* @return true iff room capacity prompt was printed
-     //*/
-    /*public boolean roomCapacityPrompt() {
-        System.out.println("\nWhat is this room's maximum capacity>");
+    /**
+     * Prompts user to input the capacity of the Room they wish to add
+     * @return true iff room capacity prompt was printed
+     */
+    public boolean roomCapacityPrompt() {
+        System.out.println("\nWhat is the capacity of the room you want to create?");
         return true;
-    }*/      // to add later, if we'd like it!
-
-
+    }
 
     // OPTION 2
 
@@ -138,8 +134,6 @@ public class OrgEventMenu implements printSubMenu {
         return true;
     }
 
-
-
     // OPTION 3
 
     /**
@@ -188,8 +182,6 @@ public class OrgEventMenu implements printSubMenu {
         return true;
     }
 
-
-
     // OPTION 4
 
     /**
@@ -209,10 +201,5 @@ public class OrgEventMenu implements printSubMenu {
         System.out.println("\nPlease enter your announcement below");
         return true;
     }
-
-
-
-
-
 
 }
