@@ -73,6 +73,7 @@ public class MessageController implements SubMenu {
                     break;
                 case 5: //View the messages in a chat
                     presenter.printChatIdPrompt();
+                    input.nextLine();
                     try {
                         presenter.printArrayList(printChat(input.nextLine()));
                     } catch (InvalidChoiceException e) {
@@ -81,6 +82,7 @@ public class MessageController implements SubMenu {
                     break;
                 case 6: //View the announcements in an announcement chat
                     presenter.printAnChatIdPrompt();
+                    input.nextLine();
                     try {
                         presenter.printArrayList(printChat(input.nextLine()));
                     } catch (InvalidChoiceException e) {
@@ -89,12 +91,14 @@ public class MessageController implements SubMenu {
                     break;
                 case 7: //Create a chat
                     presenter.printContactUsernamePrompt();
+                    input.nextLine();
                     String chatID = this.createChat(input.nextLine());
                     presenter.printChatCreated(chatID);
                     presenter.printJobDone();
                     break;
                 case 8: //Create a group chat
                     presenter.printContactUsernamesPrompt();
+                    input.nextLine();
                     String contacts = input.nextLine();
                     String[] a = contacts.split(",");
                     List<String> b = Arrays.asList(a);
@@ -105,6 +109,7 @@ public class MessageController implements SubMenu {
                     break;
                 case 9: //Send a message
                     presenter.printChatIdMessagePrompt();
+                    input.nextLine();
                     String chatId = input.nextLine();
                     presenter.printContentPrompt();
                     String content = input.nextLine();

@@ -33,12 +33,12 @@ public class MessageMenu implements printSubMenu {
      */
     public void printException(Exception e) {
         System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage());
+        System.out.println(e.getMessage() + '\n');
     }
 
 
     public void printArrayList (ArrayList<String> aList) {
-        if (aList != null) {
+        if (!aList.isEmpty()) {
             System.out.println("\n---");
             for (String item : aList) {
                 System.out.println(aList);
@@ -46,7 +46,7 @@ public class MessageMenu implements printSubMenu {
             System.out.println("---\n");
         }
         else {
-            System.out.println("Sorry! No items found");
+            System.out.println("Sorry! No items found" + '\n');
         }
     }
 
