@@ -53,7 +53,12 @@ public class AttEventController implements SubMenu {
                     // return to main menu
                     break;
                 case 1:
-                    getConventionEventList();
+                    try {
+                        String roomID = this.getRoomChoice();
+                        presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
+                    } catch (NoDataException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
@@ -78,7 +83,6 @@ public class AttEventController implements SubMenu {
                     getUserEventList();
                     break;
             }
-            // TODO add switch statement to call the methods that correspond with currentRequest
         }
         while (currentRequest != 0);
         return true;
@@ -87,29 +91,25 @@ public class AttEventController implements SubMenu {
     // TODO change, delete and/or add to the methods below
 
     /**
-     * Get's the list of Events happening at the convention
-     * @return true iff a formatted list of Events was displayed
-     */
-    public void getConventionEventList() {
-        String roomID = this.getRoomChoice();
-        presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
-    }
-
-    /**
      * Takes user input to pick a Room for which that user wishes to view the Events held there
      * @return the ID of the Room chosen
      */
-    private String getRoomChoice() {
+    private String getRoomChoice() throws NoDataException {
         presenter.printRoomChoicePrompt();
         String room = input.nextLine();
-        if (room.equals("0")) {
-            presenter.printList(roomManager.getRoomNames());
-            room = input.nextLine();
+        try {
+            if (room.equals("0")) {
+                presenter.printList(roomManager.getRoomNames(), "room");
+                room = input.nextLine();
+            }
+            if (roomManager.getRoomID(room) != null) {
+                return roomManager.getRoomID(room);
+            } else {
+                return getRoomChoice();
+            }
         }
-        if (roomManager.getRoomID(room) != null) {
-            return roomManager.getRoomID(room);
-        } else {
-            return getRoomChoice();
+        catch (NoDataException e) {
+            throw e;
         }
     }
 

@@ -28,29 +28,6 @@ public class MessageMenu implements printSubMenu {
     }
 
     /**
-     * Prints out an Exception thrown by the program to the user
-     * @param e The exception
-     */
-    public void printException(Exception e) {
-        System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage() + '\n');
-    }
-
-
-    public void printArrayList (ArrayList<String> aList) {
-        if (!aList.isEmpty()) {
-            System.out.println("\n---");
-            for (String item : aList) {
-                System.out.println(aList);
-            }
-            System.out.println("---\n");
-        }
-        else {
-            System.out.println("Sorry! No items found" + '\n');
-        }
-    }
-
-    /**
      * Prompts user to enter ID of the chat.
      */
     public void printChatIdPrompt(){
