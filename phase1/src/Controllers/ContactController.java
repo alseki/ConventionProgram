@@ -63,7 +63,8 @@ public class ContactController implements SubMenu {
      */
     public boolean getContactList() {
         ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
-        return presenter.printContactList(listOfContacts);
+        presenter.printContactList(listOfContacts);
+        return true;
     }
 
     /**
@@ -77,7 +78,8 @@ public class ContactController implements SubMenu {
         boolean b = pManager.addContactToPerson(contactID, currentUserID);
 
         if(a && b) {
-            return presenter.printContactAdded();
+            presenter.printContactAdded();
+            return true;
         }
         return false;
     }

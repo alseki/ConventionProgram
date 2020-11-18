@@ -28,9 +28,8 @@ public class ConventionPlanningSystem {
     */
     public void run() {
         do {
-            if (presenter.printIntroMessage()) {
-                accountChoice = input.nextInt();
-            }
+            presenter.printIntroMessage();
+            accountChoice = input.nextInt();
             setController(accountChoice);
         }
         while (accountChoice != 0);
