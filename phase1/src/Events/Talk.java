@@ -13,8 +13,8 @@ public class Talk extends Event {
 
     private String speakerID;
 
-    // A Talk differs from an Event in that it is exactly one hour long, and cannot take place in the same Room as
-    // any other event while that Event is occurring.
+    // A Talk is exactly one hour long, and cannot take place in the same Room as any other Event while that Event is
+    // occurring.
 
     /**
      * Constructor for Talk objects
