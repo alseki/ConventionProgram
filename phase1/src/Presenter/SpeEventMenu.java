@@ -50,4 +50,82 @@ public class SpeEventMenu implements printSubMenu {
         System.out.println("Messages are sent!");
     }
 
+
+
+    // Adding back into SpeEventMenu what I had from yesterday. Please integrate or discard whatever you wish.
+    // I'll be working on this right now too. This is just getting a glimpse.
+
+    /**
+     * Prints the options for this menu.
+     *
+     * @return true iff all menu options were printed
+     */
+    @Override
+    public boolean printMenuOptions() {
+        System.out.println("----- Speaker Event Menu -----");
+        System.out.println("To return to Main Menu, Enter '0'.");
+        // TODO add print statements for all the other menu options
+        System.out.println(("To see the schedule of your talks, Enter '1'."));
+        System.out.println("To send a message to one conference attendee, including an organizer, Enter '2'.");
+        System.out.println("To send a message to all attendees of only one of your talks, Enter '3'.");
+        System.out.println("To send a message to all attendees of all of your talks, Enter '4'");
+        return true;
+    }
+
+    /**
+     * Prompts user to print Talks.
+     *
+     * @return True iff the Talk was properly formatted and printed.
+     */
+    public boolean printFormattedTalks(ArrayList<String> eventIds) {
+        System.out.println("Print Talks: \n");
+        return true;
+
+    }
+
+    /**
+     * Prints \n
+     */
+    public void printSkipLine() {
+        System.out.println();
+    }
+
+    public boolean printRoomChoicePrompt() {
+        System.out.println("\n Which room's schedule do you want to see? (Press 0 for options)");
+        return true;
+    }
+
+    public boolean printSendMessageOneAttendee() {
+        System.out.println("\n From which event is the attendee whom you wish to message? Enter name of event.");
+        return true;
+    }
+
+    public boolean printSendMessageOneEvent() {
+        System.out.println("\n Which attendee from the above event would you like to message? Enter attendee username");
+        return true;
+    }
+
+    public boolean printSendMessageAllAttendees() {
+        System.out.println("\n Of which event do you wish to send a message to all attendees");
+        return true;
+    }
+
+    public boolean printEnterMessage() {
+        System.out.println("\n Enter message to send to one attendee or all attendees");
+        return true;
+    }
+
+    public boolean printSelectionAllEvents() {
+        System.out.println("----- Select How To Pick All Talks -----");
+        System.out.println("To enter your username to find your list of talks, Enter '1'.");
+        System.out.println("To enter all event names where you are giving a talk into a list, Eneter '2'.");
+        return true;
+    }
+
+
+
 }
+
+
+
+
