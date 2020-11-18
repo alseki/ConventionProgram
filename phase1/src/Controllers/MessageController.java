@@ -1,5 +1,9 @@
 package Controllers;
 
+// Programmer: Ran Yi
+// Description: For current User to
+// Date Modified: 18/11/2020
+
 import Message.Chat;
 import Message.ChatManager;
 import Message.Message;
@@ -160,7 +164,7 @@ public class MessageController implements SubMenu {
     }
 
     /**
-     * Show the chatList with its ID and participants' IDs.
+     * Show the chatList with this User inside with its ID and participants' IDs.
      * @return ArrayList of formatted chats
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
@@ -170,9 +174,13 @@ public class MessageController implements SubMenu {
      */
     private ArrayList<String> viewChats(){
         ArrayList<String> chats = new ArrayList<>();
-        for (String chatID: this.chatManager.getChatIDs()){
-            String formattedChat = this.chatManager.getFormattedChat(chatID);
-            chats.add(formattedChat);
+        for (Chat c : this.chatManager.getChatsList()) {
+            for (String personID : c.getPersonIds()) {
+                if (personID.equals(currentUserID)) {
+                    String formattedAnChat = this.chatManager.getFormattedChat(c.getId());
+                    chats.add(formattedAnChat);
+                }
+            }
         }
         return chats;
         // Let presenter show the chats.
@@ -181,11 +189,41 @@ public class MessageController implements SubMenu {
     /**
      * Show the messages in one chat by chatID.
      */
-    // TODO: we only have messageIDs in chat. How to get the Message????
-    private String viewMessageByChat(String chatID){
+    private ArrayList<String> viewMessageByChat(String chatID){
+        ArrayList<String> messageIDs = this.chatManager.getChat(chatID).getMessageIds();
+        ArrayList<String> messageInChat = new ArrayList<>();
+        for (String mID : messageIDs) {
+            for (Message m : this.messageManager.getMessageList()){
+                if (mID.equals(m.getMessageId())) {
+                    messageInChat.add(this.messageManager.getFormattedMessage(mID));
+                }
+            }
+        }
+        // Let presenter show the formatted messages in this chat.
+        return messageInChat;
+    }
 
-        // Let presenter show the chat info.
-        return null;
+    /**
+     * View announcement chats in formatted.
+     *  Show the chatList with its ID and participants' IDs.
+     * @return ArrayList of formatted chats
+     *                   [ID]: [ID of the chat]\new line
+     *                   [Participants]: [ID of the Participants]\newline
+     *                   [ID]: [ID of the chat]\new line
+     *                   [Participants]: [ID of the Participants]\newline
+     */
+    private ArrayList<String> viewAnnouncementChat(){
+        ArrayList<String> aChats = new ArrayList<>();
+        for (Chat ac : this.chatManager.getAnChatsList()) {
+            for (String personID : ac.getPersonIds()) {
+                if (personID.equals(currentUserID)) {
+                    String formattedAnChat = this.chatManager.getFormattedAnChat(ac.getId());
+                    aChats.add(formattedAnChat);
+                }
+            }
+        }
+        return aChats;
+        // Let presenter show the chats.
     }
 
 

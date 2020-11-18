@@ -1,5 +1,10 @@
 package Message;
 
+// Programmer: Karyn Komatsu, Ran Yi
+// Description: For current User to
+// Date Modified: 18/11/2020
+
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,6 +124,14 @@ public class ChatManager {
         return chats;
     }
 
+    public ArrayList<Chat> getChatsList(){
+        return this.chatsList;
+    }
+
+    public ArrayList<AnnouncementChat> getAnChatsList(){
+        return this.aChatsList;
+    }
+
     /**
      * Finds the Message.Message.Chat object with input Message.Message.Chat ID
      * @param chatId of the Message.Message.Chat object we are trying to find
@@ -126,13 +139,27 @@ public class ChatManager {
      *         null if ChatID invalid
      */
     public Chat getChat(String chatId){
-        Chat chat = null;
         for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
-                chat = c;
+                return c;
             }
         }
-        return chat;
+        return null;
+    }
+
+    /**
+     * Finds the AnnouncementChat object with input aChatId
+     * @param aChatId of the AnnouncementChat object we are trying to find
+     * @return AnnouncementChat object corresponding to the aChatId inputted
+     *         null if aChatId invalid
+     */
+    public AnnouncementChat getAnChat(String aChatId){
+        for(AnnouncementChat ac: aChatsList){
+            if (ac.getId().equals(aChatId)){
+                return ac;
+            }
+        }
+        return null;
     }
 
     /**
@@ -144,6 +171,17 @@ public class ChatManager {
             chatIDs.add(c.getId());
         }
         return chatIDs;
+    }
+
+    /**
+     * @return the list of IDs of the AnnouncementChats stored in this ChatManager.
+     */
+    public ArrayList<String> getAnnouncementChatIDs(){
+        ArrayList<String> aChatIDs = new ArrayList<>();
+        for (Chat c : aChatsList){
+            aChatIDs.add(c.getId());
+        }
+        return aChatIDs;
     }
 
     /**
@@ -238,7 +276,24 @@ public class ChatManager {
         for (String participantID : this.getChat(chatID).getPersonIds()){
             participants.append(participantID).append("\n");
         }
-        return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";}
+        return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
+    }
+
+    /**
+     * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\new line
+     *                                     [SenderID]: [Sender's ID]
+     *                                     [Participants]: [ID of the Participants]\newline
+     * @param aChatID of the message that is to be formatted.
+     * @return Formatted string representation of the chat.
+     */
+    public String getFormattedAnChat(String aChatID){
+        StringBuilder participants = new StringBuilder();
+        for (String participantID : this.getAnChat(aChatID).getPersonIds()){
+            participants.append(participantID).append("\n");
+        }
+        return "AnnouncementChatID: " + aChatID + "\n" + "SenderID: " +
+                this.getAnChat(aChatID).getOwnerId() + "\n" + "Participants: "
+                + "\n" + participants + "\n";}
 }
 
 // CRC Card Definition

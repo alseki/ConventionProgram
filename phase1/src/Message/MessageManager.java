@@ -1,5 +1,9 @@
 package Message;
 
+// Programmer: Ran Yi, Karyn Komatsu
+// Description: For current User to
+// Date Modified: 18/11/2020
+
 import Message.Message;
 
 import java.io.Serializable;
