@@ -11,33 +11,30 @@ public class MessageMenu implements printSubMenu {
 
     /**
      * Prints the options for this menu.
-     * @return true iff all menu options were printed
      */
     @Override
-    public boolean printMenuOptions() {
+    public void printMenuOptions() {
         System.out.println("----- Message Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         // TODO add print statements for all the other menu options
-        return true;
+        
     }
 
     /**
      * Prompts user to enter content of the new Message.
-     * @return true iff the new Message containing the entered content was created.
      */
-    public boolean printCreateMessage(){
+    public void printCreateMessage(){
         System.out.println("Send to whom?\n Username: \n");
         System.out.println("Enter the content of message: \n");
-        return true;
+        
     }
 
     /**
      * Prompts user to print Message.
-     * @return True iff the Message was properly formatted and printed.
      */
-    public boolean printFormattedMessage(){
+    public void printFormattedMessage(){
         System.out.println("Print Message: \n");
-        return true;
+        
     }
 
     /**

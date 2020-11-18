@@ -111,7 +111,8 @@ public class AttEventController implements SubMenu {
      */
     public boolean getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
-        return presenter.printAttendeeEventList(userEventList);
+        presenter.printAttendeeEventList(userEventList);
+        return true;
     }
 
     /**

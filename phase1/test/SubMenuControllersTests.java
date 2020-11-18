@@ -14,6 +14,8 @@ import Person.OrganizerManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +30,8 @@ public class SubMenuControllersTests {
     private SpeakerManager speakerManager = new SpeakerManager();
     private MessageManager messageManager = new MessageManager();
     private ChatManager chatManager = new ChatManager();
-    // TODO private RoomManager roomManager = new RoomManager();
+    LocalDateTime time = LocalDateTime.now();
+    private RoomManager roomManager = new RoomManager(time);
     // TODO private EventManager eventManager = new EventManager();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -37,8 +40,7 @@ public class SubMenuControllersTests {
 
     @Test(timeout = 50)
     public void testAttEventController() {
-        new AttEventController(userID, attendeeManager);
-        new AttEventController(userID, organizerManager);
+        new AttEventController(userID, attendeeManager, roomManager);
     }
 
     // TODO tests for menu option methods
