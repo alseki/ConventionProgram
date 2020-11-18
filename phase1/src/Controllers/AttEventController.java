@@ -1,9 +1,9 @@
 package Controllers;
 
-// Programmers: Cara McNeil, Allen Kim
+// Programmers: Cara McNeil, Allen Kim, Eytan Weinstein
 // Description: All the methods that take user input in the Attendee Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 17/11/2020
 
 import java.util.ArrayList;
 
@@ -70,7 +70,6 @@ public class AttEventController implements SubMenu {
                     getUserEventList();
                     break;
             }
-
             // TODO add switch statement to call the methods that correspond with currentRequest
         }
         while (currentRequest != 0);
@@ -84,10 +83,14 @@ public class AttEventController implements SubMenu {
      * @return true iff a formatted list of Events was displayed
      */
     public void getConventionEventList() {
-        String roomID = getRoomChoice();
+        String roomID = this.getRoomChoice();
         presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
     }
 
+    /**
+     * Takes user input to pick a Room for which that user wishes to view the Events held there
+     * @return the ID of the Room chosen
+     */
     private String getRoomChoice() {
         presenter.printRoomChoicePrompt();
         String room = input.nextLine();
@@ -104,7 +107,7 @@ public class AttEventController implements SubMenu {
 
     /**
      * Gets the list of Events the Attendee user is signed up for
-     * @return true iff the presenter has been updated with a list of events
+     * @return true iff the presenter has been updated with a list of Events
      */
     public boolean getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
@@ -112,27 +115,27 @@ public class AttEventController implements SubMenu {
     }
 
     /**
-     * Try to sign user up for an Event
+     * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      * @return true iff user was signed up for the Event
      */
     public boolean signupForEvent(String eventName) {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
-
         if (thisRoom == null) {
             return false;
         }
-
         String event = thisRoom.getEventID(eventName);
-
         boolean personAddedToEvent = thisRoom.signUpForEvent(currentUserID, event);
         boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
-
         attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
 
         if (personAddedToEvent && eventAddedToPerson) {
             presenter.printEventAdded();
             return true;
+        }
+        else if (!(personAddedToEvent)) {
+            presenter.printEventFull();
+            return false;
         }
         return false;
     }
@@ -149,14 +152,10 @@ public class AttEventController implements SubMenu {
         if (thisRoom == null) {
             return false;
         }
-
         String event = thisRoom.getEventID(eventName);
-
         boolean personRemovedFromEvent = thisRoom.removeFromEvent(currentUserID, event);
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
-
         attendeeManager.removeChat(currentUserID, thisRoom.getEventChat(event));
-
         if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
             return true;

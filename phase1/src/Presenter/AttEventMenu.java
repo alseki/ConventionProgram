@@ -1,9 +1,9 @@
 package Presenter;
 
-// Programmers: Cara McNeil, Allen Kim
+// Programmers: Cara McNeil, Allen Kim, Eytan Weinstein
 // Description: Prints information pertaining to a user's attending Event information
 // Date Created: 11/11/2020
-// Date Modified: 14/11/2020
+// Date Modified: 17/11/2020
 
 import java.util.Collection;
 import java.util.ArrayList;
@@ -90,6 +90,15 @@ public class AttEventMenu implements printSubMenu {
      */
     public boolean printEventAdded() {
         System.out.println("Event sign-up successful.");
+        return true;
+    }
+
+    /**
+     * Prints a notice to the user that the Event they intended to sign up is full
+     * @return true iff notice was printed
+     */
+    public boolean printEventFull() {
+        System.out.println("Event sign-up unsuccessful. This event is full.");
         return true;
     }
 
