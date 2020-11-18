@@ -129,7 +129,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was signed up for the Event
      */
     public void signupForEvent (String eventName) throws InvalidChoiceException  {
-        EventManager thisRoom = this.roomManager.getEventRoom(eventName);
+        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
         }
@@ -151,7 +151,7 @@ public class AttEventController implements SubMenu {
      * @return true iff user was removed from the Event
      */
     public boolean cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
-        EventManager thisRoom = this.roomManager.getEventRoom(eventName);
+        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
         }

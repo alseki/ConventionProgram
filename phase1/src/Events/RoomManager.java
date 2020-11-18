@@ -82,25 +82,12 @@ public class RoomManager implements Serializable {
         return thisRoom.getID();
     }
 
-    /**
-     * Returns the EventManager for the Room in which a particular Event is held
-     * @param eventName The name of the Event for which we need to find the EventManager
-     * @return The EventManager
-     */
-    public String addRoom(String name, int capacity) {
-        Room thisRoom = new Room(capacity, name);
-        RoomPermissions thisPermissions = new RoomPermissions(this.conferenceStart, thisRoom);
-        roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
-        roomsByName.put(thisRoom.getName(), thisRoom.getID());
-        return thisRoom.getID();
-    }
-
     public String getEventRoom(String eventName) {
         if(getRoomNames().length > 0) {
             for(String room: getRoomNames()) {
                 EventManager manager = this.getRoom(this.getRoomID(room));
                 if (manager.getEventID(eventName) != null) {
-                    return manager;
+                    return manager.getEventID(eventName);
                 }
             }
         }

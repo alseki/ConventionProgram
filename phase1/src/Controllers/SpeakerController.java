@@ -35,7 +35,7 @@ public class SpeakerController extends PersonController {
             super.run();
             do {
                 mainMenu.printSpeakerMM();
-                currentRequest = input.nextInt();
+                currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {
                     case 0:

@@ -41,7 +41,6 @@ public class MessageController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        // TODO update presenter class with a print statement for each option
         currentRequest = SubMenu.readInteger(input);
         return true;
     }
@@ -54,7 +53,6 @@ public class MessageController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
             switch (currentRequest) {
                 case 0:
                     // return to main menu
