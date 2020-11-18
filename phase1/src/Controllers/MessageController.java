@@ -12,6 +12,8 @@ import Person.PersonManager;
 import Presenter.MessageMenu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class MessageController implements SubMenu {
@@ -55,11 +57,52 @@ public class MessageController implements SubMenu {
             // TODO add switch statement to call the methods that correspond with currentRequest
             switch (currentRequest) {
                 case 0:
-                    return false; // The user has inputted 0
-                case 1:
-                    presenter.printChat(this.viewChats());
-                case 2:
-
+                    // return to main menu
+                    break;
+                case 1: //Check your inbox
+                    presenter.printArrayList(this.inBox());
+                    break;
+                case 2: //Check your sent box
+                    presenter.printArrayList(this.sentBox());
+                    break;
+                case 3: //View the chat list
+                    presenter.printArrayList(this.viewChats());
+                    break;
+                case 4: //View the announcement chat list
+                    presenter.printArrayList(this.viewAnnouncementChat());
+                    break;
+                case 5: //View the messages in a chat
+                    presenter.printChatIdPrompt();
+                    presenter.printArrayList(this.viewMessageByChat(input.nextLine()));
+                    break;
+                case 6: //View the announcements in an announcement chat
+                    presenter.printAnChatIdPrompt();
+                    presenter.printArrayList(this.viewMessageByChat(input.nextLine()));
+                    break;
+                case 7: //Create a chat
+                    presenter.printContactUsernamePrompt();
+                    String chatID = this.createChat(input.nextLine());
+                    presenter.printChatCreated(chatID);
+                    presenter.printJobDone();
+                    break;
+                case 8: //Create a group chat
+                    presenter.printContactUsernamesPrompt();
+                    String contacts = input.nextLine();
+                    String[] a = contacts.split(",");
+                    List<String> b = Arrays.asList(a);
+                    ArrayList<String> contactlist = new ArrayList<>(b);
+                    String groupChatID = this.createGroupChat(contactlist);
+                    presenter.printChatCreated(groupChatID);
+                    presenter.printJobDone();
+                    break;
+                case 9: //Send a message
+                    presenter.printChatIdMessagePrompt();
+                    String chatId = input.nextLine();
+                    presenter.printContentPrompt();
+                    String content = input.nextLine();
+                    sendMessage(chatId, content);
+                    presenter.printJobDone();
+                    break;
             }
         }
         while (currentRequest != 0);
@@ -188,6 +231,7 @@ public class MessageController implements SubMenu {
 
     /**
      * Show the messages in one chat by chatID.
+     * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
     private ArrayList<String> viewMessageByChat(String chatID){
         ArrayList<String> messageIDs = this.chatManager.getChat(chatID).getMessageIds();
