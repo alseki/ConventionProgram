@@ -1,14 +1,20 @@
 package Message;
 
+// Programmer: Shimon Nauenberg, Ran Yi
+// Description: For current User to
+// Date Modified: 18/11/2020
+
 import java.util.ArrayList;
 import java.util.UUID;
 public class AnnouncementChat extends Chat{
 
     private final String password;
+    private final String ownerId;
 
     public AnnouncementChat(String ownerId, ArrayList<String> guestIds){
         super(ownerId, guestIds);
         this.password = UUID.randomUUID().toString();
+        this.ownerId = ownerId;
     }
 
     /**
@@ -17,6 +23,14 @@ public class AnnouncementChat extends Chat{
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * A getter for the User who set up this AnnouncementChat.
+     * @return the ID of this User.
+     */
+    public String getOwnerId() {
+        return this.ownerId;
     }
 
 
