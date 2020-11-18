@@ -36,7 +36,6 @@ public class ContactController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        // TODO update presenter class with a print statement for each option
         currentRequest = input.nextInt();
         return true;
     }
@@ -49,39 +48,51 @@ public class ContactController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
+            switch (currentRequest) {
+                case 0:
+                    // return to main menu
+                    break;
+                case 1:
+                    getContactList();
+                    break;
+                case 2:
+                    presenter.printAddContactPrompt();
+                    input.nextLine();
+                    try {
+                        addContact(input.nextLine());
+                    } catch (NoDataException e) {
+                        e.printErrorMessage();
+                    }
+                    break;
+            }
         }
         while (currentRequest != 0);
         return true;
     }
 
-    // TODO change, delete and/or add to the methods below
-
     /**
      * Get's the current user's contactList
-     * @return true iff the presenter printed a formatted contactList
      */
-    public boolean getContactList() {
+    public void getContactList() {
         ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
         presenter.printContactList(listOfContacts);
-        return true;
     }
 
     /**
      * Add a contact to the current user's contactList
      * @param contactUsername the username of the contact the current user wants to add to their contactList
-     * @return true iff the presenter printed a formatted contactList
      */
-    public boolean addContact(String contactUsername) {
+    public void addContact(String contactUsername) throws NoDataException{
         String contactID = pManager.getCurrentUserID(contactUsername);
+        if (contactID == null) {
+            throw new NoDataException("contact username");
+        }
         boolean a = pManager.addContactToPerson(currentUserID, contactID);
         boolean b = pManager.addContactToPerson(contactID, currentUserID);
 
         if(a && b) {
             presenter.printContactAdded();
-            return true;
         }
-        return false;
     }
 
 }

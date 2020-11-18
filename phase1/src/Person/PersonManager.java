@@ -138,15 +138,14 @@ public abstract class PersonManager {
     /**
      *
      * @param currentUserID
-     * @param contactUsername
+     * @param contactID
      * returns the result (true/false) whether adding a new contact to User's list was successful
      * @return boolean, which indicates after checking for double contact (new or old contact)
      * whether adding contact exceuted or not
      */
-    public boolean addContactToPerson(String currentUserID, String contactUsername) {
-        String contactID = getCurrentUserID(contactUsername);
+    public boolean addContactToPerson(String currentUserID, String contactID) {
         if (!(doubleContact(currentUserID, contactID))) {
-            getPerson(currentUserID).addContact(contactUsername);
+            getPerson(currentUserID).addContact(getPerson(contactID).getUsername());
             return true;
         }
         return false;
@@ -199,15 +198,17 @@ public abstract class PersonManager {
     /**
      * This checks that the user does not already have this contact in contactList
      *
-     * @param currentId
-     * @param contactUsername
+     * @param currentID
+     * @param contactID
      * @return boolean, as the whether the user already has the contact in the contactList
      */
-    public boolean doubleContact(String currentId, String contactUsername) {
-
-        Person person =  getPerson(currentId);
-        String contactID = getCurrentUserID(contactUsername);
-        return person.getContactList().contains(contactID);
+    public boolean doubleContact(String currentID, String contactID) {
+        Person person =  getPerson(currentID);
+        String contactUsername = getPerson(contactID).getUsername();
+        if (person.getContactList().isEmpty()) {
+            return false;
+        }
+        return person.getContactList().contains(contactUsername);
     }
 
     /**

@@ -16,19 +16,20 @@ public class ContactMenu implements printSubMenu {
     public void printMenuOptions() {
         System.out.println("----- Contact Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
-        // TODO add print statements for all the other menu options
-        
+        System.out.println("To view Contact List, Enter '1'");
+        System.out.println("To add a Contact, Enter '2'.");
     }
 
     /**
      * Prints a list of the user's contacts
      */
     public void printContactList(ArrayList<String> contactList) {
-        System.out.println("-CONTACTS-");
+        System.out.println('\n' + "-CONTACTS-");
+        System.out.println("---");
         for(String c: contactList) {
             System.out.println(c);
         }
-        System.out.println("---");
+        System.out.println("---" + '\n');
     }
 
     /**
@@ -44,6 +45,4 @@ public class ContactMenu implements printSubMenu {
     public void printContactAdded() {
         System.out.println("Contact has been successfully added.");
     }
-
-    // error message for when contact isn't added?
 }
