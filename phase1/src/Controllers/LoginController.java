@@ -28,7 +28,7 @@ public class LoginController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        currentRequest = input.nextInt();
+        currentRequest = SubMenu.readInteger(input);
         presenter.printSkipLine();
         return true;
     }

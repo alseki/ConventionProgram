@@ -37,7 +37,7 @@ public class OrganizerController extends PersonController {
         if (super.loggedIn) {
             do {
                 mainMenu.printOrganizerMM();
-                currentRequest = input.nextInt();
+                currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {
                     case 0:

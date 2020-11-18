@@ -37,7 +37,7 @@ public class AttendeeController extends PersonController {
         if (super.loggedIn) {
             do {
                 mainMenu.printAttendeeMM();
-                currentRequest = input.nextInt();
+                currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {
                     case 0:

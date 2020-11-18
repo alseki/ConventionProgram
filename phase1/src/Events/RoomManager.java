@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 15 2020
+// Last edit: Nov 16 2020
 
 // Architecture Level - Use Class
 
@@ -101,6 +101,11 @@ public class RoomManager implements Serializable {
         return thisRoom.getID();
     }
 
+    /**
+     * Determines the room a particular Event is held in
+     * @param eventName The name of the event
+     * @return The room's ID, if it exists; null, otherwise
+     */
     public String getEventRoom(String eventName) {
         if(getRoomNames().length > 0) {
             for(String room: getRoomNames()) {
