@@ -11,16 +11,13 @@ import java.time.LocalTime;
 
 public class RoomPermissions implements Serializable {
 
-    private LocalDateTime conferenceStart;
     private Room room;
 
     /**
      * Constructor for a RoomPermissions object
-     * @param start The start time of the conference (as a LocalDateTime object)
      * @param room The room whose permissions are dealt with here
      */
-    protected RoomPermissions (LocalDateTime start, Room room) {
-        conferenceStart = start;
+    protected RoomPermissions (Room room) {
         this.room = room;
     }
 

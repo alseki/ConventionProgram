@@ -17,15 +17,10 @@ public class RoomManager implements Serializable {
 
     /** A mapping of Room names to their respective IDs. */
     private Map<String, String> roomsByName;
-
-    /** The start time of the conference held in all the Rooms managed here. */
-    private LocalDateTime conferenceStart;
-
     /**
      * Constructor for RoomManager objects
      */
-    public RoomManager(LocalDateTime conferenceStart) {
-        this.conferenceStart = conferenceStart;
+    public RoomManager() {
         roomList = new TreeMap<String, EventManager>();
         roomsByName = new TreeMap<String, String>();
     }
@@ -81,7 +76,7 @@ public class RoomManager implements Serializable {
      */
     public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(name, capacity);
-        RoomPermissions thisPermissions = new RoomPermissions(this.conferenceStart, thisRoom);
+        RoomPermissions thisPermissions = new RoomPermissions(thisRoom);
         roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
         return thisRoom.getID();
