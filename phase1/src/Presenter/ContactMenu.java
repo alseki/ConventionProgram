@@ -6,7 +6,6 @@ package Presenter;
 // Date Modified: 11/11/2020
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class ContactMenu implements printSubMenu {
 
