@@ -30,8 +30,7 @@ public class SubMenuControllersTests {
     private SpeakerManager speakerManager = new SpeakerManager();
     private MessageManager messageManager = new MessageManager();
     private ChatManager chatManager = new ChatManager();
-    LocalDateTime time = LocalDateTime.now();
-    private RoomManager roomManager = new RoomManager(time);
+    private RoomManager roomManager = new RoomManager();
     // TODO private EventManager eventManager = new EventManager();
 
     // -----------------------------------------------------------------------------------------------------------------

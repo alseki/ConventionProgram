@@ -1,7 +1,7 @@
 package Controllers;
 
 public class InvalidChoiceException extends Exception {
-    String type;
+    protected String type;
 
     public InvalidChoiceException(String type) {
         this.type = type;

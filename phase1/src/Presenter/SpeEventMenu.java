@@ -68,7 +68,7 @@ public class SpeEventMenu implements printSubMenu {
      * Prints the options for this menu.
      *
      * @return true iff all menu options were printed
-     */
+     *//*
     @Override
     public boolean printMenuOptions() {
         System.out.println("----- Speaker Event Menu -----");
@@ -79,7 +79,7 @@ public class SpeEventMenu implements printSubMenu {
         System.out.println("To send a message to all attendees of only one of your talks, Enter '3'.");
         System.out.println("To send a message to all attendees of all of your talks, Enter '4'");
         return true;
-    }
+    }*/
 
     /**
      * Prompts user to print Talks.

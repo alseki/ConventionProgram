@@ -27,6 +27,15 @@ public class MessageMenu implements printSubMenu {
         System.out.println("Send a message ------------------------------------- Enter '9'.");
     }
 
+    /**
+     * Prints out an Exception thrown by the program to the user
+     * @param e The exception
+     */
+    public void printException(Exception e) {
+        System.out.println("\nSorry! That didn't work.");
+        System.out.println(e.getMessage());
+    }
+
 
     public void printArrayList (ArrayList<String> aList) {
         if (aList != null) {

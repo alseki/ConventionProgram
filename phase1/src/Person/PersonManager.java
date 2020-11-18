@@ -119,7 +119,7 @@ public abstract class PersonManager {
      */
     public boolean confirmPassword(String username, String password) {
         Person person = getPersonByUsername(username);
-        if (person.getPassword() == password) {
+        if (person.getPassword().equals(password)) {
             return true;
         }
         return false;

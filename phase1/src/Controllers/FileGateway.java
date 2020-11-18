@@ -104,7 +104,7 @@ public class FileGateway<T> {
             ObjectOutput output = new ObjectOutputStream(buffer);
             output.writeObject(objIn);
             output.close();
-            System.out.println("Object successfully written!");
+            //System.out.println("Object successfully written!");
             return true;
         }
         catch (EOFException f) {

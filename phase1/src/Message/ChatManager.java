@@ -19,6 +19,14 @@ public class ChatManager {
     }
 
     /**
+     * Tells the user whether or not there exist chats in the system
+     * @return Whether there exist chats in the system
+     */
+    public boolean isEmpty() {
+        return chatsList.isEmpty();
+    }
+
+    /**
      * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestId IDs of guest

@@ -12,17 +12,19 @@ public class LoginMenu implements printSubMenu {
      */
     @Override
     public void printMenuOptions() {
-        System.out.println("----- Login Menu -----");
+        System.out.println("\n----- Login Menu -----");
         System.out.println("To return to start page, Enter '0'.");
         System.out.println("To Login, Enter '1'.");
         System.out.println("To Create a new account, Enter '2'.");
     }
 
     /**
-     * Prints \n
+     * Prints out an Exception thrown by the program to the user
+     * @param e The exception
      */
-    public void printSkipLine() {
-        System.out.println();
+    public void printException(Exception e) {
+        System.out.println("\nSorry! That didn't work.");
+        System.out.println(e.getMessage());
     }
 
     /**
@@ -57,7 +59,7 @@ public class LoginMenu implements printSubMenu {
      * Prints instructions for user to create account
      */
     public void printCreateAccountPrompt() {
-        System.out.println("To create an account, select a username and password, then enter your full name and email " +
+        System.out.println("\nTo create an account, select a username and password, then enter your full name and email " +
                 "address. ");
     }
 
@@ -72,7 +74,7 @@ public class LoginMenu implements printSubMenu {
      * Prints instructions for user to login
      */
     public void printLoginPrompt() {
-        System.out.println("To login, enter the following: ");
+        System.out.println("\nTo login, enter the following: ");
     }
 
 

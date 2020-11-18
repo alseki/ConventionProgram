@@ -73,11 +73,19 @@ public class MessageController implements SubMenu {
                     break;
                 case 5: //View the messages in a chat
                     presenter.printChatIdPrompt();
-                    presenter.printArrayList(this.viewMessageByChat(input.nextLine()));
+                    try {
+                        presenter.printArrayList(printChat(input.nextLine()));
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 6: //View the announcements in an announcement chat
                     presenter.printAnChatIdPrompt();
-                    presenter.printArrayList(this.viewMessageByChat(input.nextLine()));
+                    try {
+                        presenter.printArrayList(printChat(input.nextLine()));
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 7: //Create a chat
                     presenter.printContactUsernamePrompt();
@@ -100,8 +108,12 @@ public class MessageController implements SubMenu {
                     String chatId = input.nextLine();
                     presenter.printContentPrompt();
                     String content = input.nextLine();
-                    sendMessage(chatId, content);
-                    presenter.printJobDone();
+                    try {
+                        sendMessage(chatId, content);
+                        presenter.printJobDone();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
             }
         }
@@ -162,7 +174,13 @@ public class MessageController implements SubMenu {
      * @param messageContent The contents of the message the current user wants to send
      * @return true iff new Message was created and added to Chat's messageList
      */
-    public boolean sendMessage(String chatID, String messageContent) {
+    public boolean sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+        if (chatManager.isEmpty()) {
+            throw new NoDataException("chat");
+        }
+        if (chatManager.getChat(chatID) == null) {
+            throw new InvalidChoiceException("chat");
+        }
         Chat currentChat = this.chatManager.getChat(chatID);
         for (String receiverID : currentChat.getPersonIds()){
             if (!receiverID.equals(currentUserID)){
@@ -233,7 +251,13 @@ public class MessageController implements SubMenu {
      * Show the messages in one chat by chatID.
      * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
-    private ArrayList<String> viewMessageByChat(String chatID){
+    private ArrayList<String> printChat(String chatID) throws InvalidChoiceException{
+        if (chatManager.isEmpty()) {
+            throw new NoDataException("chat");
+        }
+        if (chatManager.getChat(chatID) == null) {
+            throw new InvalidChoiceException("chat");
+        }
         ArrayList<String> messageIDs = this.chatManager.getChat(chatID).getMessageIds();
         ArrayList<String> messageInChat = new ArrayList<>();
         for (String mID : messageIDs) {

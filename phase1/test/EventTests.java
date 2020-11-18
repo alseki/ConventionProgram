@@ -24,8 +24,8 @@ public class EventTests {
     @Test
     public void testGateway() {
         FileGateway<RoomManager> gateway = new FileGateway<RoomManager>("test.ser");
-        RoomManager rooms = new RoomManager(LocalDateTime.now());
-        rooms.addRoom("1", 200)
+        RoomManager rooms = new RoomManager();
+        rooms.addRoom("1", 200);
         rooms.addRoom("1", 200);
         gateway.writeFile(rooms);
         RoomManager rooms2 = gateway.readFile();
