@@ -10,9 +10,9 @@ public abstract class Person {
     protected String email;
     protected String fullName;
 
-    protected ArrayList<String> contactList;
-    protected ArrayList<String> chatList;
-    protected ArrayList<String> eventList;
+    protected ArrayList<String> contactList = new ArrayList<>();
+    protected ArrayList<String> chatList = new ArrayList<>();
+    protected ArrayList<String> eventList = new ArrayList<>();
 
     /**
      * this allows for access to the persons; username
@@ -67,6 +67,8 @@ public abstract class Person {
     public ArrayList<String> getContactList() {
         return this.contactList;
     }
+
+
     public void addContact(String userId){
         this.contactList.add(userId);
     }

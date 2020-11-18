@@ -1,9 +1,9 @@
 package Presenter;
 
-// Programmers: Cara McNeil,
+// Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an Organizer's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 18/11/2020
 
 import Events.EventType;
 
@@ -11,208 +11,190 @@ public class OrgEventMenu implements printSubMenu {
 
     /**
      * Prints the options for this menu.
-     * @return true iff all menu options were printed
      */
     @Override
-    public boolean printMenuOptions() {
+    public void printMenuOptions() {
         System.out.println("\n----- Organizer Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To create a new room, Enter 1");
         System.out.println("To create a new event, Enter 2");
         System.out.println("To create a speaker account, Enter 3");
         System.out.println("To make an announcement to the attendees of an event, Enter 4\n");
-        return true;
     }
 
-
+    /**
+     * Prints out an Exception thrown by the program to the user
+     * @param e The exception
+     */
+    public void printException(Exception e) {
+        System.out.println("\nSorry! That didn't work.");
+        System.out.println(e.getMessage());
+    }
 
     // OPTION 1
 
     /**
-     * Prompts user to input the name of the room they wish to add
-     * @return true iff room adding prompt was printed
+     * Prompts user to input the name of the Room they wish to add
      */
-    public boolean addRoomPrompt() {
+    public void addRoomPrompt() {
         System.out.println("\nTo create a new room, please fill in the following information:");
-        return true;
     }
 
     /**
-     * Prompts user to input the name of the room they wish to add
-     * @return true iff room adding prompt was printed
+     * Prompts user to input the name of the Room they wish to add
      */
-    public boolean addRoomNamePrompt() {
-        System.out.println("\nWhat's the name of the room you want to create?");
-        return true;
+    public void roomNamePrompt() {
+        System.out.println("\nWhat is the name of the room you want to create?");
     }
 
-    //**
-     //* Prompts user to input the capacity of the room they wish to add
-     //* @return true iff room capacity prompt was printed
-     //*/
-    /*public boolean roomCapacityPrompt() {
-        System.out.println("\nWhat is this room's maximum capacity>");
-        return true;
-    }*/      // to add later, if we'd like it!
-
-
+    /**
+     * Prompts user to input the capacity of the Room they wish to add
+     */
+    public void roomCapacityPrompt() {
+        System.out.println("\nWhat is the capacity of the room you want to create?");
+    }
 
     // OPTION 2
 
     /**
-     * prompts to create an event
-     * @return true
+     * Prompts the user to create an Event
      */
-    public boolean printCreateEventPrompt(){
+    public void printCreateEventPrompt(){
         System.out.println("\nTo create a new event, please fill in the following information:");
-        return true;
     }
 
     /**
-     * Lists possible events which can be created
-     * @return true
+     * Prompts the user to choose the type of Event they wish to create
      */
-    public boolean printEventTypePrompt(){
+    public void printEventTypePrompt(){
         System.out.println("\nWhat kind of event do you want to create? (Enter 0 for options)");
-        return true;
     }
 
-    public boolean printEventTypes() {
+    /**
+     * Presents to the user the list of possible Event types to choose from
+     */
+    public void printEventTypes() {
         System.out.println();
         for(EventType t: EventType.values()) {
             System.out.println(t.toString());
         }
         System.out.println();
-        return true;
     }
 
     /**
-     * prompts to name an event
-     * @return true
+     * Prompts the user to choose a Room for an Event (by name)
      */
-    public boolean printEventNamePrompt(){
-        System.out.println("\nWhat's the event's name??");
-        return true;
+    public void printRoomNamePrompt(){
+        System.out.println("\nWhich room should this event be held in? (Enter 0 for options)");
     }
 
     /**
-     * prompt to choose a room for an event
-     * @return true
+     * Presents to the user the list of possible Rooms in which this Event can be held
      */
-    public boolean printRoomNamePrompt(){
-        System.out.println("\nWhich room is this event held in? (Enter 0 for options)");
-        return true;
-
-    }
-
-    /**
-     * Lists rooms that events can be held in
-     * @return true
-     */
-    public boolean printRoomNames(String[] names){
+    public void printRoomNames(String[] names){
         System.out.println();
         for(String name: names) {
             System.out.println(name);
         }
         System.out.println();
-        return true;
     }
 
     /**
-     * prompts to add the speaker username
-     * @return true
+     * Prompts the user to name the new Event
      */
-    public boolean printSpeakerUsernamePrompt(){
-        System.out.println("\nWhat's the username of the speaker in charge of the event?");
-        return true;
+    public void printEventNamePrompt(){
+        System.out.println("\nWhat is the name of this new event?");
     }
 
     /**
-     * prompts to enter a start time
-     * @return true
+     * Prompts the user to enter a description for the new Event
      */
-    public boolean printStartTimePrompt(){
+    public void printDescriptionPrompt(){
+        System.out.println("\nPlease type a brief description for this new event:");
+    }
+
+    /**
+     * Prompts the user to enter a start time for the new Event
+     */
+    public void printStartTimePrompt(){
         System.out.println("\nAt what time will the event start?");
-        System.out.println("\n(Please enter one integer that represents the hour of the event's start-time, in " +
-                "24-hour clock notation.)");
-        return true;
+        System.out.println("\n(Please enter the exact date and time of this event in 24-hour clock notation. For " +
+                "example, to schedule an event at 11:30 p.m. on March 4, 2020, you would type the date, followed by" +
+                "a space, followed by the 24-hour time, as follows: '2020-03-04 23:30'. Be slow and careful!");
     }
 
+    /**
+     * Notifies the user that their start time entry was invalid
+     */
+    public void printDateError(){
+        System.out.println("\n(This is not a valid date. Try again. Be slow and careful!");
+    }
 
+    /**
+     * Prompts the user to add the username of the Speaker at this new Event
+     */
+    public void printSpeakerUsernamePrompt(){
+        System.out.println("\nWhat is the username of the speaker in charge of the event?");
+    }
+
+    /**
+     * Notifies the user that a Talk was not created because another is already scheduled
+     */
+    public void printCapacityError(){
+        System.out.println("\nThis talk could not be added. Another talk is scheduled in this room at that time.");
+    }
 
     // OPTION 3
 
     /**
-     * prompts to add aa speaker
-     * @return true
+     * Prompts the user to add a Speaker account
      */
-    public boolean printAddSpeakPrompt(){
+    public void printAddSpeakerPrompt(){
         System.out.println("\nTo create a new speaker account, please fill in the following information:");
-        return true;
-
     }
 
     /**
-     * prompts to add a name
-     * @return true
+     * Prompts the user to enter a name for the Speaker
      */
-    public boolean printAddNamePrompt(){
-        System.out.println("\nWhat's the speaker's full name?");
-        return true;
+    public void printAddNamePrompt(){
+        System.out.println("\nWhat is the speaker's full name?");
     }
 
     /**
-     * prompts to add a password
-     * @return true
+     * Prompts the user to add a password for the Speaker
      */
-    public boolean printAddPasswordPrompt(){
+    public void printAddPasswordPrompt(){
         System.out.println("\nPlease enter a password for the speaker:");
-        return true;
     }
 
     /**
-     * prompts to add username
-     * @return true
+     * Prompts the user to add a username for the Speaker
      */
-    public boolean printAddUsernamePrompt(){
+    public void printAddUsernamePrompt(){
         System.out.println("\nPlease enter a username for the speaker:");
-        return true;
     }
 
     /**
-     * prompts to add an email
-     * @return true
+     * Prompts the user to add an email for the Speaker
      */
-    public boolean printAddEmailPrompt(){
-        System.out.println("\nWhat's the speaker's email address?");
-        return true;
+    public void printAddEmailPrompt(){
+        System.out.println("\nWhat iss the speaker's e-mail address?");
     }
-
-
 
     // OPTION 4
 
     /**
-     * prompts an introduction for an event message
-     * @return true
+     * Prompts the user to make an announcement about an Event
      */
-    public boolean printEventMessageIntro(){
+    public void printEventMessageIntro(){
         System.out.println("\nTo make an announcement about an event, please fill in the following information:");
-        return true;
     }
 
     /**
-     * prompts for message content
-     * @return true
+     * Prompts the user to enter the content of the announcement
      */
-    public boolean printMessageContentPrompt(){
+    public void printMessageContentPrompt(){
         System.out.println("\nPlease enter your announcement below");
-        return true;
     }
-
-
-
-
-
 
 }

@@ -53,8 +53,49 @@ public class SpeEventController implements SubMenu {
             menuOptions();
             switch (currentRequest){
                 case 0:
-
+                    // return to main menu
+                    break;
                 case 1:
+                    // View the talk you're going to talk at
+                    presenter.printString(this.getFormattedTalks());
+                    break;
+                case 2:
+                    // Send message to all Users in an Event
+                    presenter.printEventNamePrompt();
+                    String eventNameA = input.nextLine();
+                    presenter.printContentPrompt();
+                    String contentA = input.nextLine();
+                    this.eventMessage(eventNameA, contentA);
+                    presenter.printMessageSent();
+                    break;
+                case 3:
+                    // Send message to all Attendees in an Event
+                    presenter.printEventNamePrompt();
+                    String eventNameB = input.nextLine();
+                    presenter.printContentPrompt();
+                    String contentB = input.nextLine();
+                    this.eventMessageForAttendees(eventNameB, contentB);
+                    presenter.printMessageSent();
+                    break;
+                case 4:
+                    // Send message to all Attendees in your Events
+                    presenter.printContentPrompt();
+                    String contentC = input.nextLine();
+                    // TODO: get the ArrayList of all events this Speaker will talk at.
+                    this.allSpeakerEventsMessage(????, contentC);
+                    presenter.printMessageSent();
+                    break;
+                case 5:
+                    // to be finished
+                    break;
+                case 6:
+                    // to be finished
+                    break;
+                case 7:
+                    // Send message to one Attendee in an Event
+                    // But we didn't plan to allow a Speaker to send personal message to a User.
+                    // Speakers can only send announcements.
+                    break;
 
             }
         }

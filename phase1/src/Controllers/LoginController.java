@@ -29,7 +29,6 @@ public class LoginController implements SubMenu {
     public boolean menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        presenter.printSkipLine();
         return true;
     }
 
@@ -45,20 +44,20 @@ public class LoginController implements SubMenu {
                 case 0:
                     return false; // The user has inputted 0
                 case 1:
-                    if (login()) {
-                        currentRequest = 0; // Login was successful,
-                        break;
-                    }
-                    else {
-                        System.out.println("error loggin in"); // FIXME this should be some kind of exception
+                    try {
+                        login();
+                        currentRequest = 0;
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    } finally {
                         break;
                     }
                 case 2:
-                    if (createAccount()) {
-                        break;
-                    }
-                    else{
-                        System.out.println("error creating account"); // FIXME this should be some kind of exception
+                    try {
+                        createAccount();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    } finally {
                         break;
                     }
             }
@@ -71,25 +70,25 @@ public class LoginController implements SubMenu {
      * Prompts user to input username and password.
      * @return true iff login info corresponds with an existing Person.Person account.
      */
-    private boolean login() {
+    private boolean login() throws InvalidChoiceException {
         presenter.printLoginPrompt();
         presenter.printUsernamePrompt();
         username = input.next();
         presenter.printPasswordPrompt();
         String password = input.next();
         if (manager.getCurrentUserID(username) != null)  {
-            //TODO check password?
-            return true;
+            if(manager.confirmPassword(username, password)) {
+                return true;
+            }
         }
-        presenter.printSkipLine();
-        return false;
+        throw new InvalidChoiceException("account");
     }
 
     /**
      * Prompts user for relevant information and uses it to create a new account.
      * @return true iff new account has been created
      */
-    private boolean createAccount() {
+    private boolean createAccount() throws InvalidChoiceException {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
         username = input.next();
@@ -100,11 +99,10 @@ public class LoginController implements SubMenu {
         presenter.printEmailPrompt();
         String email = input.nextLine();
         input.nextLine();
-        presenter.printSkipLine();
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
             return true;
         }
-        return false;
+        throw new InvalidChoiceException("username");
     }
 }

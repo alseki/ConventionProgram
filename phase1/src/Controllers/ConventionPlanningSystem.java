@@ -19,7 +19,7 @@ public class ConventionPlanningSystem {
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
     private MessageManager mm = new MessageManager();
-    private RoomManager rm = new RoomManager(LocalDateTime.now()); //TODO: ADD DATE INPUT
+    private RoomManager rm = new RoomManager(); 
     private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("events.ser");
     private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
 
@@ -28,9 +28,8 @@ public class ConventionPlanningSystem {
     */
     public void run() {
         do {
-            if (presenter.printIntroMessage()) {
-                accountChoice = input.nextInt();
-            }
+            presenter.printIntroMessage();
+            accountChoice = input.nextInt();
             setController(accountChoice);
         }
         while (accountChoice != 0);

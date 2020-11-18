@@ -11,29 +11,16 @@ import java.time.LocalTime;
 
 public class RoomPermissions implements Serializable {
 
-    private LocalDateTime conferenceStart;
     private Room room;
 
     /**
      * Constructor for a RoomPermissions object
-     * @param start The start time of the conference (as a LocalDateTime object)
      * @param room The room whose permissions are dealt with here
      */
-    protected RoomPermissions (LocalDateTime start, Room room) {
-        conferenceStart = start;
+    protected RoomPermissions (Room room) {
         this.room = room;
     }
 
-    /**
-     * Creates a LocalDateTime object for the time at which a particular Event starts, and makes this time the inputted
-     * number of hours after the start of the conference
-     * @param hour The number of hours after the conference start time when this Event should start
-     * @return The time at which a particular Event starts (as a LocalDateTime object)
-     */
-    protected LocalDateTime toEventTime(int hour) {
-        LocalTime time = LocalTime.of(conferenceStart.getHour() + hour, conferenceStart.getMinute());
-        return LocalDateTime.of(conferenceStart.toLocalDate(), time);
-    }
 
     /**
      * Checks if the two inputted Events conflict with each other in time

@@ -1,5 +1,9 @@
 package Message;
 
+// Programmer: Karyn Komatsu, Ran Yi
+// Description: For current User to
+// Date Modified: 18/11/2020
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;

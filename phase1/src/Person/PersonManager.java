@@ -2,8 +2,10 @@ package Person;
 
 import Events.Event;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public abstract class PersonManager {
@@ -56,7 +58,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    protected Person getPerson(String currentUserID) {
+    Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }
@@ -80,6 +82,7 @@ public abstract class PersonManager {
         }
         return null;
     }
+
 
     /**
      *
@@ -109,6 +112,20 @@ public abstract class PersonManager {
     }
 
     /**
+     * This is a helper function for LoginController in the login() method
+     * @param username
+     * @param password
+     * @return true iff the password inputted by the user corresponds to username's password
+     */
+    public boolean confirmPassword(String username, String password) {
+        Person person = getPersonByUsername(username);
+        if (person.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      *
      * @param username
      * returns a value that allows for account verificaton; whether accountUser exists or not
@@ -121,15 +138,14 @@ public abstract class PersonManager {
     /**
      *
      * @param currentUserID
-     * @param contactUsername
+     * @param contactID
      * returns the result (true/false) whether adding a new contact to User's list was successful
      * @return boolean, which indicates after checking for double contact (new or old contact)
      * whether adding contact exceuted or not
      */
-    public boolean addContactToPerson(String currentUserID, String contactUsername) {
-        String contactID = getCurrentUserID(contactUsername);
+    public boolean addContactToPerson(String currentUserID, String contactID) {
         if (!(doubleContact(currentUserID, contactID))) {
-            getPerson(currentUserID).addContact(contactUsername);
+            getPerson(currentUserID).addContact(getPerson(contactID).getUsername());
             return true;
         }
         return false;
@@ -182,15 +198,17 @@ public abstract class PersonManager {
     /**
      * This checks that the user does not already have this contact in contactList
      *
-     * @param currentId
-     * @param contactUsername
+     * @param currentID
+     * @param contactID
      * @return boolean, as the whether the user already has the contact in the contactList
      */
-    public boolean doubleContact(String currentId, String contactUsername) {
-
-        Person person =  getPerson(currentId);
-        String contactID = getCurrentUserID(contactUsername);
-        return person.getContactList().contains(contactID);
+    public boolean doubleContact(String currentID, String contactID) {
+        Person person =  getPerson(currentID);
+        String contactUsername = getPerson(contactID).getUsername();
+        if (person.getContactList().isEmpty()) {
+            return false;
+        }
+        return person.getContactList().contains(contactUsername);
     }
 
     /**

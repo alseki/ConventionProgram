@@ -9,95 +9,79 @@ public class LoginMenu implements printSubMenu {
 
     /**
      * Prints the options for this menu.
-     * @return true iff all menu options were printed
      */
     @Override
-    public boolean printMenuOptions() {
-        System.out.println("----- Login Menu -----");
+    public void printMenuOptions() {
+        System.out.println("\n----- Login Menu -----");
         System.out.println("To return to start page, Enter '0'.");
         System.out.println("To Login, Enter '1'.");
         System.out.println("To Create a new account, Enter '2'.");
-        return true;
     }
 
     /**
-     * Prints \n
+     * Prints out an Exception thrown by the program to the user
+     * @param e The exception
      */
-    public void printSkipLine() {
-        System.out.println();
+    public void printException(Exception e) {
+        System.out.println("\nSorry! That didn't work.");
+        System.out.println(e.getMessage());
     }
 
     /**
      * Prompts user to enter username
-     * @return true iff username prompt has been printed
      */
-    public boolean printUsernamePrompt() {
+    public void printUsernamePrompt() {
         System.out.print("Enter username: ");
-        return true;
     }
 
     /**
      * Prompts user to enter password
-     * @return true iff password prompt has been printed
      */
-    public boolean printPasswordPrompt() {
+    public void printPasswordPrompt() {
         System.out.print("Enter password: ");
-        return true;
     }
 
     /**
      * Prompts user to enter name
-     * @return true iff name prompt has been printed
      */
-    public boolean printNamePrompt() {
+    public void printNamePrompt() {
         System.out.print("Enter full name: ");
-        return true;
     }
 
     /**
      * Prompts user to enter email
-     * @return true iff email prompt has been printed
      */
-    public boolean printEmailPrompt() {
+    public void printEmailPrompt() {
         System.out.print("Enter email address: ");
-        return true;
     }
 
     /**
      * Prints instructions for user to create account
-     * @return true if account creation instructions are printed
      */
-    public boolean printCreateAccountPrompt() {
-        System.out.println("To create an account, select a username and password, then enter your full name and email " +
+    public void printCreateAccountPrompt() {
+        System.out.println("\nTo create an account, select a username and password, then enter your full name and email " +
                 "address. ");
-        return true;
     }
 
     /**
      * Prints confirmation that an account was created.
-     * @return true iff account creation successful statement was printed
      */
-    public boolean printAccountCreationSuccessful() {
+    public void printAccountCreationSuccessful() {
         System.out.println("Account creation successful! Redirecting to Login Menu..." + '\n');
-        return true;
     }
 
     /**
      * Prints instructions for user to login
-     * @return true iff login instructions were printed
      */
-    public boolean printLoginPrompt() {
-        System.out.println("To login, enter the following: ");
-        return true;
+    public void printLoginPrompt() {
+        System.out.println("\nTo login, enter the following: ");
     }
 
 
     /**
      * Prints confirmation that Login was successful
-     * @return true iff login successful statement was printed
      */
-    public boolean printLoginSuccessful() {
+    public void printLoginSuccessful() {
         System.out.println("Login Successful! Redirecting back to account Main Menu..." + '\n');
-        return true;
     }
 }

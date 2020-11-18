@@ -1,5 +1,9 @@
 package Controllers;
 
+// Programmer: Ran Yi
+// Description: For current User to
+// Date Modified: 18/11/2020
+
 import Message.Chat;
 import Message.ChatManager;
 import Message.Message;
@@ -8,6 +12,8 @@ import Person.PersonManager;
 import Presenter.MessageMenu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class MessageController implements SubMenu {
@@ -51,11 +57,69 @@ public class MessageController implements SubMenu {
             // TODO add switch statement to call the methods that correspond with currentRequest
             switch (currentRequest) {
                 case 0:
-                    return false; // The user has inputted 0
-                case 1:
-                    presenter.printChat(this.viewChats());
-                case 2:
-
+                    // return to main menu
+                    break;
+                case 1: //Check your inbox
+                    presenter.printArrayList(this.inBox());
+                    break;
+                case 2: //Check your sent box
+                    presenter.printArrayList(this.sentBox());
+                    break;
+                case 3: //View the chat list
+                    presenter.printArrayList(this.viewChats());
+                    break;
+                case 4: //View the announcement chat list
+                    presenter.printArrayList(this.viewAnnouncementChat());
+                    break;
+                case 5: //View the messages in a chat
+                    presenter.printChatIdPrompt();
+                    input.nextLine();
+                    try {
+                        presenter.printArrayList(printChat(input.nextLine()));
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
+                    break;
+                case 6: //View the announcements in an announcement chat
+                    presenter.printAnChatIdPrompt();
+                    input.nextLine();
+                    try {
+                        presenter.printArrayList(printChat(input.nextLine()));
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
+                    break;
+                case 7: //Create a chat
+                    presenter.printContactUsernamePrompt();
+                    input.nextLine();
+                    String chatID = this.createChat(input.nextLine());
+                    presenter.printChatCreated(chatID);
+                    presenter.printJobDone();
+                    break;
+                case 8: //Create a group chat
+                    presenter.printContactUsernamesPrompt();
+                    input.nextLine();
+                    String contacts = input.nextLine();
+                    String[] a = contacts.split(",");
+                    List<String> b = Arrays.asList(a);
+                    ArrayList<String> contactlist = new ArrayList<>(b);
+                    String groupChatID = this.createGroupChat(contactlist);
+                    presenter.printChatCreated(groupChatID);
+                    presenter.printJobDone();
+                    break;
+                case 9: //Send a message
+                    presenter.printChatIdMessagePrompt();
+                    input.nextLine();
+                    String chatId = input.nextLine();
+                    presenter.printContentPrompt();
+                    String content = input.nextLine();
+                    try {
+                        sendMessage(chatId, content);
+                        presenter.printJobDone();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
+                    break;
             }
         }
         while (currentRequest != 0);
@@ -115,7 +179,13 @@ public class MessageController implements SubMenu {
      * @param messageContent The contents of the message the current user wants to send
      * @return true iff new Message was created and added to Chat's messageList
      */
-    public boolean sendMessage(String chatID, String messageContent) {
+    public boolean sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+        if (chatManager.isEmpty()) {
+            throw new NoDataException("chat");
+        }
+        if (chatManager.getChat(chatID) == null) {
+            throw new InvalidChoiceException("chat");
+        }
         Chat currentChat = this.chatManager.getChat(chatID);
         for (String receiverID : currentChat.getPersonIds()){
             if (!receiverID.equals(currentUserID)){
@@ -160,7 +230,7 @@ public class MessageController implements SubMenu {
     }
 
     /**
-     * Show the chatList with its ID and participants' IDs.
+     * Show the chatList with this User inside with its ID and participants' IDs.
      * @return ArrayList of formatted chats
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
@@ -170,9 +240,13 @@ public class MessageController implements SubMenu {
      */
     private ArrayList<String> viewChats(){
         ArrayList<String> chats = new ArrayList<>();
-        for (String chatID: this.chatManager.getChatIDs()){
-            String formattedChat = this.chatManager.getFormattedChat(chatID);
-            chats.add(formattedChat);
+        for (Chat c : this.chatManager.getChatsList()) {
+            for (String personID : c.getPersonIds()) {
+                if (personID.equals(currentUserID)) {
+                    String formattedAnChat = this.chatManager.getFormattedChat(c.getId());
+                    chats.add(formattedAnChat);
+                }
+            }
         }
         return chats;
         // Let presenter show the chats.
@@ -180,12 +254,49 @@ public class MessageController implements SubMenu {
 
     /**
      * Show the messages in one chat by chatID.
+     * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
-    // TODO: we only have messageIDs in chat. How to get the Message????
-    private String viewMessageByChat(String chatID){
+    private ArrayList<String> printChat(String chatID) throws InvalidChoiceException{
+        if (chatManager.isEmpty()) {
+            throw new NoDataException("chat");
+        }
+        if (chatManager.getChat(chatID) == null) {
+            throw new InvalidChoiceException("chat");
+        }
+        ArrayList<String> messageIDs = this.chatManager.getChat(chatID).getMessageIds();
+        ArrayList<String> messageInChat = new ArrayList<>();
+        for (String mID : messageIDs) {
+            for (Message m : this.messageManager.getMessageList()){
+                if (mID.equals(m.getMessageId())) {
+                    messageInChat.add(this.messageManager.getFormattedMessage(mID));
+                }
+            }
+        }
+        // Let presenter show the formatted messages in this chat.
+        return messageInChat;
+    }
 
-        // Let presenter show the chat info.
-        return null;
+    /**
+     * View announcement chats in formatted.
+     *  Show the chatList with its ID and participants' IDs.
+     * @return ArrayList of formatted chats
+     *                   [ID]: [ID of the chat]\new line
+     *                   [Participants]: [ID of the Participants]\newline
+     *                   [ID]: [ID of the chat]\new line
+     *                   [Participants]: [ID of the Participants]\newline
+     */
+    private ArrayList<String> viewAnnouncementChat(){
+        ArrayList<String> aChats = new ArrayList<>();
+        for (Chat ac : this.chatManager.getAnChatsList()) {
+            for (String personID : ac.getPersonIds()) {
+                if (personID.equals(currentUserID)) {
+                    String formattedAnChat = this.chatManager.getFormattedAnChat(ac.getId());
+                    aChats.add(formattedAnChat);
+                }
+            }
+        }
+        return aChats;
+        // Let presenter show the chats.
     }
 
 

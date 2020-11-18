@@ -6,60 +6,43 @@ package Presenter;
 // Date Modified: 11/11/2020
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class ContactMenu implements printSubMenu {
 
     /**
      * Prints the options for this menu.
-     * @return true iff all menu options were printed
      */
     @Override
-    public boolean printMenuOptions() {
+    public void printMenuOptions() {
         System.out.println("----- Contact Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
-        // TODO add print statements for all the other menu options
-        return true;
-    }
-
-    /**
-     * Prints a list of options
-     * @return
-     */
-    public boolean options() {
-        return true;
+        System.out.println("To view Contact List, Enter '1'");
+        System.out.println("To add a Contact, Enter '2'.");
     }
 
     /**
      * Prints a list of the user's contacts
-     * @return true iff all contacts were printed
      */
-    public boolean printContactList(ArrayList<String> contactList) {
-        System.out.println("-CONTACTS-");
+    public void printContactList(ArrayList<String> contactList) {
+        System.out.println('\n' + "-CONTACTS-");
+        System.out.println("---");
         for(String c: contactList) {
             System.out.println(c);
         }
-        System.out.println("---");
-        return true;
+        System.out.println("---" + '\n');
     }
 
     /**
      * Prompts user to enter contact information
-     * @return true iff add contact prompt was printed
      */
-    public boolean printAddContactPrompt() {
+    public void printAddContactPrompt() {
         System.out.println("Enter the username of the person you would like to add as a contact: ");
-        return true;
     }
 
     /**
      * Prints that a contact was successfully added
-     * @return true iff successful contact addition statement was printed
      */
-    public boolean printContactAdded() {
+    public void printContactAdded() {
         System.out.println("Contact has been successfully added.");
-        return true;
     }
-
-    // error message for when contact isn't added?
 }

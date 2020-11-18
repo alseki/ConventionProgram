@@ -1,10 +1,13 @@
-package Controllers;// Programmers: Cara McNeil,
+package Controllers;
+
+// Programmers: Cara McNeil, Eytan Weinstein
 // Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
-// Date Modified: 16/11/2020
+// Date Modified: 17/11/2020
 
 import Message.ChatManager;
 import Message.MessageManager;
+import Person.AttendeeManager;
 import Person.OrganizerManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
@@ -19,6 +22,7 @@ public class OrganizerController extends PersonController {
     private String currentUserID;
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
+    private AttendeeManager attendeeManager;
     private int currentRequest;
     Scanner input = new Scanner(System.in);
 
@@ -28,6 +32,7 @@ public class OrganizerController extends PersonController {
         super(manager, rooms, messages);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
+        this.attendeeManager = (AttendeeManager) manager;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class OrganizerController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, manager, roomManager);
+                        AttEventController attEventController = new AttEventController(currentUserID, attendeeManager, roomManager);
                         attEventController.menuChoice();
                         break;
                     case 4:

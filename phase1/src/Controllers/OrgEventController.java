@@ -3,7 +3,7 @@ package Controllers;
 // Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 15/11/2020
+// Date Modified: 18/11/2020
 
 import Events.EventManager;
 import Events.EventType;
@@ -17,6 +17,9 @@ import Presenter.OrgEventMenu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class OrgEventController implements SubMenu {
 
@@ -54,11 +57,10 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
+     * @return true iff uthe ser requests to return to Main Menu
      */
     @Override
     public boolean menuChoice() {
-
         do {
             menuOptions();
             switch (currentRequest) {
@@ -68,7 +70,11 @@ public class OrgEventController implements SubMenu {
                     addRoomPrompt();
                     break;
                 case 2:
-                    createEventPrompt();
+                    try {
+                        createEventPrompt();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 3:
                     addSpeakerPrompt();
@@ -83,13 +89,248 @@ public class OrgEventController implements SubMenu {
         // TODO add switch statement to call the methods that correspond with currentRequest
     }
 
+    // OPTION 1
+
     /**
-     * Creates a new Person.Speaker account and adds it to the system.
+     * Prompts the user to input the information for the Room they wish to add
+     * @return true iff addRoom prompt was printed
+     */
+    public boolean addRoomPrompt() {
+        presenter.addRoomPrompt();
+        presenter.roomNamePrompt();
+        String name = input.nextLine();
+        presenter.roomCapacityPrompt();
+        int capacity = Integer.parseInt(input.nextLine());
+        this.addRoom(name, capacity);
+        return true;
+    }
+
+    /**
+     * Adds a room to the list of rooms in this convention
+     * @param name The name of the new Room in the convention (likely its number)
+     * @param capacity The capacity of the new Room in the convention
+     * @return true iff Room was added to the convention successfully
+     */
+    public boolean addRoom(String name, int capacity) {
+        return this.roomManager.addRoom(name, capacity) != null;
+    }
+
+    // OPTION 2
+
+    /**
+     * Prompts the user to input the information for the Event they wish to add
+     * @return true iff createEvent prompt was printed
+     */
+    public boolean createEventPrompt() throws InvalidChoiceException {
+        presenter.printCreateEventPrompt();
+        presenter.printEventTypePrompt();
+        EventType type = chooseEventType();
+        presenter.printRoomNamePrompt();
+        String roomName = chooseRoom();
+        presenter.printEventNamePrompt();
+        String eventName = input.nextLine();
+        presenter.printDescriptionPrompt();
+        String eventDescription = input.nextLine();
+        presenter.printStartTimePrompt();
+        LocalDateTime start = chooseStartTime();
+        if (type == EventType.TALK) {
+            presenter.printSpeakerUsernamePrompt();
+            String speakerUsername = input.nextLine();
+            boolean created = this.createTalk(eventName, speakerUsername, start, eventDescription, roomName);
+            if (created == false) {
+                presenter.printCapacityError();
+                return false;
+            }
+        }
+        else if (type == EventType.WORKSHOP) {
+            presenter.printSpeakerUsernamePrompt();
+            String speakerUsername = input.nextLine();
+            return this.createWorkshop(eventName, speakerUsername, start, eventDescription, roomName);
+        }
+        return true;
+    }
+
+    /**
+     * Prompts the user to choose a type for the Event they wish to add
+     * @return the type of event they have chosen (as an EventType object)
+     */
+    private EventType chooseEventType() throws InvalidChoiceException {
+        String type = input.nextLine();
+        if (type.equals("0")) {
+            presenter.printEventTypes();
+            type = input.nextLine();
+        }
+        try {
+            return EventType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException f) {
+            throw new InvalidChoiceException("event type");
+        }
+    }
+
+    /**
+     * Prompts the user to choose a Room from the list of existing Rooms
+     * @return The name of the Room they have chosen
+     */
+    private String chooseRoom() throws InvalidChoiceException {
+        String name = input.nextLine();
+        if (name.equals("0")) {
+            presenter.printRoomNames(roomManager.getRoomNames());
+            name = input.nextLine();
+        }
+        if (roomManager.getRoomID(name) != null) {
+            return name;
+        }
+        else {
+            throw new InvalidChoiceException("room");
+        }
+    }
+
+    /**
+     * Prompts the user to choose a valid start time for the new Event
+     * @return The start time as a LocalDateTime object
+     */
+    private LocalDateTime chooseStartTime() {
+        String time = input.nextLine();
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+            return dateTime;
+        }
+        catch (DateTimeParseException exc) {
+            presenter.printDateError();
+            presenter.printStartTimePrompt();
+            return chooseStartTime();
+        }
+    }
+
+    /**
+     * Creates a new Talk in this convention; also creates a new chat for this Talk and sets the Talk's chatID to the
+     * ID of this new chat.
+     * @param name The name of the Talk
+     * @param speaker The username of the Speaker at the Talk
+     * @param start The start time of the Talk
+     * @param description A description for the Talk
+     * @param room The name of the Room the Talk is in
+     * @return true iff the Talk was created successfully
+     */
+    public boolean createTalk(String name, String speaker, LocalDateTime start, String description, String room)
+            throws InvalidChoiceException {
+        String roomID = roomManager.getRoomID(room);
+        if (roomID == null) {
+            throw new InvalidChoiceException("room");
+        }
+
+        String speakerID = speakerManager.getCurrentUserID(speaker);
+        if (speakerID == null) {
+            throw new InvalidChoiceException("speaker");
+        }
+
+        boolean created = roomManager.getRoom(roomID).addTalk(name, speakerID, start, description);
+        String eventID = roomManager.getRoom(roomID).getEventID(name);
+
+        addEvent(eventID, roomID, speakerID);
+
+        return created;
+    }
+
+    /**
+     * Creates a new Workshop in this convention; also creates a new chat for this Workshop and sets the Workshop's
+     * chatID to the ID of this new chat.
+     * @param name The name of the Workshop
+     * @param speaker The username of the Speaker at the Workshop
+     * @param start The start time of the Workshop
+     * @param description A description for the Workshop
+     * @param room The name of the Room the Workshop is in
+     * @return true iff the Workshop was created successfully
+     */
+    public boolean createWorkshop(String name, String speaker, LocalDateTime start, String description, String room)
+            throws InvalidChoiceException{
+        String roomID = roomManager.getRoomID(room);
+        if (roomID == null) {
+            throw new InvalidChoiceException("room");
+        }
+
+        String speakerID = speakerManager.getCurrentUserID(speaker);
+        if (speakerID == null) {
+            throw new InvalidChoiceException("speaker");
+        }
+
+
+        boolean created = roomManager.getRoom(roomID).addWorkshop(name, speakerID, start, description);
+        String eventID = roomManager.getRoom(roomID).getEventID(name);
+
+        addEvent(eventID, roomID, speakerID);
+
+        return created;
+    }
+
+    /**
+     * Helper method - adds a newly created Event into the system
+     * @param eventID The event's ID
+     * @param roomID The ID of the room the event is in
+     * @param speakerID The ID of the speaker holding the event
+     */
+    private void addEvent(String eventID, String roomID, String speakerID) {
+
+        EventManager room = roomManager.getRoom(roomID);
+
+        ArrayList<String> attendees = room.getSignUps(eventID);
+        String announcementChatID = chatManager.createAnnouncementChat(eventID, attendees);
+        room.setEventChatID(eventID, announcementChatID);
+
+        this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
+        this.updateSpeakerChat(speakerID, announcementChatID);
+        this.speakerManager.addTalkId(speakerID, eventID);
+        speakerManager.addTalkIdToDictionary(speakerID, eventID, room.getEventName(eventID));
+
+
+    }
+
+    /**
+     * This is a helper method for the methods above; updates Speaker's chat list
+     * @param personID
+     * @param chatID
+     */
+    private void updateSpeakerChat(String personID, String chatID) {
+        this.speakerManager.addChat(personID, chatID);
+    }
+
+    /**
+     * This is helper method for the methods above; updates Speaker's announcementChatIDs
+     * @param personID
+     * @param announcementChatID
+     */
+    private void updateSpeakerChatWithAnnouncement(String personID, String announcementChatID) {
+        this.speakerManager.addAnnouncementChats(personID, announcementChatID);
+    }
+
+    // OPTION 3
+
+    /**
+     * Prompts the user to input the information required to create a new Speaker account
+     * @return true iff addSpeaker prompt was printed
+     */
+    public boolean addSpeakerPrompt(){
+        presenter.printAddSpeakerPrompt();
+        presenter.printAddNamePrompt();
+        String name = input.nextLine();
+        presenter.printAddEmailPrompt();
+        String email = input.nextLine();
+        presenter.printAddUsernamePrompt();
+        String username = input.nextLine();
+        presenter.printAddPasswordPrompt();
+        String pass = input.nextLine();
+        this.createSpeaker(name, username, pass, email);
+        return true;
+    }
+
+    /**
+     * Creates a new Person.Speaker account and adds it to the system
      * @param name The name of the Speaker
      * @param username The username of the Speaker
      * @param password The password of the Speaker
      * @param email The email of the Speaker
-     * @return true iff a new Person.Speaker object was created.
+     * @return true iff a new Person.Speaker object was created
      */
     public boolean createSpeaker(String name, String username, String password, String email) {
         if (speakerManager.findPerson(username)) {
@@ -99,216 +340,33 @@ public class OrgEventController implements SubMenu {
         return true;
     }
 
-    /**
-     * This is a helper function for the method createEvent below
-     * @param chatId
-     * @param personID
-     * @return boolean; this is to update Speaker's chat list should OrgEvent Controller wish to do so in this class
-     */
-
-    private boolean updateSpeakerChat(String personID, String chatId) {
-        this.speakerManager.addChat(personID, chatId);
-        return true;
-    }
+    // OPTION 4
 
     /**
-     * This is helper function for the method createEvent below
-     * @param acId
-     * @param personId
-     * @return boolean; this is to update Speaker's announcementChatIds (announcement chats created by Organizer pertaining to event)
+     * Prompts the user to input the information required to create an Event Message
+     * @return true iff eventMessage prompt was printed
      */
-
-    private boolean updateSpeakerChatWithAnnouncement(String personId, String acId) {
-        this.speakerManager.addAnnouncementChats(personId, acId);
-        return true;
-    }
-
-
-
-    /**
-     * Creates a new Event for the convention
-     * creates a new chat for the event and sets the event chatid to the id of this chat.
-     * @param eventName The name of the Event the user has requested to create
-     * @return true iff the Event was created
-     */
-    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime) {
-        String roomID = roomManager.getRoomID(room); // roomId
-        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
-        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
-        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
-        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
-        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
-        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
-
-        // also setting up setEventChatID for speaker(s) of event as well
-        updateSpeakerChatWithAnnouncement(speakerID, acId);
-        // also setting upEventChatId for speaker(s) of event
-        updateSpeakerChat(speakerID, acId);
-        // addEventIDtoList(String personID, String eventID)
-        speakerManager.addTalkId(speakerID, id);
-        // addEventIDtoMap(String personID, String eventID, String eventName)
-        speakerManager.addTalkIdToDictionary(speakerID, id, eventName);
-        return true;
-    }
-
-
-
-
-    /**
-     * Creates a new Event for the convention
-     * creates a new chat for the event and sets the event chatid to the id of this chat.
-     * @param eventName The name of the Event the user has requested to create
-     * @return true iff the Event was created
-     */
-    public boolean createTalk(String eventName, String speakerUsername, String room, int startTime) {
-        String roomID = roomManager.getRoomID(room); // roomId
-        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
-        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime); // Adds an event to room manager
-        String id = roomManager.getRoom(roomID).getEventID(eventName); // event id
-        ArrayList<String> attendees = roomManager.getRoom(roomID).getSignUps(id); // attendees for event
-        String acId = chatManager.createAnnouncementChat(id, attendees); // announcement chat for the event
-        roomManager.getRoom(roomID).setEventChatID(id, acId); // setting the event chatId to the announcement chatId
-
-        return true;
-    }
-
-    /**
-     * allows for input to create an event
-     * @return true
-     */
-    public boolean createEventPrompt(){
-        presenter.printCreateEventPrompt();
-        presenter.printEventTypePrompt();
-        EventType type = chooseEventType();
+    public boolean eventMessagePrompt() {
+        presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
-        String name = chooseRoom();
+        String name = input.nextLine();
         presenter.printRoomNamePrompt();
-        String roomName = input.nextLine();
-        presenter.printSpeakerUsernamePrompt();
-        String speakername = input.nextLine();
-        if (type == EventType.TALK) {
-            presenter.printStartTimePrompt();
-            int start = chooseStartTime();
-            createTalk(name, speakername, roomName, start);
-        } else {
-            //TODO: add workshop option
-        }
-        return true;
-
-    }
-
-    /**
-     * Restricts users to choosing an event type from a list of event types
-     * @return The type of event they have chosen
-     */
-    private EventType chooseEventType() {
-        String type = input.nextLine();
-        if (type.equals("0")) {
-            presenter.printEventTypes();
-            type = input.nextLine();
-        }
         try {
-            return EventType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException f) {
-            presenter.printEventTypePrompt();
-            return chooseEventType();
+            String roomName = chooseRoom();
+            presenter.printMessageContentPrompt();
+            String content = input.nextLine();
+            eventMessage(name, roomName, content);
+            return true;
+        } catch (InvalidChoiceException e) {
+            presenter.printException(e);
+            return false;
         }
     }
 
     /**
-     * Restricts users to choosing a room from a list of rooms
-     * @return The room they have chosen
-     */
-    private String chooseRoom() {
-        String name = input.nextLine();
-        if (name.equals("0")) {
-            presenter.printRoomNames(roomManager.getRoomNames());
-            name = input.nextLine();
-        }
-        if (roomManager.getRoomID(name) != null) {
-            return name;
-        } else {
-            presenter.printRoomNamePrompt();
-            return chooseRoom();
-        }
-    }
-
-    /**
-     * Restricts users to choosing a valid start time
-     * @return The start time
-     */
-    private int chooseStartTime() {
-        String time = input.nextLine();
-        try {
-            int value = Integer.valueOf(time);
-            if (value >= 0 && value <= 24) {
-                return value;
-            } else {
-                return chooseStartTime();
-            }
-        } catch (NumberFormatException f) {
-            presenter.printStartTimePrompt();
-            return chooseStartTime();
-        }
-    }
-
-    /*
-     * Creates a new Event for the convention
-     * @param eventName The name of the Event the user has requested to create
-     * @return true iff the Event was created
-
-    public boolean createEvent(String eventName, String speakerUsername, String room, int startTime,
-                               String description) {
-        String roomID = roomManager.getRoomId(room);
-        String speakerID = speakerManager.getCurrentUserID(speakerUsername); // add speaker ID
-        roomManager.getRoom(roomID).addEvent(eventName, speakerID, startTime, description);
-        return true;
-    }
-     */
-
-    /**
-     * Prompts user to input the room they wish to add
-     * @return true iff room adding prompt was printed
-     */
-    public boolean addRoomPrompt() {
-        presenter.addRoomPrompt();
-        presenter.addRoomNamePrompt();
-        String name = input.nextLine();
-        addRoom(name);
-        return true;
-    }
-
-    /**
-     * Adds a room to the list of rooms in this Convention.
-     * @param room The name/number of a room in the convention
-     * @return true iff list was added to system.
-     */
-    public boolean addRoom(String room) {
-        return roomManager.addRoom(room) != null;
-    }
-
-    /**
-     * allows for input to create a speaker
-     * @return true
-     */
-    public boolean addSpeakerPrompt(){
-        presenter.printAddSpeakPrompt();
-        presenter.printAddNamePrompt();
-        String name = input.nextLine();
-        presenter.printAddEmailPrompt();
-        String email = input.nextLine();
-        presenter.printAddUsernamePrompt();
-        String username = input.nextLine();
-        presenter.printAddPasswordPrompt();
-        String pass = input.nextLine();
-        createSpeaker(name, username, pass, email);
-        return true;
-    }
-
-    /**
-     * adds a message with content message cotnent.  to the announcementchat contained within the event with eventname.
+     * Adds a Message with content content the AnnouncementChat contained within the Event with eventName
      * @param eventName The name of the Event
-     * @return true iff the Message was added to the event's chatlist
+     * @return true iff the Message was added to the event's chat list
      */
     public boolean eventMessage(String eventName, String roomName, String messageContent){
         String roomId = roomManager.getRoomID(roomName); // roomid
@@ -323,27 +381,10 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * allows for input to create an event message
-     * @return true
-     */
-    public boolean eventMessagePrompt(){
-        presenter.printEventMessageIntro();
-        presenter.printEventNamePrompt();
-        String name = input.nextLine();
-        presenter.printRoomNamePrompt();
-        String rname = chooseRoom();
-        presenter.printMessageContentPrompt();
-        String content = input.nextLine();
-        eventMessage(name, rname, content);
-        return true;
-    }
-
-
-    /**
      * Sends a Message to one Attendee signed up for an event
      * @param eventName The name of the Event
      * @param attendeeUsername The username of the Attendee the user wishes to message
-     * @return true iff the message was sent to the corresponding Attendee
+     * @return true iff the Message was sent to the corresponding Attendee
      */
     public boolean eventMessage(String eventName, String attendeeUsername) {
         return true;

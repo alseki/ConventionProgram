@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 16 2020
+// Last edit: Nov 18 2020
 
 // Architecture Level - Use Class
 
@@ -17,15 +17,10 @@ public class RoomManager implements Serializable {
 
     /** A mapping of Room names to their respective IDs. */
     private Map<String, String> roomsByName;
-
-    /** The start time of the conference held in all the Rooms managed here. */
-    private LocalDateTime conferenceStart;
-
     /**
      * Constructor for RoomManager objects
      */
-    public RoomManager(LocalDateTime conferenceStart) {
-        this.conferenceStart = conferenceStart;
+    public RoomManager() {
         roomList = new TreeMap<String, EventManager>();
         roomsByName = new TreeMap<String, String>();
     }
@@ -75,23 +70,22 @@ public class RoomManager implements Serializable {
     }
 
     /**
-     * Creates a new Room with an automatic capacity of 2
-     * @param name The name of the new Room
+     * Creates a new Room with the inputted capacity
+     * @param capacity The name of the new Room
      * @return The ID of the new Room
      */
-    public String addRoom(String name) {
-        Room thisRoom = new Room(name);
-        RoomPermissions thisPermissions = new RoomPermissions(this.conferenceStart, thisRoom);
+    public String addRoom(String name, int capacity) {
+        Room thisRoom = new Room(name, capacity);
+        RoomPermissions thisPermissions = new RoomPermissions(thisRoom);
         roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
         return thisRoom.getID();
     }
 
     /**
-     * Creates a new Room with capacity entered manually
-     * @param name The name of the new Room
-     * @param capacity The capacity of the new Room
-     * @return The ID of the new Room
+     * Returns the EventManager for the Room in which a particular Event is held
+     * @param eventName The name of the Event for which we need to find the EventManager
+     * @return The EventManager
      */
     public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(capacity, name);
@@ -101,17 +95,12 @@ public class RoomManager implements Serializable {
         return thisRoom.getID();
     }
 
-    /**
-     * Determines the room a particular Event is held in
-     * @param eventName The name of the event
-     * @return The room's ID, if it exists; null, otherwise
-     */
     public String getEventRoom(String eventName) {
         if(getRoomNames().length > 0) {
             for(String room: getRoomNames()) {
-                String id = getRoom(getRoomID(room)).getEventID(eventName);
-                if (id != null) {
-                    return id;
+                EventManager manager = this.getRoom(this.getRoomID(room));
+                if (manager.getEventID(eventName) != null) {
+                    return manager;
                 }
             }
         }

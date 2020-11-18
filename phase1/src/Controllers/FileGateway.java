@@ -64,9 +64,7 @@ public class FileGateway<T> {
             InputStream file = new FileInputStream(path);
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
-
             T returnValue = (T)input.readObject();
-
             input.close();
             return returnValue;
         }
@@ -104,8 +102,6 @@ public class FileGateway<T> {
             OutputStream file = new FileOutputStream(path);
             OutputStream buffer = new BufferedOutputStream(file);
             ObjectOutput output = new ObjectOutputStream(buffer);
-
-
             output.writeObject(objIn);
             output.close();
             //System.out.println("Object successfully written!");
