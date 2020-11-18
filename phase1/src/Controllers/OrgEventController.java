@@ -3,7 +3,7 @@ package Controllers;
 // Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 15/11/2020
+// Date Modified: 17/11/2020
 
 import Events.EventManager;
 import Events.EventType;
@@ -105,7 +105,6 @@ public class OrgEventController implements SubMenu {
      * @param personID
      * @return boolean; this is to update Speaker's chat list should OrgEvent Controller wish to do so in this class
      */
-
     private boolean updateSpeakerChat(String personID, String chatId) {
         this.speakerManager.addChat(personID, chatId);
         return true;
@@ -117,7 +116,6 @@ public class OrgEventController implements SubMenu {
      * @param personId
      * @return boolean; this is to update Speaker's announcementChatIds (announcement chats created by Organizer pertaining to event)
      */
-
     private boolean updateSpeakerChatWithAnnouncement(String personId, String acId) {
         this.speakerManager.addAnnouncementChats(personId, acId);
         return true;
@@ -216,8 +214,8 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * Restricts users to choosing a room from a list of rooms
-     * @return The room they have chosen
+     * Restricts users to choosing a Room from a list of Rooms
+     * @return The Room they have chosen
      */
     private String chooseRoom() {
         String name = input.nextLine();

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 
 // Contributors: Eytan Weinstein
-// Last edit: Nov 15 2020
+// Last edit: Nov 17 2020
 
 // Architecture Level - Entity
 
@@ -22,40 +22,11 @@ public class Workshop extends Event {
      * @param name The Workshop's name
      * @param speakerID The ID of the speaker at this Workshop
      * @param startTime The time when the Workshop starts
-     */
-    public Workshop (String name, String speakerID, LocalDateTime startTime) {
-        super(name, startTime,startTime.plusMinutes(30));
-        this.speakerID = speakerID;
-        description = name;
-    }
-
-    /**
-     * Alternate constructor for Workshop objects
-     * @param name The Workshop's name
-     * @param speakerID The ID of the speaker at this Workshop
-     * @param startTime The time when the Workshop starts
-     * @param description A description of this Workshop
+     * @param description The description of this Talk
      */
     public Workshop (String name, String speakerID, LocalDateTime startTime, String description) {
-        super(name, startTime,startTime.plusMinutes(30));
+        super(name, startTime,startTime.plusMinutes(30), description);
         this.speakerID = speakerID;
-        this.description = name + ": " + description;
-    }
-
-    /**
-     * Getter for the description of this Workshop
-     * @return the description of this Workshop (as a String)
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Setter for the description of this Workshop
-     * @param description A new description for this Workshop
-     */
-    protected void setDescription(String description){
-        this.description = description;
     }
 
     /**

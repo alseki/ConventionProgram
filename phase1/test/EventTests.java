@@ -9,15 +9,15 @@ public class EventTests {
 
     @Test (timeout = 500)
     public void testTalk() {
-        Talk t = new Talk("The wonderful world of time management", "1", LocalDateTime.of(2017, 1, 14, 10, 34));
+        Talk t = new Talk("The wonderful world of time management", "1", LocalDateTime.of(2017, 1, 14, 10, 34), "");
         assertTrue(t.getAttendeeIDs().size() == 0);
         assertTrue(t.getName().equals("The wonderful world of time management"));
         String speaker = t.getSpeaker();
         assertTrue(speaker.equals("1"));
         assertTrue(t.getDescription().equals("Talk: The wonderful world of time management"));
-        Talk r = new Talk("workshop", "1", LocalDateTime.of(2017, 1, 14, 10, 34));
+        Talk r = new Talk("workshop", "1", LocalDateTime.of(2017, 1, 14, 10, 34), "");
         assertTrue(t.conflictsWith(r) == true);
-        Talk s = new Talk("workshop", "1", LocalDateTime.of(2017, 1, 14, 12, 34));
+        Talk s = new Talk("workshop", "1", LocalDateTime.of(2017, 1, 14, 12, 34), "");
         assertTrue(t.conflictsWith(s) == false);
     }
 

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 15 2020
+// Last edit: Nov 17 2020
 
 // Architecture Level - Entity
 
@@ -16,6 +16,7 @@ public abstract class Event implements Serializable {
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String description;
     private String ID;
     private String speakerID;
     private ArrayList<String> attendees;
@@ -27,11 +28,13 @@ public abstract class Event implements Serializable {
      * @param name The Event's name
      * @param startTime The time when the Event starts
      * @param endTime The time when the Event ends
+     * @param description A description for this Event
      */
-    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime) {
+    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.description = description;
         ID = UUID.randomUUID().toString();
         speakerID = null;
         attendees = new ArrayList<String>();
@@ -174,11 +177,24 @@ public abstract class Event implements Serializable {
     }
 
     /**
+     * A getter for the description of this Event
+     * @return a description of this Event in the form of a String
+     */
+    public String getDescription() {return this.description;};
+
+
+    /**
+     * Setter for the description of this Talk
+     * @param description A new description for this Talk
+     */
+    protected void setDescription(String description){
+        this.description = description;
+    }
+
+    /**
      * A textual representation of this event
      * @return a description of this event in the form of a String
      */
-    protected abstract String getDescription();
-
     @Override
     public String toString() {
         return getDescription();
