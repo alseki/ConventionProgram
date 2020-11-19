@@ -266,7 +266,7 @@ public class OrgEventController implements SubMenu {
 
         EventManager room = roomManager.getRoom(roomID);
 
-        ArrayList<String> attendees = room.getSignUps(eventID);
+        ArrayList<String> attendees = new ArrayList<>();
         String announcementChatID = chatManager.createAnnouncementChat(eventID, attendees);
         room.setEventChatID(eventID, announcementChatID);
 

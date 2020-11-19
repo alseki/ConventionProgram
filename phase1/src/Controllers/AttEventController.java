@@ -53,24 +53,21 @@ public class AttEventController implements SubMenu {
                     try {
                         String roomID = this.getRoomChoice();
                         presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
-                    } catch (NoDataException e) {
+                    } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
-                    SubMenu.readInput(input);
                     String addingEventInput = SubMenu.readInput(input);
                     try {
                         signupForEvent(addingEventInput);
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
-
                     break;
                 case 3:
                     presenter.printRemoveEventPrompt();
-                    SubMenu.readInput(input);
                     String removingEventInput = SubMenu.readInput(input);
                     try {
                          cancelSpotFromEvent(removingEventInput);
@@ -93,23 +90,17 @@ public class AttEventController implements SubMenu {
      * Takes user input to pick a Room for which that user wishes to view the Events held there
      * @return the ID of the Room chosen
      */
-    private String getRoomChoice() throws NoDataException {
+    private String getRoomChoice() throws InvalidChoiceException {
         presenter.printRoomChoicePrompt();
-        SubMenu.readInput(input);
         String room = SubMenu.readInput(input);
-        try {
-            if (room.equals("0")) {
-                presenter.printList(roomManager.getRoomNames(), "room");
-                room = SubMenu.readInput(input);
-            }
-            if (roomManager.getRoomID(room) != null) {
-                return roomManager.getRoomID(room);
-            } else {
-                return getRoomChoice();
-            }
+        if (room.equals("0")) {
+            presenter.printList(roomManager.getRoomNames(), "room");
+            room = SubMenu.readInput(input);
         }
-        catch (NoDataException e) {
-            throw e;
+        if (roomManager.getRoomID(room) != null) {
+            return roomManager.getRoomID(room);
+        } else {
+            throw new InvalidChoiceException("room");
         }
     }
 
@@ -118,7 +109,17 @@ public class AttEventController implements SubMenu {
      */
     private void getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
-        presenter.printAttendeeEventList(userEventList);
+        String[] evList = new String[userEventList.size()];
+        for (int i = 0; i < evList.length; i++) {
+            String room = roomManager.getEventRoomByID(userEventList.get(i));
+            String event = roomManager.getRoom(room).getEvent(userEventList.get(i));
+            evList[i] = event;
+        }
+        try {
+            presenter.printList(evList, "event");
+        } catch (InvalidChoiceException i) {
+            presenter.printException(i);
+        }
     }
 
     /**
