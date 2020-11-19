@@ -1,7 +1,7 @@
 package Message;
 
 // Programmer: Karyn Komatsu, Ran Yi
-// Description: For current User to
+// Description: Chat Entity, has ID, the messageIDs of the Messages sent in this Chat. and the Users' ID.
 // Date Modified: 18/11/2020
 
 import java.io.Serializable;

@@ -1,7 +1,7 @@
 package Message;
 
 // Programmer: Karyn Komatsu, Ran Yi, Sarah Kronenfeld
-// Description: For current User to
+// Description: Store a list of Chat objects.
 // Date Modified: 18/11/2020
 
 import java.io.Serializable;
