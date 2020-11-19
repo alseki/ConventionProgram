@@ -1,7 +1,7 @@
 package Message;
 
-// Programmer: Karyn Komatsu, Ran Yi
-// Description: For current User to
+// Programmer: Karyn Komatsu, Ran Yi, Sarah Kronenfeld
+// Description: Stores Chat objects
 // Date Modified: 18/11/2020
 
 import java.lang.reflect.Array;
