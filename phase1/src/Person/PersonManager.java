@@ -119,6 +119,19 @@ public abstract class PersonManager {
         return null;
     }
 
+
+    /**
+     * Gives the name of a person given their ID
+     * @param id The id of the person
+     * @return The person's name
+     */
+    public String getName(String id) {
+        if (idToPerson.containsKey(id)) {
+            return idToPerson.get(id).getName();
+        }
+        return null;
+    }
+
     /**
      * This is a helper function for LoginController in the login() method
      * @param username

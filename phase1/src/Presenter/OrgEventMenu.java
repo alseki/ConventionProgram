@@ -5,9 +5,16 @@ package Presenter;
 // Date Created: 13/11/2020
 // Date Modified: 18/11/2020
 
+import Events.EventManager;
 import Events.EventType;
+import Events.RoomManager;
+import Person.PersonManager;
 
-public class OrgEventMenu implements printSubMenu {
+public class OrgEventMenu extends EventMenu {
+
+    public OrgEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
+        super(rooms, events, persons);
+    }
 
     /**
      * Prints the options for this menu.

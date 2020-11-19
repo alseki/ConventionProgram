@@ -3,12 +3,12 @@ package Controllers;
 // Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the Organizer Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 18/11/2020
+// Date Modified: 19/11/2020
 
 import Events.EventManager;
+import Events.EventPermissions;
 import Events.EventType;
 import Events.RoomManager;
-import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
@@ -28,19 +28,25 @@ public class OrgEventController implements SubMenu {
     private PersonManager personManager;
     private SpeakerManager speakerManager;
     private RoomManager roomManager;
+    private EventManager eventManager;
+    private EventPermissions eventPermissions;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private OrgEventMenu presenter = new OrgEventMenu();
+    private OrgEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
     public OrgEventController(String currentUserID, PersonManager personManager, SpeakerManager speakerManager,
-                              RoomManager roomManager, MessageManager messageManager, ChatManager chatManager) {
+                              RoomManager roomManager, EventManager eventManager, MessageManager messageManager,
+                              ChatManager chatManager) {
         this.currentUserID = currentUserID;
         this.personManager = personManager;
         this.speakerManager = speakerManager;
         this.roomManager = roomManager;
+        this.eventManager = eventManager;
+        eventPermissions = new EventPermissions(roomManager, eventManager);
         this.messageManager = messageManager;
         this.chatManager = chatManager;
+        presenter = new OrgEventMenu(roomManager, eventManager, personManager);
     }
 
     /**
@@ -132,18 +138,11 @@ public class OrgEventController implements SubMenu {
         String eventDescription = SubMenu.readInput(input);
         presenter.printStartTimePrompt();
         LocalDateTime start = chooseStartTime();
-        if (type == EventType.TALK) {
-            presenter.printSpeakerUsernamePrompt();
-            String speakerUsername = SubMenu.readInput(input);
-            boolean created = this.createTalk(eventName, speakerUsername, start, eventDescription, roomName);
-            if (!created) {
-                presenter.printCapacityError();
-            }
-        }
-        else if (type == EventType.WORKSHOP) {
-            presenter.printSpeakerUsernamePrompt();
-            String speakerUsername = SubMenu.readInput(input);
-            this.createWorkshop(eventName, speakerUsername, start, eventDescription, roomName);
+        presenter.printSpeakerUsernamePrompt();
+        String speakerUsername = SubMenu.readInput(input);
+        boolean created = createEvent(eventName, speakerUsername, start, eventDescription, roomName, type);
+        if (!created) {
+            presenter.printCapacityError();
         }
     }
 
@@ -157,7 +156,11 @@ public class OrgEventController implements SubMenu {
             presenter.printEventTypes();
             type = SubMenu.readInput(input);
         }
-        return EventType.valueOf(type.toUpperCase());
+        try {
+            return EventType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidChoiceException("event type");
+        }
     }
 
     /**
@@ -167,8 +170,11 @@ public class OrgEventController implements SubMenu {
     private String chooseRoom() throws InvalidChoiceException {
         String name = SubMenu.readInput(input);
         if (name.equals("0")) {
-            presenter.printList(roomManager.getRoomNames(), "room");
+            presenter.printRoomList();
             name = SubMenu.readInput(input);
+        }
+        if (name.equals("1")) {
+            throw new InvalidChoiceException("room");
         }
         if (roomManager.getRoomID(name) != null) {
             return name;
@@ -205,7 +211,8 @@ public class OrgEventController implements SubMenu {
      * @param room The name of the Room the Talk is in
      * @return true iff the Talk was created successfully
      */
-    private boolean createTalk(String name, String speaker, LocalDateTime start, String description, String room)
+    private boolean createEvent(String name, String speaker, LocalDateTime start, String description, String room,
+                                EventType type)
             throws InvalidChoiceException {
         String roomID = roomManager.getRoomID(room);
         if (roomID == null) {
@@ -217,65 +224,35 @@ public class OrgEventController implements SubMenu {
             throw new InvalidChoiceException("speaker");
         }
 
-        boolean created = roomManager.getRoom(roomID).addTalk(name, speakerID, start, description);
-        String eventID = roomManager.getRoom(roomID).getEventID(name);
 
-        addEvent(eventID, roomID, speakerID);
+        if (eventPermissions.checkConflicts(start, type, roomID)) {
+            String eventID = addEvent(name, speakerID, start, description, type);
 
-        return created;
-    }
-
-    /**
-     * Creates a new Workshop in this convention; also creates a new chat for this Workshop and sets the Workshop's
-     * chatID to the ID of this new chat.
-     * @param name The name of the Workshop
-     * @param speaker The username of the Speaker at the Workshop
-     * @param start The start time of the Workshop
-     * @param description A description for the Workshop
-     * @param room The name of the Room the Workshop is in
-     * @return true iff the Workshop was created successfully
-     */
-    private boolean createWorkshop(String name, String speaker, LocalDateTime start, String description, String room)
-            throws InvalidChoiceException{
-        String roomID = roomManager.getRoomID(room);
-        if (roomID == null) {
-            throw new InvalidChoiceException("room");
+            roomManager.addEvent(roomID, eventID);
+            return true;
         }
-
-        String speakerID = speakerManager.getCurrentUserID(speaker);
-        if (speakerID == null) {
-            throw new InvalidChoiceException("speaker");
-        }
-
-
-        boolean created = roomManager.getRoom(roomID).addWorkshop(name, speakerID, start, description);
-        String eventID = roomManager.getRoom(roomID).getEventID(name);
-
-        addEvent(eventID, roomID, speakerID);
-
-        return created;
+        return false;
     }
 
     /**
      * Helper method - adds a newly created Event into the system
-     * @param eventID The event's ID
-     * @param roomID The ID of the room the event is in
      * @param speakerID The ID of the speaker holding the event
      */
-    private void addEvent(String eventID, String roomID, String speakerID) {
+    private String addEvent(String name, String speakerID, LocalDateTime start, String description,
+                            EventType type) {
 
-        EventManager room = roomManager.getRoom(roomID);
+        String eventID = eventManager.addEvent(name, speakerID, start, description, type);
 
         ArrayList<String> attendees = new ArrayList<>();
         String announcementChatID = chatManager.createAnnouncementChat(eventID, attendees);
-        room.setEventChatID(eventID, announcementChatID);
 
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
         this.speakerManager.addTalkId(speakerID, eventID);
-        speakerManager.addTalkIdToDictionary(speakerID, eventID, room.getEventName(eventID));
+        speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID));
 
 
+        return eventID;
     }
 
     /**
@@ -340,22 +317,18 @@ public class OrgEventController implements SubMenu {
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
         String name = SubMenu.readInput(input);
-        presenter.printRoomNamePrompt();
-        String roomName = chooseRoom();
         presenter.printMessageContentPrompt();
         String content = SubMenu.readInput(input);
-        eventMessage(name, roomName, content);
+        eventMessage(name, content);
     }
 
     /**
      * Adds a Message with content content the AnnouncementChat contained within the Event with eventName
      * @param eventName The name of the Event
      */
-    private void eventMessage(String eventName, String roomName, String messageContent){
-        String roomId = roomManager.getRoomID(roomName); // roomid
-        EventManager emanager = roomManager.getRoom(roomId); // eventmanager for events with roomid
-        String eventId =  emanager.getEventID(eventName); // eventId
-        String ev = emanager.getAnnouncementChat(eventId); // chatid
+    private void eventMessage(String eventName, String messageContent){
+        String eventId =  eventManager.getEventID(eventName); // eventId
+        String ev = eventManager.getEventChat(eventId); // chatid
         String m = messageManager.createMessage(eventId, messageContent); // creating message for event
         chatManager.addMessageIds(ev,m);// adding message to event chat
     }

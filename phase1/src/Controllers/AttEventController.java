@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import Events.CapacityException;
 import Events.EventManager;
+import Events.EventPermissions;
 import Events.RoomManager;
 import Person.AttendeeManager;
 import Presenter.AttEventMenu;
@@ -20,14 +21,22 @@ public class AttEventController implements SubMenu {
     private String currentUserID;
     private int currentRequest;
     private AttendeeManager attendeeManager;
+
     private RoomManager roomManager;
-    private AttEventMenu presenter = new AttEventMenu();
+    private EventManager eventManager;
+    private EventPermissions eventPermissions;
+
+    private AttEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public AttEventController(String currentUserID, AttendeeManager attendeeManager, RoomManager roomManager) {
+    public AttEventController(String currentUserID, AttendeeManager attendeeManager, RoomManager roomManager,
+                              EventManager eventManager) {
         this.currentUserID = currentUserID;
         this.attendeeManager = attendeeManager;
+        this.eventManager = eventManager;
+        eventPermissions = new EventPermissions(roomManager, eventManager);
         this.roomManager = roomManager;
+        presenter = new AttEventMenu(roomManager, eventManager, attendeeManager);
     }
 
     /**
@@ -53,7 +62,12 @@ public class AttEventController implements SubMenu {
                 case 1:
                     try {
                         String roomID = this.getRoomChoice();
-                        presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
+                        if (roomID.equals("1")) {
+                            presenter.printEventList("", eventManager.getEventIDs());
+                        } else {
+                            presenter.printRoomEventList(roomManager.getEventIDs(roomID),
+                                    roomManager.getRoomName(roomID));
+                        }
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
@@ -95,7 +109,7 @@ public class AttEventController implements SubMenu {
         presenter.printRoomChoicePrompt();
         String room = SubMenu.readInput(input);
         if (room.equals("0")) {
-            presenter.printList(roomManager.getRoomNames(), "room");
+            presenter.printRoomList();
             room = SubMenu.readInput(input);
         }
         if (roomManager.getRoomID(room) != null) {
@@ -112,15 +126,10 @@ public class AttEventController implements SubMenu {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
         String[] evList = new String[userEventList.size()];
         for (int i = 0; i < evList.length; i++) {
-            String room = roomManager.getEventRoomByID(userEventList.get(i));
-            String event = roomManager.getRoom(room).getEvent(userEventList.get(i));
+            String event = eventManager.getEventName(evList[i]);
             evList[i] = event;
         }
-        try {
-            presenter.printList(evList, "event");
-        } catch (InvalidChoiceException i) {
-            presenter.printException(i);
-        }
+        presenter.printEventList(" you have signed up for", evList);
     }
 
     /**
@@ -128,15 +137,15 @@ public class AttEventController implements SubMenu {
      * @param eventName The name of the Event the current user requested to sign up for
      */
     private void signupForEvent (String eventName) throws InvalidChoiceException  {
-        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
-        if (thisRoom == null) {
+        String event = eventManager.getEventID(eventName);
+        String room = roomManager.getEventRoom(eventName);
+        if (room == null || event == null) {
             throw new InvalidChoiceException("event");
         }
-        String event = thisRoom.getEventID(eventName);
         try {
-            thisRoom.signUpForEvent(currentUserID, event);
+            eventPermissions.signUpForEvent(currentUserID, event, room);
             boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
-            attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
+            attendeeManager.addChat(currentUserID, eventManager.getEventChat(event));
             if (eventAddedToPerson) {
                 presenter.printEventAdded();
             }
@@ -150,14 +159,15 @@ public class AttEventController implements SubMenu {
      * @param eventName The name of the Event the current user requested to cancel
      */
     private void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
-        EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
-        if (thisRoom == null) {
+        String event = eventManager.getEventID(eventName);
+        String room = roomManager.getEventRoom(eventName);
+        if (room == null || event == null) {
             throw new InvalidChoiceException("event");
         }
-        String event = thisRoom.getEventID(eventName);
-        boolean personRemovedFromEvent = thisRoom.removeFromEvent(currentUserID, event);
+
+        boolean personRemovedFromEvent = eventPermissions.removeFromEvent(currentUserID, event);
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
-        attendeeManager.removeChat(currentUserID, thisRoom.getEventChat(event));
+        attendeeManager.removeChat(currentUserID, eventManager.getEventChat(event));
         if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
         }

@@ -6,6 +6,7 @@ package Controllers;
 // Date Modified: 16/11/2020
 
 
+import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -22,9 +23,9 @@ public class SpeakerController extends PersonController {
     private int currentRequest;
     Scanner input = new Scanner(System.in);
 
-    public SpeakerController(SpeakerManager manager, RoomManager rooms, MessageManager messages,
-                             ChatManager chats) {
-        super(manager, rooms, messages, chats);
+    public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
+                             MessageManager messages, ChatManager chats) {
+        super(manager, rooms, events, messages, chats);
     }
 
 

@@ -5,11 +5,18 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 17/11/2020
 
-import Controllers.NoDataException;
+
+import Events.EventManager;
+import Events.RoomManager;
+import Person.PersonManager;
 
 import java.util.ArrayList;
 
-public class AttEventMenu implements printSubMenu {
+public class AttEventMenu extends EventMenu {
+
+    public AttEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
+        super(rooms, events, persons);
+    }
 
     /**
      * Prints the options for this menu.
@@ -28,8 +35,11 @@ public class AttEventMenu implements printSubMenu {
     }
 
 
+    // Option 1
+
     public void printRoomChoicePrompt() {
-        System.out.println("\n Which room's schedule do you want to see? (Press 0 for options)");
+        System.out.println("\n Which room's schedule do you want to see? \n (Press 0 for options, or press 1 to see " +
+                "all events in the conference.)");
     }
 
     /**
@@ -38,25 +48,16 @@ public class AttEventMenu implements printSubMenu {
      * @param roomName the name of the room in which the Events are being held
      */
     public void printRoomEventList(String[] eventList, String roomName) {
-        System.out.println("\nEVENTS IN ROOM " + roomName.toUpperCase() + "-");
-        try {
-            printList(eventList, "event");
-        }
-        catch (NoDataException e) {
-            printException(e);
-        }
+        printEventList(" IN ROOM " + roomName.toUpperCase(), eventList);
     }
 
     /**
      * Prints the list of Events this Attendee user has signed up for
-     * @param EventList a collection of Event information to be printed
+     * @param eventList a collection of Event information to be printed
      */
-    public void printAttendeeEventList(ArrayList<String> EventList) {
-        System.out.println('\n' + "-EVENTS YOU HAVE SIGNED UP FOR-");
-        for(String userEvent: EventList) {
-            System.out.println(userEvent);
-        }
-        System.out.println("---" + '\n');
+    public void printAttendeeEventList(ArrayList<String> eventList) {
+        String[] events = {};
+        printEventList(" you have signed up for", eventList.toArray(events));
     }
 
     /**

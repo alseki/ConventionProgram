@@ -2,18 +2,27 @@ package Events;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 18 2020
+// Last edit: Nov 19 2020
 
 // Architecture Level - Use Class
 
-public class RoomManager implements Serializable {
+abstract class RoomAccess {
+    protected abstract Room getRoom(String roomID);
+    abstract String[] getEventIDs(String roomID);
+}
 
-    /** A mapping of Room IDs to their respective EventManager objects. */
-    private Map<String, EventManager> roomList;
+public class RoomManager extends RoomAccess implements Serializable {
+
+    /** A mapping of Room IDs to their lists of EventIDs. */
+    private Map<String, ArrayList<String>> roomEventList;
+
+    /** A mapping of Room IDs to their lists of EventIDs. */
+    private Map<String, Room> roomList;
 
     /** A mapping of Room names to their respective IDs. */
     private Map<String, String> roomsByName;
@@ -21,18 +30,20 @@ public class RoomManager implements Serializable {
      * Constructor for RoomManager objects
      */
     public RoomManager() {
-        roomList = new TreeMap<String, EventManager>();
+        roomEventList = new TreeMap<String, ArrayList<String>>();
         roomsByName = new TreeMap<String, String>();
+        roomList = new TreeMap<String, Room>();
     }
 
     /**
      * Finds the EventManager object for a specific Room's Events (by ID)
-     * @param ID The ID of the Room
+     * @param roomID The ID of the Room
      * @return The Room's EventManager
      */
-    public EventManager getRoom(String ID) {
+    public String[] getEventIDs(String roomID) {
         try {
-            return roomList.get(ID);
+            String[] evList = {};
+            return roomEventList.get(roomID).toArray(evList);
         } catch (NullPointerException n) {
             return null;
         }
@@ -44,7 +55,11 @@ public class RoomManager implements Serializable {
      */
     public String[] getRoomNames() {
         String[] names = {};
-        return roomsByName.keySet().toArray(names);
+        try {
+            return roomsByName.keySet().toArray(names);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     /**
@@ -61,7 +76,11 @@ public class RoomManager implements Serializable {
      * @return The Room's ID
      */
     public String getRoomID (String name) {
-        return roomsByName.get(name);
+        try {
+            return roomsByName.get(name);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     /**
@@ -70,7 +89,11 @@ public class RoomManager implements Serializable {
      * @return The Room's name
      */
     public String getRoomName (String ID) {
-        return roomList.get(ID).getRoomName();
+        try {
+            return roomList.get(ID).getName();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     /**
@@ -80,34 +103,43 @@ public class RoomManager implements Serializable {
      */
     public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(name, capacity);
-        RoomPermissions thisPermissions = new RoomPermissions(thisRoom);
-        roomList.put(thisRoom.getID(), new EventManager(thisPermissions));
+        roomList.put(thisRoom.getID(), thisRoom);
         roomsByName.put(thisRoom.getName(), thisRoom.getID());
+        roomEventList.put(thisRoom.getID(), new ArrayList<String>());
         return thisRoom.getID();
     }
 
-    public String getEventRoom(String eventName) {
-        if(getRoomNames().length > 0) {
-            for(String room: getRoomNames()) {
-                EventManager manager = this.getRoom(this.getRoomID(room));
-                if (manager.getEventID(eventName) != null) {
-                    return getRoomID(room);
+    public String getEventRoom(String ID) {
+        try {
+            for (String room : getRoomNames()) {
+                ArrayList<String> events = roomEventList.get(roomsByName.get(room));
+                if (events.contains(ID)) {
+                    return room;
                 }
             }
+            return null;
+        } catch (NullPointerException n) {
+            return null;
         }
-        return null;
     }
 
-    public String getEventRoomByID(String ID) {
-        if(getRoomNames().length > 0) {
-            for(String room: getRoomNames()) {
-                EventManager manager = this.getRoom(this.getRoomID(room));
-                if (manager.getEvent(ID) != null) {
-                    return getRoomID(room);
-                }
-            }
+    public boolean addEvent(String roomID, String eventID) {
+        try {
+            ArrayList<String> room = roomEventList.get(roomID);
+            room.add(eventID);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
         }
-        return null;
+    }
+
+    @Override
+    protected Room getRoom(String roomID) {
+        try {
+            return roomList.get(roomID);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Override
@@ -121,16 +153,16 @@ public class RoomManager implements Serializable {
         }
         RoomManager rooms2 = (RoomManager) obj;
         if (rooms2.numRooms() == this.numRooms()) {
-            String[] roomIDs = {};
-            roomIDs = roomList.keySet().toArray(roomIDs);
-            for(String id: roomIDs) {
-                EventManager thisRoom = this.getRoom(id);
-                if (!thisRoom.equals(rooms2.getRoom(rooms2.getRoomID(thisRoom.getRoomName())))) {
-                    return false;
+            if(rooms2.getRoomNames().equals(this.getRoomNames())) {
+                for (String room : this.getRoomNames()) {
+                    String id = this.getRoomID(room);
+                    if (rooms2.getEventIDs(id).equals(this.getEventIDs(id))) {
+                        return true;
+                    }
                 }
-                return true;
             }
         }
         return false;
     }
+
 }

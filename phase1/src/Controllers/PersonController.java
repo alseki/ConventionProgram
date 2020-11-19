@@ -3,8 +3,9 @@ package Controllers;
 // Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: abstract main account page for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 16/11/2020
+// Date Modified: 19/11/2020
 
+import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -17,16 +18,18 @@ abstract public class PersonController {
     public String currentUserID;
     private PersonManager manager;
     protected RoomManager roomManager;
+    protected EventManager eventManager;
     protected MessageManager messageManager;
     protected ChatManager chatManager;
     private LoginController loginController;
     public boolean loggedIn =  false;
 
 
-    public PersonController(PersonManager manager, RoomManager roomManager, MessageManager messageManager,
-                            ChatManager chatManager) {
+    public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
+                            MessageManager messageManager, ChatManager chatManager) {
         this.manager = manager;
         this.roomManager = roomManager;
+        this.eventManager = eventManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
     }

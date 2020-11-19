@@ -1,6 +1,7 @@
 package Controllers;
 
 import Events.EventManager;
+import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
@@ -17,17 +18,20 @@ public class SpeEventController implements SubMenu {
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private RoomManager roomManager;
     private EventManager eventManager;
-    private SpeEventMenu presenter = new SpeEventMenu();
+    private SpeEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
     public SpeEventController(String currentUserID, PersonManager personManager, MessageManager messageManager,
-                              ChatManager chatManager, EventManager eventManager) {
+                              ChatManager chatManager, EventManager eventManager, RoomManager roomManager) {
         this.currentUserID = currentUserID;
         this.personManager = personManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
         this.eventManager = eventManager;
+        this.roomManager = roomManager;
+        presenter = new SpeEventMenu(roomManager, eventManager, personManager);
     }
 
     /**
@@ -51,32 +55,22 @@ public class SpeEventController implements SubMenu {
                     // return to main menu
                     break;
                 case 1:
-                    // View the talk you're going to talk at
-                    presenter.printString(this.getFormattedTalks());
+                    getOwnTalks();
                     break;
-                //case 2:
-                    // Send message to all Users in an Event
-                    //presenter.printEventNamePrompt();
-                    //String eventNameA = SubMenu.readInput(input);
-                    //presenter.printContentPrompt();
-                    //String contentA = SubMenu.readInput(input);
-                    //this.eventMessage(eventNameA, contentA);
-                    //presenter.printMessageSent();
-                    //break;
                 case 2:
                     // Send message to all Attendees in an Event
                     presenter.printEventNamePrompt();
                     String eventNameB = this.addSpeUsername(SubMenu.readInput(input));
                     presenter.printContentPrompt();
                     String contentB = SubMenu.readInput(input);
-                    this.eventMessageForAttendees(eventNameB, contentB);
+                    this.eventMessage(eventNameB, contentB);
                     presenter.printMessageSent();
                     break;
                 case 3:
                     // Send message to all Attendees in all of your Events
                     presenter.printContentPrompt();
                     String contentC = this.addSpeUsername(SubMenu.readInput(input));
-                    this.allSpeakerEventsMessagingById(contentC);
+                    this.allSpeakerEventsMessage(contentC);
                     presenter.printMessageSent();
                     break;
                 case 4:
@@ -86,21 +80,9 @@ public class SpeEventController implements SubMenu {
                     presenter.printEventNamesPrompt();
                     String eventNames = SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
-                    this.allSpeakerEventsMessage(someSpeakerEvents, contentD);
+                    this.multipleEventsAnnouncement(someSpeakerEvents, contentD);
                     presenter.printMessageSent();
                     break;
-                case 5:
-                    // Send message to a user that Speaker knows the username of
-                    presenter.printContentPrompt();
-                    String contentE = SubMenu.readInput(input);
-                    presenter.printEnterUsername();
-                    String username = SubMenu.readInput(input);
-                    this.sendIndividualMessage(username, contentE);
-                    presenter.printMessageSent();;
-                    // But we didn't plan to allow a Speaker to send personal message to a User.
-                    // Speakers can only send announcements.
-                    break;
-
             }
         }
         while (currentRequest != 0);
@@ -111,12 +93,10 @@ public class SpeEventController implements SubMenu {
      * Get the list of talk the user is scheduled to speak at
      * @return String chunk of formatted Talks
      */
-    private String getFormattedTalks() {
-        StringBuilder result = new StringBuilder();
-        ArrayList <String> events = personManager.getEventList(currentUserID);
-        for (String e: events){
-            result.append(eventManager.getFormattedEvent(e)).append("\n");}
-        return result.toString();
+    private void getOwnTalks() {
+        String[] events = {};
+        events = personManager.getEventList(currentUserID).toArray(events);
+        presenter.printEventList(" you speak at", events);
     }
 
     /**
@@ -126,51 +106,22 @@ public class SpeEventController implements SubMenu {
      */
     private void eventMessage(String eventName, String messageContent) {
         String eventID = eventManager.getEventID(eventName);
-        ArrayList<String> attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(attIDs));
+        String acID = eventManager.getEventChat(eventID);
         chatManager.addMessageIds(acID, messageID);
-    }
-
-
-    /**
-     * This is to sent a message to all attendees of an event. It uses method eventMessage from below
-     * @param eventName
-     * @param messageContent
-     */
-    private void eventMessageForAttendees(String eventName, String messageContent) {
-        String eventID = eventManager.getEventID(eventName);
-        ArrayList<String> attendeeList = eventManager.getSignUps(eventID);
-        for (String attendee : attendeeList) {
-            eventMessage(eventName, messageContent, attendee);
-        }
     }
 
     /**
      * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to
      * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
      * uses eventMessageForAttendees from above
-     * @param allSpeakerEvents ArrayList of Event Names hosted by the speaker
+     * @param events ArrayList of Event Names hosted by the speaker
      * @param messageContent String representing content of the message
      */
 
-    private void allSpeakerEventsMessage(ArrayList<String> allSpeakerEvents, String messageContent) {
-            for (String eventName : allSpeakerEvents) {
-                eventMessageForAttendees(eventName, messageContent);
-            }
-    }
-
-    /**
-     * This is to send a message to all attendees of all or some of Speaker's events. For example, if Speaker wanted to
-     * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
-     * uses eventMessageForAttendees from above
-     * @param allSpeakerEvents String Array of Names of Events hosted by the speaker
-     * @param messageContent String representing content of the message
-     */
-
-    private void allSpeakerEventsMessage(String[] allSpeakerEvents, String messageContent) {
-        for (String eventName : allSpeakerEvents) {
-            eventMessageForAttendees(eventName, messageContent);
+    private void multipleEventsAnnouncement(String[] events, String messageContent) {
+        for (String eventName : events) {
+            eventMessage(eventName, messageContent);
         }
     }
 
@@ -179,40 +130,11 @@ public class SpeEventController implements SubMenu {
      * Speaker talks
      * @param messageContent
      */
-    private void allSpeakerEventsMessagingById(String messageContent) {
-        ArrayList <String> allSpeakerEvents = personManager.getSpeakerIdAllTalks(currentUserID);
-        allSpeakerEventsMessage(allSpeakerEvents, messageContent);
+    private void allSpeakerEventsMessage(String messageContent) {
+        String[] allSpeakerEvents = {};
+        allSpeakerEvents = personManager.getSpeakerIdAllTalks(currentUserID).toArray(allSpeakerEvents);
+        multipleEventsAnnouncement(allSpeakerEvents, messageContent);
     }
-
-    /**
-     * This is the same method from above (allSpeakerEventsMessage), but using speaker's currentUserId as a parameter
-     * instead of the list of all Speaker talks
-     * @param currentUserId
-     * @param messageContent
-     */
-    private void allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
-        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(currentUserId);
-        allSpeakerEventsMessage(allSpeakerEvents, messageContent);
-
-    }
-
-    /**
-     * Sends a Message to one Attendee signed up for an event
-     * @param eventName The name of the Event
-     * @param attendeeUsername Th username of the Attendee the user wishes to message
-     */
-    private void eventMessage(String eventName, String messageContent, String attendeeUsername) {
-        String eventID = eventManager.getEventID(eventName);
-        String attID = personManager.getCurrentUserID(attendeeUsername);
-        String[] attendeeID = new String[]{attID};
-        String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attendeeID)));
-        chatManager.addMessageIds(acID, messageID);
-    }
-    //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
-    //if (!(attList.contains(attID))){
-    //throw new InvalidIDException();
-    //    return false;}
 
     /**
      *
@@ -220,21 +142,8 @@ public class SpeEventController implements SubMenu {
      * @return Content following with the sentence: ["Contact me using this username:"]\newline
      *                                              [username of the Speaker]
      */
-    private String addSpeUsername(String content){return content + "\n" + "Contact me using this username:\n"
-            + personManager.getCurrentUsername(currentUserID);}
-
-    /**
-     * Send individual Message in personal Chat between the User and the recipient User, where recipient User is
-     * represented by the username of the account.
-     * @param username Username of the recipient user
-     * @param messageContent Content of the Message
-     */
-    private void sendIndividualMessage(String username, String messageContent){
-        String recipientID = personManager.getCurrentUserID(username);
-        String messageID = messageManager.createMessage(currentUserID, recipientID ,messageContent);
-        String chatID = chatManager.createChat(currentUserID, recipientID);
-        chatManager.addMessageIds(chatID, messageID);
-        personManager.addChat(currentUserID, chatID);
-        personManager.addChat(recipientID, chatID);
+    private String addSpeUsername(String content){
+        return content + "\n" + "Contact me using this username:\n"
+            + personManager.getCurrentUsername(currentUserID);
     }
 }

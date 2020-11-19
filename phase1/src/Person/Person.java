@@ -16,12 +16,21 @@ public abstract class Person implements Serializable {
     protected ArrayList<String> eventList = new ArrayList<>();
 
     /**
-     * this allows for access to the persons; username
+     * this allows for access to the person's username
      *
      * @return the string of the username
      */
     public String getUsername() {
         return this.username;
+    }
+
+    /**
+     * this allows for access to the person's name
+     *
+     * @return the string of the name
+     */
+    public String getName() {
+        return this.fullName;
     }
 
     /**
