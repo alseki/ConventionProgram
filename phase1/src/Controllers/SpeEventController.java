@@ -66,7 +66,7 @@ public class SpeEventController implements SubMenu {
                 case 2:
                     // Send message to all Attendees in an Event
                     presenter.printEventNamePrompt();
-                    String eventNameB = SubMenu.readInput(input);
+                    String eventNameB = this.addSpeUsername(SubMenu.readInput(input));
                     presenter.printContentPrompt();
                     String contentB = SubMenu.readInput(input);
                     this.eventMessageForAttendees(eventNameB, contentB);
@@ -75,14 +75,14 @@ public class SpeEventController implements SubMenu {
                 case 3:
                     // Send message to all Attendees in all of your Events
                     presenter.printContentPrompt();
-                    String contentC = SubMenu.readInput(input);
+                    String contentC = this.addSpeUsername(SubMenu.readInput(input));
                     this.allSpeakerEventsMessagingById(contentC);
                     presenter.printMessageSent();
                     break;
                 case 4:
                     // Send message to all Attendees in some of your Events
                     presenter.printContentPrompt();
-                    String contentD = SubMenu.readInput(input);
+                    String contentD = this.addSpeUsername(SubMenu.readInput(input));
                     presenter.printEventNamesPrompt();
                     String eventNames = SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
@@ -90,10 +90,13 @@ public class SpeEventController implements SubMenu {
                     presenter.printMessageSent();
                     break;
                 case 5:
-                    // to be finished
-                    break;
-                case 6:
-                    // Send message to one Attendee in an Event
+                    // Send message to a user that Speaker knows the username of
+                    presenter.printContentPrompt();
+                    String contentE = SubMenu.readInput(input);
+                    presenter.printEnterUsername();
+                    String username = SubMenu.readInput(input);
+                    this.sendIndividualMessage(username, contentE);
+                    presenter.printMessageSent();;
                     // But we didn't plan to allow a Speaker to send personal message to a User.
                     // Speakers can only send announcements.
                     break;
@@ -211,7 +214,27 @@ public class SpeEventController implements SubMenu {
     //throw new InvalidIDException();
     //    return false;}
 
+    /**
+     *
+     * @param content Content of the message
+     * @return Content following with the sentence: ["Contact me using this username:"]\newline
+     *                                              [username of the Speaker]
+     */
+    private String addSpeUsername(String content){return content + "\n" + "Contact me using this username:\n"
+            + personManager.getCurrentUsername(currentUserID);}
 
-
-
+    /**
+     * Send individual Message in personal Chat between the User and the recipient User, where recipient User is
+     * represented by the username of the account.
+     * @param username Username of the recipient user
+     * @param messageContent Content of the Message
+     */
+    private void sendIndividualMessage(String username, String messageContent){
+        String recipientID = personManager.getCurrentUserID(username);
+        String messageID = messageManager.createMessage(currentUserID, recipientID ,messageContent);
+        String chatID = chatManager.createChat(currentUserID, recipientID);
+        chatManager.addMessageIds(chatID, messageID);
+        personManager.addChat(currentUserID, chatID);
+        personManager.addChat(recipientID, chatID);
+    }
 }
