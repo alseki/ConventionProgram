@@ -100,7 +100,7 @@ public class MessageController implements SubMenu {
                     presenter.printAnChatIdPrompt();
                     input.nextLine();
                     try {
-                        presenter.printList(printChat(input.nextLine()), "chat");
+                        presenter.printChat(input.nextLine());
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }

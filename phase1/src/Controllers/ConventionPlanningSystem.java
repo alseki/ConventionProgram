@@ -11,7 +11,7 @@ import Message.MessageManager;
 import Person.*;
 import Presenter.CPSMenu;
 
-import java.time.LocalDateTime;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -42,6 +42,8 @@ public class ConventionPlanningSystem {
     * Calls appropriate Controllers based on user input.
     */
     public void run() {
+        load();
+
         do {
             presenter.printIntroMessage();
             accountChoice = SubMenu.readInteger(input);
@@ -55,8 +57,6 @@ public class ConventionPlanningSystem {
      * Set the user's controller based on login selection.
      */
     private void setController(int choice) {
-
-        load();
 
         switch (choice) {
             case 0:
