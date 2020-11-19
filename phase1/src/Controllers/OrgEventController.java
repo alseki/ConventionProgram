@@ -136,7 +136,7 @@ public class OrgEventController implements SubMenu {
             presenter.printSpeakerUsernamePrompt();
             String speakerUsername = input.nextLine();
             boolean created = this.createTalk(eventName, speakerUsername, start, eventDescription, roomName);
-            if (created == false) {
+            if (!created) {
                 presenter.printCapacityError();
                 return false;
             }
@@ -296,8 +296,8 @@ public class OrgEventController implements SubMenu {
 
     /**
      * This is helper method for the methods above; updates Speaker's announcementChatIDs
-     * @param personID
-     * @param announcementChatID
+     * @param personID the id of the person
+     * @param announcementChatID the id of the annoucnemchat
      */
     private void updateSpeakerChatWithAnnouncement(String personID, String announcementChatID) {
         this.speakerManager.addAnnouncementChats(personID, announcementChatID);
@@ -381,14 +381,5 @@ public class OrgEventController implements SubMenu {
         return true;
     }
 
-    /**
-     * Sends a Message to one Attendee signed up for an event
-     * @param eventName The name of the Event
-     * @param attendeeUsername The username of the Attendee the user wishes to message
-     * @return true iff the Message was sent to the corresponding Attendee
-     */
-    public boolean eventMessage(String eventName, String attendeeUsername) {
-        return true;
-    }
 
 }
