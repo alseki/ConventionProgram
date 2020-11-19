@@ -111,19 +111,21 @@ public class MessageMenu implements printSubMenu {
 
     /**
      * Get message formatted as: "[From]: [Username of the sender]\new line
+     *                            [To]: [Username of the recipient]\new line
      *                            [Time Sent]: [time that was sent]\newline
      *                            [Message]: [the content of the message]\newline"
      * @param messageId of the message that is to be formatted.
      * @return Formatted string representation of the message.
      */
     private String formatMessage(String messageId) {
-        String sender = messageManager.getSenderID(messageId);
-        String recipient = messageManager.getRecipientId(messageId);
+        String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
+        String recipient = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
         String time = messageManager.getDateTime(messageId);
         String message = messageManager.getContent(messageId);
         return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
                 + "Message: " + message + "\n";
-    }//TODO: update to match formatting
+    }
+
     /**
      * Get chat formatted as: "[ID]: [ID of the chat]\new line
      *                            [Participants]: [Username of the Participants]\newline
@@ -133,10 +135,10 @@ public class MessageMenu implements printSubMenu {
     public String formatChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
         for (String participantID : chatManager.getPersonIds(chatID)){
-            participants.append(participantID).append("\n");
+            participants.append(personManager.getCurrentUsername(participantID)).append("\n");
         }
         return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
-    } //TODO: update to the specified format
+    }
 
 
     /**
