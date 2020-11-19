@@ -92,6 +92,9 @@ public class LoginController implements SubMenu {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
         username = input.next();
+        if (manager.getCurrentUserID(username) != null) {
+            throw new InvalidChoiceException("username taken");
+        }
         presenter.printPasswordPrompt();
         String password = input.next();
         presenter.printNamePrompt();
