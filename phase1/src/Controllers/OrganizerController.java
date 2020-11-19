@@ -27,11 +27,11 @@ public class OrganizerController extends PersonController {
 
 
     public OrganizerController(PersonManager manager, SpeakerManager speakerManager,
-                               RoomManager rooms, MessageManager messages, ChatManager chats) {
+                               RoomManager rooms, MessageManager messages, ChatManager chats, AttendeeManager am) {
         super(manager, rooms, messages, chats);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
-        this.attendeeManager = (AttendeeManager) manager;
+        this.attendeeManager = am;
     }
 
     @Override

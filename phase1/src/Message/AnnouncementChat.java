@@ -1,7 +1,7 @@
 package Message;
 
 // Programmer: Shimon Nauenberg, Ran Yi
-// Description: For current User to
+// Description: A Chat Entity for announcement sent by Organizer/Speaker, cannot be replied by Attendees.
 // Date Modified: 18/11/2020
 
 import java.util.ArrayList;

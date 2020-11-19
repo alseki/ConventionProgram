@@ -11,7 +11,7 @@ import Message.MessageManager;
 import Person.*;
 import Presenter.CPSMenu;
 
-import java.time.LocalDateTime;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -42,6 +42,8 @@ public class ConventionPlanningSystem {
     * Calls appropriate Controllers based on user input.
     */
     public void run() {
+        load();
+
         do {
             presenter.printIntroMessage();
             accountChoice = SubMenu.readInteger(input);
@@ -56,8 +58,6 @@ public class ConventionPlanningSystem {
      */
     private void setController(int choice) {
 
-        load();
-
         switch (choice) {
             case 0:
                 save(); // SAVE FILES
@@ -70,7 +70,8 @@ public class ConventionPlanningSystem {
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm);
+                AttendeeManager attMan = new AttendeeManager(personByName, personByID);
+                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm, attMan);
                 OC.run();
                 break;
             case 3:

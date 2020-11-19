@@ -1,7 +1,7 @@
 package Controllers;
 
 // Programmer: Ran Yi, Sarah Kronenfeld
-// Description: For current User to
+// Description: For current User to view chat and message, create chat and send message.
 // Date Modified: 18/11/2020
 
 import Message.Chat;

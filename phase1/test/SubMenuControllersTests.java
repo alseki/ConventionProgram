@@ -9,25 +9,23 @@ import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
-import Person.AttendeeManager;
-import Person.OrganizerManager;
-import Person.PersonManager;
-import Person.SpeakerManager;
+import Person.*;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 
 public class SubMenuControllersTests {
 
     private String userID = "007";
-    private AttendeeManager attendeeManager = new AttendeeManager();
-    private OrganizerManager organizerManager = new OrganizerManager();
-    private SpeakerManager speakerManager = new SpeakerManager();
+    private Map<String, Person> name2person = new HashMap<>();
+    private Map<String, Person> id2person = new HashMap<>();
+    private AttendeeManager attendeeManager = new AttendeeManager(name2person, id2person);
+    private OrganizerManager organizerManager = new OrganizerManager(name2person, id2person);
+    private SpeakerManager speakerManager = new SpeakerManager(name2person, id2person);
     private MessageManager messageManager = new MessageManager();
     private ChatManager chatManager = new ChatManager();
     private RoomManager roomManager = new RoomManager();
