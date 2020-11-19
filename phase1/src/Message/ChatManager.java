@@ -53,12 +53,12 @@ public class ChatManager implements Serializable {
 
     /**
      * creates and returns an annoucment chat with eventid and attendeeids
-     *
-     * @param eventid     id representign the event for the annoucement
+     * @param eventid id representign the event for the annoucement
+     * @param attendeeids the id's of the attendess
      * @return the chatID of AnnocuementChat made
      */
-    public String createAnnouncementChat(String eventid) {
-        AnnouncementChat ac = new AnnouncementChat(eventid);
+    public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids){
+        AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
         aChatsList.add(ac);
         return ac.getId();
     }

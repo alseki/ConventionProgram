@@ -89,7 +89,7 @@ public class MessageMenu implements printSubMenu {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
-            if (chatManager.getChat(chat).getClass().equals(AnnouncementChat.class)) {
+            if (chatManager.getChatClass(chat).equals(AnnouncementChat.class)) {
                 chatList[i] =formatAnChatString(chat);
             }
             else {

@@ -9,12 +9,12 @@ import java.util.UUID;
 public class AnnouncementChat extends Chat{
 
     private final String password;
-    private final String eventID;
+    private final String ownerId;
 
-    public AnnouncementChat(String eventID){
-        super(eventID, new ArrayList<String>());
+    public AnnouncementChat(String ownerId, ArrayList<String> guestIds){
+        super(ownerId, guestIds);
         this.password = UUID.randomUUID().toString();
-        this.eventID = eventID;
+        this.ownerId = ownerId;
     }
 
     /**
@@ -30,7 +30,7 @@ public class AnnouncementChat extends Chat{
      * @return the ID of this User.
      */
     public String getEventID() {
-        return this.eventID;
+        return this.ownerId;
     }
 
 
