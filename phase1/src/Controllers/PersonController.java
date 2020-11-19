@@ -36,10 +36,10 @@ abstract public class PersonController {
      */
     public void run() {
         loginController = new LoginController(manager);
-        if (loginController.menuChoice()) {
-            currentUserID = manager.getCurrentUserID(loginController.username);
+        loginController.menuChoice();
+        if (loginController.loggedIn) {
             loggedIn = true;
+            currentUserID = manager.getCurrentUserID(loginController.username);
         }
     }
-
 }

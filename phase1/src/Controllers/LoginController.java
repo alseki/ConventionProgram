@@ -15,6 +15,7 @@ public class LoginController implements SubMenu {
     private PersonManager manager;
     private LoginMenu presenter = new LoginMenu();
     public String username;
+    public boolean loggedIn = false;
     Scanner input = new Scanner(System.in);
 
     public LoginController(PersonManager manager) {
@@ -43,6 +44,7 @@ public class LoginController implements SubMenu {
                 case 1:
                     try {
                         login();
+                        loggedIn = true;
                         currentRequest = 0;
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
