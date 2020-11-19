@@ -80,17 +80,6 @@ public class OrgEventMenu implements printSubMenu {
     }
 
     /**
-     * Presents to the user the list of possible Rooms in which this Event can be held
-     */
-    public void printRoomNames(String[] names){
-        System.out.println();
-        for(String name: names) {
-            System.out.println(name);
-        }
-        System.out.println();
-    }
-
-    /**
      * Prompts the user to name the new Event
      */
     public void printEventNamePrompt(){
