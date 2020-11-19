@@ -1,7 +1,7 @@
 package Controllers;
 
 // Programmer: Ran Yi, Sarah Kronenfeld
-// Description: For current User to
+// Description: For current User to view chat and message, create chat and send message.
 // Date Modified: 18/11/2020
 
 import Message.Chat;
@@ -109,7 +109,7 @@ public class MessageController implements SubMenu {
                     presenter.printContactUsernamePrompt();
                     input.nextLine();
                     try {
-                        String chatID = this.createChat(input.nextLine());
+                        String chatID = createChat(input.nextLine());
                         presenter.printChatCreated(chatID);
                         presenter.printJobDone();
                     } catch (InvalidChoiceException e) {
@@ -124,7 +124,7 @@ public class MessageController implements SubMenu {
                     List<String> b = Arrays.asList(a);
                     ArrayList<String> contactlist = new ArrayList<>(b);
                     try {
-                        String groupChatID = this.createGroupChat(contactlist);
+                        String groupChatID = createGroupChat(contactlist);
                         presenter.printChatCreated(groupChatID);
                         presenter.printJobDone();
                     } catch (InvalidChoiceException e) {
@@ -150,7 +150,6 @@ public class MessageController implements SubMenu {
         return true;
     }
 
-    // TODO change, delete and/or add to the methods below
 
     /**
      * Creates new Chat if contact is on contactList
@@ -164,11 +163,11 @@ public class MessageController implements SubMenu {
             throw new InvalidChoiceException("user");
         }
         if (chatManager.existChat(currentUserID, contactID)){
-            String chatID = this.chatManager.findChat(currentUserID, contactID);
+            String chatID = chatManager.findChat(currentUserID, contactID);
             // presenter: the chat already exists
             return chatID;
         } else {
-            String chatID = this.chatManager.createChat(currentUserID, contactID);
+            String chatID = chatManager.createChat(currentUserID, contactID);
             return chatID;
         }
     }
@@ -179,20 +178,20 @@ public class MessageController implements SubMenu {
      * @return the chatID.
      */
     private String createGroupChat(ArrayList<String> contactsUsernames) throws InvalidChoiceException {
-        ArrayList<String> contactIDs = new ArrayList<String>();
+        ArrayList<String> contactIDs = new ArrayList<>();
         for (String receiver : contactsUsernames){
-            String contactID = this.personManager.getCurrentUserID(receiver);
+            String contactID = personManager.getCurrentUserID(receiver);
             if (contactID == null) {
                 throw new InvalidChoiceException("user");
             }
             contactIDs.add(contactID);
         }
         if (this.chatManager.existChat(currentUserID, contactIDs)){
-            String chatID = this.chatManager.findChat(currentUserID, contactIDs);
+            String chatID = chatManager.findChat(currentUserID, contactIDs);
             // presenter: the chat already exists.
             return chatID;
         } else {
-            String chatID = this.chatManager.createChat(currentUserID, contactIDs);
+            String chatID = chatManager.createChat(currentUserID, contactIDs);
             return chatID;
         }
     }
@@ -211,14 +210,13 @@ public class MessageController implements SubMenu {
         if (chatManager.getChat(chatID) == null) {
             throw new InvalidChoiceException("chat");
         }
-        Chat currentChat = this.chatManager.getChat(chatID);
+        Chat currentChat = chatManager.getChat(chatID);
         for (String receiverID : currentChat.getPersonIds()){
             if (!receiverID.equals(currentUserID)){
-                String messageID = this.messageManager.createMessage(currentUserID, receiverID, messageContent);
+                String messageID = messageManager.createMessage(currentUserID, receiverID, messageContent);
                 currentChat.addMessageIds(messageID);
             }
         }
-        // presenter: message sent in chatID.
         return true;
     }
 
@@ -228,7 +226,7 @@ public class MessageController implements SubMenu {
     private void sentBox() throws NoDataException{
         ArrayList<String> sentMessages = new ArrayList<>();
         for (String message: messageManager.getMessageIDs()){
-            if (messageManager.getSenderID(message).equals(currentUserID)){ //TODO: add getter!
+            if (messageManager.getSenderID(message).equals(currentUserID)){
                 sentMessages.add(message);
             }
         }
@@ -244,7 +242,7 @@ public class MessageController implements SubMenu {
     private void inBox() throws NoDataException{
         ArrayList<String> receivedMessages = new ArrayList<>();
         for (String message: messageManager.getMessageIDs()){
-            if (messageManager.getRecipientId(message).equals(currentUserID)){ //TODO: add getter!
+            if (messageManager.getRecipientId(message).equals(currentUserID)){
                 receivedMessages.add(message);
             }
         }

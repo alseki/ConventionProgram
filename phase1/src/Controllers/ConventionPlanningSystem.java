@@ -70,7 +70,8 @@ public class ConventionPlanningSystem {
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm);
+                AttendeeManager attMan = new AttendeeManager(personByName, personByID);
+                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm, attMan);
                 OC.run();
                 break;
             case 3:

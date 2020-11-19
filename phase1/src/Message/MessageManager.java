@@ -1,7 +1,7 @@
 package Message;
 
 // Programmer: Ran Yi, Karyn Komatsu
-// Description: For current User to
+// Description: Stores a list of Message objects inside. Could create and get info of Message obj.
 // Date Modified: 18/11/2020
 
 import Message.Message;
