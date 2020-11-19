@@ -1,10 +1,11 @@
 package Controllers;
 
-// Programmer: Ran Yi
+// Programmer: Ran Yi, Sarah Kronenfeld
 // Description: For current User to
 // Date Modified: 18/11/2020
 
 import Message.Chat;
+import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.Message;
 import Message.MessageManager;
@@ -22,7 +23,7 @@ public class MessageController implements SubMenu {
     private PersonManager personManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private MessageMenu presenter = new MessageMenu();
+    private MessageMenu presenter;
     Scanner input = new Scanner(System.in);
 
     public MessageController(String currentUserID, PersonManager pManager, MessageManager mManager,
@@ -31,6 +32,7 @@ public class MessageController implements SubMenu {
         this.personManager = pManager;
         this.messageManager = mManager;
         this.chatManager = cManager;
+        presenter = new MessageMenu(pManager, mManager, cManager);
     }
 
 
@@ -59,28 +61,28 @@ public class MessageController implements SubMenu {
                     break;
                 case 1: //Check your inbox
                     try {
-                        presenter.printList(inBox(), "message");
+                        inBox();;
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 2: //Check your sent box
                     try {
-                        presenter.printList(sentBox(), "message");
+                        sentBox();
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 3: //View the chat list
                     try {
-                        presenter.printList(viewChats(), "chat");
+                        viewChats(chatManager.getChatIDs(currentUserID));
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 4: //View the announcement chat list
                     try {
-                        presenter.printList(viewAnnouncementChat(), "chat");
+                        viewChats(chatManager.getAnnouncementChatIDs(currentUserID));
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
@@ -89,7 +91,7 @@ public class MessageController implements SubMenu {
                     presenter.printChatIdPrompt();
                     input.nextLine();
                     try {
-                        presenter.printList(printChat(input.nextLine()), "chat");
+                        presenter.printChat(input.nextLine());
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
@@ -106,9 +108,13 @@ public class MessageController implements SubMenu {
                 case 7: //Create a chat
                     presenter.printContactUsernamePrompt();
                     input.nextLine();
-                    String chatID = this.createChat(input.nextLine());
-                    presenter.printChatCreated(chatID);
-                    presenter.printJobDone();
+                    try {
+                        String chatID = this.createChat(input.nextLine());
+                        presenter.printChatCreated(chatID);
+                        presenter.printJobDone();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 8: //Create a group chat
                     presenter.printContactUsernamesPrompt();
@@ -117,9 +123,13 @@ public class MessageController implements SubMenu {
                     String[] a = contacts.split(",");
                     List<String> b = Arrays.asList(a);
                     ArrayList<String> contactlist = new ArrayList<>(b);
-                    String groupChatID = this.createGroupChat(contactlist);
-                    presenter.printChatCreated(groupChatID);
-                    presenter.printJobDone();
+                    try {
+                        String groupChatID = this.createGroupChat(contactlist);
+                        presenter.printChatCreated(groupChatID);
+                        presenter.printJobDone();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 9: //Send a message
                     presenter.printChatIdMessagePrompt();
@@ -151,15 +161,17 @@ public class MessageController implements SubMenu {
     // TODO: 2 steps have duplicated bodies
     // TODO: "if contact is on contactlist."
 
-    private String createChat(String contactUsername) {
-        String contactID = this.personManager.getCurrentUserID(contactUsername);
-        if (this.chatManager.existChat(currentUserID, contactID)){
+    private String createChat(String contactUsername) throws InvalidChoiceException {
+        String contactID = personManager.getCurrentUserID(contactUsername);
+        if (contactID == null) {
+            throw new InvalidChoiceException("user");
+        }
+        if (chatManager.existChat(currentUserID, contactID)){
             String chatID = this.chatManager.findChat(currentUserID, contactID);
-            // presenter: the chat is already exist. chatID is:...
+            // presenter: the chat already exists
             return chatID;
         } else {
             String chatID = this.chatManager.createChat(currentUserID, contactID);
-            // presenter: the chat is created. chatID is:...
             return chatID;
         }
     }
@@ -169,19 +181,21 @@ public class MessageController implements SubMenu {
      * @param contactsUsernames the ArrayList of contacts' usernames.
      * @return the chatID.
      */
-    private String createGroupChat(ArrayList<String> contactsUsernames){
+    private String createGroupChat(ArrayList<String> contactsUsernames) throws InvalidChoiceException {
         ArrayList<String> contactIDs = new ArrayList<String>();
         for (String receiver : contactsUsernames){
             String contactID = this.personManager.getCurrentUserID(receiver);
+            if (contactID == null) {
+                throw new InvalidChoiceException("user");
+            }
             contactIDs.add(contactID);
         }
         if (this.chatManager.existChat(currentUserID, contactIDs)){
             String chatID = this.chatManager.findChat(currentUserID, contactIDs);
-            // presenter: the chat is already exist. chatID is:...
+            // presenter: the chat already exists.
             return chatID;
         } else {
             String chatID = this.chatManager.createChat(currentUserID, contactIDs);
-            // presenter: the chat is created. chatID is:...
             return chatID;
         }
     }
@@ -213,36 +227,34 @@ public class MessageController implements SubMenu {
 
     /**
      * Show all the messages this user sent in presenter, **sorted by datetime.
-     * @return ArrayList of formatted messages.
      */
-    private String[] sentBox(){
+    private String[] sentBox() throws NoDataException{
         ArrayList<String> sentMessages = new ArrayList<>();
-        for (Message message: this.messageManager.getMessageList()){
-            if (message.getSenderId().equals(currentUserID)){
-                String formattedMessage = this.messageManager.getFormattedMessage(message.getSenderId());
-                sentMessages.add(formattedMessage);
+        for (String message: messageManager.getMessageIDs()){
+            if (messageManager.getSenderID(message).equals(currentUserID)){ //TODO: add getter!
+                sentMessages.add(message);
             }
         }
+
         String[] messages = {};
-        return sentMessages.toArray(messages);
-        // Let presenter show the sent messages.
+        messages = sentMessages.toArray(messages);
+        presenter.printList(messages, "message");
     }
 
     /**
      * Show all the messages this user received in presenter, **sorted by datetime.
-     * @return ArrayList of formatted messages.
      */
-    private String[] inBox(){
+    private void inBox() throws NoDataException{
         ArrayList<String> receivedMessages = new ArrayList<>();
-        for (Message message: this.messageManager.getMessageList()){
-            if (message.getRecipientId().equals(currentUserID)){
-                String formattedMessage = this.messageManager.getFormattedMessage(message.getSenderId());
-                receivedMessages.add(formattedMessage);
+        for (String message: messageManager.getMessageIDs()){
+            if (messageManager.getRecipientId(message).equals(currentUserID)){ //TODO: add getter!
+                receivedMessages.add(message);
             }
         }
+
         String[] messages = {};
-        return receivedMessages.toArray(messages);
-        // Let presenter show the sent messages.
+        messages = receivedMessages.toArray(messages);
+        presenter.printList(messages, "message");
     }
 
     /**
@@ -254,73 +266,11 @@ public class MessageController implements SubMenu {
      *              [Participants]: [ID of the Participants]\newline
      *              ...
      */
-    private String[] viewChats() throws  NoDataException{
-        if (chatManager.getChatsList() == null) {
+    private void viewChats(ArrayList<String> chatIDs) throws  NoDataException {
+        if (chatIDs == null) {
             throw new NoDataException("chat");
         }
-        ArrayList<String> chats = new ArrayList<>();
-        for (Chat c : this.chatManager.getChatsList()) {
-            for (String personID : c.getPersonIds()) {
-                if (personID.equals(currentUserID)) {
-                    String formattedAnChat = this.chatManager.getFormattedChat(c.getId());
-                    chats.add(formattedAnChat);
-                }
-            }
-        }
-        String[] chatList = {};
-        return chats.toArray(chatList);
-        // Let presenter show the chats.
-    }
-
-    /**
-     * Show the messages in one chat by chatID.
-     * For Phase 1 we also use this to view Announcements in AnnouncementChat.
-     */
-    private String[] printChat(String chatID) throws InvalidChoiceException{
-        if (chatManager.isEmpty()) {
-            throw new NoDataException("chat");
-        }
-        if (chatManager.getChat(chatID) == null) {
-            throw new InvalidChoiceException("chat");
-        }
-        ArrayList<String> messageIDs = this.chatManager.getChat(chatID).getMessageIds();
-        ArrayList<String> messageInChat = new ArrayList<>();
-        for (String mID : messageIDs) {
-            for (Message m : this.messageManager.getMessageList()){
-                if (mID.equals(m.getMessageId())) {
-                    messageInChat.add(this.messageManager.getFormattedMessage(mID));
-                }
-            }
-        }
-        String[] messages = {};
-        return messageInChat.toArray(messages);
-    }
-
-    /**
-     * View announcement chats in formatted.
-     *  Show the chatList with its ID and participants' IDs.
-     * @return ArrayList of formatted chats
-     *                   [ID]: [ID of the chat]\new line
-     *                   [Participants]: [ID of the Participants]\newline
-     *                   [ID]: [ID of the chat]\new line
-     *                   [Participants]: [ID of the Participants]\newline
-     */
-    private String[] viewAnnouncementChat() throws NoDataException{
-        if (chatManager.getAnChatsList() == null) {
-            throw new NoDataException("chat");
-        }
-        ArrayList<String> aChats = new ArrayList<>();
-        for (Chat ac : this.chatManager.getAnChatsList()) {
-            for (String personID : ac.getPersonIds()) {
-                if (personID.equals(currentUserID)) {
-                    String formattedAnChat = this.chatManager.getFormattedAnChat(ac.getId());
-                    aChats.add(formattedAnChat);
-                }
-            }
-        }
-        String[] chats = {};
-        return aChats.toArray(chats);
-        // Let presenter show the chats.
+        presenter.printFormattedChatList(chatIDs);
     }
 
 
