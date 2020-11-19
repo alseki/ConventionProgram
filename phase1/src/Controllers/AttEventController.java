@@ -7,6 +7,7 @@ package Controllers;
 
 import java.util.ArrayList;
 
+import Events.CapacityException;
 import Events.EventManager;
 import Events.RoomManager;
 import Person.AttendeeManager;
@@ -132,13 +133,14 @@ public class AttEventController implements SubMenu {
             throw new InvalidChoiceException("event");
         }
         String event = thisRoom.getEventID(eventName);
-        boolean personAddedToEvent = thisRoom.signUpForEvent(currentUserID, event);
-        boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
-        attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
-        if (personAddedToEvent && eventAddedToPerson) {
-            presenter.printEventAdded();
-        }
-        else if (!(personAddedToEvent)) {
+        try {
+            thisRoom.signUpForEvent(currentUserID, event);
+            boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
+            attendeeManager.addChat(currentUserID, thisRoom.getEventChat(event));
+            if (eventAddedToPerson) {
+                presenter.printEventAdded();
+            }
+        } catch (CapacityException c) {
             presenter.printEventFull();
         }
     }

@@ -48,14 +48,6 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Getter for the capacity of this EventManager (how many total attendees can be signed up)
-     * @return the capacity of this EventManager (as an int)
-     */
-    public int getEventManagerCapacity() {
-        return this.permissionChecker.getRoomCapacity();
-    }
-
-    /**
      * Helper getter for the all the Events in this EventManager
      * @return an array of all Events in this EventManager
      */
@@ -182,11 +174,14 @@ public class EventManager implements Serializable {
      * @param ID The Event
      * @return whether the Attendee was signed up (true or false)
      */
-    public boolean signUpForEvent(String personID, String ID) {
+    public boolean signUpForEvent(String personID, String ID) throws CapacityException {
             Event event = events.get(ID);
-            if ((event != null) && (this.getNumAttendees() < this.getEventManagerCapacity())) {
-                event.addAttendee(personID);
-                return true;
+            if (event != null) {
+                if (permissionChecker.checkRoomCapacity(event)) {
+                    event.addAttendee(personID);
+                    return true;
+                }
+                throw new CapacityException();
             }
             else {
                 return false;

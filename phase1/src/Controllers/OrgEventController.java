@@ -101,7 +101,7 @@ public class OrgEventController implements SubMenu {
         presenter.roomNamePrompt();
         String name = SubMenu.readInput(input);
         presenter.roomCapacityPrompt();
-        int capacity = Integer.parseInt(SubMenu.readInput(input));
+        int capacity = SubMenu.readInteger(input);
         this.addRoom(name, capacity);
     }
 

@@ -18,7 +18,7 @@ public class Speaker extends Person { //implements Person.Signupable
 
     protected ArrayList<String> announcementChatIds;
 
-    Speaker(String username, String password, String fullName, String email){
+    Speaker(String fullName, String username, String password, String email){
         this.username = username;
         this.password = password;
         this.fullName = fullName;

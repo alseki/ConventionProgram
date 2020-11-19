@@ -101,7 +101,7 @@ public abstract class Person implements Serializable {
     }
 
     /**
-     * allows for access to the list of events for Person.doubleBooking
+     * allows for access to the list of events for doubleBooking
      * @return ArrayList return the ist of strings corresponding to the event IDs
      */
     public ArrayList<String> getEventList() {
