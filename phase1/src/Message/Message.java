@@ -1,5 +1,9 @@
 package Message;
 
+// Programmer: Ran Yi
+// Description: Message Entity, has ID, sender's ID, recipient's ID and content.
+// Date Modified: 15/11/2020
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
