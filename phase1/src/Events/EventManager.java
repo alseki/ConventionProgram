@@ -98,7 +98,11 @@ public class EventManager implements Serializable {
      * @return The Event, as a String
      */
     public String getEvent(String eventID) {
-        return events.get(eventID).toString();
+        try {
+            return events.get(eventID).toString();
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     /**
@@ -107,7 +111,11 @@ public class EventManager implements Serializable {
      * @return The name of the Event, as a String
      */
     public String getEventName(String eventID) {
-        return events.get(eventID).getName();
+        try {
+            return events.get(eventID).getName();
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
     
     /**
@@ -116,7 +124,11 @@ public class EventManager implements Serializable {
      * @return The ID
      */
     public String getEventID(String name) {
+        try {
             return eventsByName.get(name);
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     /**
@@ -204,8 +216,11 @@ public class EventManager implements Serializable {
      * @return the chatID for the inputted Event (as a String)
      */
     public String getAnnouncementChat(String eventID){
-        Event ev = events.get(eventID);
-        return ev.getChatID();
+        try {
+            return events.get(eventID).getChatID();
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     /**
@@ -214,8 +229,11 @@ public class EventManager implements Serializable {
      * @return an array list of the IDs of all Attendees
      */
     public ArrayList<String> getSignUps(String eventID){
-        Event ev = events.get(eventID);
-        return ev.getAttendeeIDs();
+        try {
+            return events.get(eventID).getAttendeeIDs();
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     /**
@@ -224,8 +242,11 @@ public class EventManager implements Serializable {
      * @param chatID The chatID
      */
     public void setEventChatID(String eventID, String chatID) {
-        Event ev = events.get(eventID);
-        ev.setChatID(chatID);
+        try {
+            events.get(eventID).setChatID(chatID);
+        } catch (NullPointerException n) {
+            return;
+        }
     }
 
     /**
