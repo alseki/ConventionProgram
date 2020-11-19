@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager {
-    //private ArrayList<Organizer> organizerList;
-    //private Organizer currentOrganizer;
-    //private Map<String, Organizer> usernameToOrganizer;
 
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
@@ -83,6 +80,10 @@ public class OrganizerManager extends PersonManager {
     }
 
 
+    /** a getter for the signedup events
+     * @param organizerId a string representing the organizer id
+     * @return an ArrauList</String> representing the id's of the lists
+     */
     public ArrayList<String> getSignedUpForEvents(String organizerId){
         return idToPerson.get(organizerId).getEventList();
     }
