@@ -87,15 +87,20 @@ public class ChatManager {
     }
 
     /**
-     * @param chatId of Message.Message.Chat object
+     * Get ArrayList of messageIDs of the Messages storedin the Chat or AnnouncementChat object
+     * represented by the inputted chatId
+     * @param chatId of Chat or Announcement Chat object
      * @return ArrayList of messageIDs stored in the Message.Message.Chat with inputted chatID
      *         null iff no Message.Message.Chat in ChatList has the inputted chatId
      */
     public ArrayList<String> getMessages(String chatId){
         for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
-                return c.getMessageIds();
-            }
+                return c.getMessageIds();}
+        }
+        for(AnnouncementChat ac: aChatsList){
+            if (ac.getId().equals(chatId)){
+                return ac.getMessageIds();}
         }
         return null;
     }
@@ -111,8 +116,12 @@ public class ChatManager {
         for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
                 c.addPersonIds(personId);
-                return true;
-            }
+                return true;}
+        }
+        for(AnnouncementChat ac: aChatsList){
+            if (ac.getId().equals(chatId)){
+                ac.addPersonIds(personId);
+                return true;}
         }
         return false;
     }
@@ -146,7 +155,7 @@ public class ChatManager {
      * @return Message.Message.Chat object corresponding to the Message.Message.Chat ID inputted
      *         null if ChatID invalid
      */
-    public Chat getChat(String chatId){
+    private Chat getChat(String chatId){
         for(Chat c: chatsList){
             if (c.getId().equals(chatId)){
                 return c;
@@ -161,7 +170,7 @@ public class ChatManager {
      * @return AnnouncementChat object corresponding to the aChatId inputted
      *         null if aChatId invalid
      */
-    public AnnouncementChat getAnChat(String aChatId){
+    private AnnouncementChat getAnChat(String aChatId){
         for(AnnouncementChat ac: aChatsList){
             if (ac.getId().equals(aChatId)){
                 return ac;
@@ -288,8 +297,8 @@ public class ChatManager {
     }
 
     /**
-     * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\new line
-     *                                     [SenderID]: [Sender's ID]
+     * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\newline
+     *                                     [SenderID]: [Sender's ID]\newline
      *                                     [Participants]: [ID of the Participants]\newline
      * @param aChatID of the message that is to be formatted.
      * @return Formatted string representation of the chat.
