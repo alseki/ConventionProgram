@@ -16,9 +16,7 @@ public class SpeEventMenu implements printSubMenu {
         System.out.println("Send message to all Attendees in an Event ---------- Enter '2'.");
         System.out.println("Send message to all Attendees in all of your Events ------- Enter '3'.");
         System.out.println("Send message to all Attendees in some of your EVents ------ Enter '4'.");
-        System.out.println("to be finished ------------------------ Enter '5'.");
-        System.out.println("to be finished ----- Enter '6'.");
-        System.out.println("Send message to one Attendee in an Event ----------- Enter '7'.");
+        System.out.println("Send message to a User ----------- Enter '5'.");
         // TODO add print statements for all the other menu options
         
     }
@@ -68,7 +66,9 @@ public class SpeEventMenu implements printSubMenu {
         System.out.println("Messages are sent!");
     }
 
-
+    public void printEnterUsername(){
+        System.out.println("Enter the USERNAME of the user you would like to send the message to.");
+    }
 
     // Adding back into SpeEventMenu what I had from yesterday. Please integrate or discard whatever you wish.
     // I'll be working on this right now too. This is just getting a glimpse.

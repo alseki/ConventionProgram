@@ -81,7 +81,6 @@ public class SpeakerManager extends PersonManager {
      * @return boolean; this function is for adding announcement messages for events created by Organizer, and then putting the chatId in
      *                  Speaker's announcementChatIds list
      */
-
     public boolean addAnnouncementChats(String personId, String acId) {
         Speaker individual = (Speaker) idToPerson.get(personId);
         if(!individual.getAnnouncementChats().contains(acId)) {

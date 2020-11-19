@@ -225,6 +225,7 @@ public class ChatManager implements Serializable {
         return pChats;
     }
 
+
     /**
      * @return the list of IDs of the AnnouncementChats stored in this ChatManager.
      */
