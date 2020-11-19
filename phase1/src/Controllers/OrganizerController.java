@@ -17,7 +17,6 @@ import Presenter.MainMenu;
 import java.util.Scanner;
 
 public class OrganizerController extends PersonController {
-    private ChatManager chatManager = new ChatManager();
     private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private OrganizerManager manager;
@@ -28,8 +27,8 @@ public class OrganizerController extends PersonController {
 
 
     public OrganizerController(PersonManager manager, SpeakerManager speakerManager,
-                               RoomManager rooms, MessageManager messages) {
-        super(manager, rooms, messages);
+                               RoomManager rooms, MessageManager messages, ChatManager chats) {
+        super(manager, rooms, messages, chats);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
         this.attendeeManager = (AttendeeManager) manager;

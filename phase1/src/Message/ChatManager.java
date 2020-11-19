@@ -1,16 +1,17 @@
 package Message;
 
-// Programmer: Karyn Komatsu, Ran Yi
+// Programmer: Karyn Komatsu, Ran Yi, Sarah Kronenfeld
 // Description: For current User to
 // Date Modified: 18/11/2020
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ChatManager {
+public class ChatManager implements Serializable {
     private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
     private ArrayList<AnnouncementChat> aChatsList; // list for storing a collection of all AnnouncementChat objects
 

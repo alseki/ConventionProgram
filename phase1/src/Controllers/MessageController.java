@@ -228,7 +228,7 @@ public class MessageController implements SubMenu {
     /**
      * Show all the messages this user sent in presenter, **sorted by datetime.
      */
-    private String[] sentBox() throws NoDataException{
+    private void sentBox() throws NoDataException{
         ArrayList<String> sentMessages = new ArrayList<>();
         for (String message: messageManager.getMessageIDs()){
             if (messageManager.getSenderID(message).equals(currentUserID)){ //TODO: add getter!

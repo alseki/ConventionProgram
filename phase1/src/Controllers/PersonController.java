@@ -6,6 +6,7 @@ package Controllers;
 // Date Modified: 16/11/2020
 
 import Events.RoomManager;
+import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 
@@ -17,14 +18,17 @@ abstract public class PersonController {
     private PersonManager manager;
     protected RoomManager roomManager;
     protected MessageManager messageManager;
+    protected ChatManager chatManager;
     private LoginController loginController;
     public boolean loggedIn =  false;
 
 
-    public PersonController(PersonManager manager, RoomManager roomManager, MessageManager messageManager) {
+    public PersonController(PersonManager manager, RoomManager roomManager, MessageManager messageManager,
+                            ChatManager chatManager) {
         this.manager = manager;
         this.roomManager = roomManager;
         this.messageManager = messageManager;
+        this.chatManager = chatManager;
     }
 
     /**
