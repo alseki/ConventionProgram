@@ -59,8 +59,8 @@ public class AttEventController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
-                    input.nextLine();
-                    String addingEventInput = input.nextLine();
+                    SubMenu.readInput(input);
+                    String addingEventInput = SubMenu.readInput(input);
                     try {
                         signupForEvent(addingEventInput);
                     } catch (InvalidChoiceException e) {
@@ -70,8 +70,8 @@ public class AttEventController implements SubMenu {
                     break;
                 case 3:
                     presenter.printRemoveEventPrompt();
-                    input.nextLine();
-                    String removingEventInput = input.nextLine();
+                    SubMenu.readInput(input);
+                    String removingEventInput = SubMenu.readInput(input);
                     try {
                          cancelSpotFromEvent(removingEventInput);
                     } catch (InvalidChoiceException e) {
@@ -95,12 +95,12 @@ public class AttEventController implements SubMenu {
      */
     private String getRoomChoice() throws NoDataException {
         presenter.printRoomChoicePrompt();
-        input.nextLine();
-        String room = input.nextLine();
+        SubMenu.readInput(input);
+        String room = SubMenu.readInput(input);
         try {
             if (room.equals("0")) {
                 presenter.printList(roomManager.getRoomNames(), "room");
-                room = input.nextLine();
+                room = SubMenu.readInput(input);
             }
             if (roomManager.getRoomID(room) != null) {
                 return roomManager.getRoomID(room);

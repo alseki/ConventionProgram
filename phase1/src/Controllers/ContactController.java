@@ -51,9 +51,9 @@ public class ContactController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddContactPrompt();
-                    // input.nextLine();
+                    // SubMenu.readInput(input);
                     try {
-                        addContact(input.nextLine());
+                        addContact(SubMenu.readInput(input));
                     } catch (NoDataException e) {
                         e.printErrorMessage();
                     }

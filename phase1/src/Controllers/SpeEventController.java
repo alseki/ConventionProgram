@@ -57,34 +57,34 @@ public class SpeEventController implements SubMenu {
                 //case 2:
                     // Send message to all Users in an Event
                     //presenter.printEventNamePrompt();
-                    //String eventNameA = input.nextLine();
+                    //String eventNameA = SubMenu.readInput(input);
                     //presenter.printContentPrompt();
-                    //String contentA = input.nextLine();
+                    //String contentA = SubMenu.readInput(input);
                     //this.eventMessage(eventNameA, contentA);
                     //presenter.printMessageSent();
                     //break;
                 case 2:
                     // Send message to all Attendees in an Event
                     presenter.printEventNamePrompt();
-                    String eventNameB = input.nextLine();
+                    String eventNameB = SubMenu.readInput(input);
                     presenter.printContentPrompt();
-                    String contentB = input.nextLine();
+                    String contentB = SubMenu.readInput(input);
                     this.eventMessageForAttendees(eventNameB, contentB);
                     presenter.printMessageSent();
                     break;
                 case 3:
                     // Send message to all Attendees in all of your Events
                     presenter.printContentPrompt();
-                    String contentC = input.nextLine();
+                    String contentC = SubMenu.readInput(input);
                     this.allSpeakerEventsMessagingById(contentC);
                     presenter.printMessageSent();
                     break;
                 case 4:
                     // Send message to all Attendees in some of your Events
                     presenter.printContentPrompt();
-                    String contentD = input.nextLine();
+                    String contentD = SubMenu.readInput(input);
                     presenter.printEventNamesPrompt();
-                    String eventNames = input.nextLine();
+                    String eventNames = SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
                     this.allSpeakerEventsMessage(someSpeakerEvents, contentD);
                     presenter.printMessageSent();
