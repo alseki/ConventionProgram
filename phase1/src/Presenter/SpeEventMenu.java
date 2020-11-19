@@ -12,9 +12,10 @@ public class SpeEventMenu implements printSubMenu {
         System.out.println("----- Speaker Event Menu -----");
         System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
         System.out.println("View the talk you're going to talk at -------------- Enter '1'.");
-        System.out.println("Send message to all Users in an Event -------------- Enter '2'.");
-        System.out.println("Send message to all Attendees in an Event ---------- Enter '3'.");
-        System.out.println("Send message to all Attendees in your Events ------- Enter '4'.");
+        //System.out.println("Send message to all Users in an Event -------------- Enter '2'.");
+        System.out.println("Send message to all Attendees in an Event ---------- Enter '2'.");
+        System.out.println("Send message to all Attendees in all of your Events ------- Enter '3'.");
+        System.out.println("Send message to all Attendees in some of your EVents ------ Enter '4'.");
         System.out.println("to be finished ------------------------ Enter '5'.");
         System.out.println("to be finished ----- Enter '6'.");
         System.out.println("Send message to one Attendee in an Event ----------- Enter '7'.");
@@ -43,6 +44,14 @@ public class SpeEventMenu implements printSubMenu {
      */
     public void printEventNamePrompt() {
         System.out.println("Enter the NAME of the Event you want to send message to.");
+    }
+
+    /**
+     * Prompts user to enter an ArrayList of eventName(s) of the one or more events
+     * that they want to send the message to.
+     */
+    public void printEventNamesPrompt(){
+        System.out.println("Enter the NAMES of Events that you want to send message to, using comma without space (,) to split.");
     }
 
     /**
