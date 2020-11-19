@@ -1,14 +1,16 @@
 package Person;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class OrganizerManager extends PersonManager {
     //private ArrayList<Organizer> organizerList;
     //private Organizer currentOrganizer;
     //private Map<String, Organizer> usernameToOrganizer;
 
-    public OrganizerManager(){
-        super();
+
+    public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+        super(usernameToPerson, idToPerson);
     }
 
 
@@ -26,7 +28,6 @@ public class OrganizerManager extends PersonManager {
         // will change this if we make some errors.
         if(!usernameToPerson.containsKey(username)) { // check that there is not someone with that username
             Organizer og = new Organizer(fullName, username, password, email);
-            updateAllPersons(og); // see below
             updateUsernameToPerson(og.getUsername(), og); // see below
             idToPerson.put(og.getID(), og);
             return true;
@@ -89,10 +90,6 @@ public class OrganizerManager extends PersonManager {
 
     private void updateUsernameToPerson(String username, Organizer org){
         usernameToPerson.put(username,org);
-    }
-
-    private void updateAllPersons(Organizer org){
-        allPersons.add(org);
     }
 
 

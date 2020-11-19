@@ -10,10 +10,6 @@ import java.util.Map;
 
 public abstract class PersonManager {
 
-    // This is a list of all Person objects that will be added to by the Attendee/Organizer/Speaker Managers
-    // when a user objects is created
-    protected static List<Person> allPersons;
-
     // This is a dictionary that will pair username to Person object. This dictionary is used by methods below
     protected Map<String, Person> usernameToPerson = new HashMap<String, Person>();
 
@@ -21,12 +17,9 @@ public abstract class PersonManager {
     protected Map<String, Person> idToPerson = new HashMap<String, Person>();
 
 
-    public PersonManager() {   // constructor for this Manager that creates the list and the two dictionaries
-
-        allPersons = new ArrayList<>();
-        usernameToPerson = new HashMap<>();
-        idToPerson = new HashMap<>();
-
+    public PersonManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+        this.usernameToPerson = usernameToPerson;
+        this.idToPerson = idToPerson;
     }
 
     /**
