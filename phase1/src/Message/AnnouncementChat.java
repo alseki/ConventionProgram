@@ -29,10 +29,9 @@ public class AnnouncementChat extends Chat{
      * A getter for the User who set up this AnnouncementChat.
      * @return the ID of this User.
      */
-    public String getOwnerId() {
+    public String getEventID() {
         return this.ownerId;
     }
-
 
 
     /**
