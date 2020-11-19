@@ -76,14 +76,14 @@ public class OrgEventMenu implements printSubMenu {
      * Prompts the user to choose a Room for an Event (by name)
      */
     public void printRoomNamePrompt(){
-        System.out.println("\nWhich room should this event be held in? (Enter 0 for options)");
+        System.out.println("\nWhich room is this event held in? (Enter 0 for options)");
     }
 
     /**
      * Prompts the user to name the new Event
      */
     public void printEventNamePrompt(){
-        System.out.println("\nWhat is the name of this new event?");
+        System.out.println("\nWhat is the name of this event?");
     }
 
     /**
@@ -98,9 +98,9 @@ public class OrgEventMenu implements printSubMenu {
      */
     public void printStartTimePrompt(){
         System.out.println("\nAt what time will the event start?");
-        System.out.println("\n(Please enter the exact date and time of this event in 24-hour clock notation. For " +
-                "example, to schedule an event at 11:30 p.m. on March 4, 2020, you would type the date, followed by" +
-                "a space, followed by the 24-hour time, as follows: '2020-03-04 23:30'. Be slow and careful!");
+        System.out.println("\n(Please enter the exact date and time of this event in 24-hour clock notation. \nFor " +
+                "example, to schedule an event at 11:30 p.m. on March 4, 2020, you would type the date, followed by " +
+                "a space, followed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and careful!");
     }
 
     /**

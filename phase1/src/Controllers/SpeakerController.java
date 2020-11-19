@@ -30,9 +30,9 @@ public class SpeakerController extends PersonController {
 
     @Override
     public void run() {
+        super.run();
         this.currentUserID = super.currentUserID;
         if (super.loggedIn) {
-            super.run();
             do {
                 mainMenu.printSpeakerMM();
                 currentRequest = SubMenu.readInteger(input);
