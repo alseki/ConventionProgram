@@ -186,20 +186,7 @@ public class SpeEventController implements SubMenu {
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
     }
 
-    /**
-     * This is the same method from above (allSpeakerEventsMessage), but using speaker's currentUserId as a parameter
-     * instead of the list of all Speaker talks
-     * @param currentUserId
-     * @param messageContent
-     * @return
-     */
-    public boolean allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
-        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(currentUserId);
-        allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
-        return true;
-
-    }
 
     /**
      * Sends a Message to one Attendee signed up for an event
