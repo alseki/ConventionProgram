@@ -92,7 +92,7 @@ public class SpeEventController implements SubMenu {
                 case 5:
                     // Send message to a user that Speaker knows the username of
                     presenter.printContentPrompt();
-                    String contentE = this.addSpeUsername(SubMenu.readInput(input));
+                    String contentE = SubMenu.readInput(input);
                     presenter.printEnterUsername();
                     String username = SubMenu.readInput(input);
                     this.sendIndividualMessage(username, contentE);
@@ -223,6 +223,12 @@ public class SpeEventController implements SubMenu {
     private String addSpeUsername(String content){return content + "\n" + "Contact me using this username:\n"
             + personManager.getCurrentUsername(currentUserID);}
 
+    /**
+     * Send individual Message in personal Chat between the User and the recipient User, where recipient User is
+     * represented by the username of the account.
+     * @param username Username of the recipient user
+     * @param messageContent Content of the Message
+     */
     private void sendIndividualMessage(String username, String messageContent){
         String recipientID = personManager.getCurrentUserID(username);
         String messageID = messageManager.createMessage(currentUserID, recipientID ,messageContent);
