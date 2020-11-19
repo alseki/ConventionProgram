@@ -157,9 +157,6 @@ public class MessageController implements SubMenu {
      * @param contactUsername the username of the contact the current user wants create a Chat with
      * @return chatID iff new Chat was created and added to user's Chat list and contact's contactList
      */
-    // TODO: here we make this in two steps: 1. check existence return boolean 2. find the chat return String
-    // TODO: 2 steps have duplicated bodies
-    // TODO: "if contact is on contactlist."
 
     private String createChat(String contactUsername) throws InvalidChoiceException {
         String contactID = personManager.getCurrentUserID(contactUsername);

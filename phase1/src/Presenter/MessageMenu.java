@@ -123,10 +123,10 @@ public class MessageMenu implements printSubMenu {
      * @return Formatted string representation of the message.
      */
     private String formatMessages(String messageId) {
-        String sender = messageManager.getSenderId(messageId);
+        String sender = messageManager.getSenderID(messageId);
         String recipient = messageManager.getRecipientId(messageId);
         String time = messageManager.getDateTime(messageId);
-        String message = messageManage.getContent(messageId);
+        String message = messageManager.getContent(messageId);
         return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
                 + "Message: " + message + "\n";
     }//TODO: update to match formatting
@@ -181,7 +181,7 @@ public class MessageMenu implements printSubMenu {
      * Show the messages in one chat by chatID.
      * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
-    private void printChat(String chatID) throws InvalidChoiceException {
+    public void printChat(String chatID) throws InvalidChoiceException {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }

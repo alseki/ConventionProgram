@@ -78,4 +78,33 @@ public class MessageManager implements Serializable {
         }
         return messageIDs;
     }
+
+    /**
+     * @return the senderID of a message by the messageID.
+     */
+    public String getSenderID(String messageID) {
+        return getMessage(messageID).getSenderId();
+    }
+
+    /**
+     * @return the recipientID of a message by the messageID.
+     */
+    public String getRecipientId(String messageID) {
+        return getMessage(messageID).getRecipientId();
+    }
+
+    /**
+     * @return the DateTime of a message by the messageID.
+     */
+    public String getDateTime(String messageID) {
+        return getMessage(messageID).getDateTime().toString();
+    }
+
+    /**
+     * @return the Content of a message by the messageID.
+     */
+    public String getContent(String messageID) {
+        return getMessage(messageID).getContent();
+    }
+
 }
