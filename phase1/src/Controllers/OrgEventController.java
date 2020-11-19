@@ -136,7 +136,7 @@ public class OrgEventController implements SubMenu {
             presenter.printSpeakerUsernamePrompt();
             String speakerUsername = input.nextLine();
             boolean created = this.createTalk(eventName, speakerUsername, start, eventDescription, roomName);
-            if (created == false) {
+            if (!created) {
                 presenter.printCapacityError();
                 return false;
             }
@@ -296,8 +296,8 @@ public class OrgEventController implements SubMenu {
 
     /**
      * This is helper method for the methods above; updates Speaker's announcementChatIDs
-     * @param personID
-     * @param announcementChatID
+     * @param personID the id of the person
+     * @param announcementChatID the id of the annoucnemchat
      */
     private void updateSpeakerChatWithAnnouncement(String personID, String announcementChatID) {
         this.speakerManager.addAnnouncementChats(personID, announcementChatID);
@@ -372,21 +372,14 @@ public class OrgEventController implements SubMenu {
         EventManager emanager = roomManager.getRoom(roomId); // eventmanager for events with roomid
         String eventId =  emanager.getEventID(eventName); // eventId
         String ev = emanager.getAnnouncementChat(eventId); // chatid
-        AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev); // the annoucement chat for the event
-        String pass = ch.getPassword(); // the password for the announcemenchat
+        //AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev); // the annoucement chat for the event
+        //String pass = ch.getPassword(); // the password for the announcemenchat
+        //ch.addMessageIds(m, pass);
+        //Commented out the above 3 lines as chatManager.addMessageIds were improved. -Karyn, Nov 18
         String m = messageManager.createMessage(eventId, messageContent); // creating message for event
-        ch.addMessageIds(m, pass); // adding message to event chat
+        chatManager.addMessageIds(ev,m);// adding message to event chat
         return true;
     }
 
-    /**
-     * Sends a Message to one Attendee signed up for an event
-     * @param eventName The name of the Event
-     * @param attendeeUsername The username of the Attendee the user wishes to message
-     * @return true iff the Message was sent to the corresponding Attendee
-     */
-    public boolean eventMessage(String eventName, String attendeeUsername) {
-        return true;
-    }
 
 }

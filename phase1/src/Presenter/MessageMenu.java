@@ -132,7 +132,7 @@ public class MessageMenu implements printSubMenu {
      */
     public String formatChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
-        for (String participantID : chatManager.getChat(chatID).getPersonIds()){
+        for (String participantID : chatManager.getPersonIds(chatID)){
             participants.append(participantID).append("\n");
         }
         return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
@@ -147,7 +147,7 @@ public class MessageMenu implements printSubMenu {
      * */
     public String formatAnChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
-        for (String participantID : chatManager.getChat(chatID).getPersonIds()){
+        for (String participantID : chatManager.getPersonIds(chatID)){
             participants.append(participantID).append("\n");
         }
         return null;
@@ -177,17 +177,17 @@ public class MessageMenu implements printSubMenu {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
-        if (chatManager.getChat(chatID) == null) {
+        if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
 
-        if (chatManager.getChat(chatID).getClass().equals(AnnouncementChat.class)) {
+        if (chatManager.getChatClass(chatID).equals(AnnouncementChat.class)) {
             formatAnChatString(chatID);
         }
         else {
             formatChatString(chatID);
         }
 
-        printList(formatMessages(chatManager.getChat(chatID).getMessageIds()), "message");
+        printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
     }
 }

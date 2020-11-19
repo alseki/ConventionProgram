@@ -209,14 +209,13 @@ public class MessageController implements SubMenu {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
-        if (chatManager.getChat(chatID) == null) {
+        if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
-        Chat currentChat = chatManager.getChat(chatID);
-        for (String receiverID : currentChat.getPersonIds()){
+        for (String receiverID : chatManager.getPersonIds(chatID)){
             if (!receiverID.equals(currentUserID)){
                 String messageID = messageManager.createMessage(currentUserID, receiverID, messageContent);
-                currentChat.addMessageIds(messageID);
+                chatManager.addMessageIds(chatID,messageID);
             }
         }
     }

@@ -49,6 +49,11 @@ public class AnnouncementChat extends Chat{
         return false;
     }
 
+    /**
+     * Checks if the password entered is correct
+     * @param pass inputted password
+     * @return true iff the inputted password is correct
+     */
     private boolean checkPassword(String pass) {
         return pass.equals(password);
     }
