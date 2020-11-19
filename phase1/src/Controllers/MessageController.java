@@ -261,9 +261,6 @@ public class MessageController implements SubMenu {
      *              ...
      */
     private void viewChats(ArrayList<String> chatIDs) throws  NoDataException {
-        if (chatIDs == null) {
-            throw new NoDataException("chat");
-        }
         presenter.printFormattedChatList(chatIDs);
     }
 

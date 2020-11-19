@@ -61,14 +61,14 @@ public class MessageMenu implements printSubMenu {
      * Prompts user to enter username of the contact want to have chat with.
      */
     public void printContactUsernamePrompt(){
-        System.out.println("Who do you want to have chat with? Enter the Username of Him/Her/Its.");
+        System.out.println("Who do you want to chat with? Enter their username.");
     }
 
     /**
      * Prompts user to enter usernames of the contacts want to have chat with.
      */
     public void printContactUsernamesPrompt(){
-        System.out.println("Who do you want to have a group chat with? Enter the Username of them use , to split.");
+        System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list.");
     }
 
     /**
@@ -109,7 +109,7 @@ public class MessageMenu implements printSubMenu {
     public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
         ArrayList<String> messageInChat = new ArrayList<>();
         for (String mID : messageIDs) {
-            messageInChat.add(formatMessages(mID));
+            messageInChat.add(formatMessage(mID));
         }
         String[] messages = {};
         return messageInChat.toArray(messages);
@@ -122,7 +122,7 @@ public class MessageMenu implements printSubMenu {
      * @param messageId of the message that is to be formatted.
      * @return Formatted string representation of the message.
      */
-    private String formatMessages(String messageId) {
+    private String formatMessage(String messageId) {
         String sender = messageManager.getSenderID(messageId);
         String recipient = messageManager.getRecipientId(messageId);
         String time = messageManager.getDateTime(messageId);

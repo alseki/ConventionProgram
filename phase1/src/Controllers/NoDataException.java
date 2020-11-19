@@ -8,7 +8,7 @@ public class NoDataException extends InvalidChoiceException {
 
     @Override
     public String getMessage() {
-        return "Whoops! No " + type + "s exist. Please try again!";
+        return "No " + type + "s exist yet!";
     }
 
     public void printErrorMessage() {
