@@ -10,8 +10,9 @@ public class SpeakerManager extends PersonManager {
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
 
-    public SpeakerManager() {
-        super();
+
+    public SpeakerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+        super(usernameToPerson, idToPerson);
     }
 
     @Override
@@ -19,7 +20,6 @@ public class SpeakerManager extends PersonManager {
         if (!usernameToPerson.containsKey(username)) {
             Speaker newSpeaker = new Speaker(name, username, password, email);
             usernameToPerson.put(username, newSpeaker);
-            allPersons.add(newSpeaker);    // allPersons is a List from PersonManager
             idToPerson.put(newSpeaker.getID(), newSpeaker);
             return true;
         }

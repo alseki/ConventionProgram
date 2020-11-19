@@ -12,6 +12,8 @@ import Person.*;
 import Presenter.CPSMenu;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConventionPlanningSystem {
@@ -19,12 +21,22 @@ public class ConventionPlanningSystem {
     private int accountChoice;
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
+
     private MessageManager mm = new MessageManager();
-    private RoomManager rm = new RoomManager();
     private ChatManager cm = new ChatManager();
-    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("events.ser");
     private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
     private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("chats.ser");
+
+    private RoomManager rm = new RoomManager();
+    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("events.ser");
+
+    private Map<String, Person> personByName = new HashMap<>();
+    private Map<String, Person> personByID = new HashMap<>();
+    private static final FileGateway<Map<String, Person>> id2Person =
+            new FileGateway<Map<String, Person>>("person\\byID.ser");
+    private static final FileGateway<Map<String, Person>> n2Person =
+            new FileGateway<Map<String, Person>>("person\\byName.ser");
+
 
     /**
     * Calls appropriate Controllers based on user input.
@@ -51,18 +63,18 @@ public class ConventionPlanningSystem {
                 save(); // SAVE FILES
                 break;
             case 1:
-                AttendeeManager am = new AttendeeManager();
+                AttendeeManager am = new AttendeeManager(personByName, personByID);
                 AttendeeController AC =  new AttendeeController(am, rm, mm, cm);
                 AC.run();
                 break;
             case 2:
-                OrganizerManager om = new OrganizerManager();
-                SpeakerManager sm = new SpeakerManager();
+                OrganizerManager om = new OrganizerManager(personByName, personByID);
+                SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm);
                 OC.run();
                 break;
             case 3:
-                SpeakerManager sman = new SpeakerManager();
+                SpeakerManager sman = new SpeakerManager(personByName, personByID);
                 SpeakerController SC = new SpeakerController(sman, rm, mm, cm);
                 SC.run();
                 break;
@@ -82,6 +94,12 @@ public class ConventionPlanningSystem {
         if (chatLoader.readFile() != null) {
             cm = chatLoader.readFile();
         }
+        if (id2Person.readFile() != null) {
+            personByID = id2Person.readFile();
+        }
+        if (n2Person.readFile() != null) {
+            personByName = n2Person.readFile();
+        }
     }
 
     /**
@@ -91,6 +109,8 @@ public class ConventionPlanningSystem {
         roomLoader.writeFile(rm);
         messageLoader.writeFile(mm);
         chatLoader.writeFile(cm);
+        id2Person.writeFile(personByID);
+        n2Person.writeFile(personByName);
     }
 
 }

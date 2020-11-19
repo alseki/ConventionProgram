@@ -4,13 +4,15 @@ import Events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AttendeeManager extends PersonManager {
 
     // private List<Attendee> allAttendees;
 
-    public AttendeeManager() {
-        super();
+
+    public AttendeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+        super(usernameToPerson, idToPerson);
     }
 
     /**
@@ -27,7 +29,6 @@ public class AttendeeManager extends PersonManager {
             Attendee newAtt = new Attendee(name, username, password, email);
             idToPerson.put(newAtt.getID(), newAtt);
             usernameToPerson.put(username, newAtt);
-            allPersons.add(newAtt);
             return true;
         }
         return false;
