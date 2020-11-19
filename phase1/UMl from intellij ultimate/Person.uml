@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Person</OriginalElement>
+  <nodes>
+    <node x="376.0" y="315.0">Person.AttendeeManager</node>
+    <node x="200.0" y="235.0">Person.PersonManager</node>
+    <node x="36.000000000000014" y="80.0">Person.Attendee</node>
+    <node x="196.0" y="315.0">Person.SpeakerManager</node>
+    <node x="0.0" y="0.0">Person.Signupable</node>
+    <node x="168.0" y="80.0">Person.Speaker</node>
+    <node x="0.0" y="390.0">Person.SignupableManager</node>
+    <node x="32.00000000000003" y="160.0">Person.Organizer</node>
+    <node x="0.0" y="315.0">Person.OrganizerManager</node>
+    <node x="148.0" y="0.0">Person.Person</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Person.AttendeeManager" target="Person.PersonManager">
+      <point x="0.0" y="-15.0" />
+      <point x="460.0" y="290.0" />
+      <point x="326.66666666666663" y="290.0" />
+      <point x="50.66666666666663" y="15.0" />
+    </edge>
+    <edge source="Person.SpeakerManager" target="Person.PersonManager">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Person.Speaker" target="Person.Person">
+      <point x="0.0" y="-15.0" />
+      <point x="24.0" y="15.0" />
+    </edge>
+    <edge source="Person.Organizer" target="Person.Attendee">
+      <point x="-1.4210854715202004E-14" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Person.Attendee" target="Person.Signupable">
+      <point x="-28.000000000000014" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Person.Attendee" target="Person.Person">
+      <point x="27.999999999999986" y="-15.0" />
+      <point x="120.0" y="55.0" />
+      <point x="172.0" y="55.0" />
+      <point x="-24.0" y="15.0" />
+    </edge>
+    <edge source="Person.OrganizerManager" target="Person.PersonManager">
+      <point x="0.0" y="-15.0" />
+      <point x="88.0" y="290.0" />
+      <point x="225.33333333333334" y="290.0" />
+      <point x="-50.66666666666666" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="272.0" y="210.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Message</OriginalElement>
+  <nodes>
+    <node x="0.0" y="155.0">Message.MessageManager</node>
+    <node x="48.0" y="0.0">Message.Chat</node>
+    <node x="0.0" y="230.0">Message.ChatManager</node>
+    <node x="181.0" y="230.0">Message.Message</node>
+    <node x="0.0" y="80.0">Message.AnnouncementChat</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Message.AnnouncementChat" target="Message.Chat">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="142.5" y="130.0" />
+  <SelectedNodes>
+    <node>Message.MessageManager</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
