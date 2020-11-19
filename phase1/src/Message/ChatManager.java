@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.io.Serializable;
 
-public class ChatManager {
+public class ChatManager implements Serializable{
     private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
     private ArrayList<AnnouncementChat> aChatsList; // list for storing a collection of all AnnouncementChat objects
     public ChatManager(){
@@ -99,7 +100,7 @@ public class ChatManager {
      * @return true iff senders (personIds) list of Message.Message.Chat is successfully updated
      */
     //The senders list and related methods in Message.Message.Chat class must be fixed so that it contains ID instead of Person.Person
-    public boolean addPerson(String chatId, String personId){
+    public boolean addPersonIds(String chatId, String personId){
         Chat chat = getUnknownTypeChat(chatId);
         if(chat != null){
             chat.addPersonIds(personId);
@@ -153,13 +154,6 @@ public class ChatManager {
         return chats;
     }
 
-    protected ArrayList<Chat> getChatsList(){
-        return this.chatsList;
-    }
-
-    protected ArrayList<AnnouncementChat> getAnChatsList(){
-        return this.aChatsList;
-    }
 
     /**
      * Finds the Message.Message.Chat object with input Message.Message.Chat ID
