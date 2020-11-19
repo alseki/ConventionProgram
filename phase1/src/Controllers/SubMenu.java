@@ -35,4 +35,17 @@ public interface SubMenu {
             return readInteger(in);
         }
     }
+
+    /**
+     * Reads in lines of the input until it recieves input
+     * @param in A scanner used to read in input
+     * @return The input it eventually receives
+     */
+    static String readInput(Scanner in) {
+        String i = in.nextLine();
+        while (i == null || i.equals("")) {
+            i = in.nextLine();
+        }
+        return i;
+    }
 }

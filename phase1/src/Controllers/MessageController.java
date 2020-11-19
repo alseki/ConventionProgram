@@ -60,94 +60,62 @@ public class MessageController implements SubMenu {
                     // return to main menu
                     break;
                 case 1: //Check your inbox
-                    try {
-                        inBox();;
-                    } catch (NoDataException e) {
-                        presenter.printException(e);
-                    }
+                    inBox();
                     break;
                 case 2: //Check your sent box
-                    try {
-                        sentBox();
-                    } catch (NoDataException e) {
-                        presenter.printException(e);
-                    }
+                    sentBox();
                     break;
                 case 3: //View the chat list
-                    try {
-                        viewChats(chatManager.getChatIDs(currentUserID));
-                    } catch (NoDataException e) {
-                        presenter.printException(e);
-                    }
+                    viewChats(chatManager.getChatIDs(currentUserID));
                     break;
                 case 4: //View the announcement chat list
-                    try {
-                        viewChats(chatManager.getAnnouncementChatIDs(currentUserID));
-                    } catch (NoDataException e) {
-                        presenter.printException(e);
-                    }
+                    viewChats(chatManager.getAnnouncementChatIDs(currentUserID));
                     break;
                 case 5: //View the messages in a chat
-                    presenter.printChatIdPrompt();
-                    input.nextLine();
-                    try {
-                        presenter.printChat(input.nextLine());
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
+                    displayChat("");
                     break;
                 case 6: //View the announcements in an announcement chat
-                    presenter.printAnChatIdPrompt();
-                    input.nextLine();
-                    try {
-                        presenter.printChat(input.nextLine());
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
-                    break;
+                    displayChat("Announcement");
                 case 7: //Create a chat
-                    presenter.printContactUsernamePrompt();
-                    input.nextLine();
-                    try {
-                        String chatID = createChat(input.nextLine());
-                        presenter.printChatCreated(chatID);
-                        presenter.printJobDone();
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
+                    createChatChoice();
                     break;
                 case 8: //Create a group chat
-                    presenter.printContactUsernamesPrompt();
-                    input.nextLine();
-                    String contacts = input.nextLine();
-                    String[] a = contacts.split(",");
-                    List<String> b = Arrays.asList(a);
-                    ArrayList<String> contactlist = new ArrayList<>(b);
-                    try {
-                        String groupChatID = createGroupChat(contactlist);
-                        presenter.printChatCreated(groupChatID);
-                        presenter.printJobDone();
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
+                    createGroupchatChoice();
                     break;
                 case 9: //Send a message
-                    presenter.printChatIdMessagePrompt();
-                    input.nextLine();
-                    String chatId = input.nextLine();
-                    presenter.printContentPrompt();
-                    String content = input.nextLine();
-                    try {
-                        sendMessage(chatId, content);
-                        presenter.printJobDone();
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
+                    sendMessageChoice();
                     break;
             }
         }
         while (currentRequest != 0);
         return true;
+    }
+
+    /**
+     * Displays a chat
+     * @param type The type of chat it is (e.g. "" for a normal chat, "Announcement" for an AnnouncementChat)
+     */
+    private void displayChat(String type) {
+        presenter.printChatIdPrompt(type);
+        try {
+            presenter.printChat(SubMenu.readInput(input));
+        } catch (InvalidChoiceException e) {
+            presenter.printException(e);
+        }
+    }
+
+    /**
+     * Creates a new Chat
+     */
+    private void createChatChoice() {
+        presenter.printContactUsernamePrompt();
+        try {
+            String chatID = createChat(SubMenu.readInput(input));
+            presenter.printChatCreated(chatID);
+            presenter.printJobDone();
+        } catch (InvalidChoiceException e) {
+            presenter.printException(e);
+        }
     }
 
 
@@ -169,6 +137,24 @@ public class MessageController implements SubMenu {
         } else {
             String chatID = chatManager.createChat(currentUserID, contactID);
             return chatID;
+        }
+    }
+
+    /**
+     * Creates a new GroupChat
+     */
+    private void createGroupchatChoice() {
+        presenter.printContactUsernamesPrompt();
+        String contacts = SubMenu.readInput(input);
+        String[] a = contacts.split(",");
+        List<String> b = Arrays.asList(a);
+        ArrayList<String> contactlist = new ArrayList<>(b);
+        try {
+            String groupChatID = createGroupChat(contactlist);
+            presenter.printChatCreated(groupChatID);
+            presenter.printJobDone();
+        } catch (InvalidChoiceException e) {
+            presenter.printException(e);
         }
     }
 
@@ -198,12 +184,28 @@ public class MessageController implements SubMenu {
 
 
     /**
+     * Sends a new Message
+     */
+    private void sendMessageChoice() {
+        presenter.printChatIdMessagePrompt();
+        String chatId = SubMenu.readInput(input);
+        presenter.printContentPrompt();
+        String content = SubMenu.readInput(input);
+        try {
+            sendMessage(chatId, content);
+            presenter.printJobDone();
+        } catch (InvalidChoiceException e) {
+            presenter.printException(e);
+        }
+    }
+
+    /**
      * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
      * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      * @return true iff new Message was created and added to Chat's messageList
      */
-    public boolean sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+    public void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
@@ -217,39 +219,42 @@ public class MessageController implements SubMenu {
                 currentChat.addMessageIds(messageID);
             }
         }
-        return true;
     }
 
     /**
      * Show all the messages this user sent in presenter, **sorted by datetime.
      */
-    private void sentBox() throws NoDataException{
-        ArrayList<String> sentMessages = new ArrayList<>();
-        for (String message: messageManager.getMessageIDs()){
-            if (messageManager.getSenderID(message).equals(currentUserID)){
-                sentMessages.add(message);
+    private void sentBox(){
+        try {
+            ArrayList<String> sentMessages = new ArrayList<>();
+            for (String message: messageManager.getMessageIDs()){
+                if (messageManager.getSenderID(message).equals(currentUserID)){
+                    sentMessages.add(message);
+                }
             }
-        }
 
-        String[] messages = {};
-        messages = sentMessages.toArray(messages);
-        presenter.printList(messages, "message");
+            presenter.printList(presenter.formatMessages(sentMessages), "message");
+        } catch (NoDataException e) {
+            presenter.printException(e);
+        }
     }
 
     /**
      * Show all the messages this user received in presenter, **sorted by datetime.
      */
-    private void inBox() throws NoDataException{
-        ArrayList<String> receivedMessages = new ArrayList<>();
-        for (String message: messageManager.getMessageIDs()){
-            if (messageManager.getRecipientId(message).equals(currentUserID)){
-                receivedMessages.add(message);
+    private void inBox(){
+        try {
+            ArrayList<String> receivedMessages = new ArrayList<>();
+            for (String message: messageManager.getMessageIDs()){
+                if (messageManager.getRecipientId(message).equals(currentUserID)){
+                    receivedMessages.add(message);
+                }
             }
-        }
 
-        String[] messages = {};
-        messages = receivedMessages.toArray(messages);
-        presenter.printList(messages, "message");
+            presenter.printList(presenter.formatMessages(receivedMessages), "message");
+        } catch (NoDataException e) {
+            presenter.printException(e);
+        }
     }
 
     /**
@@ -261,8 +266,13 @@ public class MessageController implements SubMenu {
      *              [Participants]: [ID of the Participants]\newline
      *              ...
      */
-    private void viewChats(ArrayList<String> chatIDs) throws  NoDataException {
-        presenter.printFormattedChatList(chatIDs);
+    private void viewChats(ArrayList<String> chatIDs) {
+        try {
+            presenter.printFormattedChatList(chatIDs);
+
+        } catch (NoDataException e) {
+            presenter.printException(e);
+        }
     }
 
 

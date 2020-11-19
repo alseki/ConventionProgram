@@ -25,7 +25,7 @@ public interface printSubMenu {
         if (list != null && list.length > 0) {
             System.out.println("\n---");
             for (String item : list) {
-                System.out.println(item);
+                System.out.println(item + "\n");
             }
             System.out.println("---\n");
         }

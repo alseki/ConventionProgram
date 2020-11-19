@@ -46,15 +46,8 @@ public class MessageMenu implements printSubMenu {
     /**
      * Prompts user to enter ID of the chat.
      */
-    public void printChatIdPrompt(){
-        System.out.println("Which chat do you want to check? Enter the chatID.");
-    }
-
-    /**
-     * Prompts user to enter ID of the Announcement.
-     */
-    public void printAnChatIdPrompt(){
-        System.out.println("Which announcement chat do you want to check? Enter the AnnouncementChatID.");
+    public void printChatIdPrompt(String type){
+        System.out.println("Which " + type + "Chat do you want to check? Enter the chatID.");
     }
 
     /**
@@ -94,12 +87,13 @@ public class MessageMenu implements printSubMenu {
 
     public void printFormattedChatList(ArrayList<String> chatIDs) throws NoDataException {
         String[] chatList = new String[chatIDs.size()];
-        for (String chat: chatIDs) {
+        for (int i = 0; i < chatList.length; i++) {
+            String chat = chatIDs.get(i);
             if (chatManager.getChat(chat).getClass().equals(AnnouncementChat.class)) {
-                formatAnChatString(chat);
+                chatList[i] =formatAnChatString(chat);
             }
             else {
-                formatChatString(chat);
+                chatList[i] = formatChatString(chat);
             }
         }
         printList(chatList, "chat");
@@ -130,8 +124,6 @@ public class MessageMenu implements printSubMenu {
         return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
                 + "Message: " + message + "\n";
     }//TODO: update to match formatting
-    //TODO: implement methods (or equivalent) as requested in MessageManager
-
     /**
      * Get chat formatted as: "[ID]: [ID of the chat]\new line
      *                            [Participants]: [Username of the Participants]\newline
