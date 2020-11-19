@@ -4,7 +4,6 @@ import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
-import Person.Speaker;
 import Presenter.SpeEventMenu;
 
 import java.util.ArrayList;
@@ -136,6 +135,7 @@ public class SpeEventController implements SubMenu {
         return true;
     }
 
+
     /**
      * This is to sent a message to all attendees of an event. It uses method eventMessage from below
      * @param eventName
@@ -167,7 +167,7 @@ public class SpeEventController implements SubMenu {
     }
 
     /**
-     * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to announce, "download
+     * This is to send a message to all attendees of all or some of Speaker's events. For example, if Speaker wanted to announce, "download
      * so and so application for the our talk today" to all talks, this method proves useful. This uses eventMessageForAttendees from above
      * @param allSpeakerEvents String Array of Names of Events hosted by the speaker
      * @param messageContent String representing content of the message
@@ -182,7 +182,7 @@ public class SpeEventController implements SubMenu {
     }
 
     /**
-     * This is the same method from above, but only using speakerId as a parameter instead of the list of all Speaker talks
+     * This is the same method from above, but only using messageContent as a parameter instead of the list of all Speaker talks
      * @param messageContent
      * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
@@ -194,13 +194,13 @@ public class SpeEventController implements SubMenu {
     }
 
     /**
-     * This is the same method from above (allSpeakerEventsMessage), but only using speaker's username as a parameter instead of the list of all Speaker talks
-     * @param username
+     * This is the same method from above (allSpeakerEventsMessage), but using speaker's currentUserId as a parameter instead of the list of all Speaker talks
+     * @param currentUserId
      * @param messageContent
      * @return
      */
-    public boolean allSpeakerEventsMessagingByUsername(String username, String messageContent) {
-        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(username);
+    public boolean allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(currentUserId);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;
@@ -221,7 +221,7 @@ public class SpeEventController implements SubMenu {
         String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attendeeID)));
         chatManager.addMessageIds(acID, messageID);
         return true;
-        }
+    }
     //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
     //if (!(attList.contains(attID))){
     //throw new InvalidIDException();
