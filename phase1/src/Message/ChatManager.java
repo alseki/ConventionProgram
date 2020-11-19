@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.io.Serializable;
 
-public class ChatManager implements Serializable{
+public class ChatManager implements Serializable {
     private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
     private ArrayList<AnnouncementChat> aChatsList; // list for storing a collection of all AnnouncementChat objects
     public ChatManager(){
@@ -53,12 +53,12 @@ public class ChatManager implements Serializable{
 
     /**
      * creates and returns an annoucment chat with eventid and attendeeids
-     * @param eventid id representign the event for the annoucement
-     * @param attendeeids the id's of the attendess
+     *
+     * @param eventid     id representign the event for the annoucement
      * @return the chatID of AnnocuementChat made
      */
-    public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids){
-        AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
+    public String createAnnouncementChat(String eventid) {
+        AnnouncementChat ac = new AnnouncementChat(eventid);
         aChatsList.add(ac);
         return ac.getId();
     }
@@ -211,6 +211,20 @@ public class ChatManager implements Serializable{
         return chatIDs;
     }
 
+    public ArrayList<String> getChatIDs(String thisPersonID) {
+        ArrayList<String> chats = getChatIDs();
+        ArrayList<String> pChats = new ArrayList();
+        for (String c : chats) {
+            for (String personID : getChat(c).getPersonIds()) {
+                if (personID.equals(thisPersonID)) {
+                    pChats.add(c);
+                    break;
+                }
+            }
+        }
+        return pChats;
+    }
+
     /**
      * @return the list of IDs of the AnnouncementChats stored in this ChatManager.
      */
@@ -222,6 +236,19 @@ public class ChatManager implements Serializable{
         return aChatIDs;
     }
 
+    public ArrayList<String> getAnnouncementChatIDs(String thisPersonID) {
+        ArrayList<String> chats = getAnnouncementChatIDs();
+        ArrayList<String> pChats = new ArrayList();
+        for (String c : chats) {
+            for (String personID : getChat(c).getPersonIds()) {
+                if (personID.equals(thisPersonID)) {
+                    pChats.add(c);
+                    break;
+                }
+            }
+        }
+        return pChats;
+    }
     /**
      * Checks if there already exists a Chat object with same group members inputted
      * @param currentId ID of the user
@@ -229,15 +256,9 @@ public class ChatManager implements Serializable{
      * @return True iff there exists a Chat with the exact same group members inputted
      *         False iff there does not exist a Chat with the exact same group members inputted
      */
-    public boolean existChat(String currentId, String guestId){
-        ArrayList<String> personIds = new ArrayList<>();
-        personIds.add(currentId);
-        personIds.add(guestId);
-        Collections.sort(personIds);
-        for(Chat c: chatsList) {
-            ArrayList <String> members = c.getPersonIds();
-            Collections.sort(members);
-            if (members.equals(personIds)){return true;}
+    public boolean existChat(String currentId, String guestId) {
+        if (findChat(currentId, guestId) != null) {
+            return true;
         }
         return false;
     }
@@ -249,14 +270,9 @@ public class ChatManager implements Serializable{
      * @return True iff there exists a Chat with the exact same group members inputted
      *         False iff there does not exist a Chat with the exact same group members inputted
      */
-    public boolean existChat(String currentId, ArrayList <String> guestsId){
-        guestsId.add(currentId);
-        Collections.sort(guestsId);
-        for(Chat c: chatsList) {
-            ArrayList <String> members = c.getPersonIds();
-            Collections.sort(members);
-            if (members.equals(guestsId)){
-                return true;}
+    public boolean existChat(String currentId, ArrayList<String> guestsId) {
+        if (findChat(currentId, guestsId) != null) {
+            return true;
         }
         return false;
     }
@@ -270,68 +286,30 @@ public class ChatManager implements Serializable{
      */
     public String findChat(String currentId, String guestId) {
         ArrayList<String> personIds = new ArrayList<>();
-        personIds.add(currentId);
         personIds.add(guestId);
-        Collections.sort(personIds);
-        for (Chat c : chatsList) {
-            ArrayList<String> members = c.getPersonIds();
-            Collections.sort(members);
-            if (members.equals(personIds)) {
-                return c.getId();
-            }
-        }
-        return null;
+        return findChat(currentId, personIds);
     }
 
     /**
      * Find and return the chat ID of the Chat that has the exact same chat members inputted
+     *
      * @param currentId ID of the user
-     * @param guestsId ID of the chat members of the Chat
+     * @param guestsId  ID of the chat members of the Chat
      * @return chat ID of the Chat with exact same group members inputted.
-     *         null otherwise.
+     * null otherwise.
      */
-    public String findChat(String currentId, ArrayList <String> guestsId){
+    public String findChat(String currentId, ArrayList<String> guestsId) {
         guestsId.add(currentId);
         Collections.sort(guestsId);
-        for(Chat c: chatsList) {
-            ArrayList <String> members = c.getPersonIds();
+        for (Chat c : chatsList) {
+            ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);
-            if (members.equals(guestsId)){
+            if (members.equals(guestsId)) {
                 return c.getId();
             }
         }
         return null;
     }
-
-    /**
-     * Get chat formatted as: "[ID]: [ID of the chat]\new line
-     *                            [Participants]: [ID of the Participants]\newline
-     * @param chatID of the message that is to be formatted.
-     * @return Formatted string representation of the chat.
-     */
-    public String getFormattedChat(String chatID){
-        StringBuilder participants = new StringBuilder();
-        for (String participantID : this.getChat(chatID).getPersonIds()){
-            participants.append(participantID).append("\n");
-        }
-        return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
-    }
-
-    /**
-     * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\newline
-     *                                     [SenderID]: [Sender's ID]\newline
-     *                                     [Participants]: [ID of the Participants]\newline
-     * @param aChatID of the message that is to be formatted.
-     * @return Formatted string representation of the chat.
-     */
-    public String getFormattedAnChat(String aChatID){
-        StringBuilder participants = new StringBuilder();
-        for (String participantID : this.getAnChat(aChatID).getPersonIds()){
-            participants.append(participantID).append("\n");
-        }
-        return "AnnouncementChatID: " + aChatID + "\n" + "SenderID: " +
-                this.getAnChat(aChatID).getOwnerId() + "\n" + "Participants: "
-                + "\n" + participants + "\n";}
 }
 
 // CRC Card Definition

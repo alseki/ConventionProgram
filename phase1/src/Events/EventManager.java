@@ -93,19 +93,6 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Returns a list of Events stored in the EventManager
-     * @param eventsIn The IDs of the Events you want returned
-     * @return The Events, as an array of their String representations
-     */
-    public String[] getEventList(String[] eventsIn) {
-        String[] eventInfoArray = new String[eventsIn.length];
-        for (int i = 0; i < eventsIn.length; i++) {
-            eventInfoArray[i] = events.get(eventsIn[i]).toString();
-        }
-        return eventInfoArray;
-    }
-
-    /**
      * Returns a textual representation of an Event
      * @param eventID The ID of the Event
      * @return The Event, as a String
@@ -175,19 +162,6 @@ public class EventManager implements Serializable {
         else {
             return false;
         }
-    }
-
-    /**
-     * Checks to see whether two Events conflict
-     * @param event1ID The ID of the first Event
-     * @param event2ID The ID of the second Event. We assume this Event is held in this Room.
-     * @return whether the two Events conflict (true or false)
-     */
-    public boolean getConflict(String event1ID, String event2ID) {
-        if (events.get(event1ID) != null) {
-            return permissionChecker.checkConflicts(events.get(event1ID), events.get(event2ID));
-        }
-        return false;
     }
 
     /**
