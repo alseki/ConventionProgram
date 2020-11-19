@@ -22,12 +22,12 @@ public class SpeEventController implements SubMenu {
     Scanner input = new Scanner(System.in);
 
     public SpeEventController(String currentUserID, PersonManager personManager, MessageManager messageManager,
-                              ChatManager chatManager, EventManager eventManager) {
+                              ChatManager chatManager) {
         this.currentUserID = currentUserID;
         this.personManager = personManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
-        this.eventManager = eventManager;
+        //this.eventManager = eventManager;
     }
 
     /**

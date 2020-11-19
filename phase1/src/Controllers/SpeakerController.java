@@ -9,7 +9,6 @@ package Controllers;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
-import Person.AttendeeManager;
 import Person.SpeakerManager;
 import Presenter.MainMenu;
 
@@ -50,9 +49,9 @@ public class SpeakerController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        //SpeEventController speEventController = new SpeEventController(currentUserID, manager,
-                        //        messageManager, chatManager);
-                        //speEventController.menuChoice();
+                        SpeEventController speEventController = new SpeEventController(currentUserID, manager,
+                                messageManager, chatManager);
+                        speEventController.menuChoice();
                         break;
                 }
             }
