@@ -372,10 +372,12 @@ public class OrgEventController implements SubMenu {
         EventManager emanager = roomManager.getRoom(roomId); // eventmanager for events with roomid
         String eventId =  emanager.getEventID(eventName); // eventId
         String ev = emanager.getAnnouncementChat(eventId); // chatid
-        AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev); // the annoucement chat for the event
-        String pass = ch.getPassword(); // the password for the announcemenchat
+        //AnnouncementChat ch = (AnnouncementChat)chatManager.getChat(ev); // the annoucement chat for the event
+        //String pass = ch.getPassword(); // the password for the announcemenchat
+        //ch.addMessageIds(m, pass);
+        //Commented out the above 3 lines as chatManager.addMessageIds were improved. -Karyn, Nov 18
         String m = messageManager.createMessage(eventId, messageContent); // creating message for event
-        ch.addMessageIds(m, pass); // adding message to event chat
+        chatManager.addMessageIds(ev,m);// adding message to event chat
         return true;
     }
 

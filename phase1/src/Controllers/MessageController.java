@@ -75,14 +75,14 @@ public class MessageController implements SubMenu {
                     break;
                 case 3: //View the chat list
                     try {
-                        viewChats(chatManager.getChatIDs(currentUserID));
+                        viewChats(chatManager.getChatIDs());
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 4: //View the announcement chat list
                     try {
-                        viewChats(chatManager.getAnnouncementChatIDs(currentUserID));
+                        viewChats(chatManager.getAnnouncementChatIDs());
                     } catch (NoDataException e) {
                         presenter.printException(e);
                     }
@@ -207,14 +207,13 @@ public class MessageController implements SubMenu {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
-        if (chatManager.getChat(chatID) == null) {
+        if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
-        Chat currentChat = chatManager.getChat(chatID);
-        for (String receiverID : currentChat.getPersonIds()){
+        for (String receiverID : chatManager.getPersonIds(chatID)){
             if (!receiverID.equals(currentUserID)){
                 String messageID = messageManager.createMessage(currentUserID, receiverID, messageContent);
-                currentChat.addMessageIds(messageID);
+                chatManager.addMessageIds(chatID,messageID);
             }
         }
         return true;
