@@ -45,21 +45,18 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
      */
     @Override
-    public boolean menuOptions() {
+    public void menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        return true;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff uthe ser requests to return to Main Menu
      */
     @Override
-    public boolean menuChoice() {
+    public void menuChoice() {
         do {
             menuOptions();
             switch (currentRequest) {
@@ -84,24 +81,20 @@ public class OrgEventController implements SubMenu {
             }
         }
         while (currentRequest != 0);
-        return true;
-        // TODO add switch statement to call the methods that correspond with currentRequest
     }
 
     // OPTION 1
 
     /**
      * Prompts the user to input the information for the Room they wish to add
-     * @return true iff addRoom prompt was printed
      */
-    public boolean addRoomPrompt() {
+    public void addRoomPrompt() {
         presenter.addRoomPrompt();
         presenter.roomNamePrompt();
         String name = input.nextLine();
         presenter.roomCapacityPrompt();
         int capacity = Integer.parseInt(input.nextLine());
         this.addRoom(name, capacity);
-        return true;
     }
 
     /**
@@ -118,9 +111,8 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Prompts the user to input the information for the Event they wish to add
-     * @return true iff createEvent prompt was printed
      */
-    public boolean createEventPrompt() throws InvalidChoiceException {
+    public void createEventPrompt() throws InvalidChoiceException {
         presenter.printCreateEventPrompt();
         presenter.printEventTypePrompt();
         EventType type = chooseEventType();
@@ -138,15 +130,13 @@ public class OrgEventController implements SubMenu {
             boolean created = this.createTalk(eventName, speakerUsername, start, eventDescription, roomName);
             if (!created) {
                 presenter.printCapacityError();
-                return false;
             }
         }
         else if (type == EventType.WORKSHOP) {
             presenter.printSpeakerUsernamePrompt();
             String speakerUsername = input.nextLine();
-            return this.createWorkshop(eventName, speakerUsername, start, eventDescription, roomName);
+            this.createWorkshop(eventName, speakerUsername, start, eventDescription, roomName);
         }
-        return true;
     }
 
     /**
@@ -307,9 +297,8 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Prompts the user to input the information required to create a new Speaker account
-     * @return true iff addSpeaker prompt was printed
      */
-    public boolean addSpeakerPrompt(){
+    public void addSpeakerPrompt(){
         presenter.printAddSpeakerPrompt();
         presenter.printAddNamePrompt();
         String name = input.nextLine();
@@ -320,7 +309,6 @@ public class OrgEventController implements SubMenu {
         presenter.printAddPasswordPrompt();
         String pass = input.nextLine();
         this.createSpeaker(name, username, pass, email);
-        return true;
     }
 
     /**
@@ -343,9 +331,8 @@ public class OrgEventController implements SubMenu {
 
     /**
      * Prompts the user to input the information required to create an Event Message
-     * @return true iff eventMessage prompt was printed
      */
-    public boolean eventMessagePrompt() {
+    public void eventMessagePrompt() {
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
         String name = input.nextLine();
@@ -355,10 +342,8 @@ public class OrgEventController implements SubMenu {
             presenter.printMessageContentPrompt();
             String content = input.nextLine();
             eventMessage(name, roomName, content);
-            return true;
         } catch (InvalidChoiceException e) {
             presenter.printException(e);
-            return false;
         }
     }
 

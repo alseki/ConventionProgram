@@ -4,7 +4,6 @@ import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
-import Person.Speaker;
 import Presenter.SpeEventMenu;
 
 import java.util.ArrayList;
@@ -33,21 +32,18 @@ public class SpeEventController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
      */
     @Override
-    public boolean menuOptions() {
+    public void menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        return true;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
      */
     @Override
-    public boolean menuChoice() {
+    public void menuChoice() {
         do {
             menuOptions();
             switch (currentRequest){
@@ -105,7 +101,6 @@ public class SpeEventController implements SubMenu {
             }
         }
         while (currentRequest != 0);
-        return true;
     }
 
 
@@ -136,24 +131,24 @@ public class SpeEventController implements SubMenu {
         return true;
     }
 
+
     /**
      * This is to sent a message to all attendees of an event. It uses method eventMessage from below
      * @param eventName
      * @param messageContent
-     * @return boolean; returns true if sending message to all attendees is successful.
      */
-    public boolean eventMessageForAttendees(String eventName, String messageContent) {
+    public void eventMessageForAttendees(String eventName, String messageContent) {
         String eventID = eventManager.getEventID(eventName);
         ArrayList<String> attendeeList = eventManager.getSignUps(eventID);
         for (String attendee : attendeeList) {
             eventMessage(eventName, messageContent, attendee);
         }
-        return true;
     }
 
     /**
-     * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to announce, "download
-     * so and so application for the our talk today" to all talks, this method proves useful. This uses eventMessageForAttendees from above
+     * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to
+     * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
+     * uses eventMessageForAttendees from above
      * @param allSpeakerEvents ArrayList of Event Names hosted by the speaker
      * @param messageContent String representing content of the message
      * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
@@ -167,40 +162,39 @@ public class SpeEventController implements SubMenu {
     }
 
     /**
-     * This is to send a message to all attendees of all of Speaker's events. For example, if Speaker wanted to announce, "download
-     * so and so application for the our talk today" to all talks, this method proves useful. This uses eventMessageForAttendees from above
+     * This is to send a message to all attendees of all or some of Speaker's events. For example, if Speaker wanted to
+     * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
+     * uses eventMessageForAttendees from above
      * @param allSpeakerEvents String Array of Names of Events hosted by the speaker
      * @param messageContent String representing content of the message
      * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
 
-    public boolean allSpeakerEventsMessage(String[] allSpeakerEvents, String messageContent) {
+    public void allSpeakerEventsMessage(String[] allSpeakerEvents, String messageContent) {
         for (String eventName : allSpeakerEvents) {
             eventMessageForAttendees(eventName, messageContent);
         }
-        return true;
     }
 
     /**
-     * This is the same method from above, but only using speakerId as a parameter instead of the list of all Speaker talks
+     * This is the same method from above, but only using messageContent as a parameter instead of the list of all
+     * Speaker talks
      * @param messageContent
-     * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
-    public boolean allSpeakerEventsMessagingById(String messageContent) {
+    public void allSpeakerEventsMessagingById(String messageContent) {
         ArrayList <String> allSpeakerEvents = personManager.getSpeakerIdAllTalks(currentUserID);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
-        return true;
-
     }
 
     /**
-     * This is the same method from above (allSpeakerEventsMessage), but only using speaker's username as a parameter instead of the list of all Speaker talks
-     * @param username
+     * This is the same method from above (allSpeakerEventsMessage), but using speaker's currentUserId as a parameter
+     * instead of the list of all Speaker talks
+     * @param currentUserId
      * @param messageContent
      * @return
      */
-    public boolean allSpeakerEventsMessagingByUsername(String username, String messageContent) {
-        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(username);
+    public boolean allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
+        ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(currentUserId);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
 
         return true;
@@ -221,7 +215,7 @@ public class SpeEventController implements SubMenu {
         String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attendeeID)));
         chatManager.addMessageIds(acID, messageID);
         return true;
-        }
+    }
     //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
     //if (!(attList.contains(attID))){
     //throw new InvalidIDException();

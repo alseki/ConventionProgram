@@ -30,7 +30,7 @@ public class MessageMenu implements printSubMenu {
      */
     @Override
     public void printMenuOptions() {
-        System.out.println("----- Message Menu -----");
+        System.out.println('\n' + "----- Message Menu -----");
         System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
         System.out.println("Check your inbox ----------------------------------- Enter '1'.");
         System.out.println("Check your sent box -------------------------------- Enter '2'.");

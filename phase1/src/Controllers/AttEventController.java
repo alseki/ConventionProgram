@@ -31,21 +31,18 @@ public class AttEventController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff int was inputted and currentRequest was updated
      */
     @Override
-    public boolean menuOptions() {
+    public void menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        return true;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
      */
     @Override
-    public boolean menuChoice() {
+    public void menuChoice() {
         do {
             menuOptions();
             switch(currentRequest) {
@@ -87,7 +84,7 @@ public class AttEventController implements SubMenu {
             }
         }
         while (currentRequest != 0);
-        return true;
+
     }
 
     // TODO change, delete and/or add to the methods below
@@ -118,18 +115,15 @@ public class AttEventController implements SubMenu {
 
     /**
      * Gets the list of Events the Attendee user is signed up for
-     * @return true iff the presenter has been updated with a list of Events
      */
-    public boolean getUserEventList() {
+    public void getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
         presenter.printAttendeeEventList(userEventList);
-        return true;
     }
 
     /**
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
-     * @return true iff user was signed up for the Event
      */
     public void signupForEvent (String eventName) throws InvalidChoiceException  {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
@@ -151,9 +145,8 @@ public class AttEventController implements SubMenu {
     /**
      * Remove this user from Event
      * @param eventName The name of the Event the current user requested to cancel
-     * @return true iff user was removed from the Event
      */
-    public boolean cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
+    public void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
@@ -164,8 +157,6 @@ public class AttEventController implements SubMenu {
         attendeeManager.removeChat(currentUserID, thisRoom.getEventChat(event));
         if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
-            return true;
         }
-        return false;
     }
 }

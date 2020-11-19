@@ -9,7 +9,7 @@ public class SpeEventMenu implements printSubMenu {
      */
     @Override
     public void printMenuOptions() {
-        System.out.println("----- Speaker Event Menu -----");
+        System.out.println('\n' + "----- Speaker Event Menu -----");
         System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
         System.out.println("View the talk you're going to talk at -------------- Enter '1'.");
         //System.out.println("Send message to all Users in an Event -------------- Enter '2'.");
@@ -78,7 +78,7 @@ public class SpeEventMenu implements printSubMenu {
      *
      * @return true iff all menu options were printed
      *//*
-    @Override
+    /*@Override
     public boolean printMenuOptions() {
         System.out.println("----- Speaker Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
