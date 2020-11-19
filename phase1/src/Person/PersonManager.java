@@ -94,12 +94,27 @@ public abstract class PersonManager {
      *
      * @param username
      * returns CurrentUser ID
-     * @return String; this is for methods that need CurrentUserID, but only which to get CurrentUserID
+     * @return String; this is for methods that need CurrentUserID, by giving username
      * using search by username only. Ex. public boolean addContract; see below
      */
     public String getCurrentUserID(String username) {
         if (usernameToPerson.containsKey(username)) {
             return usernameToPerson.get(username).getID();
+        }
+        return null;
+    }
+
+
+    /**
+     *
+     * @param currentId
+     * returns username
+     * @return String; this is for methods that need username, by giving currentId
+     * using search by username only. Ex. public boolean addContract; see below
+     */
+    public String getCurrentUsername(String currentId) {
+        if (idToPerson.containsKey(currentId)) {
+            return usernameToPerson.get(currentId).getUsername();
         }
         return null;
     }
