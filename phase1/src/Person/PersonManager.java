@@ -2,13 +2,14 @@ package Person;
 
 import Events.Event;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public abstract class PersonManager {
+public abstract class PersonManager implements Serializable {
 
     // This is a dictionary that will pair username to Person object. This dictionary is used by methods below
     protected Map<String, Person> usernameToPerson = new HashMap<String, Person>();
