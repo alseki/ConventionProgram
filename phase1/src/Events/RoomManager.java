@@ -31,7 +31,11 @@ public class RoomManager implements Serializable {
      * @return The Room's EventManager
      */
     public EventManager getRoom(String ID) {
-        return roomList.get(ID);
+        try {
+            return roomList.get(ID);
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     /**
@@ -87,7 +91,19 @@ public class RoomManager implements Serializable {
             for(String room: getRoomNames()) {
                 EventManager manager = this.getRoom(this.getRoomID(room));
                 if (manager.getEventID(eventName) != null) {
-                    return manager.getEventID(eventName);
+                    return getRoomID(room);
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getEventRoomByID(String ID) {
+        if(getRoomNames().length > 0) {
+            for(String room: getRoomNames()) {
+                EventManager manager = this.getRoom(this.getRoomID(room));
+                if (manager.getEvent(ID) != null) {
+                    return getRoomID(room);
                 }
             }
         }

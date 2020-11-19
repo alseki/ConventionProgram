@@ -51,9 +51,9 @@ public class ContactController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddContactPrompt();
-                    // input.nextLine();
+                    // SubMenu.readInput(input);
                     try {
-                        addContact(input.nextLine());
+                        addContact(SubMenu.readInput(input));
                     } catch (NoDataException e) {
                         e.printErrorMessage();
                     }
@@ -66,7 +66,7 @@ public class ContactController implements SubMenu {
     /**
      * Get's the current user's contactList
      */
-    public void getContactList() {
+    private void getContactList() {
         ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
         presenter.printContactList(listOfContacts);
     }
@@ -75,7 +75,7 @@ public class ContactController implements SubMenu {
      * Add a contact to the current user's contactList
      * @param contactUsername the username of the contact the current user wants to add to their contactList
      */
-    public void addContact(String contactUsername) throws NoDataException{
+    private void addContact(String contactUsername) throws NoDataException{
         String contactID = pManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             throw new NoDataException("contact username");

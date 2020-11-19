@@ -48,15 +48,15 @@ public class LoginController implements SubMenu {
                         currentRequest = 0;
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
-                        break;
                     }
+                    break;
                 case 2:
                     try {
                         createAccount();
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
-                        break;
                     }
+                    break;
             }
         }
         while (currentRequest != 0);
@@ -68,14 +68,15 @@ public class LoginController implements SubMenu {
     private void login() throws InvalidChoiceException {
         presenter.printLoginPrompt();
         presenter.printUsernamePrompt();
-        username = input.next();
+        username = SubMenu.readInput(input);
         presenter.printPasswordPrompt();
-        String password = input.next();
+        String password = SubMenu.readInput(input);
         if (manager.getCurrentUserID(username) != null)  {
-            if(!manager.confirmPassword(username, password)) {
-                throw new InvalidChoiceException("account");
+            if(manager.confirmPassword(username, password)) {
+                return;
             }
         }
+        throw new InvalidChoiceException("account");
     }
 
     /**
@@ -84,20 +85,21 @@ public class LoginController implements SubMenu {
     private void createAccount() throws InvalidChoiceException {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
-        username = input.next();
+        username = SubMenu.readInput(input);
         if (manager.getCurrentUserID(username) != null) {
             throw new InvalidChoiceException("username taken");
         }
         presenter.printPasswordPrompt();
-        String password = input.next();
+        String password = SubMenu.readInput(input);
         presenter.printNamePrompt();
-        String name = input.next();
+        String name = SubMenu.readInput(input);
         presenter.printEmailPrompt();
-        String email = input.nextLine();
-        input.nextLine();
+        String email = SubMenu.readInput(input);
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
         }
-        throw new InvalidChoiceException("username");
+        else {
+            throw new OverwritingException("username");
+        }
     }
 }

@@ -53,25 +53,22 @@ public class AttEventController implements SubMenu {
                     try {
                         String roomID = this.getRoomChoice();
                         presenter.printRoomEventList(roomManager.getRoom(roomID).getEventList(), roomManager.getRoomName(roomID));
-                    } catch (NoDataException e) {
+                    } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
-                    input.nextLine();
-                    String addingEventInput = input.nextLine();
+                    String addingEventInput = SubMenu.readInput(input);
                     try {
                         signupForEvent(addingEventInput);
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
-
                     break;
                 case 3:
                     presenter.printRemoveEventPrompt();
-                    input.nextLine();
-                    String removingEventInput = input.nextLine();
+                    String removingEventInput = SubMenu.readInput(input);
                     try {
                          cancelSpotFromEvent(removingEventInput);
                     } catch (InvalidChoiceException e) {
@@ -93,39 +90,43 @@ public class AttEventController implements SubMenu {
      * Takes user input to pick a Room for which that user wishes to view the Events held there
      * @return the ID of the Room chosen
      */
-    private String getRoomChoice() throws NoDataException {
+    private String getRoomChoice() throws InvalidChoiceException {
         presenter.printRoomChoicePrompt();
-        input.nextLine();
-        String room = input.nextLine();
-        try {
-            if (room.equals("0")) {
-                presenter.printList(roomManager.getRoomNames(), "room");
-                room = input.nextLine();
-            }
-            if (roomManager.getRoomID(room) != null) {
-                return roomManager.getRoomID(room);
-            } else {
-                return getRoomChoice();
-            }
+        String room = SubMenu.readInput(input);
+        if (room.equals("0")) {
+            presenter.printList(roomManager.getRoomNames(), "room");
+            room = SubMenu.readInput(input);
         }
-        catch (NoDataException e) {
-            throw e;
+        if (roomManager.getRoomID(room) != null) {
+            return roomManager.getRoomID(room);
+        } else {
+            throw new InvalidChoiceException("room");
         }
     }
 
     /**
      * Gets the list of Events the Attendee user is signed up for
      */
-    public void getUserEventList() {
+    private void getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
-        presenter.printAttendeeEventList(userEventList);
+        String[] evList = new String[userEventList.size()];
+        for (int i = 0; i < evList.length; i++) {
+            String room = roomManager.getEventRoomByID(userEventList.get(i));
+            String event = roomManager.getRoom(room).getEvent(userEventList.get(i));
+            evList[i] = event;
+        }
+        try {
+            presenter.printList(evList, "event");
+        } catch (InvalidChoiceException i) {
+            presenter.printException(i);
+        }
     }
 
     /**
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      */
-    public void signupForEvent (String eventName) throws InvalidChoiceException  {
+    private void signupForEvent (String eventName) throws InvalidChoiceException  {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
@@ -146,7 +147,7 @@ public class AttEventController implements SubMenu {
      * Remove this user from Event
      * @param eventName The name of the Event the current user requested to cancel
      */
-    public void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
+    private void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
