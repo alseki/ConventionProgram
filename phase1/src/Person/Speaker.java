@@ -12,7 +12,7 @@ public class Speaker extends Person { //implements Person.Signupable
 
     protected ArrayList<String> eventsSignedUp;
 
-    protected ArrayList<String> allTalksID;
+    protected ArrayList<String> allTalksID = new ArrayList<>();
 
     protected Map<String, String> allTalksDictionary = new HashMap<String, String>(); // this is a a dictionary of eventIDs to eventNames
 

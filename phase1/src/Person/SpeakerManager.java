@@ -84,6 +84,9 @@ public class SpeakerManager extends PersonManager {
 
     public boolean addAnnouncementChats(String personId, String acId) {
         Speaker individual = (Speaker) idToPerson.get(personId);
+        if(individual.getAnnouncementChats() == null) {
+            return false;
+        }
         if(!individual.getAnnouncementChats().contains(acId)) {
             individual.announcementChatIds.add(acId);
             return true;

@@ -85,17 +85,16 @@ public class LoginController implements SubMenu {
     private void createAccount() throws InvalidChoiceException {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
-        username = input.next();
+        username = SubMenu.readInput(input);
         if (manager.getCurrentUserID(username) != null) {
             throw new InvalidChoiceException("username taken");
         }
         presenter.printPasswordPrompt();
-        String password = input.next();
+        String password = SubMenu.readInput(input);
         presenter.printNamePrompt();
-        String name = input.next();
+        String name = SubMenu.readInput(input);
         presenter.printEmailPrompt();
         String email = SubMenu.readInput(input);
-        SubMenu.readInput(input);
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
         }

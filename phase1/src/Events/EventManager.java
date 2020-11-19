@@ -61,7 +61,7 @@ public class EventManager implements Serializable {
      */
     private Event[] getEvents() {
         Event[] eventArray = {};
-        return events.entrySet().toArray(eventArray);
+        return events.values().toArray(eventArray);
     }
 
     /**

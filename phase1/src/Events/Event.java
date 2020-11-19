@@ -197,7 +197,7 @@ public abstract class Event implements Serializable {
      */
     @Override
     public String toString() {
-        return getDescription();
+        return "Title: " + getName() + "\n" + getDescription();
     }
 
     /**
