@@ -14,7 +14,7 @@ public class ContactMenu implements printSubMenu {
      */
     @Override
     public void printMenuOptions() {
-        System.out.println("----- Contact Menu -----");
+        System.out.println('\n' + "----- Contact Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To view Contact List, Enter '1'");
         System.out.println("To add a Contact, Enter '2'.");

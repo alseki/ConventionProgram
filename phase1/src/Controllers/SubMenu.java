@@ -11,15 +11,13 @@ public interface SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
      */
-    boolean menuOptions();
+    void menuOptions();
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
      */
-    boolean menuChoice();
+    void menuChoice();
 
     /**
      * Reads in lines of the input until it recieves an integer

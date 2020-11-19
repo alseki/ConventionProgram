@@ -34,18 +34,16 @@ public class ContactController implements SubMenu {
      * @return true iff choice was inputted
      */
     @Override
-    public boolean menuOptions() {
+    public void menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        return true;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
      */
     @Override
-    public boolean menuChoice() {
+    public void menuChoice() {
         do {
             menuOptions();
             switch (currentRequest) {
@@ -57,7 +55,7 @@ public class ContactController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddContactPrompt();
-                    input.nextLine();
+                    // input.nextLine();
                     try {
                         addContact(input.nextLine());
                     } catch (NoDataException e) {
@@ -67,7 +65,6 @@ public class ContactController implements SubMenu {
             }
         }
         while (currentRequest != 0);
-        return true;
     }
 
     /**

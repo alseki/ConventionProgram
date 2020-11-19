@@ -38,21 +38,18 @@ public class MessageController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
      */
     @Override
-    public boolean menuOptions() {
+    public void menuOptions() {
         presenter.printMenuOptions();
         currentRequest = SubMenu.readInteger(input);
-        return true;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     * @return true iff user requests to return to Main Menu
      */
     @Override
-    public boolean menuChoice() {
+    public void menuChoice() {
         do {
             menuOptions();
             switch (currentRequest) {
@@ -88,7 +85,6 @@ public class MessageController implements SubMenu {
             }
         }
         while (currentRequest != 0);
-        return true;
     }
 
     /**
@@ -203,7 +199,6 @@ public class MessageController implements SubMenu {
      * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
      * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
-     * @return true iff new Message was created and added to Chat's messageList
      */
     public void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
         if (chatManager.isEmpty()) {
