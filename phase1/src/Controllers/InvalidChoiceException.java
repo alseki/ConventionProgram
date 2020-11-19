@@ -9,7 +9,7 @@ public class InvalidChoiceException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Whoops! That's an invalid " + type + " choice. Please try again!";
+        return "No such " + type + " exists.";
     }
 
     public void printErrorMessage() {
