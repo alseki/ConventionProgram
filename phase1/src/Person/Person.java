@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class Person implements Serializable {
     protected String username;
-    public String id;
+    protected String id;
     protected String currentUserID;
     protected String password;
     protected String email;
