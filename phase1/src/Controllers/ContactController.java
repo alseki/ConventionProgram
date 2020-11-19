@@ -6,11 +6,8 @@ package Controllers;
 // Date Modified: 14/11/2020
 
 
-import Events.RoomManager;
-import Message.ChatManager;
-import Message.MessageManager;
+
 import Person.PersonManager;
-import Person.SpeakerManager;
 import Presenter.ContactMenu;
 
 import java.util.Scanner;
@@ -31,7 +28,6 @@ public class ContactController implements SubMenu {
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     * @return true iff choice was inputted
      */
     @Override
     public void menuOptions() {
