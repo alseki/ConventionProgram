@@ -200,7 +200,7 @@ public class MessageController implements SubMenu {
      * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      */
-    public void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+    private void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }

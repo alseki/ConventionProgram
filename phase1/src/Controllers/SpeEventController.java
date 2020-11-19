@@ -108,7 +108,7 @@ public class SpeEventController implements SubMenu {
      * Get the list of talk the user is scheduled to speak at
      * @return String chunk of formatted Talks
      */
-    public String getFormattedTalks() {
+    private String getFormattedTalks() {
         StringBuilder result = new StringBuilder();
         ArrayList <String> events = personManager.getEventList(currentUserID);
         for (String e: events){
@@ -120,15 +120,13 @@ public class SpeEventController implements SubMenu {
      * Sends a Message to every user signed up for an event
      * @param eventName The name of the Event
      * @param messageContent Content of the Message to be sent
-     * @return true iff the Message was sent to every user on the event list
      */
-    public boolean eventMessage(String eventName, String messageContent) {
+    private void eventMessage(String eventName, String messageContent) {
         String eventID = eventManager.getEventID(eventName);
         ArrayList<String> attIDs = eventManager.getSignUps(eventID);
         String messageID = messageManager.createMessage(eventID, messageContent);
         String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(attIDs));
         chatManager.addMessageIds(acID, messageID);
-        return true;
     }
 
 
@@ -137,7 +135,7 @@ public class SpeEventController implements SubMenu {
      * @param eventName
      * @param messageContent
      */
-    public void eventMessageForAttendees(String eventName, String messageContent) {
+    private void eventMessageForAttendees(String eventName, String messageContent) {
         String eventID = eventManager.getEventID(eventName);
         ArrayList<String> attendeeList = eventManager.getSignUps(eventID);
         for (String attendee : attendeeList) {
@@ -151,14 +149,12 @@ public class SpeEventController implements SubMenu {
      * uses eventMessageForAttendees from above
      * @param allSpeakerEvents ArrayList of Event Names hosted by the speaker
      * @param messageContent String representing content of the message
-     * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
 
-    public boolean allSpeakerEventsMessage(ArrayList<String> allSpeakerEvents, String messageContent) {
+    private void allSpeakerEventsMessage(ArrayList<String> allSpeakerEvents, String messageContent) {
             for (String eventName : allSpeakerEvents) {
                 eventMessageForAttendees(eventName, messageContent);
             }
-            return true;
     }
 
     /**
@@ -167,10 +163,9 @@ public class SpeEventController implements SubMenu {
      * uses eventMessageForAttendees from above
      * @param allSpeakerEvents String Array of Names of Events hosted by the speaker
      * @param messageContent String representing content of the message
-     * @return boolean; returns true if sending message to all attendees of all of a speaker's event was successful
      */
 
-    public void allSpeakerEventsMessage(String[] allSpeakerEvents, String messageContent) {
+    private void allSpeakerEventsMessage(String[] allSpeakerEvents, String messageContent) {
         for (String eventName : allSpeakerEvents) {
             eventMessageForAttendees(eventName, messageContent);
         }
@@ -181,7 +176,7 @@ public class SpeEventController implements SubMenu {
      * Speaker talks
      * @param messageContent
      */
-    public void allSpeakerEventsMessagingById(String messageContent) {
+    private void allSpeakerEventsMessagingById(String messageContent) {
         ArrayList <String> allSpeakerEvents = personManager.getSpeakerIdAllTalks(currentUserID);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
     }
@@ -191,13 +186,10 @@ public class SpeEventController implements SubMenu {
      * instead of the list of all Speaker talks
      * @param currentUserId
      * @param messageContent
-     * @return
      */
-    public boolean allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
+    private void allSpeakerEventsMessagingByUsername(String currentUserId, String messageContent) {
         ArrayList <String> allSpeakerEvents = personManager.getSpeakerAllTalks(currentUserId);
         allSpeakerEventsMessage(allSpeakerEvents, messageContent);
-
-        return true;
 
     }
 
@@ -205,16 +197,14 @@ public class SpeEventController implements SubMenu {
      * Sends a Message to one Attendee signed up for an event
      * @param eventName The name of the Event
      * @param attendeeUsername Th username of the Attendee the user wishes to message
-     * @return true iff the message was sent to the corresponding Attendee
      */
-    public boolean eventMessage(String eventName, String messageContent, String attendeeUsername) {
+    private void eventMessage(String eventName, String messageContent, String attendeeUsername) {
         String eventID = eventManager.getEventID(eventName);
         String attID = personManager.getCurrentUserID(attendeeUsername);
         String[] attendeeID = new String[]{attID};
         String messageID = messageManager.createMessage(eventID, messageContent);
         String acID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>(Arrays.asList(attendeeID)));
         chatManager.addMessageIds(acID, messageID);
-        return true;
     }
     //List<String> attList = Arrays.asList(eventManager.getSignUps(eventManager.getEventID(eventName)));
     //if (!(attList.contains(attID))){

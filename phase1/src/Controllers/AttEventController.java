@@ -116,7 +116,7 @@ public class AttEventController implements SubMenu {
     /**
      * Gets the list of Events the Attendee user is signed up for
      */
-    public void getUserEventList() {
+    private void getUserEventList() {
         ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
         presenter.printAttendeeEventList(userEventList);
     }
@@ -125,7 +125,7 @@ public class AttEventController implements SubMenu {
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      */
-    public void signupForEvent (String eventName) throws InvalidChoiceException  {
+    private void signupForEvent (String eventName) throws InvalidChoiceException  {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
@@ -146,7 +146,7 @@ public class AttEventController implements SubMenu {
      * Remove this user from Event
      * @param eventName The name of the Event the current user requested to cancel
      */
-    public void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
+    private void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
         EventManager thisRoom = roomManager.getRoom(roomManager.getEventRoom(eventName));
         if (thisRoom == null) {
             throw new InvalidChoiceException("event");
