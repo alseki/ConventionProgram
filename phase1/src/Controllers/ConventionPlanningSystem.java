@@ -29,7 +29,7 @@ public class ConventionPlanningSystem {
     public void run() {
         do {
             presenter.printIntroMessage();
-            accountChoice = input.nextInt();
+            accountChoice = SubMenu.readInteger(input);
             setController(accountChoice);
         }
         while (accountChoice != 0);

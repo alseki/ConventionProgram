@@ -22,15 +22,6 @@ public class OrgEventMenu implements printSubMenu {
         System.out.println("To make an announcement to the attendees of an event, Enter 4\n");
     }
 
-    /**
-     * Prints out an Exception thrown by the program to the user
-     * @param e The exception
-     */
-    public void printException(Exception e) {
-        System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage());
-    }
-
     // OPTION 1
 
     /**

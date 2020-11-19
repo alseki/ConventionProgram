@@ -101,13 +101,6 @@ public class SpeEventMenu implements printSubMenu {
 
     }
 
-    /**
-     * Prints \n
-     */
-    public void printSkipLine() {
-        System.out.println();
-    }
-
     public boolean printRoomChoicePrompt() {
         System.out.println("\n Which room's schedule do you want to see? (Press 0 for options)");
         return true;

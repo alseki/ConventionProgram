@@ -5,6 +5,8 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 17/11/2020
 
+import Controllers.NoDataException;
+
 import java.util.ArrayList;
 
 public class AttEventMenu implements printSubMenu {
@@ -30,21 +32,6 @@ public class AttEventMenu implements printSubMenu {
         System.out.println("\n Which room's schedule do you want to see? (Press 0 for options)");
     }
 
-
-    public void printList (String[] list) {
-        System.out.println();
-        if (list != null) {
-            System.out.println("\n---");
-            for (String item : list) {
-                System.out.println(item);
-            }
-            System.out.println("---\n");
-        }
-        else {
-            System.out.println("Sorry! No items found");
-        }
-    }
-
     /**
      * Prints the list of Events happening in a given room
      * @param eventList a collection of Event information to be printed
@@ -52,16 +39,12 @@ public class AttEventMenu implements printSubMenu {
      */
     public void printRoomEventList(String[] eventList, String roomName) {
         System.out.println("\nEVENTS IN ROOM " + roomName.toUpperCase() + "-");
-        printList(eventList);
-    }
-
-    /**
-     * Prints out an Exception thrown by the program to the user
-     * @param e The exception
-     */
-    public void printException(Exception e) {
-        System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage());
+        try {
+            printList(eventList, "event");
+        }
+        catch (NoDataException e) {
+            printException(e);
+        }
     }
 
     /**
@@ -69,11 +52,11 @@ public class AttEventMenu implements printSubMenu {
      * @param EventList a collection of Event information to be printed
      */
     public void printAttendeeEventList(ArrayList<String> EventList) {
-        System.out.println("-EVENTS YOU HAVE SIGNED UP FOR-");
+        System.out.println('\n' + "-EVENTS YOU HAVE SIGNED UP FOR-");
         for(String userEvent: EventList) {
             System.out.println(userEvent);
         }
-        System.out.println("---");
+        System.out.println("---" + '\n');
     }
 
     /**

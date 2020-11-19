@@ -41,8 +41,7 @@ public class MessageController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        // TODO update presenter class with a print statement for each option
-        currentRequest = input.nextInt();
+        currentRequest = SubMenu.readInteger(input);
         return true;
     }
 
@@ -54,28 +53,43 @@ public class MessageController implements SubMenu {
     public boolean menuChoice() {
         do {
             menuOptions();
-            // TODO add switch statement to call the methods that correspond with currentRequest
             switch (currentRequest) {
                 case 0:
                     // return to main menu
                     break;
                 case 1: //Check your inbox
-                    presenter.printArrayList(this.inBox());
+                    try {
+                        presenter.printList(inBox(), "message");
+                    } catch (NoDataException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 2: //Check your sent box
-                    presenter.printArrayList(this.sentBox());
+                    try {
+                        presenter.printList(sentBox(), "message");
+                    } catch (NoDataException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 3: //View the chat list
-                    presenter.printArrayList(this.viewChats());
+                    try {
+                        presenter.printList(viewChats(), "chat");
+                    } catch (NoDataException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 4: //View the announcement chat list
-                    presenter.printArrayList(this.viewAnnouncementChat());
+                    try {
+                        presenter.printList(viewAnnouncementChat(), "chat");
+                    } catch (NoDataException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 5: //View the messages in a chat
                     presenter.printChatIdPrompt();
                     input.nextLine();
                     try {
-                        presenter.printArrayList(printChat(input.nextLine()));
+                        presenter.printList(printChat(input.nextLine()), "chat");
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
@@ -84,7 +98,7 @@ public class MessageController implements SubMenu {
                     presenter.printAnChatIdPrompt();
                     input.nextLine();
                     try {
-                        presenter.printArrayList(printChat(input.nextLine()));
+                        presenter.printList(printChat(input.nextLine()), "chat");
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
@@ -201,7 +215,7 @@ public class MessageController implements SubMenu {
      * Show all the messages this user sent in presenter, **sorted by datetime.
      * @return ArrayList of formatted messages.
      */
-    private ArrayList<String> sentBox(){
+    private String[] sentBox(){
         ArrayList<String> sentMessages = new ArrayList<>();
         for (Message message: this.messageManager.getMessageList()){
             if (message.getSenderId().equals(currentUserID)){
@@ -209,7 +223,8 @@ public class MessageController implements SubMenu {
                 sentMessages.add(formattedMessage);
             }
         }
-        return sentMessages;
+        String[] messages = {};
+        return sentMessages.toArray(messages);
         // Let presenter show the sent messages.
     }
 
@@ -217,7 +232,7 @@ public class MessageController implements SubMenu {
      * Show all the messages this user received in presenter, **sorted by datetime.
      * @return ArrayList of formatted messages.
      */
-    private ArrayList<String> inBox(){
+    private String[] inBox(){
         ArrayList<String> receivedMessages = new ArrayList<>();
         for (Message message: this.messageManager.getMessageList()){
             if (message.getRecipientId().equals(currentUserID)){
@@ -225,7 +240,8 @@ public class MessageController implements SubMenu {
                 receivedMessages.add(formattedMessage);
             }
         }
-        return receivedMessages;
+        String[] messages = {};
+        return receivedMessages.toArray(messages);
         // Let presenter show the sent messages.
     }
 
@@ -238,7 +254,10 @@ public class MessageController implements SubMenu {
      *              [Participants]: [ID of the Participants]\newline
      *              ...
      */
-    private ArrayList<String> viewChats(){
+    private String[] viewChats() throws  NoDataException{
+        if (chatManager.getChatsList() == null) {
+            throw new NoDataException("chat");
+        }
         ArrayList<String> chats = new ArrayList<>();
         for (Chat c : this.chatManager.getChatsList()) {
             for (String personID : c.getPersonIds()) {
@@ -248,7 +267,8 @@ public class MessageController implements SubMenu {
                 }
             }
         }
-        return chats;
+        String[] chatList = {};
+        return chats.toArray(chatList);
         // Let presenter show the chats.
     }
 
@@ -256,7 +276,7 @@ public class MessageController implements SubMenu {
      * Show the messages in one chat by chatID.
      * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
-    private ArrayList<String> printChat(String chatID) throws InvalidChoiceException{
+    private String[] printChat(String chatID) throws InvalidChoiceException{
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
@@ -272,8 +292,8 @@ public class MessageController implements SubMenu {
                 }
             }
         }
-        // Let presenter show the formatted messages in this chat.
-        return messageInChat;
+        String[] messages = {};
+        return messageInChat.toArray(messages);
     }
 
     /**
@@ -285,7 +305,10 @@ public class MessageController implements SubMenu {
      *                   [ID]: [ID of the chat]\new line
      *                   [Participants]: [ID of the Participants]\newline
      */
-    private ArrayList<String> viewAnnouncementChat(){
+    private String[] viewAnnouncementChat() throws NoDataException{
+        if (chatManager.getAnChatsList() == null) {
+            throw new NoDataException("chat");
+        }
         ArrayList<String> aChats = new ArrayList<>();
         for (Chat ac : this.chatManager.getAnChatsList()) {
             for (String personID : ac.getPersonIds()) {
@@ -295,7 +318,8 @@ public class MessageController implements SubMenu {
                 }
             }
         }
-        return aChats;
+        String[] chats = {};
+        return aChats.toArray(chats);
         // Let presenter show the chats.
     }
 

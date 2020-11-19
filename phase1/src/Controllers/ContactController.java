@@ -36,7 +36,7 @@ public class ContactController implements SubMenu {
     @Override
     public boolean menuOptions() {
         presenter.printMenuOptions();
-        currentRequest = input.nextInt();
+        currentRequest = SubMenu.readInteger(input);
         return true;
     }
 
