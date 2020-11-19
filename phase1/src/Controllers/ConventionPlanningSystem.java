@@ -3,9 +3,10 @@ package Controllers;
 // Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: The central Controller of the Convention System. Calls all other Controllers.
 // Date Created: 01/11/2020
-// Date Modified: 16/11/2020
+// Date Modified: 18/11/2020
 
 import Events.RoomManager;
+import Message.ChatManager;
 import Message.MessageManager;
 import Person.*;
 import Presenter.CPSMenu;
@@ -19,9 +20,11 @@ public class ConventionPlanningSystem {
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
     private MessageManager mm = new MessageManager();
-    private RoomManager rm = new RoomManager(); 
+    private RoomManager rm = new RoomManager();
+    private ChatManager cm = new ChatManager();
     private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("events.ser");
     private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
+    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("chats.ser");
 
     /**
     * Calls appropriate Controllers based on user input.
@@ -49,18 +52,18 @@ public class ConventionPlanningSystem {
                 break;
             case 1:
                 AttendeeManager am = new AttendeeManager();
-                AttendeeController AC =  new AttendeeController(am, rm, mm);
+                AttendeeController AC =  new AttendeeController(am, rm, mm, cm);
                 AC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager();
                 SpeakerManager sm = new SpeakerManager();
-                OrganizerController OC = new OrganizerController(om, sm, rm, mm);
+                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm);
                 OC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager();
-                SpeakerController SC = new SpeakerController(sman, rm, mm);
+                SpeakerController SC = new SpeakerController(sman, rm, mm, cm);
                 SC.run();
                 break;
         }
@@ -76,6 +79,9 @@ public class ConventionPlanningSystem {
         if (messageLoader.readFile() != null) {
             mm = messageLoader.readFile();
         }
+        if (chatLoader.readFile() != null) {
+            cm = chatLoader.readFile();
+        }
     }
 
     /**
@@ -84,6 +90,7 @@ public class ConventionPlanningSystem {
     private void save() {
         roomLoader.writeFile(rm);
         messageLoader.writeFile(mm);
+        chatLoader.writeFile(cm);
     }
 
 }

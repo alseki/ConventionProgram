@@ -14,7 +14,7 @@ import java.util.List;
 public class MessageManager implements Serializable {
     private ArrayList<Message> messageList;
 
-    public MessageManager(){
+    public MessageManager() {
         messageList = new ArrayList<>();
     }
 
@@ -23,7 +23,7 @@ public class MessageManager implements Serializable {
      *
      * @return the messageId iff succeed.
      */
-    public String createMessage(String senderId, String recipientId, String content){
+    public String createMessage(String senderId, String recipientId, String content) {
         Message newMessage = new Message(senderId, recipientId, content);
         messageList.add(newMessage);
         return newMessage.getMessageId();
@@ -31,11 +31,12 @@ public class MessageManager implements Serializable {
 
     /**
      * this method is used for event messages.
+     *
      * @param eventId an id representing the eventId
      * @param content an string reprsenting the content
      * @return ID of the newly created Message object
      */
-    public String createMessage(String eventId, String content){
+    public String createMessage(String eventId, String content) {
         Message newMessage = new Message(eventId, content);
         messageList.add(newMessage);
         return newMessage.getMessageId();
@@ -47,19 +48,20 @@ public class MessageManager implements Serializable {
      *
      * @return the Message.Message.messageList.
      */
-    public ArrayList<Message> getMessageList(){
+    public ArrayList<Message> getMessageList() {
         return this.messageList;
     }
 
     /**
      * Get Message.Message by the Id.
+     *
      * @param MessageId the ID of Message object that we are trying to retrieve.
      * @return the Message.Message.
      */
-    private Message getMessage(String MessageId){
+    private Message getMessage(String MessageId) {
         Message curMessage = null;
-        for (Message m : messageList){
-            if (m.getMessageId().equals(MessageId)){
+        for (Message m : messageList) {
+            if (m.getMessageId().equals(MessageId)) {
                 curMessage = m;
             }
         }
@@ -69,28 +71,40 @@ public class MessageManager implements Serializable {
     /**
      * @return the list of IDs of the messages stored in this MessageManager.
      */
-    public ArrayList<String> getMessageIDs(){
+    public ArrayList<String> getMessageIDs() {
         ArrayList<String> messageIDs = new ArrayList<>();
-        for (Message m : messageList){
+        for (Message m : messageList) {
             messageIDs.add(m.getMessageId());
         }
         return messageIDs;
     }
 
     /**
-     * Get message formatted as: "[From]: [ID of the sender]\new line
-     *                            [To]: [ID of the recipient]\newline
-     *                            [Time Sent]: [time that was sent]\newline
-     *                            [Message]: [the content of the message]\newline"
-     * @param messageId of the message that is to be formatted.
-     * @return Formatted string representation of the message.
+     * @return the senderID of a message by the messageID.
      */
-    public String getFormattedMessage(String messageId){
-        String sender = getMessage(messageId).getSenderId();
-        String recipient = getMessage(messageId).getRecipientId();
-        LocalDateTime time = getMessage(messageId).getDateTime();
-        String message = getMessage(messageId).getContent();
-        return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
-                + "Message: " + message + "\n";}
+    public String getSenderID(String messageID) {
+        return getMessage(messageID).getSenderId();
+    }
+
+    /**
+     * @return the recipientID of a message by the messageID.
+     */
+    public String getRecipientId(String messageID) {
+        return getMessage(messageID).getRecipientId();
+    }
+
+    /**
+     * @return the DateTime of a message by the messageID.
+     */
+    public String getDateTime(String messageID) {
+        return getMessage(messageID).getDateTime().toString();
+    }
+
+    /**
+     * @return the Content of a message by the messageID.
+     */
+    public String getContent(String messageID) {
+        return getMessage(messageID).getContent();
+    }
 
 }

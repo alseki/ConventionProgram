@@ -15,15 +15,15 @@ import Presenter.MainMenu;
 import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
-    private ChatManager chatManager = new ChatManager();
     private AttendeeManager manager;
     private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private int currentRequest;
     Scanner input = new Scanner(System.in);
 
-    public AttendeeController(PersonManager manager, RoomManager rooms, MessageManager messages) {
-        super(manager, rooms, messages);
+    public AttendeeController(PersonManager manager, RoomManager rooms, MessageManager messages,
+                              ChatManager chats) {
+        super(manager, rooms, messages, chats);
         this.manager = (AttendeeManager) manager;
     }
 

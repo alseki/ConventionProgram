@@ -4,12 +4,13 @@ package Message;
 // Description: For current User to
 // Date Modified: 18/11/2020
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
 
-public class Chat {
+public class Chat implements Serializable {
     protected String Id;
     protected ArrayList<String> messageIds;
     protected ArrayList<String> personIds;
