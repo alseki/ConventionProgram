@@ -2,6 +2,7 @@ package Presenter;
 
 import Controllers.InvalidChoiceException;
 import Controllers.NoDataException;
+import Events.EventManager;
 import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -14,8 +15,11 @@ public class MessageMenu implements printSubMenu {
     protected PersonManager personManager;
     protected ChatManager chatManager;
     protected MessageManager messageManager;
+    protected EventManager eventManager;
 
-    public MessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager) {
+    public MessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager,
+                       EventManager eventManager) {
+        this.eventManager = eventManager;
         this.personManager = personManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
@@ -89,11 +93,11 @@ public class MessageMenu implements printSubMenu {
      * @return Formatted string representation of the chat.
      * */
     public String formatAnChatString(String chatID) {
-        StringBuilder participants = new StringBuilder();
-        for (String participantID : chatManager.getPersonIds(chatID)){
-            participants.append(participantID).append(", ");
+        try {
+            return eventManager.getEventName(chatManager.getPersonIds(chatID).get(0)) + "\n" + chatID;
+        } catch (Exception e) {
+            return chatID;
         }
-        return null;
     } //TODO: update to the specified format
 
     public void printFormattedChatList(ArrayList<String> chatIDs) throws NoDataException {
@@ -149,12 +153,10 @@ public class MessageMenu implements printSubMenu {
             throw new InvalidChoiceException("chat");
         }
         if (chatManager.getChatClass(chatID) != AnnouncementChat.class) {
-
-            formatChatString(chatID);
-
+            System.out.println("\n\n" + formatChatString(chatID));
             printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
         } else  {
-            formatAnChatString(chatID);
+            System.out.println("\n\n" + formatAnChatString(chatID));
             printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
         }
     }

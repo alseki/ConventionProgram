@@ -53,7 +53,7 @@ public class OrganizerController extends PersonController {
                         break;
                     case 2:
                         AttMessageController messageController = new AttMessageController(currentUserID,
-                                attendeeManager, messageManager, chatManager);
+                                attendeeManager, messageManager, chatManager, eventManager);
                         messageController.menuChoice();
                         break;
                     case 3:

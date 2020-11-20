@@ -27,6 +27,7 @@ public class SpeakerController extends PersonController {
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats) {
         super(manager, rooms, events, messages, chats);
+        this.manager = manager;
     }
 
 
@@ -48,7 +49,7 @@ public class SpeakerController extends PersonController {
                         break;
                     case 2:
                         MessageController messageController = new MessageController(currentUserID, manager,
-                                messageManager, chatManager);
+                                messageManager, chatManager, eventManager);
                         messageController.menuChoice();
                         break;
                     case 3:

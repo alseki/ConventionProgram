@@ -5,6 +5,7 @@ package Controllers;
 // Date Modified: 19/11/2020
 
 
+import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
@@ -19,10 +20,10 @@ public class AttMessageController extends MessageController {
     private AttMessageMenu presenter;
 
     public AttMessageController(String currentUserID, AttendeeManager attendeeManager, MessageManager mManager,
-                             ChatManager cManager) {
-        super(currentUserID, attendeeManager, mManager, cManager);
+                                ChatManager cManager, EventManager eventManager) {
+        super(currentUserID, attendeeManager, mManager, cManager, eventManager);
         this.attendeeManager = attendeeManager;
-        presenter = new AttMessageMenu(attendeeManager, mManager, cManager);
+        presenter = new AttMessageMenu(attendeeManager, mManager, cManager, eventManager);
     }
 
 

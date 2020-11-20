@@ -1,5 +1,6 @@
 package Controllers;
 
+import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
@@ -13,17 +14,19 @@ public class MessageController implements SubMenu {
     protected PersonManager personManager;
     protected ChatManager chatManager;
     protected MessageManager messageManager;
+    protected EventManager eventManager;
     private MessageMenu presenter;
     Scanner input = new Scanner(System.in);
     protected int currentRequest;
 
     public MessageController (String currentUserID, PersonManager personManager, MessageManager mManager,
-                             ChatManager cManager) {
+                              ChatManager cManager, EventManager eventManager) {
         this.currentUserID = currentUserID;
         this.personManager = personManager;
         this.messageManager = mManager;
         this.chatManager = cManager;
-        presenter = new MessageMenu(personManager, messageManager, chatManager);
+        this.eventManager = eventManager;
+        presenter = new MessageMenu(personManager, messageManager, chatManager, eventManager);
     }
 
 

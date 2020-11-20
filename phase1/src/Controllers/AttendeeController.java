@@ -49,7 +49,7 @@ public class AttendeeController extends PersonController {
                         break;
                     case 2:
                         AttMessageController messageController = new AttMessageController(currentUserID, manager,
-                                messageManager, chatManager);
+                                messageManager, chatManager, eventManager);
                         messageController.menuChoice();
                         break;
                     case 3:

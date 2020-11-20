@@ -6,6 +6,7 @@ package Presenter;
 // Date Modified: 19/11/2020
 
 
+import Events.EventManager;
 import Message.*;
 import Person.PersonManager;
 
@@ -13,8 +14,9 @@ import Person.PersonManager;
 public class AttMessageMenu extends MessageMenu {
 
 
-    public AttMessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager) {
-        super(personManager, messageManager, chatManager);
+    public AttMessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager,
+                          EventManager eventManager) {
+        super(personManager, messageManager, chatManager, eventManager);
     }
 
     /**

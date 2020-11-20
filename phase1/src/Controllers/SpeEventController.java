@@ -60,9 +60,9 @@ public class SpeEventController implements SubMenu {
                 case 2:
                     // Send message to all Attendees in an Event
                     presenter.printEventNamePrompt();
-                    String eventNameB = this.addSpeUsername(SubMenu.readInput(input));
+                    String eventNameB = SubMenu.readInput(input);
                     presenter.printContentPrompt();
-                    String contentB = SubMenu.readInput(input);
+                    String contentB = this.addSpeUsername(SubMenu.readInput(input));
                     this.eventMessage(eventNameB, contentB);
                     presenter.printMessageSent();
                     break;
@@ -76,7 +76,7 @@ public class SpeEventController implements SubMenu {
                 case 4:
                     // Send message to all Attendees in some of your Events
                     presenter.printContentPrompt();
-                    String contentD = SubMenu.readInput(input);
+                    String contentD = this.addSpeUsername(SubMenu.readInput(input));
                     presenter.printEventNamesPrompt();
                     String eventNames = SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
@@ -109,9 +109,9 @@ public class SpeEventController implements SubMenu {
      * @param messageContent Content of the Message to be sent
      */
     private void eventMessage(String eventName, String messageContent) {
-        String eventID = eventManager.getEventID(eventName);
-        String messageID = messageManager.createMessage(eventID, messageContent);
-        String acID = eventManager.getEventChat(eventID);
+        String eID = eventManager.getEventID(eventName);
+        String messageID = messageManager.createMessage(eID, messageContent);
+        String acID = eventManager.getEventChat(eID);
         chatManager.addMessageIds(acID, messageID);
     }
 

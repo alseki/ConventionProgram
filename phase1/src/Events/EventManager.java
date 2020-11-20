@@ -183,11 +183,10 @@ public class EventManager extends EventAccess implements Serializable {
      * @return The event's chat ID
      */
     public String getEventChat(String id) {
-        Event event = events.get(id);
-        if (event != null) {
+        try {
+            Event event = events.get(id);
             return event.getChatID();
-        }
-        else {
+        } catch (NullPointerException n) {
             return null;
         }
     }
