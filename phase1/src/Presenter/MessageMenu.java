@@ -77,9 +77,9 @@ public class MessageMenu implements printSubMenu {
     public String formatChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
         for (String participantID : chatManager.getPersonIds(chatID)){
-            participants.append(personManager.getCurrentUsername(participantID)).append("\n");
+            participants.append("\n").append(personManager.getCurrentUsername(participantID));
         }
-        return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
+        return "ChatID: " + chatID + "\n" + "Participants: " + participants.toString() ;
     }
 
     /**
@@ -91,7 +91,7 @@ public class MessageMenu implements printSubMenu {
     public String formatAnChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
         for (String participantID : chatManager.getPersonIds(chatID)){
-            participants.append(participantID).append("\n");
+            participants.append(participantID).append(", ");
         }
         return null;
     } //TODO: update to the specified format
@@ -100,7 +100,7 @@ public class MessageMenu implements printSubMenu {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
-            if (chatManager.getChatClass(chatList[i]) != AnnouncementChat.class) {
+            if (chatManager.getChatClass(chatIDs.get(i)) != AnnouncementChat.class) {
                 chatList[i] = formatChatString(chat);
             } else {
                 chatList[i] = formatAnChatString(chat);
@@ -120,12 +120,9 @@ public class MessageMenu implements printSubMenu {
      * @return Formatted string representation of the message.
      */
     private String formatMessage(String messageId) {
-        String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
-        String recipient = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
         String time = messageManager.getDateTime(messageId);
         String message = messageManager.getContent(messageId);
-        return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
-                + "Message: " + message + "\n";
+        return "Time sent: " + time + "\n" + "Message: " + message;
     } //TODO - update this for events!
 
     public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {

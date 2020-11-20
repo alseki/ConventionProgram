@@ -129,7 +129,11 @@ public class ChatManager implements Serializable {
      * @return Class type
      */
      public Class<?> getChatClass(String chatID){
-         return getUnknownTypeChat(chatID).getClass();
+         try {
+             return getUnknownTypeChat(chatID).getClass();
+         } catch (NullPointerException n) {
+             return null;
+         }
      }
 
     /**

@@ -114,7 +114,7 @@ public abstract class PersonManager {
      */
     public String getCurrentUsername(String currentId) {
         if (idToPerson.containsKey(currentId)) {
-            return usernameToPerson.get(currentId).getUsername();
+            return idToPerson.get(currentId).getUsername();
         }
         return null;
     }

@@ -54,7 +54,11 @@ public class MessageController implements SubMenu {
                     sentBox();
                     break;
                 case 3: //View the chat list
-                    viewChats(personManager.getChats(currentUserID));
+                    try {
+                        viewChats(personManager.getChats(currentUserID));
+                    } catch (NullPointerException e) {
+                        System.out.println("huh?");
+                    }
                     break;
                 case 4: //View the messages in a chat
                     displayChat();
@@ -125,7 +129,6 @@ public class MessageController implements SubMenu {
     protected void viewChats(ArrayList<String> chatIDs) {
         try {
             presenter.printFormattedChatList(chatIDs);
-
         } catch (NoDataException e) {
             presenter.printException(e);
         }

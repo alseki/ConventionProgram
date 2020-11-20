@@ -22,6 +22,7 @@ public class AttMessageMenu extends MessageMenu {
      */
     @Override
     public void printMenuOptions() {
+        super.printMenuOptions();
         System.out.println("View the announcement chat list -------------------- Enter '6'.");
         System.out.println("View the announcements in an announcement chat ----- Enter '7'.");
         System.out.println("Create a chat -------------------------------------- Enter '8'.");

@@ -41,21 +41,15 @@ public class Speaker extends Person { //implements Person.Signupable
     }
 
 
-    @Override
-    public ArrayList<String> getChatList() {
-        return announcementChatIds;
-    }
+    /**
+     *
+     * This is a list of strings representing chatIds pertaining to announcements about events
+     * @return ArrayList<String> of chatID of messages received by the User
+     */
 
-    @Override
-    public void addChat(String chatID) {
-        announcementChatIds.add(chatID);
-    }
+    public ArrayList<String> getAnnouncementChats() {
+        return this.announcementChatIds;
 
-    @Override
-    public void removeChat(String chatID) {
-        if (announcementChatIds.contains(chatID)) {
-            announcementChatIds.remove(chatID);
-        }
     }
 }
 

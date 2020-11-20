@@ -23,7 +23,16 @@ public class AttMessageController extends MessageController {
         super(currentUserID, attendeeManager, mManager, cManager);
         this.attendeeManager = attendeeManager;
         presenter = new AttMessageMenu(attendeeManager, mManager, cManager);
+    }
 
+
+    /**
+     * Prompts user to choose a menu option, takes the input and calls the corresponding method
+     */
+    @Override
+    public void menuOptions() {
+        presenter.printMenuOptions();
+        currentRequest = SubMenu.readInteger(input);
     }
 
     /**
@@ -54,6 +63,7 @@ public class AttMessageController extends MessageController {
                     break;
                 case 6: //View the announcement chat list
                     viewChats(attendeeManager.getAnChats(currentUserID));
+                    break;
                 case 7:
                     //View the announcements in an announcement chat
                     displayChat("Announcement");

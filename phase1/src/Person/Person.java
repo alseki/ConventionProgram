@@ -13,6 +13,7 @@ public abstract class Person implements Serializable {
 
     protected ArrayList<String> contactList = new ArrayList<>();
     protected ArrayList<String> eventList = new ArrayList<>();
+    protected ArrayList<String> chatList = new ArrayList<>();
 
     /**
      * this allows for access to the person's username
@@ -86,19 +87,27 @@ public abstract class Person implements Serializable {
      *allows for access to the list of Message.Message.Chat IDs
      * @return ArrayList returns the list of string corresponding to the chat Ids
      */
-    public abstract ArrayList<String> getChatList();
+    public ArrayList<String> getChatList() {
+        return chatList;
+    }
 
     /**
      * Adds a Chat to the list of the user's chats
      * @param chatID
      */
-    public abstract void addChat(String chatID);
+    public void addChat(String chatID) {
+        chatList.add(chatID);
+    }
 
     /**
      * Removes a Chat from the list of the user's chats
      * @param chatID
      */
-    public abstract void removeChat(String chatID);
+    public void removeChat(String chatID) {
+        if (chatList.contains(chatID)) {
+            chatList.remove(chatID);
+        }
+    }
 
     /**
      * allows for access to the list of events for doubleBooking
