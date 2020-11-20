@@ -1,17 +1,22 @@
 package Events;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.TreeMap;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 17 2020
+// Last edit: Nov 19 2020
 
 // Architecture Level - Use Class
 
-public class EventManager implements Serializable {
+
+abstract class EventAccess {
+    protected abstract Event getEvent(String eventID);
+}
+
+public class EventManager extends EventAccess implements Serializable {
 
     /** A mapping of Event names to their respective IDs. */
     private Map<String, String> eventsByName;
@@ -19,105 +24,53 @@ public class EventManager implements Serializable {
     /** A mapping of IDs to the respective Events they represent. */
     private Map<String, Event> events;
 
-    /** The RoomPermissions object which delegates permissions to these Events. */
-    private RoomPermissions permissionChecker;
-
     /**
      * Creates a new empty EventManager
-     * @param checker A RoomPermissions object based on the room in which these Events are being held
      */
-    public EventManager(RoomPermissions checker) {
+    public EventManager() {
         events = new TreeMap<String, Event>();
         eventsByName = new TreeMap<String, String>();
-        permissionChecker = checker;
     }
 
-    /**
-     * Creates a new EventManager from an array of Events
-     * @param checker A RoomPermissions object based on the room in which these Events are being held
-     * @param events The array of Events to be read in
-     */
-    public EventManager(RoomPermissions checker, Event[] events) {
-        this.events = new TreeMap<String, Event>();
-        eventsByName = new TreeMap<String, String>();
-        for (Event event: events) {
-            this.events.put(event.getID(), event);
-            eventsByName.put(event.getName(), event.getID());
-        }
-        permissionChecker = checker;
-    }
 
-    /**
-     * Getter for the capacity of this EventManager (how many total attendees can be signed up)
-     * @return the capacity of this EventManager (as an int)
-     */
-    public int getEventManagerCapacity() {
-        return this.permissionChecker.getRoomCapacity();
-    }
-
-    /**
-     * Helper getter for the all the Events in this EventManager
-     * @return an array of all Events in this EventManager
-     */
-    private Event[] getEvents() {
-        Event[] eventArray = {};
-        return events.values().toArray(eventArray);
-    }
-
-    /**
-     * Helper getter for the total number of attendees currently signed up for the Events in this EventManager
-     * @return the total number of attendees (as an int)
-     */
-    private int getNumAttendees() {
-        int total = 0;
-        for (Event ev : this.getEvents()) {
-            total = total + ev.getAttendeeIDs().size();
-        }
-        return total;
-    }
-
-    /**
-     * Returns all the Events stored in the EventManager
-     * @return The Events, as an array of their String representations
-     */
-    public String[] getEventList() {
-        Event[] eventArray = getEvents();
-        if (eventArray != null) {
-            String[] eventInfoArray = new String[eventArray.length];
-            for (int i = 0; i < eventArray.length; i++) {
-                eventInfoArray[i] = eventArray[i].toString();
-            }
-            return eventInfoArray;
-        }
-        return null;
-    }
+    // Protected getters (of Event objects)
 
     /**
      * Returns a textual representation of an Event
      * @param eventID The ID of the Event
      * @return The Event, as a String
      */
-    public String getEvent(String eventID) {
+    protected Event getEvent(String eventID) {
         try {
-            return events.get(eventID).toString();
+            return events.get(eventID);
         } catch (NullPointerException n) {
             return null;
         }
     }
 
     /**
-     * Returns the name of an Event stored in this EventManager, given its ID
-     * @param eventID The ID of the Event
-     * @return The name of the Event, as a String
+     * Returns all the Events from a list of IDs
+     * @param ids The IDs of the events you want to get
+     * @return The Events, as an array of their String representations
      */
-    public String getEventName(String eventID) {
+    protected Event[] getEventList(String[] ids) {
         try {
-            return events.get(eventID).getName();
+            if (ids != null && ids.length > 0) {
+                Event[] eventInfoArray = new Event[ids.length];
+                for (int i = 0; i < ids.length; i++) {
+                    eventInfoArray[i] = events.get(ids[i]);
+                }
+                return eventInfoArray;
+            }
+            return null;
         } catch (NullPointerException n) {
             return null;
         }
     }
-    
+
+
+    // Public getters (of ids)
+
     /**
      * Returns the ID of an Event given its name
      * @param name The Event's name
@@ -132,32 +85,154 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Adds a Talk to EventManager
-     * @param name The name of the Talk
-     * @return whether the Talk has been successfully added
+     * Helper getter for the all the Events in this EventManager
+     * @return an array of all Events in this EventManager
      */
-    public boolean addTalk(String name, String speakerID, LocalDateTime startTime, String description) {
-        Event event = new Talk(name, speakerID, startTime, description);
-        if (this.permissionChecker.checkConflicts(event, this.getEvents())) {
-            return false;
+    public String[] getEventIDs() {
+        String[] eventArray = {};
+        if (events.size() > 0) {
+            return events.keySet().toArray(eventArray);
         }
-        else {
-            events.put(event.getID(), event);
-            eventsByName.put(event.getName(), event.getID());
-            return true;
+        return null;
+    }
+
+    /**
+     * Returns the name of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The name of the Event, as a String
+     */
+    public String getEventName(String eventID) {
+        try {
+            return events.get(eventID).getName();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    public String getDescription(String eventID){
+        try {
+            return events.get(eventID).getDescription();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    public EventType getEventType(String eventID){
+        try {
+            Event event = getEvent(eventID);
+            if (event.getClass().equals(Talk.class)) {
+                return EventType.TALK;
+            } else if (event.getClass().equals(Workshop.class)) {
+                return EventType.WORKSHOP;
+            } else {
+                return null;
+            }
+        } catch (NullPointerException n) {
+            return null;
         }
     }
 
     /**
-     * Adds a Workshop to EventManager
-     * @param name The name of the Workshop
-     * @return whether the Workshop has been successfully added
+     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
+     * @param eventID The Event we are interested in
+     * @return an array list of the IDs of all Attendees
      */
-    public boolean addWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
-        Event event = new Workshop(name, speakerID, startTime, description);
+    public String getSpeakerID(String eventID){
+        try {
+            return events.get(eventID).getSpeaker();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
+     * @param eventID The Event we are interested in
+     * @return an array list of the IDs of all Attendees
+     */
+    public String getStartTime(String eventID){
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return formatter.format(events.get(eventID).getStartTime());
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
+     * @param eventID The Event we are interested in
+     * @return an array list of the IDs of all Attendees
+     */
+    public String getEndTime(String eventID){
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return formatter.format(events.get(eventID).getEndTime());
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+
+
+    // Chat settings
+
+    /**
+     * Getter for the ID of an event's chat
+     * @param id The event's ID
+     * @return The event's chat ID
+     */
+    public String getEventChat(String id) {
+        Event event = events.get(id);
+        if (event != null) {
+            return event.getChatID();
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the chatID for the Event with the inputted eventID
+     * @param eventID The ID of the Event for which we want to set the chatID
+     * @param chatID The chatID
+     */
+    public void setEventChat(String eventID, String chatID) {
+        try {
+            events.get(eventID).setChatID(chatID);
+        } catch (NullPointerException n) {
+            return;
+        }
+    }
+
+    /**
+     * Getter for this password of the Event with the inputted eventID
+     * @param eventID The ID of the Event for which we want the password
+     * @return String representing the Event's password
+     */
+    public String getEventPassword(String eventID) {
+        Event ev = events.get(eventID);
+        return ev.getPassword();
+    }
+
+
+
+    // Event-adding settings
+
+    public String addEvent(String name, String speakerID, LocalDateTime startTime, String description, EventType type) {
+        Event event;
+        if (type.equals(EventType.TALK)) {
+            event = createTalk(name, speakerID, startTime, description);
+        }
+        else if (type.equals(EventType.WORKSHOP)) {
+            event = createWorkshop(name, speakerID, startTime, description);
+        }
+        else {
+            return null;
+        }
         events.put(event.getID(), event);
         eventsByName.put(event.getName(), event.getID());
-        return true;
+        return event.getID();
     }
 
     /**
@@ -177,95 +252,24 @@ public class EventManager implements Serializable {
     }
 
     /**
-     * Signs an individual Attendee up for an Event
-     * @param personID The ID of the Attendee
-     * @param ID The Event
-     * @return whether the Attendee was signed up (true or false)
+     * Adds a Talk to EventManager
+     * @param name The name of the Talk
      */
-    public boolean signUpForEvent(String personID, String ID) {
-            Event event = events.get(ID);
-            if ((event != null) && (this.getNumAttendees() < this.getEventManagerCapacity())) {
-                event.addAttendee(personID);
-                return true;
-            }
-            else {
-                return false;
-            }
+    private Event createTalk(String name, String speakerID, LocalDateTime startTime, String description) {
+        return new Talk(name, speakerID, startTime, description);
     }
 
     /**
-     * Takes an individual Attendee off an Event's list of attendees
-     * @param personID The Attendee
-     * @param ID The Event
-     * @return whether the Attendee was removed from the Event (true or false)
+     * Adds a Workshop to EventManager
+     * @param name The name of the Workshop
+     * @return whether the Workshop has been successfully added
      */
-    public boolean removeFromEvent(String personID, String ID) {
-        Event event = events.get(ID);
-        if (event != null) {
-            event.removeAttendee(personID);
-            return true;
-        }
-        else {
-            return false;
-        }
+    private Event createWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
+        return new Workshop(name, speakerID, startTime, description);
     }
 
-    /**
-     * Returns the chatID for the Event with the inputted eventID
-     * @param eventID The ID of the Event for which the chatID is being requested
-     * @return the chatID for the inputted Event (as a String)
-     */
-    public String getAnnouncementChat(String eventID){
-        try {
-            return events.get(eventID).getChatID();
-        } catch (NullPointerException n) {
-            return null;
-        }
-    }
 
-    /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
-     */
-    public ArrayList<String> getSignUps(String eventID){
-        try {
-            return events.get(eventID).getAttendeeIDs();
-        } catch (NullPointerException n) {
-            return null;
-        }
-    }
-
-    /**
-     * Sets the chatID for the Event with the inputted eventID
-     * @param eventID The ID of the Event for which we want to set the chatID
-     * @param chatID The chatID
-     */
-    public void setEventChatID(String eventID, String chatID) {
-        try {
-            events.get(eventID).setChatID(chatID);
-        } catch (NullPointerException n) {
-            return;
-        }
-    }
-
-    /**
-     * Getter for this password of the Event with the inputted eventID
-     * @param eventID The ID of the Event for which we want the password
-     * @return String representing the Event's password
-     */
-    public String getEventPassword(String eventID) {
-        Event ev = events.get(eventID);
-        return ev.getPassword();
-    }
-
-    /**
-     * Getter for the name of this Room
-     * @return the Name
-     */
-    public String getRoomName() {
-        return permissionChecker.getName();
-    }
+    // Equality method
 
     @Override
     public boolean equals(Object obj) {
@@ -276,48 +280,13 @@ public class EventManager implements Serializable {
             return false;
         }
         EventManager events2 = (EventManager) obj;
-        if(!events2.getRoomName().equals(this.getRoomName())) {
-            return false;
-        }
-        if (events2.getEventList().length == this.getEventList().length) {
-            for (Event event: this.getEvents()) {
-                if(events2.getEvent(event.getID()).equals(event.toString())) {
-                    return false;
-                }
+        try {
+            if (events2.getEventList(this.getEventIDs()).length > this.getEventIDs().length) {
+                return false;
             }
             return true;
-        }
-        return false;
-    }
-
-    /**
-     * Getter for the ID of an event's chat
-     * @param id The event's ID
-     * @return The event's chat ID
-     */
-    public String getEventChat(String id) {
-        Event event = events.get(id);
-        if (event != null) {
-            return event.getChatID();
-        }
-        else {
-            return null;
+        } catch (NullPointerException e) {
+            return false;
         }
     }
-
-    /**
-     * Get Event formatted as: "[Event ID]: [ID of the Event]\new line
-     *                         [Event Name]: [Name of Event]\newline
-     *                         [Time] : [Start time to End time]\newline
-     *                         [Description]: [Textual Representation of Event]\newline
-     * @param eventID of the Event that is to be formatted.
-     * @return Formatted string representation of the Event.
-     */
-    public String getFormattedEvent(String eventID){
-        String eventName = getEventName(eventID);
-        String desc = events.get(eventID).getDescription();
-        String startToEnd = events.get(eventID).getStartTime().toString() + " to " +
-                events.get(eventID).getEndTime().toString();
-        return "Event ID: " + eventID + "\n" + "Event Name: " + eventName + "\n" +
-                "Time: " + startToEnd + "\n" + "Description: " + desc + "\n";}
 }

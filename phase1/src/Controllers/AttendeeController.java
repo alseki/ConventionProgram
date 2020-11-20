@@ -5,6 +5,7 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 16/11/2020
 
+import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -21,9 +22,9 @@ public class AttendeeController extends PersonController {
     private int currentRequest;
     Scanner input = new Scanner(System.in);
 
-    public AttendeeController(PersonManager manager, RoomManager rooms, MessageManager messages,
+    public AttendeeController(PersonManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats) {
-        super(manager, rooms, messages, chats);
+        super(manager, rooms, events, messages, chats);
         this.manager = (AttendeeManager) manager;
     }
 
@@ -52,7 +53,8 @@ public class AttendeeController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, manager, roomManager);
+                        AttEventController attEventController = new AttEventController(currentUserID, manager,
+                                roomManager, eventManager);
                         attEventController.menuChoice();
                         break;
                 }

@@ -29,6 +29,7 @@ public class SubMenuControllersTests {
     private MessageManager messageManager = new MessageManager();
     private ChatManager chatManager = new ChatManager();
     private RoomManager roomManager = new RoomManager();
+    private EventManager eventManager = new EventManager();
     // TODO private EventManager eventManager = new EventManager();
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -37,7 +38,7 @@ public class SubMenuControllersTests {
 
     @Test(timeout = 50)
     public void testAttEventController() {
-        new AttEventController(userID, attendeeManager, roomManager);
+        new AttEventController(userID, attendeeManager, roomManager, eventManager);
     }
 
     // TODO tests for menu option methods

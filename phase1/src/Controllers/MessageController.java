@@ -246,6 +246,8 @@ public class MessageController implements SubMenu {
             }
 
             presenter.printList(presenter.formatMessages(receivedMessages), "message");
+        } catch (NullPointerException e) {
+            presenter.printException(new NoDataException("message"));
         } catch (NoDataException e) {
             presenter.printException(e);
         }

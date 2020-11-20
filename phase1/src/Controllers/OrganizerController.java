@@ -5,6 +5,7 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 17/11/2020
 
+import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
@@ -26,9 +27,9 @@ public class OrganizerController extends PersonController {
     Scanner input = new Scanner(System.in);
 
 
-    public OrganizerController(PersonManager manager, SpeakerManager speakerManager,
-                               RoomManager rooms, MessageManager messages, ChatManager chats, AttendeeManager am) {
-        super(manager, rooms, messages, chats);
+    public OrganizerController(PersonManager manager, SpeakerManager speakerManager, RoomManager rooms,
+                               EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am) {
+        super(manager, rooms, events, messages, chats);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
         this.attendeeManager = am;
@@ -56,13 +57,19 @@ public class OrganizerController extends PersonController {
                         messageController.menuChoice();
                         break;
                     case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, attendeeManager, roomManager);
+                        AttEventController attEventController = new AttEventController(currentUserID, attendeeManager,
+                                roomManager, eventManager);
                         attEventController.menuChoice();
                         break;
                     case 4:
                         OrgEventController orgEventController = new OrgEventController(currentUserID, manager,
-                                speakerManager, roomManager, messageManager, chatManager);
+                                speakerManager, roomManager, eventManager, messageManager, chatManager);
                         orgEventController.menuChoice();
+                        break;
+                    case 5:
+                        SpeEventController speEventController = new SpeEventController(currentUserID, speakerManager,
+                                messageManager, chatManager, eventManager, roomManager);
+                        speEventController.menuChoice();
                         break;
                 }
             }

@@ -1,8 +1,16 @@
 package Presenter;
 
+import Events.EventManager;
+import Events.RoomManager;
+import Person.PersonManager;
+
 import java.util.ArrayList;
 
-public class SpeEventMenu implements printSubMenu {
+public class SpeEventMenu extends EventMenu {
+
+    public SpeEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
+        super(rooms, events, persons);
+    }
 
     /**
      * Prints the options for this menu.

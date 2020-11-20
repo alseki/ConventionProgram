@@ -5,6 +5,7 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 18/11/2020
 
+import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
@@ -24,11 +25,13 @@ public class ConventionPlanningSystem {
 
     private MessageManager mm = new MessageManager();
     private ChatManager cm = new ChatManager();
-    private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
-    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("chats.ser");
+    private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("message\\messages.ser");
+    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("message\\chats.ser");
 
     private RoomManager rm = new RoomManager();
-    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("events.ser");
+    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("event\\rooms.ser");
+    private EventManager em = new EventManager();
+    private static final FileGateway<EventManager> eventLoader = new FileGateway<>("event\\events.ser");
 
     private Map<String, Person> personByName = new HashMap<>();
     private Map<String, Person> personByID = new HashMap<>();
@@ -64,19 +67,19 @@ public class ConventionPlanningSystem {
                 break;
             case 1:
                 AttendeeManager am = new AttendeeManager(personByName, personByID);
-                AttendeeController AC =  new AttendeeController(am, rm, mm, cm);
+                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm);
                 AC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 AttendeeManager attMan = new AttendeeManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, mm, cm, attMan);
+                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan);
                 OC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager(personByName, personByID);
-                SpeakerController SC = new SpeakerController(sman, rm, mm, cm);
+                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm);
                 SC.run();
                 break;
         }
@@ -88,6 +91,9 @@ public class ConventionPlanningSystem {
     private void load() {
         if (roomLoader.readFile()!= null) {
             rm = roomLoader.readFile();
+        }
+        if (eventLoader.readFile()!= null) {
+            em = eventLoader.readFile();
         }
         if (messageLoader.readFile() != null) {
             mm = messageLoader.readFile();
@@ -108,6 +114,7 @@ public class ConventionPlanningSystem {
      */
     private void save() {
         roomLoader.writeFile(rm);
+        eventLoader.writeFile(em);
         messageLoader.writeFile(mm);
         chatLoader.writeFile(cm);
         id2Person.writeFile(personByID);

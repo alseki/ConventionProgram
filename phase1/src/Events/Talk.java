@@ -11,8 +11,6 @@ import java.time.Duration;
 
 public class Talk extends Event {
 
-    private String speakerID;
-
     // A Talk is exactly one hour long, and cannot take place in the same Room as any other Event while that Event is
     // occurring.
 
@@ -24,24 +22,7 @@ public class Talk extends Event {
      * @param description The description of this Talk
      */
     public Talk (String name, String speakerID, LocalDateTime startTime, String description) {
-        super(name, startTime,startTime.plusHours(1), description);
-        this.speakerID = speakerID;
-    }
-
-    /**
-     * Getter for the speaker of this Talk
-     * @return the ID of the speaker of this Talk (as a String)
-     */
-    public String getSpeakerID() {
-        return speakerID;
-    }
-
-    /**
-     * Setter for the speaker of this Talk
-     * @param speakerID The ID of a new speaker for this Talk
-     */
-    protected void setSpeakerID(String speakerID){
-        this.speakerID = speakerID;
+        super(name, startTime,startTime.plusHours(1), description, speakerID);
     }
 
     /**
