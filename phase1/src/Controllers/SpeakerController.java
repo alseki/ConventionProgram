@@ -51,7 +51,7 @@ public class SpeakerController extends PersonController {
                         break;
                     case 3:
                         SpeEventController speEventController = new SpeEventController(currentUserID, manager,
-                                messageManager, chatManager);
+                                messageManager, chatManager, eventManager, roomManager);
                         speEventController.menuChoice();
                         break;
                 }
