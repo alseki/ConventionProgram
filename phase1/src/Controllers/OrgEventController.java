@@ -110,7 +110,7 @@ public class OrgEventController implements SubMenu {
         presenter.addRoomPrompt();
         presenter.roomNamePrompt();
         String name = SubMenu.readInput(input);
-        if (name.equals("1")) {
+        if (name.equals("1") || roomManager.contains(name)) {
             throw new OverwritingException("room");
         }
         presenter.roomCapacityPrompt();
@@ -226,6 +226,10 @@ public class OrgEventController implements SubMenu {
         String speakerID = speakerManager.getCurrentUserID(speaker);
         if (speakerID == null) {
             throw new InvalidChoiceException("speaker");
+        }
+
+        if (eventManager.contains(name)) {
+            throw new OverwritingException("event");
         }
 
         if (eventPermissions.checkConflicts(start, type, roomID)) {

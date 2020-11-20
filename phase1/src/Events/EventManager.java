@@ -271,6 +271,14 @@ public class EventManager extends EventAccess implements Serializable {
 
     // Equality method
 
+    public boolean contains(String name) {
+        if (getEventID(name) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

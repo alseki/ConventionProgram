@@ -9,6 +9,7 @@ import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.Message;
 import Message.MessageManager;
+import Person.AttendeeManager;
 import Person.PersonManager;
 import Presenter.MessageMenu;
 
@@ -20,19 +21,19 @@ import java.util.Scanner;
 public class MessageController implements SubMenu {
     private int currentRequest;
     private String currentUserID;
-    private PersonManager personManager;
+    private AttendeeManager attendeeManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
     private MessageMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public MessageController(String currentUserID, PersonManager pManager, MessageManager mManager,
+    public MessageController(String currentUserID, AttendeeManager attendeeManager, MessageManager mManager,
                              ChatManager cManager) {
         this.currentUserID = currentUserID;
-        this.personManager = pManager;
+        this.attendeeManager = attendeeManager;
         this.messageManager = mManager;
         this.chatManager = cManager;
-        presenter = new MessageMenu(pManager, mManager, cManager);
+        presenter = new MessageMenu(attendeeManager, mManager, cManager);
     }
 
 
@@ -63,10 +64,10 @@ public class MessageController implements SubMenu {
                     sentBox();
                     break;
                 case 3: //View the chat list
-                    viewChats(chatManager.getChatIDs(currentUserID));
+                    viewChats(attendeeManager.getChats(currentUserID));
                     break;
                 case 4: //View the announcement chat list
-                    viewChats(chatManager.getAnnouncementChatIDs(currentUserID));
+                    viewChats(attendeeManager.getAnChats(currentUserID));
                     break;
                 case 5: //View the messages in a chat
                     displayChat("");
@@ -122,7 +123,7 @@ public class MessageController implements SubMenu {
      */
 
     private String createChat(String contactUsername) throws InvalidChoiceException {
-        String contactID = personManager.getCurrentUserID(contactUsername);
+        String contactID = attendeeManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             throw new InvalidChoiceException("user");
         }
@@ -162,7 +163,7 @@ public class MessageController implements SubMenu {
     private String createGroupChat(ArrayList<String> contactsUsernames) throws InvalidChoiceException {
         ArrayList<String> contactIDs = new ArrayList<>();
         for (String receiver : contactsUsernames){
-            String contactID = personManager.getCurrentUserID(receiver);
+            String contactID = attendeeManager.getCurrentUserID(receiver);
             if (contactID == null) {
                 throw new InvalidChoiceException("user");
             }

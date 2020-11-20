@@ -5,6 +5,8 @@ import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import Person.Speaker;
+import Person.SpeakerManager;
 import Presenter.SpeEventMenu;
 
 import java.util.ArrayList;
@@ -15,23 +17,21 @@ public class SpeEventController implements SubMenu {
 
     private String currentUserID;
     private int currentRequest;
-    private PersonManager personManager;
+    private SpeakerManager speakerManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private RoomManager roomManager;
     private EventManager eventManager;
     private SpeEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public SpeEventController(String currentUserID, PersonManager personManager, MessageManager messageManager,
+    public SpeEventController(String currentUserID, SpeakerManager speakerManager, MessageManager messageManager,
                               ChatManager chatManager, EventManager eventManager, RoomManager roomManager) {
         this.currentUserID = currentUserID;
-        this.personManager = personManager;
+        this.speakerManager = speakerManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
         this.eventManager = eventManager;
-        this.roomManager = roomManager;
-        presenter = new SpeEventMenu(roomManager, eventManager, personManager);
+        presenter = new SpeEventMenu(roomManager, eventManager, speakerManager);
     }
 
     /**
@@ -95,7 +95,7 @@ public class SpeEventController implements SubMenu {
      */
     private void getOwnTalks() {
         String[] events = {};
-        events = personManager.getEventList(currentUserID).toArray(events);
+        events = speakerManager.getEventList(currentUserID).toArray(events);
         presenter.printEventList(" you speak at", events);
     }
 
@@ -120,8 +120,8 @@ public class SpeEventController implements SubMenu {
      */
 
     private void multipleEventsAnnouncement(String[] events, String messageContent) {
-        for (String eventName : events) {
-            eventMessage(eventName, messageContent);
+        for (String eventID : events) {
+            eventMessage(eventID, messageContent);
         }
     }
 
@@ -131,9 +131,9 @@ public class SpeEventController implements SubMenu {
      * @param messageContent
      */
     private void allSpeakerEventsMessage(String messageContent) {
-        String[] allSpeakerEvents = {};
-        allSpeakerEvents = personManager.getSpeakerIdAllTalks(currentUserID).toArray(allSpeakerEvents);
-        multipleEventsAnnouncement(allSpeakerEvents, messageContent);
+        String[] allTalks = {};
+        allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
+        multipleEventsAnnouncement(allTalks, messageContent);
     }
 
     /**
@@ -144,6 +144,6 @@ public class SpeEventController implements SubMenu {
      */
     private String addSpeUsername(String content){
         return content + "\n" + "Contact me using this username:\n"
-            + personManager.getCurrentUsername(currentUserID);
+            + speakerManager.getCurrentUsername(currentUserID);
     }
 }

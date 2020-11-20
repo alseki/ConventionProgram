@@ -135,7 +135,7 @@ public class AttEventController implements SubMenu {
         try {
             eventPermissions.signUpForEvent(currentUserID, event, room);
             boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
-            attendeeManager.addChat(currentUserID, eventManager.getEventChat(event));
+            attendeeManager.addAnChat(currentUserID, eventManager.getEventChat(event));
             if (eventAddedToPerson) {
                 presenter.printEventAdded();
             }
@@ -157,7 +157,7 @@ public class AttEventController implements SubMenu {
 
         boolean personRemovedFromEvent = eventPermissions.removeFromEvent(currentUserID, event);
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
-        attendeeManager.removeChat(currentUserID, eventManager.getEventChat(event));
+        attendeeManager.removeAnChat(currentUserID, eventManager.getEventChat(event));
         if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
         }

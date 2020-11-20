@@ -141,6 +141,14 @@ public class RoomManager extends RoomAccess implements Serializable {
         }
     }
 
+    public boolean contains(String name) {
+        if (getRoomID(name)!= null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null){

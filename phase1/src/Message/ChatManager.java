@@ -237,19 +237,6 @@ public class ChatManager implements Serializable {
         return aChatIDs;
     }
 
-    public ArrayList<String> getAnnouncementChatIDs(String thisPersonID) {
-        ArrayList<String> chats = getAnnouncementChatIDs();
-        ArrayList<String> pChats = new ArrayList();
-        for (String c : chats) {
-            for (String personID : getChat(c).getPersonIds()) {
-                if (personID.equals(thisPersonID)) {
-                    pChats.add(c);
-                    break;
-                }
-            }
-        }
-        return pChats;
-    }
     /**
      * Checks if there already exists a Chat object with same group members inputted
      * @param currentId ID of the user

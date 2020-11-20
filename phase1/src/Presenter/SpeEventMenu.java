@@ -19,12 +19,10 @@ public class SpeEventMenu extends EventMenu {
     public void printMenuOptions() {
         System.out.println('\n' + "----- Speaker Event Menu -----");
         System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
-        System.out.println("View the talk you're going to talk at -------------- Enter '1'.");
-        //System.out.println("Send message to all Users in an Event -------------- Enter '2'.");
+        System.out.println("View your events -------------- Enter '1'.");
         System.out.println("Send message to all Attendees in an Event ---------- Enter '2'.");
         System.out.println("Send message to all Attendees in all of your Events ------- Enter '3'.");
-        System.out.println("Send message to all Attendees in some of your EVents ------ Enter '4'.");
-        System.out.println("Send message to a User ----------- Enter '5'.");
+        System.out.println("Send message to all Attendees in a list of of your Events ------ Enter '4'.");
         // TODO add print statements for all the other menu options
         
     }

@@ -61,7 +61,8 @@ public class MessageMenu implements printSubMenu {
      * Prompts user to enter usernames of the contacts want to have chat with.
      */
     public void printContactUsernamesPrompt(){
-        System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list.");
+        System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
+                "\n(E.g. 'user1,user2,user3'; please do not add spaces after commas)");
     }
 
     /**

@@ -3,7 +3,7 @@ package Controllers;
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Main account page for Organizer users.
 // Date Created: 01/11/2020
-// Date Modified: 17/11/2020
+// Date Modified: 19/11/2020
 
 import Events.EventManager;
 import Message.ChatManager;
@@ -52,8 +52,8 @@ public class OrganizerController extends PersonController {
                         contactController.menuChoice();
                         break;
                     case 2:
-                        MessageController messageController = new MessageController(currentUserID, manager, messageManager,
-                                chatManager);
+                        MessageController messageController = new MessageController(currentUserID,
+                                attendeeManager, messageManager, chatManager);
                         messageController.menuChoice();
                         break;
                     case 3:
@@ -65,11 +65,6 @@ public class OrganizerController extends PersonController {
                         OrgEventController orgEventController = new OrgEventController(currentUserID, manager,
                                 speakerManager, roomManager, eventManager, messageManager, chatManager);
                         orgEventController.menuChoice();
-                        break;
-                    case 5:
-                        SpeEventController speEventController = new SpeEventController(currentUserID, speakerManager,
-                                messageManager, chatManager, eventManager, roomManager);
-                        speEventController.menuChoice();
                         break;
                 }
             }

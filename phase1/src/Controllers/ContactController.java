@@ -47,15 +47,18 @@ public class ContactController implements SubMenu {
                     // return to main menu
                     break;
                 case 1:
-                    getContactList();
+                    try {
+                        getContactList();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 2:
                     presenter.printAddContactPrompt();
-                    // SubMenu.readInput(input);
                     try {
                         addContact(SubMenu.readInput(input));
                     } catch (NoDataException e) {
-                        e.printErrorMessage();
+                        presenter.printException(e);
                     }
                     break;
             }
@@ -66,7 +69,7 @@ public class ContactController implements SubMenu {
     /**
      * Get's the current user's contactList
      */
-    private void getContactList() {
+    private void getContactList() throws InvalidChoiceException {
         ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
         presenter.printContactList(listOfContacts);
     }

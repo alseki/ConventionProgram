@@ -165,7 +165,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to add an email for the Speaker
      */
     public void printAddEmailPrompt(){
-        System.out.println("\nWhat iss the speaker's e-mail address?");
+        System.out.println("\nWhat is the speaker's e-mail address?");
     }
 
     // OPTION 4
