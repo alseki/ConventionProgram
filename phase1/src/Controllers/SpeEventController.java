@@ -125,33 +125,32 @@ public class SpeEventController implements SubMenu {
         try {
             for (String event : events) {
                 eventMessage(event, messageContent);
-            } }
-        catch (InputMismatchException ime){
+            }
+        } catch (InputMismatchException ime){
                 System.out.println("You have entered an event name incorrectly.");
-            }
-
         }
+    }
 
 
-                /**
-                 * This is the same method from above, but only using messageContent as a parameter instead of the list of all
-                 * Speaker talks
-                 * @param messageContent
-                 */
-                private void allSpeakerEventsMessage (String messageContent){
-                    String[] allTalks = {};
-                    allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
-                    multipleEventsAnnouncement(allTalks, messageContent);
-                }
+    /**
+     * This is the same method from above, but only using messageContent as a parameter instead of the list of all
+     * Speaker talks
+     * @param messageContent
+     */
+    private void allSpeakerEventsMessage (String messageContent){
+        String[] allTalks = {};
+        allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
+        multipleEventsAnnouncement(allTalks, messageContent);
+    }
 
-                /**
-                 *
-                 * @param content Content of the message
-                 * @return Content following with the sentence: ["Contact me using this username:"]\newline
-                 *                                              [username of the Speaker]
-                 */
-                private String addSpeUsername (String content){
-                    return content + "\n" + "Contact me using this username:\n"
-                            + speakerManager.getCurrentUsername(currentUserID);
-                }
-            }
+    /**
+     *
+     * @param content Content of the message
+     * @return Content following with the sentence: ["Contact me using this username:"]\newline
+     *                                              [username of the Speaker]
+     */
+    private String addSpeUsername (String content){
+        return content + "\n" + "Contact me using this username:\n"
+                + speakerManager.getCurrentUsername(currentUserID);
+    }
+}

@@ -44,14 +44,31 @@ public class SpeakerManager extends PersonManager {
      * @return boolean; takes eventId created in OrgEventController method createEvent and adds it to Speaker's allTalksId list
      */
 
-    public boolean addTalkId(String userID, String eventID) {
-        if ((idToPerson).containsKey(userID)) {
-            Speaker individual = (Speaker) idToPerson.get(userID);
-            individual.getAllTalks().add(eventID);
+//    public boolean addTalkId(String userID, String eventID) {
+//        if ((idToPerson).containsKey(userID)) {
+//            Speaker individual = (Speaker) idToPerson.get(userID);
+//            individual.getAllTalks().add(eventID);
+//            return true;
+//        }
+//        return false;
+//    }
+
+    /**
+     *
+     * @param eventId
+     * @param userId
+     * @return boolean; takes eventId created in OrgEventController method createEvent, and adds it to Speaker's allTalksId list
+     */
+
+    public boolean addTalk(String eventId, String userId) {
+        Speaker sp = (Speaker) idToPerson.get(userId);
+        if (!(sp.getAllTalks().contains(eventId))) {
+            sp.signUp(eventId);
             return true;
         }
         return false;
     }
+
 
     /**
      *
@@ -64,9 +81,9 @@ public class SpeakerManager extends PersonManager {
 
 
     public boolean addTalkIdToDictionary(String userID, String eventID, String eventName) {
-        Speaker individual = (Speaker) idToPerson.get(userID);
-        if (!(individual.getAllTalksDictionary().containsKey(eventID))) {
-            individual.getAllTalksDictionary().put(eventID, eventName);
+        Speaker sp = (Speaker) idToPerson.get(userID);
+        if (!(sp.getAllTalksDictionary().containsKey(eventID))) {
+            sp.getAllTalksDictionary().put(eventID, eventName);
             return true;
         }
         return false;
@@ -90,17 +107,7 @@ public class SpeakerManager extends PersonManager {
     }
 
 
-    /**
-     *
-     * @param username
-     * @return
-     */
-    public int confirmAttendee(String username){
-        if (usernameToPerson.containsKey(username)) {
-            return getPerson(username).getTypePerson();
-        }
-        return -1;
-    }
+
 
     /**
      * gets the Speaker's list of contacts.

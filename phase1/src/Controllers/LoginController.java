@@ -73,7 +73,7 @@ public class LoginController implements SubMenu {
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
         if(this.accountChoice != manager.typePerson(username)) {
-            throw new InvalidChoiceException("logged in as wrong type of user");
+            throw new InvalidChoiceException("account");
         }
         presenter.printPasswordPrompt();
         String password = SubMenu.readInput(input);
