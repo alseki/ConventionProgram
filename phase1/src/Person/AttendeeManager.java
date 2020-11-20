@@ -1,9 +1,6 @@
 package Person;
 
-import Events.Event;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AttendeeManager extends PersonManager {
@@ -138,6 +135,13 @@ public class AttendeeManager extends PersonManager {
         Attendee attendee = (Attendee)getPerson(currentUserID);
         return attendee.getAnChatList();
 
+    }
+
+    public int confirmAttendee(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
     }
 
 }

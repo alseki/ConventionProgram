@@ -132,6 +132,16 @@ public abstract class PersonManager {
         return null;
     }
 
+
+
+    public int typePerson(String username) {
+        if(usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+
+        }
+        return -1;
+    }
+
     /**
      * This is a helper function for LoginController in the login() method
      * @param username

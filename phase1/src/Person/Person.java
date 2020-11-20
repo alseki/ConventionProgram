@@ -10,6 +10,7 @@ public abstract class Person implements Serializable {
     protected String password;
     protected String email;
     protected String fullName;
+    protected int typePerson;
 
     protected ArrayList<String> contactList = new ArrayList<>();
     protected ArrayList<String> eventList = new ArrayList<>();
@@ -67,6 +68,10 @@ public abstract class Person implements Serializable {
      */
     public String getPassword() {
         return this.password;
+    }
+
+    public int getTypePerson() {
+        return this.typePerson;
     }
 
     /**

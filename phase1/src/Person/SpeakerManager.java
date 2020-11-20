@@ -89,6 +89,13 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
+    public int confirmAttendee(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
+    }
+
     /**
      * gets the Speaker's list of contacts.
      * @param personId the Person Id of the speaker whose contact list we are retrieving
@@ -122,6 +129,13 @@ public class SpeakerManager extends PersonManager {
             return true;
         }
         return false;
+    }
+
+    public int confirmSpeaker(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
     }
 
     }

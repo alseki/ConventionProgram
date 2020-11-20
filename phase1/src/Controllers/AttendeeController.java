@@ -20,12 +20,16 @@ public class AttendeeController extends PersonController {
     private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private int currentRequest;
+    private int typePerson;
+    private int accountChoice;
     Scanner input = new Scanner(System.in);
 
     public AttendeeController(PersonManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats) {
-        super(manager, rooms, events, messages, chats);
+        super(manager, rooms, events, messages, chats, 1);
         this.manager = (AttendeeManager) manager;
+        this.typePerson = 1;
+        this.accountChoice = accountChoice;
     }
 
     /**
