@@ -69,7 +69,11 @@ public class OrgEventController implements SubMenu {
                 case 0:
                     break;
                 case 1:
-                    addRoomPrompt();
+                    try {
+                        addRoomPrompt();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 2:
                     try {
@@ -102,10 +106,13 @@ public class OrgEventController implements SubMenu {
     /**
      * Prompts the user to input the information for the Room they wish to add
      */
-    private void addRoomPrompt() {
+    private void addRoomPrompt() throws InvalidChoiceException {
         presenter.addRoomPrompt();
         presenter.roomNamePrompt();
         String name = SubMenu.readInput(input);
+        if (name.equals("1")) {
+            throw new OverwritingException("room");
+        }
         presenter.roomCapacityPrompt();
         int capacity = SubMenu.readInteger(input);
         this.addRoom(name, capacity);
@@ -173,9 +180,6 @@ public class OrgEventController implements SubMenu {
             presenter.printRoomList();
             name = SubMenu.readInput(input);
         }
-        if (name.equals("1")) {
-            throw new InvalidChoiceException("room");
-        }
         if (roomManager.getRoomID(name) != null) {
             return name;
         }
@@ -224,7 +228,6 @@ public class OrgEventController implements SubMenu {
             throw new InvalidChoiceException("speaker");
         }
 
-
         if (eventPermissions.checkConflicts(start, type, roomID)) {
             String eventID = addEvent(name, speakerID, start, description, type);
 
@@ -243,8 +246,9 @@ public class OrgEventController implements SubMenu {
 
         String eventID = eventManager.addEvent(name, speakerID, start, description, type);
 
-        ArrayList<String> attendees = new ArrayList<>();
-        String announcementChatID = chatManager.createAnnouncementChat(eventID, attendees);
+
+        String announcementChatID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>());
+        eventManager.setEventChat(eventID, announcementChatID);
 
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
@@ -256,7 +260,7 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * This is a helper method for the methods above; updates Speaker's chat list
+     * This is a helper method for the methods a    bove; updates Speaker's chat list
      * @param personID
      * @param chatID
      */

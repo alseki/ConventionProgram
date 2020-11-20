@@ -32,7 +32,7 @@ public class MainMenu {
     public void printOrganizerMM() {
         printAttendeeMM();
         System.out.println("For Event Organizing options (edit Event list, create Speaker accounts, add rooms) " +
-                "Enter '4.");
+                "Enter '4'.");
         System.out.println("For Event Messaging options (message Event Attendees, message Event Speakers) Enter '5'.");
         
     }

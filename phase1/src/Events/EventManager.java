@@ -2,7 +2,6 @@ package Events;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 
 abstract class EventAccess {
     protected abstract Event getEvent(String eventID);
-    protected abstract Event[] getEventList(String[] eventIDs);
 }
 
 public class EventManager extends EventAccess implements Serializable {
@@ -121,23 +119,14 @@ public class EventManager extends EventAccess implements Serializable {
 
     public EventType getEventType(String eventID){
         try {
-            String name = events.get(eventID).getClass().getName();
-            return EventType.valueOf(name);
-        } catch (NullPointerException n) {
-            return null;
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
-     */
-    public ArrayList<String> getSignUps(String eventID){
-        try {
-            return events.get(eventID).getAttendeeIDs();
+            Event event = getEvent(eventID);
+            if (event.getClass().equals(Talk.class)) {
+                return EventType.TALK;
+            } else if (event.getClass().equals(Workshop.class)) {
+                return EventType.WORKSHOP;
+            } else {
+                return null;
+            }
         } catch (NullPointerException n) {
             return null;
         }

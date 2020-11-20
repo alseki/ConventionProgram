@@ -8,14 +8,18 @@ package Presenter;
 
 import Events.EventManager;
 import Events.RoomManager;
-import Person.PersonManager;
+import Person.AttendeeManager;
 
 import java.util.ArrayList;
 
 public class AttEventMenu extends EventMenu {
+    AttendeeManager attendeeManager;
+    String currentUserID;
 
-    public AttEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
+    public AttEventMenu(String currentUserID, RoomManager rooms, EventManager events, AttendeeManager persons) {
         super(rooms, events, persons);
+        attendeeManager = persons;
+        this.currentUserID = currentUserID;
     }
 
     /**
@@ -53,11 +57,11 @@ public class AttEventMenu extends EventMenu {
 
     /**
      * Prints the list of Events this Attendee user has signed up for
-     * @param eventList a collection of Event information to be printed
      */
-    public void printAttendeeEventList(ArrayList<String> eventList) {
-        String[] events = {};
-        printEventList(" you have signed up for", eventList.toArray(events));
+    public void printAttendeeEventList() {
+        String[] evList = {};
+        evList = attendeeManager.getSignedUpEvents(currentUserID).toArray(evList);
+        printEventList(" you have signed up for", evList);
     }
 
     /**

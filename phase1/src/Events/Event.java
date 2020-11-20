@@ -30,13 +30,13 @@ public abstract class Event implements Serializable {
      * @param endTime The time when the Event ends
      * @param description A description for this Event
      */
-    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description) {
+    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description, String speakerID) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
         ID = UUID.randomUUID().toString();
-        speakerID = null;
+        this.speakerID = speakerID;
         attendees = new ArrayList<String>();
         this.chatID = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString().replace("-", "");

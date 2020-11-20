@@ -92,6 +92,9 @@ public class ConventionPlanningSystem {
         if (roomLoader.readFile()!= null) {
             rm = roomLoader.readFile();
         }
+        if (eventLoader.readFile()!= null) {
+            em = eventLoader.readFile();
+        }
         if (messageLoader.readFile() != null) {
             mm = messageLoader.readFile();
         }
@@ -111,6 +114,7 @@ public class ConventionPlanningSystem {
      */
     private void save() {
         roomLoader.writeFile(rm);
+        eventLoader.writeFile(em);
         messageLoader.writeFile(mm);
         chatLoader.writeFile(cm);
         id2Person.writeFile(personByID);

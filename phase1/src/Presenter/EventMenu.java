@@ -26,8 +26,8 @@ public abstract class EventMenu implements printSubMenu {
         }
     }
 
-    public void printEventList(String[] eventIDList) {
-        printEventList("", eventIDList);
+    public void printEventList() {
+        printEventList("", events.getEventIDs());
     }
 
     public void printEventList(String condition, String[] eventIDList) {
@@ -37,7 +37,10 @@ public abstract class EventMenu implements printSubMenu {
             for (int i  = 0; i < eventIDList.length; i++) {
                 events[i] = formatEvent(eventIDList[i]);
             }
-            printList(eventIDList, "event");
+            printList(events, "event");
+        }
+        catch (NullPointerException e) {
+            printException(new InvalidChoiceException("event"));
         }
         catch (InvalidChoiceException e) {
             printException(e);
@@ -45,19 +48,25 @@ public abstract class EventMenu implements printSubMenu {
     }
 
     public String formatEvent(String eventID) throws InvalidChoiceException  {
-        StringBuilder e = new StringBuilder();
-        e.append(events.getEventType(eventID).toString());
-        e.append(": ");
-        e.append(events.getEventName(eventID));
-        e.append("\nby ");
-        e.append(persons.getName(events.getSpeakerID(eventID)));
-        e.append("\nfrom ");
-        e.append(events.getStartTime(eventID));
-        e.append(" to ");
-        e.append(events.getEndTime(eventID));
-        e.append("\n");
-        e.append(events.getDescription(eventID));
-        return e.toString();
+        try {
+            StringBuilder e = new StringBuilder();
+            e.append(events.getEventType(eventID).toString());
+            e.append(": ");
+            e.append(events.getEventName(eventID));
+            e.append("\nby ");
+            e.append(persons.getName(events.getSpeakerID(eventID)));
+            e.append(" in room ");
+            e.append(rooms.getEventRoom(eventID));
+            e.append("\nfrom ");
+            e.append(events.getStartTime(eventID));
+            e.append(" to ");
+            e.append(events.getEndTime(eventID));
+            e.append("\n");
+            e.append(events.getDescription(eventID));
+            return e.toString();
+        } catch (NullPointerException n) {
+            throw new InvalidChoiceException("event");
+        }
     }
 
 }

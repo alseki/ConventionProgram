@@ -66,6 +66,11 @@ public class OrganizerController extends PersonController {
                                 speakerManager, roomManager, eventManager, messageManager, chatManager);
                         orgEventController.menuChoice();
                         break;
+                    case 5:
+                        SpeEventController speEventController = new SpeEventController(currentUserID, speakerManager,
+                                messageManager, chatManager, eventManager, roomManager);
+                        speEventController.menuChoice();
+                        break;
                 }
             }
             while (currentRequest != 0);

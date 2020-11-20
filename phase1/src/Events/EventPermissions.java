@@ -1,14 +1,14 @@
 package Events;
 
-import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 15 2020
+// Last edit: Nov 19 2020
 
 // Architecture Level - Use Class
 
-public class EventPermissions implements Serializable {
+public class EventPermissions {
 
     private RoomAccess roomAccess;
     private EventAccess eventAccess;
@@ -70,11 +70,11 @@ public class EventPermissions implements Serializable {
     /**
      * Checks if the inputted Event conflicts with multiple other inputted Events
      * @param roomID The the ID of the roomt he Event will be held in
-     * @return True or False
+     * @return True if the event doesn't conflict with any existing events
      */
-    public boolean checkConflicts(LocalDateTime startTime, EventType type, String roomID) throws NullPointerException {
+    public boolean checkConflicts(LocalDateTime startTime, EventType type, String roomID) {
         Event event;
-        String[] events = roomAccess.getEventIDs(roomID);
+        String[] eventIDs = roomAccess.getEventIDs(roomID);
         if (type.equals(EventType.WORKSHOP)) {
             event = new Workshop("", "", startTime, "");
         } else if (type.equals(EventType.TALK)) {
@@ -83,12 +83,16 @@ public class EventPermissions implements Serializable {
             return false;
         }
 
-        for (String e : events) {
-            if (eventAccess.getEvent(e).conflictsWith(event)) {
-                return false;
+        try {
+            for (String eID : eventIDs) {
+                if (eventAccess.getEvent(eID).conflictsWith(event)) {
+                    return false;
+                }
             }
+            return true;
+        } catch (NullPointerException n) {
+            return true;
         }
-        return true;
     }
 
 }

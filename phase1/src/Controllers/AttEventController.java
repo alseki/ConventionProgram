@@ -36,7 +36,7 @@ public class AttEventController implements SubMenu {
         this.eventManager = eventManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
         this.roomManager = roomManager;
-        presenter = new AttEventMenu(roomManager, eventManager, attendeeManager);
+        presenter = new AttEventMenu(currentUserID, roomManager, eventManager, attendeeManager);
     }
 
     /**
@@ -63,7 +63,7 @@ public class AttEventController implements SubMenu {
                     try {
                         String roomID = this.getRoomChoice();
                         if (roomID.equals("1")) {
-                            presenter.printEventList("", eventManager.getEventIDs());
+                            presenter.printEventList();
                         } else {
                             presenter.printRoomEventList(roomManager.getEventIDs(roomID),
                                     roomManager.getRoomName(roomID));
@@ -91,7 +91,7 @@ public class AttEventController implements SubMenu {
                     }
                     break;
                 case 4:
-                    getUserEventList();
+                    presenter.printAttendeeEventList();
                     break;
             }
         }
@@ -112,6 +112,9 @@ public class AttEventController implements SubMenu {
             presenter.printRoomList();
             room = SubMenu.readInput(input);
         }
+        if (room.equals("1")) {
+            return "1";
+        }
         if (roomManager.getRoomID(room) != null) {
             return roomManager.getRoomID(room);
         } else {
@@ -120,25 +123,12 @@ public class AttEventController implements SubMenu {
     }
 
     /**
-     * Gets the list of Events the Attendee user is signed up for
-     */
-    private void getUserEventList() {
-        ArrayList<String> userEventList = attendeeManager.getSignedUpEvents(currentUserID);
-        String[] evList = new String[userEventList.size()];
-        for (int i = 0; i < evList.length; i++) {
-            String event = eventManager.getEventName(evList[i]);
-            evList[i] = event;
-        }
-        presenter.printEventList(" you have signed up for", evList);
-    }
-
-    /**
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      */
     private void signupForEvent (String eventName) throws InvalidChoiceException  {
         String event = eventManager.getEventID(eventName);
-        String room = roomManager.getEventRoom(eventName);
+        String room = roomManager.getEventRoom(event);
         if (room == null || event == null) {
             throw new InvalidChoiceException("event");
         }
