@@ -1,23 +1,19 @@
 package Presenter;
 
-// Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
-// Description: Prints information pertaining to a user's message information
-// Date Created: 11/11/2020
-// Date Modified: 18/11/2020
-
 import Controllers.InvalidChoiceException;
 import Controllers.NoDataException;
-import Message.*;
+import Message.AnnouncementChat;
+import Message.ChatManager;
+import Message.MessageManager;
 import Person.PersonManager;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MessageMenu implements printSubMenu {
 
-    private PersonManager personManager;
-    private ChatManager chatManager;
-    private MessageManager messageManager;
+    protected PersonManager personManager;
+    protected ChatManager chatManager;
+    protected MessageManager messageManager;
 
     public MessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager) {
         this.personManager = personManager;
@@ -35,41 +31,17 @@ public class MessageMenu implements printSubMenu {
         System.out.println("Check your inbox ----------------------------------- Enter '1'.");
         System.out.println("Check your sent box -------------------------------- Enter '2'.");
         System.out.println("View the chat list --------------------------------- Enter '3'.");
-        System.out.println("View the announcement chat list -------------------- Enter '4'.");
-        System.out.println("View the messages in a chat ------------------------ Enter '5'.");
-        System.out.println("View the announcements in an announcement chat ----- Enter '6'.");
-        System.out.println("Create a chat -------------------------------------- Enter '7'.");
-        System.out.println("Create a group chat -------------------------------- Enter '8'.");
-        System.out.println("Send a message ------------------------------------- Enter '9'.");
+        System.out.println("View the messages in a chat ------------------------ Enter '4'.");
+        System.out.println("Send a message ------------------------------------- Enter '5'.");
     }
+
+    // Prompts
 
     /**
      * Prompts user to enter ID of the chat.
      */
-    public void printChatIdPrompt(String type){
+    public void printChatIdPrompt(String type) {
         System.out.println("Which " + type + "Chat do you want to check? Enter the chatID.");
-    }
-
-    /**
-     * Prompts user to enter username of the contact want to have chat with.
-     */
-    public void printContactUsernamePrompt(){
-        System.out.println("Who do you want to chat with? Enter their username.");
-    }
-
-    /**
-     * Prompts user to enter usernames of the contacts want to have chat with.
-     */
-    public void printContactUsernamesPrompt(){
-        System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
-                "\n(E.g. 'user1,user2,user3'; please do not add spaces after commas)");
-    }
-
-    /**
-     * Tell the User the chat is created and the ID.
-     */
-    public void printChatCreated(String chatID){
-        System.out.println("Chat created! The ID is: " + chatID);
     }
 
     /**
@@ -86,46 +58,15 @@ public class MessageMenu implements printSubMenu {
         System.out.println("Which chat do you want to send message to? Enter the chatID.");
     }
 
-    public void printFormattedChatList(ArrayList<String> chatIDs) throws NoDataException {
-        String[] chatList = new String[chatIDs.size()];
-        for (int i = 0; i < chatList.length; i++) {
-            String chat = chatIDs.get(i);
-            if (chatManager.getChatClass(chat).equals(AnnouncementChat.class)) {
-                chatList[i] =formatAnChatString(chat);
-            }
-            else {
-                chatList[i] = formatChatString(chat);
-            }
-        }
-        printList(chatList, "chat");
-
-    }
-
-    public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
-        ArrayList<String> messageInChat = new ArrayList<>();
-        for (String mID : messageIDs) {
-            messageInChat.add(formatMessage(mID));
-        }
-        String[] messages = {};
-        return messageInChat.toArray(messages);
-    }
 
     /**
-     * Get message formatted as: "[From]: [Username of the sender]\new line
-     *                            [To]: [Username of the recipient]\new line
-     *                            [Time Sent]: [time that was sent]\newline
-     *                            [Message]: [the content of the message]\newline"
-     * @param messageId of the message that is to be formatted.
-     * @return Formatted string representation of the message.
+     * Prompts user to enter content of the message.
      */
-    private String formatMessage(String messageId) {
-        String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
-        String recipient = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
-        String time = messageManager.getDateTime(messageId);
-        String message = messageManager.getContent(messageId);
-        return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
-                + "Message: " + message + "\n";
+    public void printContentPrompt(){
+        System.out.println("Please enter the content.");
     }
+
+    // Chat summary formatting
 
     /**
      * Get chat formatted as: "[ID]: [ID of the chat]\new line
@@ -141,7 +82,6 @@ public class MessageMenu implements printSubMenu {
         return "ChatID: " + chatID + "\n" + "Participants: " + "\n" + participants + "\n";
     }
 
-
     /**
      * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\new line
      *                                     [Event]: [Name of event]
@@ -156,21 +96,49 @@ public class MessageMenu implements printSubMenu {
         return null;
     } //TODO: update to the specified format
 
+    public void printFormattedChatList(ArrayList<String> chatIDs) throws NoDataException {
+        String[] chatList = new String[chatIDs.size()];
+        for (int i = 0; i < chatList.length; i++) {
+            String chat = chatIDs.get(i);
+            if (chatManager.getChatClass(chatList[i]) != AnnouncementChat.class) {
+                chatList[i] = formatChatString(chat);
+            } else {
+                chatList[i] = formatAnChatString(chat);
+            }
+        }
+        printList(chatList, "chat");
 
-    /**
-     * Prompts user to enter content of the message.
-     */
-    public void printContentPrompt(){
-        System.out.println("Please enter the content.");
     }
 
+    // Message formatting
+
     /**
-     * Let the presenter show the info from parameter, i.e. from MessageController.
-     * @param input info from MessageController, e.g. Chat/Message information.
+     * Get message formatted as: "[From]: [Username of the sender\Name of the Event]\new line
+     *                            [Time Sent]: [time that was sent]\newline
+     *                            [Message]: [the content of the message]\newline"
+     * @param messageId of the message that is to be formatted.
+     * @return Formatted string representation of the message.
      */
-    public void showRequiredInfo(String input){
-        System.out.println(input);
+    private String formatMessage(String messageId) {
+        String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
+        String recipient = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
+        String time = messageManager.getDateTime(messageId);
+        String message = messageManager.getContent(messageId);
+        return "From: " + sender + "\n" + "To: " + recipient + "\n" + "Time sent: " + time + "\n"
+                + "Message: " + message + "\n";
+    } //TODO - update this for events!
+
+    public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
+        ArrayList<String> messageInChat = new ArrayList<>();
+        for (String mID : messageIDs) {
+            messageInChat.add(formatMessage(mID));
+        }
+        String[] messages = {};
+        return messageInChat.toArray(messages);
     }
+
+
+    // Entire chat formatting
 
     /**
      * Show the messages in one chat by chatID.
@@ -183,14 +151,14 @@ public class MessageMenu implements printSubMenu {
         if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
+        if (chatManager.getChatClass(chatID) != AnnouncementChat.class) {
 
-        if (chatManager.getChatClass(chatID).equals(AnnouncementChat.class)) {
-            formatAnChatString(chatID);
-        }
-        else {
             formatChatString(chatID);
-        }
 
-        printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
+            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
+        } else  {
+            formatAnChatString(chatID);
+            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
+        }
     }
 }

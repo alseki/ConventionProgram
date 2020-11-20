@@ -52,7 +52,7 @@ public class OrganizerController extends PersonController {
                         contactController.menuChoice();
                         break;
                     case 2:
-                        MessageController messageController = new MessageController(currentUserID,
+                        AttMessageController messageController = new AttMessageController(currentUserID,
                                 attendeeManager, messageManager, chatManager);
                         messageController.menuChoice();
                         break;

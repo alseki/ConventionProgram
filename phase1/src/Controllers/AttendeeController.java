@@ -48,7 +48,7 @@ public class AttendeeController extends PersonController {
                         contactController.menuChoice();
                         break;
                     case 2:
-                        MessageController messageController = new MessageController(currentUserID, manager,
+                        AttMessageController messageController = new AttMessageController(currentUserID, manager,
                                 messageManager, chatManager);
                         messageController.menuChoice();
                         break;

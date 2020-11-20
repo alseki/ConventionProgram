@@ -47,6 +47,11 @@ public class SpeakerController extends PersonController {
                         contactController.menuChoice();
                         break;
                     case 2:
+                        MessageController messageController = new MessageController(currentUserID, manager,
+                                messageManager, chatManager);
+                        messageController.menuChoice();
+                        break;
+                    case 3:
                         SpeEventController speEventController = new SpeEventController(currentUserID, manager,
                                 messageManager, chatManager, eventManager, roomManager);
                         speEventController.menuChoice();
