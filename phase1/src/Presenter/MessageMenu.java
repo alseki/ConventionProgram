@@ -10,6 +10,11 @@ import Person.PersonManager;
 
 import java.util.ArrayList;
 
+// Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
+// Description: Prints information pertaining to a user's message information
+// Date Created: 11/11/2020
+// Date Modified: 19/11/2020
+
 public class MessageMenu implements printSubMenu {
 
     protected PersonManager personManager;
@@ -43,6 +48,7 @@ public class MessageMenu implements printSubMenu {
 
     /**
      * Prompts user to enter ID of the chat.
+     * @param type The type of chat to be printed
      */
     public void printChatIdPrompt(String type) {
         System.out.println("Which " + type + "Chat do you want to check? Enter the chatID.");
@@ -100,7 +106,12 @@ public class MessageMenu implements printSubMenu {
         }
     } //TODO: update to the specified format
 
-    public void printFormattedChatList(ArrayList<String> chatIDs) throws NoDataException {
+    /**
+     * Print out a list of formatted chat summaries
+     * @param chatIDs The list of IDs the chats to print out
+     * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     */
+    public void printFormattedChatList(ArrayList<String> chatIDs) throws InvalidChoiceException {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);

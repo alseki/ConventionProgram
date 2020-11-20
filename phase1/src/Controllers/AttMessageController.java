@@ -1,7 +1,7 @@
 package Controllers;
 
 // Programmer: Ran Yi, Sarah Kronenfeld
-// Description: For current User to view chat and message, create chat and send message.
+// Description: For current Attendee (or Organizer) to view chat and message, create chat and send message.
 // Date Modified: 19/11/2020
 
 

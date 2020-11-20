@@ -90,11 +90,7 @@ public class OrgEventController implements SubMenu {
                     }
                     break;
                 case 4:
-                    try {
-                        eventMessagePrompt();
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
+                    eventMessagePrompt();
                     break;
             }
         }
@@ -264,8 +260,8 @@ public class OrgEventController implements SubMenu {
     }
 
     /**
-     * This is a helper method for the methods a    bove; updates Speaker's chat list
-     * @param personID
+     * This is a helper method for the methods above; updates Speaker's chat list
+     * @param personID The  id of the person
      * @param chatID
      */
     private void updateSpeakerChat(String personID, String chatID) {
@@ -321,7 +317,7 @@ public class OrgEventController implements SubMenu {
     /**
      * Prompts the user to input the information required to create an Event Message
      */
-    public void eventMessagePrompt() throws InvalidChoiceException {
+    public void eventMessagePrompt() {
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
         String name = SubMenu.readInput(input);

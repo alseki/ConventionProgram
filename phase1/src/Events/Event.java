@@ -29,6 +29,7 @@ public abstract class Event implements Serializable {
      * @param startTime The time when the Event starts
      * @param endTime The time when the Event ends
      * @param description A description for this Event
+     * @param speakerID The ID of the Speaker holding this event
      */
     protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description, String speakerID) {
         this.name = name;
@@ -67,36 +68,11 @@ public abstract class Event implements Serializable {
     }
 
     /**
-     * Setter for the start time of this Event
-     * @param startTime The new start time of this Event
-     */
-    protected void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
      * Getter for the end time of this Event
      * @return the end time of this Event
      */
     public LocalDateTime getEndTime() {
         return endTime;
-    }
-
-    /**
-     * Setter for the end time of this Event
-     * @param endTime The new start time of this Event
-     */
-    protected void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    /**
-     * Getter for the time (in hours) that this Event will run
-     * @return the duration of this Event (as an int)
-     */
-    public int getDuration() {
-        Duration diff = Duration.between(this.startTime, this.endTime);
-        return (int) diff.toHours();
     }
 
     /**
@@ -118,14 +94,6 @@ public abstract class Event implements Serializable {
         else{
             return speakerID;
         }
-    }
-
-    /**
-     * Setter for the speaker running this Event
-     * @param id The ID of the new speaker
-     */
-    protected void setSpeakerID(String id) {
-        speakerID = id;
     }
 
     /**

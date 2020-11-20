@@ -9,6 +9,10 @@ import Presenter.MessageMenu;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Programmer: Ran Yi, Sarah Kronenfeld
+// Description: For current User to view chat and message, create chat and send message.
+// Date Modified: 19/11/2020
+
 public class MessageController implements SubMenu {
     protected String currentUserID;
     protected PersonManager personManager;
@@ -122,17 +126,18 @@ public class MessageController implements SubMenu {
 
     /**
      * Show the chatList with this User inside with its ID and participants' IDs.
-     * @return ArrayList of formatted chats
+     * Chats formatted like so:
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
      *              ...
+     * @return ArrayList of formatted chats
      */
     protected void viewChats(ArrayList<String> chatIDs) {
         try {
             presenter.printFormattedChatList(chatIDs);
-        } catch (NoDataException e) {
+        } catch (InvalidChoiceException e) {
             presenter.printException(e);
         }
     }

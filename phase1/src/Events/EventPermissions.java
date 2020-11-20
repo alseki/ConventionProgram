@@ -24,7 +24,8 @@ public class EventPermissions {
     /**
      * Signs an individual Attendee up for an Event
      * @param personID The ID of the Attendee
-     * @param eventID The Event
+     * @param eventID The ID of the Event
+     * @param roomID  The ID of the Room the Event is in
      * @return Whether the Event exists
      */
     public boolean signUpForEvent(String personID, String eventID, String roomID) throws CapacityException {
@@ -58,8 +59,10 @@ public class EventPermissions {
     }
 
     /**
-     * Getter for the capacity of the Room whose permissions are dealt with here
-     * @return the capacity (as an int)
+     * Checks if an event is full
+     * @param eventID The ID of the Event
+     * @param roomID The ID of the Room the Event is in
+     * @return True if there is still space for more Attendees to register
      */
     private boolean checkRoomCapacity(String eventID, String roomID) {
         Event event = eventAccess.getEvent(eventID);
@@ -69,7 +72,9 @@ public class EventPermissions {
 
     /**
      * Checks if the inputted Event conflicts with multiple other inputted Events
-     * @param roomID The the ID of the roomt he Event will be held in
+     * @param startTime The time at which the event will start
+     * @param type The type of event, as an EventType
+     * @param roomID The the ID of the room the Event will be held in
      * @return True if the event doesn't conflict with any existing events
      */
     public boolean checkConflicts(LocalDateTime startTime, EventType type, String roomID) {

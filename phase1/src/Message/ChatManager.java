@@ -2,7 +2,7 @@ package Message;
 
 // Programmer: Karyn Komatsu, Ran Yi, Sarah Kronenfeld
 // Description: Stores Chat objects
-// Date Modified: 18/11/2020
+// Date Modified: 19/11/2020
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
@@ -141,7 +141,13 @@ public class ChatManager implements Serializable {
      * @param chatID ID of the chat
      * @returns true iff chat ID corresponds to null object.
      */
-     public boolean isChatIDNull(String chatID) {return getUnknownTypeChat(chatID).equals(null);}
+     public boolean isChatIDNull(String chatID) {
+         try {
+             return getUnknownTypeChat(chatID).equals(null);
+         } catch (NullPointerException n) {
+             return true;
+         }
+     }
 
     /**
      * Return collection of all Chats where the inputted person ID is part of the member.
@@ -213,20 +219,6 @@ public class ChatManager implements Serializable {
             chatIDs.add(c.getId());
         }
         return chatIDs;
-    }
-
-    public ArrayList<String> getChatIDs(String thisPersonID) {
-        ArrayList<String> chats = getChatIDs();
-        ArrayList<String> pChats = new ArrayList();
-        for (String c : chats) {
-            for (String personID : getChat(c).getPersonIds()) {
-                if (personID.equals(thisPersonID)) {
-                    pChats.add(c);
-                    break;
-                }
-            }
-        }
-        return pChats;
     }
 
 
