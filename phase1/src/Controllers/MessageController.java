@@ -132,7 +132,7 @@ public class MessageController implements SubMenu {
      *              [ID]: [ID of the chat]\new line
      *              [Participants]: [ID of the Participants]\newline
      *              ...
-     * @return ArrayList of formatted chats
+     *
      */
     protected void viewChats(ArrayList<String> chatIDs) {
         try {

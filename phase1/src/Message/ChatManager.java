@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ChatManager implements Serializable {
     private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
@@ -128,17 +129,13 @@ public class ChatManager implements Serializable {
      }
 
     /**
-     * Get password of a Chat object casted by  represented by the inputted chat ID
-     * @param chatID ID of the Chat Object
-     */
-    /**
      * Get class of the Chat item corresponding to the inputted chat ID
-     * @chatID ID of the Chat object
+     * @param chatID ID of the Chat object
      * @return Class type
      */
      public Class<?> getChatClass(String chatID){
          try {
-             return getUnknownTypeChat(chatID).getClass();
+             return Objects.requireNonNull(getUnknownTypeChat(chatID)).getClass();
          } catch (NullPointerException n) {
              return null;
          }
@@ -147,11 +144,11 @@ public class ChatManager implements Serializable {
     /**
      * Figures if chat ID corresponds to null object (i.e. There is no Chat object associated with the inputted ID)
      * @param chatID ID of the chat
-     * @returns true iff chat ID corresponds to null object.
+     * @return true iff chat ID corresponds to null object.
      */
      public boolean isChatIDNull(String chatID) {
          try {
-             return getUnknownTypeChat(chatID).equals(null);
+             return getUnknownTypeChat(chatID) == null;
          } catch (NullPointerException n) {
              return true;
          }
