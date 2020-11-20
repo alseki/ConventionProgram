@@ -1,6 +1,6 @@
 package Controllers;
 
-// Programmer: Ran Yi, Sarah Kronenfeld
+// Programmer: Ran Yi, Sarah Kronenfeld, Karyn Komatsu
 // Description: For current Attendee (or Organizer) to view chat and message, create chat and send message.
 // Date Modified: 19/11/2020
 
@@ -89,8 +89,7 @@ public class AttMessageController extends MessageController {
         presenter.printContactUsernamePrompt();
         try {
             String chatID = createChat(SubMenu.readInput(input));
-            presenter.printChatCreated(chatID);
-            presenter.printJobDone();
+            if(chatID!=null){presenter.printID(chatID);}
         } catch (InvalidChoiceException e) {
             presenter.printException(e);
         }
@@ -110,12 +109,20 @@ public class AttMessageController extends MessageController {
         }
         if (chatManager.existChat(currentUserID, contactID)){
             String chatID = chatManager.findChat(currentUserID, contactID);
-            // presenter: the chat already exists
+            presenter.printChatNotCreated();
+            presenter.printChatExists();
             return chatID;
-        } else {
+        }
+        else if (currentUserID.equals(contactID)){
+            presenter.printChatNotCreated();
+            presenter.printSoloChatNotAllowed();
+            return null;
+        }else {
             String chatID = chatManager.createChat(currentUserID, contactID);
             attendeeManager.addChat(contactID, chatID);
             attendeeManager.addChat(currentUserID, chatID);
+            presenter.printJobDone();
+            presenter.printChatCreated();
             return chatID;
         }
     }
@@ -141,11 +148,13 @@ public class AttMessageController extends MessageController {
                 cs.add(attendeeManager.getCurrentUserID(contact));
             }
             String groupChatID = createGroupChat(cs);
-            for (String contact: cs) {
+            if  (groupChatID != null){
+                for (String contact: cs) {
                 attendeeManager.addChat(contact, groupChatID);
             }
-            presenter.printChatCreated(groupChatID);
             presenter.printJobDone();
+            presenter.printChatCreated();
+            presenter.printID(groupChatID);}
         } catch (InvalidChoiceException e) {
             presenter.printException(e);
         } catch (NullPointerException e) {
@@ -167,12 +176,19 @@ public class AttMessageController extends MessageController {
             }
             contactIDs.add(contactID);
         }
-        if (this.chatManager.existChat(currentUserID, contactIDs)) {
+        if (this.chatManager.existChat(currentUserID, contactIDs)) { //if there already exist a desired Chat
             String chatID = chatManager.findChat(currentUserID, contactIDs);
-            // presenter: the chat already exists.
-            return chatID;
-        } else {
+            presenter.printChatNotCreated();
+            presenter.printChatExists();
+            return chatID; }
+        else if ((contactIDs.size()==1)&&(contactIDs.contains(currentUserID))){ //if it's trying to create Chat by itself
+            presenter.printChatNotCreated();
+            presenter.printSoloChatNotAllowed();
+            return null;}
+        else {
             String chatID = chatManager.createChat(currentUserID, contactIDs);
+            presenter.printJobDone();
+            presenter.printChatCreated();
             return chatID;
         }
     }

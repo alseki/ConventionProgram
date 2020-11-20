@@ -82,7 +82,6 @@ public class SpeEventMenu extends EventMenu {
     public boolean printMenuOptions() {
         System.out.println("----- Speaker Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
-        // TODO add print statements for all the other menu options
         System.out.println(("To see the schedule of your talks, Enter '1'."));
         System.out.println("To send a message to one conference attendee, including an organizer, Enter '2'.");
         System.out.println("To send a message to all attendees of only one of your talks, Enter '3'.");

@@ -1,5 +1,10 @@
 package Controllers;
 
+// Programmer: Karyn Komatsu,
+// Description: Event Menu for Speaker users.
+// Date Created: 01/11/2020
+// Date Modified: 19/11/2020
+
 import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
