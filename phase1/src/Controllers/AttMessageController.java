@@ -136,8 +136,7 @@ public class AttMessageController extends MessageController {
         presenter.printContactUsernamesPrompt();
         String contacts = SubMenu.readInput(input);
         String[] a = contacts.split(",");
-        List<String> b = Arrays.asList(a);
-        ArrayList<String> contactlist = new ArrayList<>(b);
+        ArrayList<String> contactlist = new ArrayList<>(Arrays.asList(a));
         if (contactlist.isEmpty()) {
             presenter.printException(new InvalidChoiceException("user"));
             return;
@@ -150,45 +149,39 @@ public class AttMessageController extends MessageController {
             String groupChatID = createGroupChat(cs);
             if  (groupChatID != null){
                 for (String contact: cs) {
-                attendeeManager.addChat(contact, groupChatID);
+                    attendeeManager.addChat(contact, groupChatID);
+                }
+                presenter.printJobDone();
+                presenter.printChatCreated();
+                presenter.printID(groupChatID);
             }
-            presenter.printJobDone();
-            presenter.printChatCreated();
-            presenter.printID(groupChatID);}
-        } catch (InvalidChoiceException e) {
-            presenter.printException(e);
+        } catch (NoDataException e) {
+            presenter.printChatNotCreated();
+            presenter.printSoloChatNotAllowed();
         } catch (NullPointerException e) {
             presenter.printException(new InvalidChoiceException("user"));
+        } catch (InvalidChoiceException e) {
+            presenter.printChatNotCreated();
+            presenter.printException(e);
         }
     }
 
     /**
      * Create a new group chat if contacts are in this user's contactlist.
-     * @param contactsUsernames the ArrayList of contacts' usernames.
+     * @param contactIDs the ArrayList of contacts' IDs.
      * @return the chatID.
      */
-    private String createGroupChat(ArrayList<String> contactsUsernames) throws InvalidChoiceException {
-        ArrayList<String> contactIDs = new ArrayList<>();
-        for (String receiver : contactsUsernames) {
-            String contactID = attendeeManager.getCurrentUserID(receiver);
-            if (contactID == null) {
-                throw new InvalidChoiceException("user");
-            }
-            contactIDs.add(contactID);
-        }
+    private String createGroupChat(ArrayList<String> contactIDs) throws InvalidChoiceException {
         if (this.chatManager.existChat(currentUserID, contactIDs)) { //if there already exist a desired Chat
             String chatID = chatManager.findChat(currentUserID, contactIDs);
-            presenter.printChatNotCreated();
-            presenter.printChatExists();
-            return chatID; }
+            presenter.printID(chatID);
+            throw new OverwritingException("chat");
+        }
         else if ((contactIDs.size()==1)&&(contactIDs.contains(currentUserID))){ //if it's trying to create Chat by itself
-            presenter.printChatNotCreated();
-            presenter.printSoloChatNotAllowed();
-            return null;}
+            throw new NoDataException("user");
+        }
         else {
             String chatID = chatManager.createChat(currentUserID, contactIDs);
-            presenter.printJobDone();
-            presenter.printChatCreated();
             return chatID;
         }
     }

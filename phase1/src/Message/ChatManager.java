@@ -288,7 +288,8 @@ public class ChatManager implements Serializable {
      * null otherwise.
      */
     public String findChat(String currentId, ArrayList<String> guestsId) {
-        guestsId.add(currentId);
+        ArrayList<String> personIds = new ArrayList<>(guestsId);
+        personIds.add(currentId);
         Collections.sort(guestsId);
         for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
