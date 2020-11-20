@@ -3,7 +3,7 @@ package Presenter;
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an Organizer's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 18/11/2020
+// Date Modified: 19/11/2020
 
 import Events.EventManager;
 import Events.EventType;
@@ -107,7 +107,7 @@ public class OrgEventMenu extends EventMenu {
         System.out.println("\nAt what time will the event start?");
         System.out.println("\n(Please enter the exact date and time of this event in 24-hour clock notation. \nFor " +
                 "example, to schedule an event at 11:30 p.m. on March 4, 2020, you would type the date, followed by " +
-                "a space, followed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and careful!");
+                "a space, \nfollowed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and careful!");
     }
 
     /**

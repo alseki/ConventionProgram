@@ -57,7 +57,7 @@ public class ContactController implements SubMenu {
                     presenter.printAddContactPrompt();
                     try {
                         addContact(SubMenu.readInput(input));
-                    } catch (NoDataException e) {
+                    } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
                     break;
@@ -78,10 +78,10 @@ public class ContactController implements SubMenu {
      * Add a contact to the current user's contactList
      * @param contactUsername the username of the contact the current user wants to add to their contactList
      */
-    private void addContact(String contactUsername) throws NoDataException{
+    private void addContact(String contactUsername) throws InvalidChoiceException{
         String contactID = pManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
-            throw new NoDataException("contact username");
+            throw new InvalidChoiceException("user");
         }
         boolean a = pManager.addContactToPerson(currentUserID, contactID);
         boolean b = pManager.addContactToPerson(contactID, currentUserID);

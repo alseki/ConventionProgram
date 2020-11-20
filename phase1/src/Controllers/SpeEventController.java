@@ -76,7 +76,7 @@ public class SpeEventController implements SubMenu {
                 case 4:
                     // Send message to all Attendees in some of your Events
                     presenter.printContentPrompt();
-                    String contentD = this.addSpeUsername(SubMenu.readInput(input));
+                    String contentD = SubMenu.readInput(input);
                     presenter.printEventNamesPrompt();
                     String eventNames = SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
@@ -94,9 +94,13 @@ public class SpeEventController implements SubMenu {
      * @return String chunk of formatted Talks
      */
     private void getOwnTalks() {
-        String[] events = {};
-        events = speakerManager.getEventList(currentUserID).toArray(events);
-        presenter.printEventList(" you speak at", events);
+        try {
+            String[] events = {};
+            events = speakerManager.getEventList(currentUserID).toArray(events);
+            presenter.printEventList(" you speak at", events);
+        } catch (NullPointerException e) {
+            presenter.printException(new NoDataException("event"));
+        }
     }
 
     /**

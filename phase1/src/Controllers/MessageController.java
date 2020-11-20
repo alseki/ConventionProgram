@@ -133,6 +133,8 @@ public class MessageController implements SubMenu {
             return chatID;
         } else {
             String chatID = chatManager.createChat(currentUserID, contactID);
+            attendeeManager.addChat(contactID, chatID);
+            attendeeManager.addChat(currentUserID, chatID);
             return chatID;
         }
     }
@@ -146,12 +148,25 @@ public class MessageController implements SubMenu {
         String[] a = contacts.split(",");
         List<String> b = Arrays.asList(a);
         ArrayList<String> contactlist = new ArrayList<>(b);
+        if (contactlist.isEmpty()) {
+            presenter.printException(new InvalidChoiceException("user"));
+            return;
+        }
         try {
-            String groupChatID = createGroupChat(contactlist);
+            ArrayList<String> cs = new ArrayList<String>();
+            for (String contact: contactlist) {
+                cs.add(attendeeManager.getCurrentUserID(contact));
+            }
+            String groupChatID = createGroupChat(cs);
+            for (String contact: cs) {
+                attendeeManager.addChat(contact, groupChatID);
+            }
             presenter.printChatCreated(groupChatID);
             presenter.printJobDone();
         } catch (InvalidChoiceException e) {
             presenter.printException(e);
+        } catch (NullPointerException e) {
+            presenter.printException(new InvalidChoiceException("user"));
         }
     }
 
@@ -229,6 +244,8 @@ public class MessageController implements SubMenu {
             }
 
             presenter.printList(presenter.formatMessages(sentMessages), "message");
+        } catch (NullPointerException e) {
+            presenter.printException(new NoDataException("message"));
         } catch (NoDataException e) {
             presenter.printException(e);
         }
