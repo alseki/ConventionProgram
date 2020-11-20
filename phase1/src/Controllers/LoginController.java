@@ -52,16 +52,8 @@ public class LoginController implements SubMenu {
                         presenter.printException(e);
                     }
                     break;
-                case 2:
-                    try {
-                        login();
-                        loggedIn = true;
-                        currentRequest = 0;
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
-                case 3:
-                    try {
+                    case 2:
+                        try {
                         createAccount();
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
@@ -80,7 +72,7 @@ public class LoginController implements SubMenu {
         presenter.printLoginPrompt();
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
-        if(accountChoice != manager.typePerson(username)) {
+        if(this.accountChoice != manager.typePerson(username)) {
             throw new InvalidChoiceException("logged in as wrong type of user");
         }
         presenter.printPasswordPrompt();

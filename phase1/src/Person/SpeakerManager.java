@@ -89,6 +89,12 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
+
+    /**
+     *
+     * @param username
+     * @return
+     */
     public int confirmAttendee(String username){
         if (usernameToPerson.containsKey(username)) {
             return getPerson(username).getTypePerson();

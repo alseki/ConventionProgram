@@ -4,7 +4,6 @@ import Events.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -133,7 +132,11 @@ public abstract class PersonManager {
     }
 
 
-
+    /**
+     *
+     * @param username
+     * @return
+     */
     public int typePerson(String username) {
         if(usernameToPerson.containsKey(username)) {
             return getPerson(username).getTypePerson();
