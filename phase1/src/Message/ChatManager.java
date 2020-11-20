@@ -27,6 +27,11 @@ public class ChatManager implements Serializable {
         return chatsList.isEmpty();
     }
 
+    //MODIFIED createChat (both of the two below: one taking String and String, other taking String and ArrayList<String>
+    // so that it returns null iff inputted "guest" is the owner (ie the program user is trying to create a Chat by itself)
+    // or when the Chat with same members already exist
+    //TODO Throw exceptions in controllers when we get null returned by create Chat, telling the user:
+    // TODO "Chat was not created. You either tried to create a Chat that already exists, or a Chat by yourself."
     /**
      * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
@@ -34,6 +39,7 @@ public class ChatManager implements Serializable {
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
     public String createChat(String ownerId, String guestId){
+        if ((ownerId.equals(guestId))||(this.existChat(ownerId, guestId))){return null;}
         Chat newC = new Chat(ownerId, guestId);
         chatsList.add(newC);
         return newC.getId();
@@ -44,12 +50,14 @@ public class ChatManager implements Serializable {
      * @param ownerId ID of the user owning this Chat object
      * @param guestIds Collection of IDs of (one or more) guests
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
+     *         null iff (ArrayList guestIds only contain ownerId) OR (a group Chat with same member exists)
      */
     public String createChat(String ownerId, ArrayList <String> guestIds){
+        if (((guestIds.size()==1) && guestIds.contains(ownerId))||(this.existChat(ownerId, guestIds))){return null;}
         Chat newC = new Chat(ownerId, guestIds);
         chatsList.add(newC);
-        return newC.getId();
-    }
+        return newC.getId();}
+
 
     /**
      * creates and returns an annoucment chat with eventid and attendeeids
