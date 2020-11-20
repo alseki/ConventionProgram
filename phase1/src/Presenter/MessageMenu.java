@@ -93,8 +93,9 @@ public class MessageMenu implements printSubMenu {
     }
 
     /**
-     * Get AnnouncementChat formatted as: "[ID]: [ID of the chat]\new line
+     * Get AnnouncementChat formatted as: "
      *                                     [Event]: [Name of event]
+     *                                     [ID]: [ID of the chat]\new line
      * @param chatID The ID of the Chat that is to be formatted
      * @return Formatted string representation of the chat.
      * */
@@ -104,7 +105,7 @@ public class MessageMenu implements printSubMenu {
         } catch (Exception e) {
             return chatID;
         }
-    } //TODO: update to the specified format
+    } //TODO: update to the specified format(not updated 20/11, 10.50 a.m.)
 
     /**
      * Print out a list of formatted chat summaries
@@ -129,16 +130,31 @@ public class MessageMenu implements printSubMenu {
 
     /**
      * Get message formatted as: "[From]: [Username of the sender\Name of the Event]\new line
+     *                            [To]: [Username of the receiver/null]
      *                            [Time Sent]: [time that was sent]\newline
      *                            [Message]: [the content of the message]\newline"
      * @param messageId of the message that is to be formatted.
      * @return Formatted string representation of the message.
      */
     private String formatMessage(String messageId) {
-        String time = messageManager.getDateTime(messageId);
-        String message = messageManager.getContent(messageId);
-        return "Time sent: " + time + "\n" + "Message: " + message;
-    } //TODO - update this for events!
+        if (messageManager.getRecipientId(messageId) == null) { // TODO: if this check is correct phrase.
+            String eventName = eventManager.getEventName(messageManager.getSenderID(messageId));
+            String time = messageManager.getDateTime(messageId);
+            String message = messageManager.getContent(messageId);
+            return "From: " + eventName + "[Event]" + "\n" +
+                    "Time sent:" + time + "\n" +
+                    "Message:" + message + "\n";
+        } else {
+            String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
+            String receiver = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
+            String time = messageManager.getDateTime(messageId);
+            String message = messageManager.getContent(messageId);
+            return "From: " + sender + "[Username]" + "\n" +
+                    "To: " + receiver + "\n" +
+                    "Time sent:" + time + "\n" +
+                    "Message:" + message + "\n";
+        }
+    } //TODO - updated. see if correct.
 
     public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
         ArrayList<String> messageInChat = new ArrayList<>();
