@@ -108,5 +108,37 @@ public class AttendeeManager extends PersonManager {
         return ((Attendee)idToPerson.get(userID)).getEventsSignedUp(); //gets the list from Attendee
     }
 
+    /**
+     * Adds a chat
+     * @param currentID
+     * @param chatID
+     */
+    public void addAnChat(String currentID, String chatID) {
+        Attendee attendee = (Attendee)getPerson(currentID);
+        attendee.addAnChat(chatID);
+    }
+
+    /**
+     * Removes a chat
+     * @param currentID
+     * @param chatID
+     */
+    public void removeAnChat(String currentID, String chatID) {
+        Attendee attendee = (Attendee)getPerson(currentID);
+        attendee.removeAnChat(chatID);
+    }
+
+    /**
+     *
+     * @param currentUserID
+     * @return ArrayList<String>,of chatID of messages receieved by the User
+     */
+
+    public ArrayList<String> getAnChats(String currentUserID) {
+        Attendee attendee = (Attendee)getPerson(currentUserID);
+        return attendee.getAnChatList();
+
+    }
+
 }
 

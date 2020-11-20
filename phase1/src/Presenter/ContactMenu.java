@@ -5,6 +5,8 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 11/11/2020
 
+import Controllers.InvalidChoiceException;
+
 import java.util.ArrayList;
 
 public class ContactMenu implements printSubMenu {
@@ -23,13 +25,11 @@ public class ContactMenu implements printSubMenu {
     /**
      * Prints a list of the user's contacts
      */
-    public void printContactList(ArrayList<String> contactList) {
+    public void printContactList(ArrayList<String> contactList) throws InvalidChoiceException {
         System.out.println('\n' + "-CONTACTS-");
-        System.out.println("---");
-        for(String c: contactList) {
-            System.out.println(c);
-        }
-        System.out.println("---" + '\n');
+        String[] clist = {};
+        clist = contactList.toArray(clist);
+        printList(clist, "contact");
     }
 
     /**

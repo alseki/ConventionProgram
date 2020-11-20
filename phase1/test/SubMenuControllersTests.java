@@ -75,9 +75,9 @@ public class SubMenuControllersTests {
 
     @Test(timeout = 50)
     public void testMessageController() {
-        new MessageController(userID, attendeeManager, messageManager, chatManager);
-        new MessageController(userID, organizerManager, messageManager, chatManager);
-        new MessageController(userID, speakerManager, messageManager, chatManager);
+        new AttMessageController(userID, attendeeManager, messageManager, chatManager, eventManager);
+        new MessageController(userID, speakerManager, messageManager, chatManager, eventManager);
+        new MessageController(userID, organizerManager, messageManager, chatManager, eventManager);
     }
 
     // TODO tests for menu option methods

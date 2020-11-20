@@ -114,7 +114,7 @@ public abstract class PersonManager {
      */
     public String getCurrentUsername(String currentId) {
         if (idToPerson.containsKey(currentId)) {
-            return usernameToPerson.get(currentId).getUsername();
+            return idToPerson.get(currentId).getUsername();
         }
         return null;
     }
@@ -196,7 +196,7 @@ public abstract class PersonManager {
      * @return ArrayList<String>,of chatID of messages receieved by the User
      */
 
-    public List getChats(String currentUserID) {
+    public ArrayList<String> getChats(String currentUserID) {
         return getPerson(currentUserID).getChatList();
 
     }
@@ -240,25 +240,6 @@ public abstract class PersonManager {
     public ArrayList <String> getEventList(String personID){
         return this.getPerson(personID).getEventList();
     }
-
-    /**
-     * Get list of all talks in a Speaker object, referred to by the Speaker's username.
-     * @param username username of the Speaker
-     * @return Arraylist of Strings corresponding to Talk Event IDs
-     */
-    public ArrayList<String> getSpeakerAllTalks(String username){
-        Speaker spe = (Speaker) getPerson(username);
-        return spe.getAllTalks();
-    }
-
-    /**
-     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
-     * @param speakerID ID of the Speaker
-     * @return Arraylist of Strings corresponding to Talk Event IDs
-     */
-    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
-        Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();}
 }
 
 

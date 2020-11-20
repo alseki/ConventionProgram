@@ -11,7 +11,7 @@ public class CPSMenu {
      * Greets the user and prompts them to choose a login menu
      */
     public void printIntroMessage() {
-        System.out.println("~Welcome to ConventionSystem~" + "\n");
+        System.out.println("\n\n\n\n\n~Welcome to ConventionSystem~" + "\n");
         System.out.println("Please select from the following options:");
         System.out.println("To Login or create an account as an Attendee, Enter '1';");
         System.out.println("To Login or create an account as an Organizer, Enter '2';");

@@ -6,6 +6,8 @@ import java.util.UUID;
 public class Attendee extends Person implements Signupable {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
+    protected ArrayList<String> anChatList = new ArrayList<>();
+
 
     public Attendee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -45,6 +47,20 @@ public class Attendee extends Person implements Signupable {
      */
     public ArrayList<String> getContactList() { // why does this need to be overriden shouldn't the one in person suffice?
         return this.contactList;
+    }
+
+    public ArrayList<String> getAnChatList() {
+        return anChatList;
+    }
+
+    public void addAnChat(String chatID) {
+        anChatList.add(chatID);
+    }
+
+    public void removeAnChat(String chatID) {
+        if (anChatList.contains(chatID)) {
+            anChatList.remove(chatID);
+        }
     }
 
 }

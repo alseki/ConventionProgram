@@ -12,8 +12,8 @@ public abstract class Person implements Serializable {
     protected String fullName;
 
     protected ArrayList<String> contactList = new ArrayList<>();
-    protected ArrayList<String> chatList = new ArrayList<>();
     protected ArrayList<String> eventList = new ArrayList<>();
+    protected ArrayList<String> chatList = new ArrayList<>();
 
     /**
      * this allows for access to the person's username
@@ -96,7 +96,7 @@ public abstract class Person implements Serializable {
      * @param chatID
      */
     public void addChat(String chatID) {
-        this.chatList.add(chatID);
+        chatList.add(chatID);
     }
 
     /**
@@ -104,8 +104,8 @@ public abstract class Person implements Serializable {
      * @param chatID
      */
     public void removeChat(String chatID) {
-        if (this.chatList.contains(chatID)) {
-            this.chatList.remove(chatID);
+        if (chatList.contains(chatID)) {
+            chatList.remove(chatID);
         }
     }
 

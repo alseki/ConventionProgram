@@ -1,9 +1,9 @@
 package Controllers;
 
-// Programmer: Cara McNeil,
+// Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: Main account page for Speaker users.
 // Date Created: 01/11/2020
-// Date Modified: 16/11/2020
+// Date Modified: 19/11/2020
 
 
 import Events.EventManager;
@@ -12,6 +12,7 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
 import Presenter.MainMenu;
+import Presenter.SpeEventMenu;
 
 import java.util.Scanner;
 
@@ -25,6 +26,7 @@ public class SpeakerController extends PersonController {
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats) {
         super(manager, rooms, events, messages, chats);
+        this.manager = manager;
     }
 
 
@@ -45,8 +47,8 @@ public class SpeakerController extends PersonController {
                         contactController.menuChoice();
                         break;
                     case 2:
-                        MessageController messageController = new MessageController(currentUserID, manager, messageManager,
-                                chatManager);
+                        MessageController messageController = new MessageController(currentUserID, manager,
+                                messageManager, chatManager, eventManager);
                         messageController.menuChoice();
                         break;
                     case 3:

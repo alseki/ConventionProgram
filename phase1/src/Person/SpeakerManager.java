@@ -27,17 +27,14 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
-
-
     /**
-     * accesses an Speaker object in order to retrieve a list of events/talks (eventIDs) that the speaker has been signed up for
-     * @param personID of the speaker with list of events/talks
-     * @return returns the list of eventIDs that represent the events/talks the Speaker has been signed up for
+     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
+     * @param speakerID ID of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
      */
-    public ArrayList<String> getAllTalksSignedUp(String personID) {
-        return ((Speaker)idToPerson.get(personID)).getAllTalks(); //gets the list from Speaker
-    }
-
+    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
+        Speaker spe = (Speaker) getPerson(speakerID);
+        return spe.getAllTalks();}
 
 
     /**
@@ -82,11 +79,9 @@ public class SpeakerManager extends PersonManager {
      * @return boolean; this function is for adding announcement messages for events created by Organizer, and then putting the chatId in
      *                  Speaker's announcementChatIds list
      */
+
     public boolean addAnnouncementChats(String personId, String acId) {
         Speaker individual = (Speaker) idToPerson.get(personId);
-        if(individual.getAnnouncementChats() == null) {
-            return false;
-        }
         if(!individual.getAnnouncementChats().contains(acId)) {
             individual.announcementChatIds.add(acId);
             return true;

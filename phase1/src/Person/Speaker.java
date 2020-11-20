@@ -10,13 +10,11 @@ import java.util.UUID;
 
 public class Speaker extends Person { //implements Person.Signupable
 
-    protected ArrayList<String> eventsSignedUp;
-
     protected ArrayList<String> allTalksID = new ArrayList<>();
 
     protected Map<String, String> allTalksDictionary = new HashMap<String, String>(); // this is a a dictionary of eventIDs to eventNames
 
-    protected ArrayList<String> announcementChatIds;
+    protected ArrayList<String> announcementChatIds = new ArrayList<>();
 
     Speaker(String fullName, String username, String password, String email){
         this.username = username;
@@ -53,8 +51,6 @@ public class Speaker extends Person { //implements Person.Signupable
         return this.announcementChatIds;
 
     }
-
-
 }
 
 

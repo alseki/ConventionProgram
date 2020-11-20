@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 
 // Architecture Level - Use Class
 
-
+/**
+ * Abstract class representing an object that can find Events by EventID
+ */
 abstract class EventAccess {
     protected abstract Event getEvent(String eventID);
 }
@@ -109,6 +111,11 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
+    /**
+     * Returns the description of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The description of the Event, as a String
+     */
     public String getDescription(String eventID){
         try {
             return events.get(eventID).getDescription();
@@ -117,6 +124,11 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
+    /**
+     * Returns the type of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The type of the Event, as an EventType
+     */
     public EventType getEventType(String eventID){
         try {
             Event event = getEvent(eventID);
@@ -183,11 +195,10 @@ public class EventManager extends EventAccess implements Serializable {
      * @return The event's chat ID
      */
     public String getEventChat(String id) {
-        Event event = events.get(id);
-        if (event != null) {
+        try {
+            Event event = events.get(id);
             return event.getChatID();
-        }
-        else {
+        } catch (NullPointerException n) {
             return null;
         }
     }
@@ -219,6 +230,15 @@ public class EventManager extends EventAccess implements Serializable {
 
     // Event-adding settings
 
+    /**
+     * Adds an Event to this EventManager
+     * @param name The name of the Event to be created
+     * @param speakerID The ID of the speaker of the Event to be created
+     * @param startTime The start time of the Event to be created, as a LocalDateTime object
+     * @param description The description for the Event to be created
+     * @param type The Type of the Event to be created, as an EventType
+     * @return The new Event's ID
+     */
     public String addEvent(String name, String speakerID, LocalDateTime startTime, String description, EventType type) {
         Event event;
         if (type.equals(EventType.TALK)) {
@@ -252,24 +272,36 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Adds a Talk to EventManager
-     * @param name The name of the Talk
+     * Creates a Talk to add to EventManager
+     * Helper method for addEvent
      */
     private Event createTalk(String name, String speakerID, LocalDateTime startTime, String description) {
         return new Talk(name, speakerID, startTime, description);
     }
 
     /**
-     * Adds a Workshop to EventManager
-     * @param name The name of the Workshop
-     * @return whether the Workshop has been successfully added
+     * Creates a Workshop to add to EventManager
+     * Helper method for addEvent
      */
     private Event createWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
         return new Workshop(name, speakerID, startTime, description);
     }
 
 
-    // Equality method
+    // comparison methods
+
+    /**
+     * Checks to see if this EventManager contains an event of a certain name
+     * @param name The name
+     * @return True if an event with this name exists; false if not
+     */
+    public boolean contains(String name) {
+        if (getEventID(name) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {

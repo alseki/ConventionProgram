@@ -87,7 +87,7 @@ public class LoginController implements SubMenu {
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
         if (manager.getCurrentUserID(username) != null) {
-            throw new InvalidChoiceException("username taken");
+            throw new OverwritingException("username");
         }
         presenter.printPasswordPrompt();
         String password = SubMenu.readInput(input);
@@ -97,9 +97,6 @@ public class LoginController implements SubMenu {
         String email = SubMenu.readInput(input);
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
-        }
-        else {
-            throw new OverwritingException("username");
         }
     }
 }

@@ -47,15 +47,18 @@ public class ContactController implements SubMenu {
                     // return to main menu
                     break;
                 case 1:
-                    getContactList();
+                    try {
+                        getContactList();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
                     break;
                 case 2:
                     presenter.printAddContactPrompt();
-                    // SubMenu.readInput(input);
                     try {
                         addContact(SubMenu.readInput(input));
-                    } catch (NoDataException e) {
-                        e.printErrorMessage();
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
                     }
                     break;
             }
@@ -66,7 +69,7 @@ public class ContactController implements SubMenu {
     /**
      * Get's the current user's contactList
      */
-    private void getContactList() {
+    private void getContactList() throws InvalidChoiceException {
         ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
         presenter.printContactList(listOfContacts);
     }
@@ -75,10 +78,10 @@ public class ContactController implements SubMenu {
      * Add a contact to the current user's contactList
      * @param contactUsername the username of the contact the current user wants to add to their contactList
      */
-    private void addContact(String contactUsername) throws NoDataException{
+    private void addContact(String contactUsername) throws InvalidChoiceException{
         String contactID = pManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
-            throw new NoDataException("contact username");
+            throw new InvalidChoiceException("user");
         }
         boolean a = pManager.addContactToPerson(currentUserID, contactID);
         boolean b = pManager.addContactToPerson(contactID, currentUserID);

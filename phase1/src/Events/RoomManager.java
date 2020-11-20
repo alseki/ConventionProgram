@@ -10,6 +10,9 @@ import java.util.TreeMap;
 
 // Architecture Level - Use Class
 
+/**
+ * Abstract class representing an object that can find Rooms by RoomID
+ */
 abstract class RoomAccess {
     protected abstract Room getRoom(String roomID);
     abstract String[] getEventIDs(String roomID);
@@ -25,6 +28,7 @@ public class RoomManager extends RoomAccess implements Serializable {
 
     /** A mapping of Room names to their respective IDs. */
     private Map<String, String> roomsByName;
+
     /**
      * Constructor for RoomManager objects
      */
@@ -34,40 +38,23 @@ public class RoomManager extends RoomAccess implements Serializable {
         roomList = new TreeMap<String, Room>();
     }
 
-    /**
-     * Finds the EventManager object for a specific Room's Events (by ID)
-     * @param roomID The ID of the Room
-     * @return The Room's EventManager
-     */
-    public String[] getEventIDs(String roomID) {
-        try {
-            String[] evList = {};
-            return roomEventList.get(roomID).toArray(evList);
-        } catch (NullPointerException n) {
-            return null;
-        }
-    }
+
+    // Protected getters
 
     /**
-     * Returns a list of the names of all Rooms currently established at this conference
-     * @return The Room's EventManager
+     * Returns the Room associated with this RoomID
+     * @param roomID The Room's ID
+     * @return The Room
      */
-    public String[] getRoomNames() {
-        String[] names = {};
+    protected Room getRoom(String roomID) {
         try {
-            return roomsByName.keySet().toArray(names);
+            return roomList.get(roomID);
         } catch (NullPointerException e) {
             return null;
         }
     }
 
-    /**
-     * Returns the number of Rooms this RoomManager contains
-     * @return ^
-     */
-    public int numRooms() {
-        return roomList.size();
-    }
+    // Public getters
 
     /**
      * Finds the ID of a specific Room (by name)
@@ -96,18 +83,23 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Creates a new Room with the inputted capacity
-     * @param capacity The name of the new Room
-     * @return The ID of the new Room
+     * Returns a list of the names of all Rooms currently established at this conference
+     * @return The Room's EventManager
      */
-    public String addRoom(String name, int capacity) {
-        Room thisRoom = new Room(name, capacity);
-        roomList.put(thisRoom.getID(), thisRoom);
-        roomsByName.put(thisRoom.getName(), thisRoom.getID());
-        roomEventList.put(thisRoom.getID(), new ArrayList<String>());
-        return thisRoom.getID();
+    public String[] getRoomNames() {
+        String[] names = {};
+        try {
+            return roomsByName.keySet().toArray(names);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
+    /**
+     * Gets the Room an Event is held in
+     * @param ID the ID of the event
+     * @return the ID of the room
+     */
     public String getEventRoom(String ID) {
         try {
             for (String room : getRoomNames()) {
@@ -122,6 +114,50 @@ public class RoomManager extends RoomAccess implements Serializable {
         }
     }
 
+    /**
+     * Finds the EventManager object for a specific Room's Events (by ID)
+     * @param roomID The ID of the Room
+     * @return The Room's EventManager
+     */
+    public String[] getEventIDs(String roomID) {
+        try {
+            String[] evList = {};
+            return roomEventList.get(roomID).toArray(evList);
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the number of Rooms this RoomManager contains
+     * @return ^
+     */
+    public int numRooms() {
+        return roomList.size();
+    }
+
+    // Adding methods
+
+    /**
+     * Creates a new Room with the inputted capacity
+     * @param name The name of the new room
+     * @param capacity The capacity of the new Room
+     * @return The ID of the new Room
+     */
+    public String addRoom(String name, int capacity) {
+        Room thisRoom = new Room(name, capacity);
+        roomList.put(thisRoom.getID(), thisRoom);
+        roomsByName.put(thisRoom.getName(), thisRoom.getID());
+        roomEventList.put(thisRoom.getID(), new ArrayList<String>());
+        return thisRoom.getID();
+    }
+
+    /**
+     * Adds an event in a certain Room to that Room's EventIDs list
+     * @param roomID The Room's ID
+     * @param eventID The Event's ID
+     * @return True if successful
+     */
     public boolean addEvent(String roomID, String eventID) {
         try {
             ArrayList<String> room = roomEventList.get(roomID);
@@ -132,12 +168,18 @@ public class RoomManager extends RoomAccess implements Serializable {
         }
     }
 
-    @Override
-    protected Room getRoom(String roomID) {
-        try {
-            return roomList.get(roomID);
-        } catch (NullPointerException e) {
-            return null;
+    // comparison methods
+
+    /**
+     * Checks to see if this RoomManager contains a room of a certain name
+     * @param name The name
+     * @return True if an event with this name exists; false if not
+     */
+    public boolean contains(String name) {
+        if (getRoomID(name)!= null) {
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -25,20 +25,20 @@ public class ConventionPlanningSystem {
 
     private MessageManager mm = new MessageManager();
     private ChatManager cm = new ChatManager();
-    private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("message\\messages.ser");
-    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("message\\chats.ser");
+    private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
+    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("chats.ser");
 
     private RoomManager rm = new RoomManager();
-    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("event\\rooms.ser");
+    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("rooms.ser");
     private EventManager em = new EventManager();
-    private static final FileGateway<EventManager> eventLoader = new FileGateway<>("event\\events.ser");
+    private static final FileGateway<EventManager> eventLoader = new FileGateway<>("events.ser");
 
     private Map<String, Person> personByName = new HashMap<>();
     private Map<String, Person> personByID = new HashMap<>();
     private static final FileGateway<Map<String, Person>> id2Person =
-            new FileGateway<Map<String, Person>>("person\\byID.ser");
+            new FileGateway<Map<String, Person>>("pByID.ser");
     private static final FileGateway<Map<String, Person>> n2Person =
-            new FileGateway<Map<String, Person>>("person\\byName.ser");
+            new FileGateway<Map<String, Person>>("pByName.ser");
 
 
     /**

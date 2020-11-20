@@ -28,7 +28,7 @@ public class Workshop extends Event {
     /**
      * Checks if the inputted Event conflicts in time with this Workshop (recall that only a Talk can conflict)
      * @param event The event which is being checked for conflicts with this Workshop
-     * @returns whether or not there is a conflict (true or false)
+     * @return whether or not there is a conflict (true or false)
      */
     public boolean conflictsWith(Event event) {
         if (event instanceof Talk) {
