@@ -4,13 +4,10 @@ import Events.EventManager;
 import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
-import Person.PersonManager;
-import Person.Speaker;
 import Person.SpeakerManager;
 import Presenter.SpeEventMenu;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SpeEventController implements SubMenu {
@@ -123,31 +120,38 @@ public class SpeEventController implements SubMenu {
      * @param messageContent String representing content of the message
      */
 
-    private void multipleEventsAnnouncement(String[] events, String messageContent) {
-        for (String eventID : events) {
-            eventMessage(eventID, messageContent);
+    private void  multipleEventsAnnouncement (String[] events, String messageContent) {
+
+        try {
+            for (String event : events) {
+                eventMessage(event, messageContent);
+            } }
+        catch (InputMismatchException ime){
+                System.out.println("You have entered an event name incorrectly.");
+            }
+
         }
-    }
 
-    /**
-     * This is the same method from above, but only using messageContent as a parameter instead of the list of all
-     * Speaker talks
-     * @param messageContent
-     */
-    private void allSpeakerEventsMessage(String messageContent) {
-        String[] allTalks = {};
-        allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
-        multipleEventsAnnouncement(allTalks, messageContent);
-    }
 
-    /**
-     *
-     * @param content Content of the message
-     * @return Content following with the sentence: ["Contact me using this username:"]\newline
-     *                                              [username of the Speaker]
-     */
-    private String addSpeUsername(String content){
-        return content + "\n" + "Contact me using this username:\n"
-            + speakerManager.getCurrentUsername(currentUserID);
-    }
-}
+                /**
+                 * This is the same method from above, but only using messageContent as a parameter instead of the list of all
+                 * Speaker talks
+                 * @param messageContent
+                 */
+                private void allSpeakerEventsMessage (String messageContent){
+                    String[] allTalks = {};
+                    allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
+                    multipleEventsAnnouncement(allTalks, messageContent);
+                }
+
+                /**
+                 *
+                 * @param content Content of the message
+                 * @return Content following with the sentence: ["Contact me using this username:"]\newline
+                 *                                              [username of the Speaker]
+                 */
+                private String addSpeUsername (String content){
+                    return content + "\n" + "Contact me using this username:\n"
+                            + speakerManager.getCurrentUsername(currentUserID);
+                }
+            }
