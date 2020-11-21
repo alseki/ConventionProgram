@@ -54,14 +54,6 @@ public class LoginController implements SubMenu {
                     break;
                 case 2:
                     try {
-                        login();
-                        loggedIn = true;
-                        currentRequest = 0;
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
-                case 3:
-                    try {
                         createAccount();
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);

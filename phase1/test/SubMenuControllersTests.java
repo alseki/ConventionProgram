@@ -62,9 +62,9 @@ public class SubMenuControllersTests {
 
     @Test(timeout = 50)
     public void testLoginController() {
-        new LoginController(attendeeManager);
-        new LoginController(organizerManager);
-        new LoginController(speakerManager);
+        new LoginController(attendeeManager, 1);
+        new LoginController(organizerManager, 2);
+        new LoginController(speakerManager, 3);
     }
 
     // TODO tests for menu option methods
