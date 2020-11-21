@@ -4,7 +4,6 @@ import Events.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -58,6 +57,8 @@ public abstract class PersonManager {
         return null;
     }
 
+
+
     /**
      *
      * @param username
@@ -83,7 +84,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to username
      * @return Person; this is for methods in PersonController that which to get Person using username only
      */
-    private Person getPersonByUsername(String username) {
+    Person getPersonByUsername(String username) {
         if (usernameToPerson.containsKey(username)) {
             return usernameToPerson.get(username);
         }
@@ -133,7 +134,11 @@ public abstract class PersonManager {
     }
 
 
-
+    /**
+     *
+     * @param username
+     * @return
+     */
     public int typePerson(String username) {
         if(usernameToPerson.containsKey(username)) {
             return getPersonByUsername(username).getTypePerson();
