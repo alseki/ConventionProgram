@@ -94,7 +94,10 @@ public class SpeEventController implements SubMenu {
         try {
             String[] events = {};
             events = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(events);
-            presenter.printEventList(" you speak at", events);
+//            for(String event: events) {
+//                eventManager.getEvent(event);
+//            }
+            presenter.printSpeakerTalkList();
         } catch (NullPointerException e) {
             presenter.printException(new NoDataException("event"));
         }

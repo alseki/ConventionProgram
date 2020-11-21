@@ -92,6 +92,9 @@ public class LoginController implements SubMenu {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
+        if(username.contains(",")) {
+            throw new InvalidChoiceException("username possible. Try again with NO comma(s)");
+        }
         if (manager.getCurrentUserID(username) != null) {
             throw new OverwritingException("username");
         }
