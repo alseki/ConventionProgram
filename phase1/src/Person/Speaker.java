@@ -25,6 +25,15 @@ public class Speaker extends Person { //implements Person.Signupable
         this.typePerson = 3;
     }
 
+
+    /**
+     * adds an event ID to the Person.Person.Speaker's list of signed up Talks
+     * @param eventID takes in the ID of the event
+     */
+    public void signUp(String eventID) {
+        this.allTalksID.add(eventID);
+    }
+
     /**
      * returns the events/talks that the Person.Speaker has been signed up for by Organizer
      * @return ArrayList<String> getAllTalks the events' ids that the person has signed up for
