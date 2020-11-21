@@ -34,24 +34,9 @@ public class SpeakerManager extends PersonManager {
      */
     public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
         Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();}
+        return spe.getAllTalks();
+    }
 
-
-    /**
-     *
-     * @param userID
-     * @param eventID
-     * @return boolean; takes eventId created in OrgEventController method createEvent and adds it to Speaker's allTalksId list
-     */
-
-//    public boolean addTalkId(String userID, String eventID) {
-//        if ((idToPerson).containsKey(userID)) {
-//            Speaker individual = (Speaker) idToPerson.get(userID);
-//            individual.getAllTalks().add(eventID);
-//            return true;
-//        }
-//        return false;
-//    }
 
     /**
      *
@@ -107,8 +92,6 @@ public class SpeakerManager extends PersonManager {
     }
 
 
-
-
     /**
      * gets the Speaker's list of contacts.
      * @param personId the Person Id of the speaker whose contact list we are retrieving
@@ -150,6 +133,22 @@ public class SpeakerManager extends PersonManager {
         }
         return -1;
     }
+
+    /**
+     *
+     * @param userID
+     * @param eventID
+     * @return boolean; takes eventId created in OrgEventController method createEvent and adds it to Speaker's allTalksId list
+     */
+
+//    public boolean addTalkId(String userID, String eventID) {
+//        if ((idToPerson).containsKey(userID)) {
+//            Speaker individual = (Speaker) idToPerson.get(userID);
+//            individual.getAllTalks().add(eventID);
+//            return true;
+//        }
+//        return false;
+//    }
 
     }
 
