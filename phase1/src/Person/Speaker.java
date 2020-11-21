@@ -22,6 +22,7 @@ public class Speaker extends Person { //implements Person.Signupable
         this.fullName = fullName;
         this.email = email;
         this.id = UUID.randomUUID().toString();
+        this.typePerson = 3;
     }
 
     /**

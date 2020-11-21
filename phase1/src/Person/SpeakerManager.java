@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class SpeakerManager extends PersonManager {
 
+
     protected Map<String, ArrayList<String>> allTalksBySpeaker = new HashMap<String, ArrayList<String>>();
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
@@ -45,7 +46,7 @@ public class SpeakerManager extends PersonManager {
 
     public boolean addTalkId(String userID, String eventID) {
         if ((idToPerson).containsKey(userID)) {
-            Speaker individual = (Speaker) getPerson(userID);
+            Speaker individual = (Speaker) idToPerson.get(userID);
             individual.getAllTalks().add(eventID);
             return true;
         }
@@ -88,6 +89,13 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
+    public int confirmAttendee(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
+    }
+
     /**
      * gets the Speaker's list of contacts.
      * @param personId the Person Id of the speaker whose contact list we are retrieving
@@ -121,6 +129,13 @@ public class SpeakerManager extends PersonManager {
             return true;
         }
         return false;
+    }
+
+    public int confirmSpeaker(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
     }
 
     }

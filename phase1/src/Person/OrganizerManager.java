@@ -79,6 +79,13 @@ public class OrganizerManager extends PersonManager {
         return false;
     }
 
+    public int confirmOrganizer(String username){
+        if (usernameToPerson.containsKey(username)) {
+            return getPerson(username).getTypePerson();
+        }
+        return -1;
+    }
+
 
     /** a getter for the signedup events
      * @param organizerId a string representing the organizer id

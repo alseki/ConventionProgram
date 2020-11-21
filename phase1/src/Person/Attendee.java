@@ -15,6 +15,7 @@ public class Attendee extends Person implements Signupable {
         this.password = password;
         this.email = email;
         this.id = UUID.randomUUID().toString();
+        this.typePerson = 1;
     }
 
     /**

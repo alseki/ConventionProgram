@@ -12,14 +12,16 @@ import java.util.Scanner;
 
 public class LoginController implements SubMenu {
     private int currentRequest;
+    private int accountChoice;
     private PersonManager manager;
     private LoginMenu presenter = new LoginMenu();
     public String username;
     public boolean loggedIn = false;
     Scanner input = new Scanner(System.in);
 
-    public LoginController(PersonManager manager) {
+    public LoginController(PersonManager manager, int accountChoice) {
         this.manager = manager;
+        this.accountChoice = accountChoice;
     }
 
     /**
@@ -52,6 +54,14 @@ public class LoginController implements SubMenu {
                     break;
                 case 2:
                     try {
+                        login();
+                        loggedIn = true;
+                        currentRequest = 0;
+                    } catch (InvalidChoiceException e) {
+                        presenter.printException(e);
+                    }
+                case 3:
+                    try {
                         createAccount();
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
@@ -66,9 +76,13 @@ public class LoginController implements SubMenu {
      * Prompts user to input username and password.
      */
     private void login() throws InvalidChoiceException {
+        //int typePresenter = PersonController;
         presenter.printLoginPrompt();
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
+        if(accountChoice != manager.typePerson(username)) {
+            throw new InvalidChoiceException("logged in as wrong type of user");
+        }
         presenter.printPasswordPrompt();
         String password = SubMenu.readInput(input);
         if (manager.getCurrentUserID(username) != null)  {

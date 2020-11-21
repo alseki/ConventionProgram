@@ -24,15 +24,17 @@ public class OrganizerController extends PersonController {
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
     private int currentRequest;
+    private int typePerson;
     Scanner input = new Scanner(System.in);
 
 
     public OrganizerController(PersonManager manager, SpeakerManager speakerManager, RoomManager rooms,
                                EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am) {
-        super(manager, rooms, events, messages, chats);
+        super(manager, rooms, events, messages, chats, 2);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
         this.attendeeManager = am;
+        this.typePerson = 2;
     }
 
     @Override
