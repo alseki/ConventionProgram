@@ -58,14 +58,14 @@ Below are the instruction on how to use this program base on different identity.
     -------------
     Event system:
     -------------
-    Organizers have the highest access to this conference.
-    [details here]
+    Organizers have the fewest restrictions to this conferences
+
     Organizers are in charge of creating rooms, in which Events are held.
-    [details here]
+
     Organizers could set up the Events with name, room, and descriptions.
-    [details here]
+
     Organizers could view the Events that are scheduled by room.
-    [details here]
+
 
     Organizers could also attend to an Event.
 
@@ -96,7 +96,6 @@ Below are the instruction on how to use this program base on different identity.
     Event system:
     -------------
     Speakers are the people who will give a talk in an Event.
-    [details here]
 
 
     Speakers could also attend to an Event.
