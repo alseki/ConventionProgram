@@ -136,7 +136,7 @@ public abstract class PersonManager {
 
     public int typePerson(String username) {
         if(usernameToPerson.containsKey(username)) {
-            return getPerson(username).getTypePerson();
+            return getPersonByUsername(username).getTypePerson();
 
         }
         return -1;
