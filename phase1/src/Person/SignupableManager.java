@@ -1,3 +1,5 @@
+// PLEASE IGNORE THIS CLASS FOR PHASE 1
+
 package Person;
 
 import Person.Signupable;
