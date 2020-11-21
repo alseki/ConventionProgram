@@ -12,7 +12,6 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
 import Presenter.MainMenu;
-import Presenter.SpeEventMenu;
 
 import java.util.Scanner;
 
@@ -21,14 +20,14 @@ public class SpeakerController extends PersonController {
     private String currentUserID;
     private SpeakerManager manager;
     private int currentRequest;
-    private int typePerson;
+    //private int typePerson;
     Scanner input = new Scanner(System.in);
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats) {
         super(manager, rooms, events, messages, chats, 3);
-        this.typePerson = 3;
-        this.manager = manager;
+        this.manager = (SpeakerManager) manager;
+        //this.typePerson = 3;
     }
 
 
