@@ -3,9 +3,10 @@ package Person;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
-public class OrganizerManager extends PersonManager{
+public class OrganizerManager extends PersonManager implements PropertyChangeListener{
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -108,5 +109,9 @@ public class OrganizerManager extends PersonManager{
     }
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) { // should update the request status here, this is here so that
+        // all organizers can have access.
 
+    }
 }

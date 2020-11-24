@@ -20,6 +20,9 @@ public class RequestEntity{
         this.requestId = UUID.randomUUID().toString();
         this.observable = new PropertyChangeSupport (this);
     }
+    public boolean getFulfilled(){
+        return this.fulfilled;
+    }
 
     public String getRequestingUserId() {
         return requestingUserId;
@@ -37,7 +40,7 @@ public class RequestEntity{
      * @param observer
      */
     public void addObserver(PropertyChangeListener observer) {
-        observable.addPropertyChangeListener("location", observer);
+        observable.addPropertyChangeListener(this.requestId, observer);
     }
     /**
      * Notify observers o the change event.
@@ -53,7 +56,7 @@ public class RequestEntity{
     public void setFulfilled(){
         this.fulfilled = true;
         PropertyChangeEvent newEvent = new PropertyChangeEvent(
-                this, "Fulfilled", false, true);
+                this, this.requestId, false, true);
         notifyObservers(newEvent);
     }
     //todo need to set up a way so that all the organizers can observe changes in this entity.

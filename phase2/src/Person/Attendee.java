@@ -3,13 +3,15 @@ package Person;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Attendee extends Person implements Signupable, PropertyChangeListener {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();
-    private boolean requestStatus;
+    private Map<String, Boolean> requestidtostatus;
 
     public Attendee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -18,7 +20,7 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
         this.email = email;
         this.id = UUID.randomUUID().toString();
         this.typePerson = 1;
-        this.requestStatus = false;
+        this.requestidtostatus = new HashMap<>();
     }
 
     /**
@@ -66,8 +68,8 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
             anChatList.remove(chatID);
         }
     }
-    public String getRequestStatus(){
-        if (!requestStatus){
+    public String getRequestStatus(String requestId){
+        if (!requestidtostatus.get(requestId)){
             return "Pending";
         }
         else{
@@ -76,8 +78,9 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.requestStatus = (boolean) evt.getNewValue();
+    public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
+        this.requestidtostatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
 
     }
+
 }
