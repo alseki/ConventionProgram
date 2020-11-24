@@ -1,13 +1,15 @@
 package Person;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Attendee extends Person implements Signupable {
+public class Attendee extends Person implements Signupable, PropertyChangeListener {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();
-
+    private boolean requestStatus;
 
     public Attendee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -16,6 +18,7 @@ public class Attendee extends Person implements Signupable {
         this.email = email;
         this.id = UUID.randomUUID().toString();
         this.typePerson = 1;
+        this.requestStatus = false;
     }
 
     /**
@@ -63,5 +66,18 @@ public class Attendee extends Person implements Signupable {
             anChatList.remove(chatID);
         }
     }
+    public String getRequestStatus(){
+        if (!requestStatus){
+            return "Pending";
+        }
+        else{
+            return "Fulfilled";
+        }
+    }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        this.requestStatus = (boolean) evt.getNewValue();
+
+    }
 }

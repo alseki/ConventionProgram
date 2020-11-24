@@ -1,10 +1,11 @@
 package Person;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class OrganizerManager extends PersonManager {
-
+public class OrganizerManager extends PersonManager{
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -105,6 +106,7 @@ public class OrganizerManager extends PersonManager {
     private void updateUsernameToPerson(String username, Organizer org){
         usernameToPerson.put(username,org);
     }
+
 
 
 }

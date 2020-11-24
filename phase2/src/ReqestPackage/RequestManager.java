@@ -35,4 +35,11 @@ public class RequestManager {
         return requestsList;
 
     }
+
+    public void AddObserver(String reqId){
+        RequestEntity req = getRequestEntity(reqId);
+        String userid = req.getRequestingUserId();
+
+
+    }
 }

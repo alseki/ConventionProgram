@@ -49,12 +49,14 @@ public class RequestEntity{
             observer.propertyChange(newEvent);
     }
 
+
     public void setFulfilled(){
         this.fulfilled = true;
         PropertyChangeEvent newEvent = new PropertyChangeEvent(
                 this, "Fulfilled", false, true);
         notifyObservers(newEvent);
     }
+    //todo need to set up a way so that all the organizers can observe changes in this entity.
 
 
 }
