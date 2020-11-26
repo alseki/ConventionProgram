@@ -48,8 +48,7 @@ public class ConventionPlanningSystem {
         load();
 
         do {
-            presenter.printIntroMessage();
-            accountChoice = SubMenu.readInteger(input);
+            accountChoice = Integer.parseInt(presenter.printIntroMessage());
             setController(accountChoice);
         }
         while (accountChoice != 0);

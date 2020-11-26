@@ -5,67 +5,75 @@ package Presenter;
 // Date Created: 11/11/2020
 // Date Modified: 13/11/2020
 
-public class LoginMenu implements printSubMenu {
+import javax.swing.*;
+
+public class LoginMenu {
 
     /**
      * Prints the options for this menu.
      */
-    @Override
-    public void printMenuOptions() {
-        System.out.println("\n----- Login Menu -----");
-        System.out.println("To return to start page, Enter '0'.");
-        System.out.println("To Login, Enter '1'.");
-        System.out.println("To Create a new account, Enter '2'.");
+    public String printMenuOptions() {
+        String message = "\nTo return to start page, Enter '0'." + "\nTo Login, Enter '1'."
+                + "\nTo Create a new account, Enter '2'.";
+        return JOptionPane.showInputDialog(null, message, "[User Type] Login Menu",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
      * Prompts user to enter username
      */
-    public void printUsernamePrompt() {
-        System.out.print("Enter username: ");
+    public String printUsernamePrompt() {
+        return JOptionPane.showInputDialog(null, "Enter username:",
+                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
      * Prompts user to enter password
      */
-    public void printPasswordPrompt() {
-        System.out.print("Enter password: ");
+    public String printPasswordPrompt() {
+        return JOptionPane.showInputDialog(null, "Enter password:",
+                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
      * Prompts user to enter name
      */
-    public void printNamePrompt() {
-        System.out.print("Enter full name: ");
+    public String printNamePrompt() {
+        return JOptionPane.showInputDialog(null, "Enter full name: ", "[User Type] Login",
+                JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
      * Prompts user to enter email
      */
-    public void printEmailPrompt() {
-        System.out.print("Enter email address: ");
+    public String printEmailPrompt() {
+        return JOptionPane.showInputDialog(null, "Enter email address: ",
+                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
     }
 
     /**
      * Prints instructions for user to create account
      */
     public void printCreateAccountPrompt() {
-        System.out.println("\nTo create an account, select a username and password, then enter your full name and email " +
-                "address. ");
+        JOptionPane.showMessageDialog(null, "\nTo create an account, select a username and " +
+                        "password, then enter your full name and email address. ", "[User Type] Create Account",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
      * Prints confirmation that an account was created.
      */
     public void printAccountCreationSuccessful() {
-        System.out.println("Account creation successful! Redirecting to Login Menu..." + '\n');
+        JOptionPane.showMessageDialog(null, "Account creation successful! Redirecting to " +
+                "Login Menu...\n", "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
      * Prints instructions for user to login
      */
     public void printLoginPrompt() {
-        System.out.println("\nTo login, enter the following: ");
+        JOptionPane.showMessageDialog(null, "\nTo login, enter the following: ",
+                "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
     }
 
 
@@ -73,6 +81,12 @@ public class LoginMenu implements printSubMenu {
      * Prints confirmation that Login was successful
      */
     public void printLoginSuccessful() {
-        System.out.println("Login Successful! Redirecting back to account Main Menu..." + '\n');
+        JOptionPane.showMessageDialog(null, "Login Successful! Redirecting back to account " +
+                "Main Menu..." + '\n', "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void printException(Exception e) {
+        String message = "\nSorry! That didn't work." + '\n' + e.getMessage() + "\nPlease try again!";
+        JOptionPane.showMessageDialog(null, message, "[User Type] Login", JOptionPane.ERROR_MESSAGE);
     }
 }

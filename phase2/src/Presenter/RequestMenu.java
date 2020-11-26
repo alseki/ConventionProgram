@@ -44,10 +44,4 @@ public class RequestMenu implements printSubMenu{
         System.out.println("Which Request Would you like to fulfill, please enter the ID.");
     }
 
-
-
-    }
-
-
-
 }

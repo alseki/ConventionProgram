@@ -10,7 +10,7 @@ import Presenter.LoginMenu;
 
 import java.util.Scanner;
 
-public class LoginController implements SubMenu {
+public class LoginController implements SubMenu{
     private int currentRequest;
     private int accountChoice;
     private PersonManager manager;
@@ -27,10 +27,8 @@ public class LoginController implements SubMenu {
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
      */
-    @Override
     public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
+        currentRequest = Integer.parseInt(presenter.printMenuOptions());
     }
 
     /**
@@ -70,13 +68,11 @@ public class LoginController implements SubMenu {
     private void login() throws InvalidChoiceException {
         //int typePresenter = PersonController;
         presenter.printLoginPrompt();
-        presenter.printUsernamePrompt();
-        username = SubMenu.readInput(input);
+        username = presenter.printUsernamePrompt();
         if(this.accountChoice != manager.typePerson(username)) {
             throw new InvalidChoiceException("account");
         }
-        presenter.printPasswordPrompt();
-        String password = SubMenu.readInput(input);
+        String password = presenter.printPasswordPrompt();
         if (manager.getCurrentUserID(username) != null)  {
             if(manager.confirmPassword(username, password)) {
                 return;
@@ -90,20 +86,16 @@ public class LoginController implements SubMenu {
      */
     private void createAccount() throws InvalidChoiceException {
         presenter.printCreateAccountPrompt();
-        presenter.printUsernamePrompt();
-        username = SubMenu.readInput(input);
+        username = presenter.printUsernamePrompt();
         if(username.contains(",")) {
             throw new InvalidChoiceException("username possible. Try again with NO comma(s)");
         }
         if (manager.getCurrentUserID(username) != null) {
             throw new OverwritingException("username");
         }
-        presenter.printPasswordPrompt();
-        String password = SubMenu.readInput(input);
-        presenter.printNamePrompt();
-        String name = SubMenu.readInput(input);
-        presenter.printEmailPrompt();
-        String email = SubMenu.readInput(input);
+        String password = presenter.printPasswordPrompt();
+        String name = presenter.printNamePrompt();
+        String email = presenter.printEmailPrompt();
         if (manager.createAccount(name, username, password, email)) {
             presenter.printAccountCreationSuccessful();
         }

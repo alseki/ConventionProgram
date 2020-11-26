@@ -56,6 +56,3 @@ public class RequestController implements SubMenu {
         reqM.createRequest(id, content);
     }
 }
-
-
-}
