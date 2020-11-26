@@ -7,9 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager implements PropertyChangeListener{
-
+    private Map<String, Boolean> requestIdToStatus;
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
+        this.requestIdToStatus = new HashMap<String, Boolean>();
     }
 
 
@@ -108,9 +109,14 @@ public class OrganizerManager extends PersonManager implements PropertyChangeLis
         usernameToPerson.put(username,org);
     }
 
+    public void addRequest(String requestId){
+        requestIdToStatus.put(requestId, false);
+    }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) { // should update the request status here, this is here so that
+    public void propertyChange(PropertyChangeEvent evt) {
+        requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
+        // should update the request status here, this is here so that
         // all organizers can have access.
 
     }

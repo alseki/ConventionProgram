@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Attendee extends Person implements Signupable, PropertyChangeListener {
+public class Attendee extends Person implements Signupable {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();
-    private Map<String, Boolean> requestidtostatus;
+    private Map<String, Boolean> requestIdToStatus;
 
     public Attendee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -20,7 +20,7 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
         this.email = email;
         this.id = UUID.randomUUID().toString();
         this.typePerson = 1;
-        this.requestidtostatus = new HashMap<>();
+        this.requestIdToStatus = new HashMap<>();
     }
 
     /**
@@ -69,17 +69,20 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
         }
     }
     public String getRequestStatus(String requestId){
-        if (!requestidtostatus.get(requestId)){
+        if (!requestIdToStatus.get(requestId)){
             return "Pending";
         }
         else{
             return "Fulfilled";
         }
     }
+    public void newRequest(String requestId){
+        requestIdToStatus.put(requestId, false);
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
-        this.requestidtostatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
+        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
 
     }
 
