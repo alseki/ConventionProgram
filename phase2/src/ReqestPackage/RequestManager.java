@@ -60,7 +60,4 @@ public class RequestManager {
             observer.propertyChange(newEvent);
     }
 
-
-
-    }
 }

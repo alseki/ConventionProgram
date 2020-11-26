@@ -27,10 +27,10 @@ public class FileGateway<T> {
                 pathString = directoryString + "\\";
             }
             else {
-                if (directoryString.contains("phase1")) {
+                if (directoryString.contains("phase2")) {
                     String part = parts[0];
                     int i = 0;
-                    while (!part.equals("phase1")) {
+                    while (!part.equals("phase2")) {
                         pathString += part + "\\";
                         i++;
                         part = parts[i];
@@ -45,7 +45,7 @@ public class FileGateway<T> {
                         i++;
                         part = parts[i];
                     }
-                    pathString += part + "\\phase1\\data\\";
+                    pathString += part + "\\phase2\\data\\";
                 }
             }
             return pathString;

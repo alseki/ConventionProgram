@@ -32,7 +32,7 @@ public class RequestMenu implements printSubMenu{
     public void seeOutstandingRequests() {
         StringBuilder reqs = new StringBuilder();
         for (RequestEntity r : reqm.getAllRequests()) {
-            if(!r.getFulfilled()){ // so that we only get currently active one's
+            if(!r.getFulfilled()){ // so that we only get currently active ones
                 reqs.append("\n").append(r.getRequestContent());
                 reqs.append("\t").append(r.getRequestId());
             }
