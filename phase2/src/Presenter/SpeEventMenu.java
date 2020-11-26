@@ -2,17 +2,12 @@ package Presenter;
 
 import Events.EventManager;
 import Events.RoomManager;
-import Person.SpeakerManager;
+import Person.PersonManager;
 
 public class SpeEventMenu extends EventMenu {
 
-    SpeakerManager speakerManager;
-    String currentUserID;
-
-    public SpeEventMenu(RoomManager rooms, EventManager events, SpeakerManager persons) {
+    public SpeEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
         super(rooms, events, persons);
-        //speakerManager = persons;
-        //this.currentUserID = currentUserID;
     }
 
     /**
@@ -74,12 +69,6 @@ public class SpeEventMenu extends EventMenu {
     public void printMessageSent() {
         System.out.println("Messages are sent!");
     }
-
-//    public void printSpeakerTalkList() {
-//        String[] evList = {};
-//        evList = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(evList);
-//        printEventList(" you have signed up for", evList);
-//    }
 
     // Adding back into SpeEventMenu what I had from yesterday. Please integrate or discard whatever you wish.
     // I'll be working on this right now too. This is just getting a glimpse.
