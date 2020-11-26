@@ -8,37 +8,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestManager {
-    private ArrayList<RequestEntity> requestsList;
-    private Map<String, RequestEntity> idToRequest;
+    private ArrayList<RequestPackage.RequestEntity> requestsList;
+    private Map<String, RequestPackage.RequestEntity> idToRequest;
     private PropertyChangeSupport observable;
     public RequestManager(){
-        this.requestsList = new ArrayList<RequestEntity>();
-        idToRequest = new HashMap<String, RequestEntity>();
+        this.requestsList = new ArrayList<RequestPackage.RequestEntity>();
+        idToRequest = new HashMap<String, RequestPackage.RequestEntity>();
         this.observable = new PropertyChangeSupport (this);
     }
-    private void addRequest(RequestEntity req){
+    private void addRequest(RequestPackage.RequestEntity req){
         requestsList.add(req);
     }
     public boolean createRequest(String reqUserId, String reqContent){
-        RequestEntity req = new RequestEntity(reqContent, reqUserId);
+        RequestPackage.RequestEntity req = new RequestPackage.RequestEntity(reqContent, reqUserId);
         updateMap(reqUserId, req);
         addRequest(req);
         return true;
     }
-    private void updateMap(String str, RequestEntity req){
+    private void updateMap(String str, RequestPackage.RequestEntity req){
         idToRequest.put(str, req);
     }
-    public RequestEntity getRequestEntity(String reqId){
+    public RequestPackage.RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
     public void updateEntity(String reqId) {
-        RequestEntity req = getRequestEntity(reqId);
+        RequestPackage.RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
         PropertyChangeEvent newEvent = new PropertyChangeEvent(
                 this, reqId, false, true);
         notifyObservers(newEvent);
     }
-    public ArrayList<RequestEntity> getAllRequests(){
+    public ArrayList<RequestPackage.RequestEntity> getAllRequests(){
         return requestsList;
 
     }
