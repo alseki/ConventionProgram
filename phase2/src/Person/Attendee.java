@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Attendee extends Person implements Signupable {
+public class Attendee extends Person implements Signupable, PropertyChangeListener {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();

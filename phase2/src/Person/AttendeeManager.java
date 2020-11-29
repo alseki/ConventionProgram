@@ -1,19 +1,19 @@
 package Person;
 
+import ReqestPackage.RequestEntity;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class AttendeeManager extends PersonManager implements PropertyChangeListener {
+public class AttendeeManager extends PersonManager{
 
     // private List<Attendee> allAttendees;
-    private ArrayList<String> requestIds;
 
 
     public AttendeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
-        this.requestIds = new ArrayList<String>();
     }
 
     /**
@@ -140,7 +140,6 @@ public class AttendeeManager extends PersonManager implements PropertyChangeList
         return attendee.getAnChatList();
 
     }
-
     /**
      *
      * @param username
@@ -156,12 +155,11 @@ public class AttendeeManager extends PersonManager implements PropertyChangeList
     public void addRequest(String attendeeId, String requestId){
        Attendee at = (Attendee)getPerson(attendeeId);
        at.newRequest(requestId);
-       requestIds.add(requestId);
-    }
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
-        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
 
+    }
+    public String getRequestStatus(String requestId, String attendeeId) {
+        Attendee at = (Attendee) getPerson(attendeeId);
+        return at.getRequestStatus(requestId);
     }
 
 

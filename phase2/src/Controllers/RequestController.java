@@ -31,17 +31,20 @@ public class RequestController implements SubMenu {
                 case 1: //make request
                     request();
                     break;
-                case 2: // see the requests --> must be an organizer
+                case 2:
+                    personalRequest();
+                    break;
+                case 3: // see the requests --> must be an organizer
                     seeRequests();
                     break;
-                case 3: // fulfill requests --> must be an organizer
+                case 4: // fulfill requests --> must be an organizer
                     fulfillRequest();
             }
         }
         while (currentRequest != 0);
     }
     private void seeRequests(){
-        presenter.seeOutstandingRequests();
+        presenter.seeRequests();
     }
     private void fulfillRequest(){
         presenter.fulfillRequestPrompt();
@@ -55,4 +58,13 @@ public class RequestController implements SubMenu {
         String id = SubMenu.readInput(input);
         reqM.createRequest(id, content);
     }
+    private void personalRequest(){
+        presenter.seeSpecificRequestPrompt();
+        String id = SubMenu.readInput(input);
+        presenter.seeRequest(id);
+
+    }
+    //TODO how to allow the type of person checker
+    //TODO how do I deal with adding this to the person options
+
 }
