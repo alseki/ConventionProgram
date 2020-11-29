@@ -1,6 +1,6 @@
 package Person;
 
-import Events.Event;
+import Event.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;

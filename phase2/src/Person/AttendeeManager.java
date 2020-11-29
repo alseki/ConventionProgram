@@ -1,6 +1,6 @@
 package Person;
 
-import ReqestPackage.RequestEntity;
+import Request.RequestEntity;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

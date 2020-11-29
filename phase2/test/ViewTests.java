@@ -1,10 +1,10 @@
-import Controllers.InvalidChoiceException;
-import View.Login.iViewPane;
-import View.Login.PopoutView;
+import Presenter.InvalidChoiceException;
+import View.PopoutView;
 
 public class ViewTests {
 
     public static void main(String[] args) {
+        /*
         iViewPane view = new PopoutView();
 
         // Tests message printing
@@ -20,9 +20,10 @@ public class ViewTests {
         System.out.println(testIntegerInput(view));
 
         // Tests an option input box
-        System.out.println(testOptionBox(view));
+        System.out.println(testOptionBox(view));*/
     }
 
+    /*
     static String testOptionBox(iViewPane view) {
         String[] args = {"Molly", "Also Molly", "Still Molly", "Molly, of Course"};
         try {
@@ -46,5 +47,5 @@ public class ViewTests {
 
     static void testMessagePrint(iViewPane view) {
         view.printMessage("Test", "WOAH! A TEST!");
-    }
+    }*/
 }

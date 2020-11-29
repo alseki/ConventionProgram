@@ -24,7 +24,7 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
     }
 
     /**
-     * adds an event ID to the Person.Person.Attendee's list of signed up Events
+     * adds an event ID to the attendee's list of signed up Event
      * @param eventID takes in the ID of the event
      */
     public void signUp(String eventID) {
@@ -32,7 +32,7 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
     }
 
     /**
-     * removes an event ID from the Person.Person.Attendee's list of signed up Events
+     * removes an event ID from the attendee's list of signed up Event
      * @param eventID takes in the ID of the event
      */
     public void cancelSpot(String eventID) {
@@ -48,7 +48,7 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
     }
 
     /**
-     * returns the contacts that Person.Person.Attendee has in list
+     * returns the contacts that the attendee has in list
      * @return ArrayList<String> of person's id
      */
     public ArrayList<String> getContactList() { // why does this need to be overriden shouldn't the one in person suffice?
