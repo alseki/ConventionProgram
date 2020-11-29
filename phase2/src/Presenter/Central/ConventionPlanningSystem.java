@@ -1,20 +1,18 @@
-package Controllers.Central;
+package Presenter.Central;
 
 // Programmer: Cara McNeil, Sarah Kronenfeld
-// Description: The central Controller of the Convention System. Calls all other Controllers.
+// Description: The central Controller of the Convention System. Calls all other Presenter.
 // Date Created: 01/11/2020
 // Date Modified: 18/11/2020
 
-import Controllers.AttendeeController.AttendeeController;
-import Controllers.OrganizerController.OrganizerController;
-import Controllers.SpeakerController.SpeakerController;
-import Events.EventManager;
-import Events.RoomManager;
+import Presenter.AttendeeController.AttendeeController;
+import Presenter.OrganizerController.OrganizerController;
+import Presenter.SpeakerController.SpeakerController;
+import Event.EventManager;
+import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.*;
-import View.Account.iViewGUI;
-import View.Login.iViewPane;
 
 
 import java.util.HashMap;
@@ -26,8 +24,6 @@ public class ConventionPlanningSystem {
     private int accountChoice;
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
-    private iViewPane vp;
-    private iViewGUI vg;
 
     private MessageManager mm = new MessageManager();
     private ChatManager cm = new ChatManager();
@@ -48,12 +44,10 @@ public class ConventionPlanningSystem {
 
 
     /**
-    * Calls appropriate Controllers based on user input.
+    * Calls appropriate Presenter based on user input.
     */
-    public void run(iViewPane viewPane, iViewGUI viewGUI) {
+    public void run() {
         load();
-        this.vp = viewPane;
-        this.vg = viewGUI;
 
         do {
             // TODO get rid of CPSMenu class
@@ -76,19 +70,19 @@ public class ConventionPlanningSystem {
                 break;
             case 1:
                 AttendeeManager am = new AttendeeManager(personByName, personByID);
-                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm, vp, vg);
+                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm);
                 AC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 AttendeeManager attMan = new AttendeeManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan, vp, vg);
+                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan);
                 OC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager(personByName, personByID);
-                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm, vp, vg);
+                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm);
                 SC.run();
                 break;
         }

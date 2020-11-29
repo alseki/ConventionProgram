@@ -1,5 +1,6 @@
 package Presenter.PersonController;
 
+import Presenter.Central.SubMenu;
 import Presenter.InvalidChoiceException;
 import Presenter.NoDataException;
 import Event.EventManager;
@@ -14,44 +15,23 @@ import java.util.Scanner;
 // Description: For current User to view chat and message, create chat and send message.
 // Date Modified: 19/11/2020
 
-public class MessageController implements SubMenu {
+public class MessageController extends SubMenu {
     protected String currentUserID;
-    protected PersonManager personManager;
-    protected ChatManager chatManager;
-    protected MessageManager messageManager;
-    protected EventManager eventManager;
     private MessageMenu presenter;
-    Scanner input = new Scanner(System.in);
     protected int currentRequest;
 
-    public MessageController (String currentUserID, PersonManager personManager, MessageManager mManager,
-                              ChatManager cManager, EventManager eventManager) {
-        this.currentUserID = currentUserID;
-        this.personManager = personManager;
-        this.messageManager = mManager;
-        this.chatManager = cManager;
-        this.eventManager = eventManager;
+    public MessageController (SubMenu subMenu, String currentUserID) {
+        super(subMenu);
         presenter = new MessageMenu(personManager, messageManager, chatManager, eventManager);
-    }
-
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
+        this.currentUserID = currentUserID;
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
-            switch (currentRequest) {
+            switch (1) {
                 case 0:
                     // return to main menu
                     break;
@@ -152,7 +132,7 @@ public class MessageController implements SubMenu {
     protected void displayChat(String type) {
         presenter.printChatIdPrompt(type);
         try {
-            presenter.printChat(SubMenu.readInput(input));
+            presenter.printChat("a");//SubMenu.readInput(input));
         } catch (InvalidChoiceException e) {
             presenter.printException(e);
         }
@@ -171,9 +151,9 @@ public class MessageController implements SubMenu {
      */
     protected void sendMessageChoice() {
         presenter.printChatIdMessagePrompt();
-        String chatId = SubMenu.readInput(input);
+        String chatId = "";//= SubMenu.readInput(input);
         presenter.printContentPrompt();
-        String content = SubMenu.readInput(input);
+        String content = "";// = SubMenu.readInput(input);
         try {
             sendMessage(chatId, content);
             presenter.printJobDone();

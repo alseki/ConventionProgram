@@ -1,6 +1,6 @@
 package Presenter;
 
-import Presenter.PersonController.printSubMenu;
+import Presenter.Central.printSubMenu;
 import Request.*;
 
 public class RequestMenu implements printSubMenu {

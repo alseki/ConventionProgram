@@ -1,11 +1,11 @@
-package Presenter.Central;
+package Presenter.PersonController;
 
 // Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's login information
 // Date Created: 11/11/2020
 // Date Modified: 29/11/2020
 
-import javax.swing.*;
+import Presenter.Central.SubMenuPrinter;
 
 public class LoginMenu implements SubMenuPrinter {
 
@@ -60,58 +60,43 @@ public class LoginMenu implements SubMenuPrinter {
      * Prompts user to enter username
      */
     public String printUsernamePrompt() {
-        return JOptionPane.showInputDialog(null, "Enter username:",
-                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
+        return "Please enter username: ";
     }
 
     /**
      * Prompts user to enter password
      */
     public String printPasswordPrompt() {
-        return JOptionPane.showInputDialog(null, "Enter password:",
-                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
+        return "Please enter password: ";
     }
 
     /**
      * Prompts user to enter name
      */
     public String printNamePrompt() {
-        return JOptionPane.showInputDialog(null, "Enter full name: ", "[User Type] Login",
-                JOptionPane.QUESTION_MESSAGE);
+        return "Please enter your full name: ";
     }
 
     /**
      * Prompts user to enter email
      */
     public String printEmailPrompt() {
-        return JOptionPane.showInputDialog(null, "Enter email address: ",
-                "[User Type] Login", JOptionPane.QUESTION_MESSAGE);
+        return "Please enter email address: ";
     }
 
     /**
-     * Prints instructions for user to create account
+     * Returns a written confirmation that an account was created.
      */
-    public void printCreateAccountPrompt() {
-        JOptionPane.showMessageDialog(null, "\nTo create an account, select a username and " +
-                        "password, then enter your full name and email address. ", "[User Type] Create Account",
-                JOptionPane.PLAIN_MESSAGE);
-    }
-
-    /**
-     * Prints confirmation that an account was created.
-     */
-    public void printAccountCreationSuccessful() {
-        JOptionPane.showMessageDialog(null, "Account creation successful! Redirecting to " +
-                "Login Menu...\n", "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
+    public String printAccountCreationSuccessful() {
+        return "Account creation successful! Redirecting back to account \nMain Menu...";
     }
 
 
     /**
-     * Prints confirmation that Login was successful
+     * Returns a written confirmation that Login was successful
      */
-    public void printLoginSuccessful() {
-        JOptionPane.showMessageDialog(null, "Login Successful! Redirecting back to account " +
-                "Main Menu..." + '\n', "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
+    public String printLoginSuccessful() {
+        return "Login successful! Redirecting back to account \nMain Menu...";
     }
 
 }

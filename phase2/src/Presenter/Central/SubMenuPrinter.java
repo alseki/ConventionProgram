@@ -1,22 +1,29 @@
-package Presenter.PersonController;
+package Presenter.Central;
 
 import Presenter.NoDataException;
 
-public interface printSubMenu {
+public interface SubMenuPrinter {
 
     /**
      * Prints the options for this menu.
      */
-    void printMenuOptions();
+    String printMenuOptions();
 
     /**
-     * Prints out an Exception thrown by the program to the user
-     * @param e The exception
+     * Writes out a default title for any exception message
+     * @return The expression, in printed form
      */
-    default void printException(Exception e) {
-        System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage());
-        System.out.println("Please try again!\n\n");
+    default String exceptionTitle() {
+        return "Whoops!";
+    }
+
+    /**
+     * Writes out an Exception thrown by the program to the user
+     * @param e The exception
+     * @return The expression, in printed form
+     */
+    default String printException(Exception e) {
+        return "That didn't work.\n" + e.getMessage() + "\nPlease try again!\n\n";
     }
 
 

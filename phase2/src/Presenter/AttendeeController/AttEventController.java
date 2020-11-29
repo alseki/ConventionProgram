@@ -6,7 +6,7 @@ package Presenter.AttendeeController;
 // Date Modified: 17/11/2020
 
 import Presenter.InvalidChoiceException;
-import Presenter.PersonController.SubMenu;
+import Presenter.Central.SubMenu;
 import Event.CapacityException;
 import Event.EventManager;
 import Event.EventPermissions;
@@ -15,46 +15,29 @@ import Person.AttendeeManager;
 
 import java.util.Scanner;
 
-public class AttEventController implements SubMenu {
+public class AttEventController extends SubMenu {
 
     private String currentUserID;
-    private int currentRequest;
     private AttendeeManager attendeeManager;
-
-    private RoomManager roomManager;
-    private EventManager eventManager;
     private EventPermissions eventPermissions;
 
     private AttEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public AttEventController(String currentUserID, AttendeeManager attendeeManager, RoomManager roomManager,
-                              EventManager eventManager) {
+    public AttEventController(String currentUserID, AttendeeManager attendeeManager, SubMenu subMenu) {
+        super(subMenu);
         this.currentUserID = currentUserID;
         this.attendeeManager = attendeeManager;
-        this.eventManager = eventManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
-        this.roomManager = roomManager;
         presenter = new AttEventMenu(currentUserID, roomManager, eventManager, attendeeManager);
-    }
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
-            switch(currentRequest) {
+            switch(1) {
                 case 0:
                     // return to main menu
                     break;
@@ -73,7 +56,7 @@ public class AttEventController implements SubMenu {
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
-                    String addingEventInput = SubMenu.readInput(input);
+                    String addingEventInput = "";//SubMenu.readInput(input);
                     try {
                         signupForEvent(addingEventInput);
                     } catch (InvalidChoiceException e) {
@@ -82,7 +65,7 @@ public class AttEventController implements SubMenu {
                     break;
                 case 3:
                     presenter.printRemoveEventPrompt();
-                    String removingEventInput = SubMenu.readInput(input);
+                    String removingEventInput = "";//SubMenu.readInput(input);
                     try {
                          cancelSpotFromEvent(removingEventInput);
                     } catch (InvalidChoiceException e) {
@@ -94,7 +77,7 @@ public class AttEventController implements SubMenu {
                     break;
             }
         }
-        while (currentRequest != 0);
+        while (true);
 
     }
 
@@ -106,10 +89,10 @@ public class AttEventController implements SubMenu {
      */
     private String getRoomChoice() throws InvalidChoiceException {
         presenter.printRoomChoicePrompt();
-        String room = SubMenu.readInput(input);
+        String room = "";//SubMenu.readInput(input);
         if (room.equals("0")) {
             presenter.printRoomList();
-            room = SubMenu.readInput(input);
+            room = "";//SubMenu.readInput(input);
         }
         if (room.equals("1")) {
             return "1";

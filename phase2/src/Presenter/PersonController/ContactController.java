@@ -7,42 +7,30 @@ package Presenter.PersonController;
 
 
 
+import Presenter.Central.SubMenu;
 import Presenter.InvalidChoiceException;
 import Person.PersonManager;
 
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class ContactController implements SubMenu {
+public class ContactController extends SubMenu {
 
     private String currentUserID;
-    private int currentRequest;
-    private PersonManager pManager;
     private ContactMenu presenter = new ContactMenu();
     Scanner input = new Scanner(System.in);
 
-    public ContactController(String currentUserID, PersonManager personManager) {
+    public ContactController(SubMenu subMenu, String currentUserID) {
+        super(subMenu);
         this.currentUserID = currentUserID;
-        this.pManager = personManager;
-    }
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
-            switch (currentRequest) {
+            switch (1) {
                 case 0:
                     // return to main menu
                     break;
@@ -56,21 +44,21 @@ public class ContactController implements SubMenu {
                 case 2:
                     presenter.printAddContactPrompt();
                     try {
-                        addContact(SubMenu.readInput(input));
+                        addContact("");//SubMenu.readInput(input));
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
                     }
                     break;
             }
         }
-        while (currentRequest != 0);
+        while (true);
     }
 
     /**
      * Get's the current user's contactList
      */
     private void getContactList() throws InvalidChoiceException {
-        ArrayList<String> listOfContacts = pManager.getContactList(currentUserID);
+        ArrayList<String> listOfContacts = personManager.getContactList(currentUserID);
         presenter.printContactList(listOfContacts);
     }
 
@@ -79,12 +67,12 @@ public class ContactController implements SubMenu {
      * @param contactUsername the username of the contact the current user wants to add to their contactList
      */
     private void addContact(String contactUsername) throws InvalidChoiceException{
-        String contactID = pManager.getCurrentUserID(contactUsername);
+        String contactID = personManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             throw new InvalidChoiceException("user");
         }
-        boolean a = pManager.addContactToPerson(currentUserID, contactID);
-        boolean b = pManager.addContactToPerson(contactID, currentUserID);
+        boolean a = personManager.addContactToPerson(currentUserID, contactID);
+        boolean b = personManager.addContactToPerson(contactID, currentUserID);
 
         if(a && b) {
             presenter.printContactAdded();

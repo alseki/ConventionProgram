@@ -7,7 +7,7 @@ package Presenter.OrganizerController;
 
 import Presenter.InvalidChoiceException;
 import Presenter.OverwritingException;
-import Presenter.PersonController.SubMenu;
+import Presenter.Central.SubMenu;
 import Event.EventManager;
 import Event.EventPermissions;
 import Event.EventType;
@@ -23,50 +23,29 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class OrgEventController implements SubMenu {
+public class OrgEventController extends SubMenu {
 
     private String currentUserID;
     private int currentRequest;
-    private PersonManager personManager;
     private SpeakerManager speakerManager;
-    private RoomManager roomManager;
-    private EventManager eventManager;
     private EventPermissions eventPermissions;
-    private MessageManager messageManager;
-    private ChatManager chatManager;
     private OrgEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public OrgEventController(String currentUserID, PersonManager personManager, SpeakerManager speakerManager,
-                              RoomManager roomManager, EventManager eventManager, MessageManager messageManager,
-                              ChatManager chatManager) {
+    public OrgEventController(String currentUserID, SpeakerManager speakerManager,
+                              SubMenu subMenu) {
+        super(subMenu);
         this.currentUserID = currentUserID;
-        this.personManager = personManager;
         this.speakerManager = speakerManager;
-        this.roomManager = roomManager;
-        this.eventManager = eventManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
-        this.messageManager = messageManager;
-        this.chatManager = chatManager;
         presenter = new OrgEventMenu(roomManager, eventManager, personManager);
-    }
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
     }
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
             switch (currentRequest) {
                 case 0:
                     break;
@@ -107,12 +86,12 @@ public class OrgEventController implements SubMenu {
     private void addRoomPrompt() throws InvalidChoiceException {
         presenter.addRoomPrompt();
         presenter.roomNamePrompt();
-        String name = SubMenu.readInput(input);
+        String name = "";//SubMenu.readInput(input);
         if (name.equals("1") || roomManager.contains(name)) {
             throw new OverwritingException("room");
         }
         presenter.roomCapacityPrompt();
-        int capacity = SubMenu.readInteger(input);
+        int capacity = 0;//SubMenu.readInteger(input);
         this.addRoom(name, capacity);
     }
 
@@ -138,13 +117,13 @@ public class OrgEventController implements SubMenu {
         presenter.printRoomNamePrompt();
         String roomName = chooseRoom();
         presenter.printEventNamePrompt();
-        String eventName = SubMenu.readInput(input);
+        String eventName = "";//SubMenu.readInput(input);
         presenter.printDescriptionPrompt();
-        String eventDescription = SubMenu.readInput(input);
+        String eventDescription = "";//SubMenu.readInput(input);
         presenter.printStartTimePrompt();
         LocalDateTime start = chooseStartTime();
         presenter.printSpeakerUsernamePrompt();
-        String speakerUsername = SubMenu.readInput(input);
+        String speakerUsername = "";//SubMenu.readInput(input);
         boolean created = createEvent(eventName, speakerUsername, start, eventDescription, roomName, type);
         if (!created) {
             presenter.printCapacityError();
@@ -156,10 +135,10 @@ public class OrgEventController implements SubMenu {
      * @return the type of event they have chosen (as an EventType object)
      */
     private EventType chooseEventType() throws InvalidChoiceException {
-        String type = SubMenu.readInput(input);
+        String type = "";//SubMenu.readInput(input);
         if (type.equals("0")) {
             presenter.printEventTypes();
-            type = SubMenu.readInput(input);
+            type = "";//SubMenu.readInput(input);
         }
         try {
             return EventType.valueOf(type.toUpperCase());
@@ -173,10 +152,10 @@ public class OrgEventController implements SubMenu {
      * @return The name of the Room they have chosen
      */
     private String chooseRoom() throws InvalidChoiceException {
-        String name = SubMenu.readInput(input);
+        String name = "";//SubMenu.readInput(input);
         if (name.equals("0")) {
             presenter.printRoomList();
-            name = SubMenu.readInput(input);
+            name = "";//SubMenu.readInput(input);
         }
         if (roomManager.getRoomID(name) != null) {
             return name;
@@ -191,7 +170,7 @@ public class OrgEventController implements SubMenu {
      * @return The start time as a LocalDateTime object
      */
     private LocalDateTime chooseStartTime() {
-        String time = SubMenu.readInput(input);
+        String time = "";//SubMenu.readInput(input);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return LocalDateTime.parse(time, formatter);
@@ -287,13 +266,13 @@ public class OrgEventController implements SubMenu {
     public void addSpeakerPrompt() throws InvalidChoiceException{
         presenter.printAddSpeakerPrompt();
         presenter.printAddNamePrompt();
-        String name = SubMenu.readInput(input);
+        String name = "";//SubMenu.readInput(input);
         presenter.printAddEmailPrompt();
-        String email = SubMenu.readInput(input);
+        String email = "";//SubMenu.readInput(input);
         presenter.printAddUsernamePrompt();
-        String username = SubMenu.readInput(input);
+        String username = "";//SubMenu.readInput(input);
         presenter.printAddPasswordPrompt();
-        String pass = SubMenu.readInput(input);
+        String pass = "";//SubMenu.readInput(input);
         this.createSpeaker(name, username, pass, email);
     }
 
@@ -322,9 +301,9 @@ public class OrgEventController implements SubMenu {
     public void eventMessagePrompt() {
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
-        String name = SubMenu.readInput(input);
+        String name = "";//SubMenu.readInput(input);
         presenter.printMessageContentPrompt();
-        String content = SubMenu.readInput(input);
+        String content = "";//SubMenu.readInput(input);
         eventMessage(name, content);
     }
 

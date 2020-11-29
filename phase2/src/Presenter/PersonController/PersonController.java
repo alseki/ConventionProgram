@@ -3,50 +3,41 @@ package Presenter.PersonController;
 // Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: abstract main account page for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 29/11/2020
 
-import Presenter.Central.LoginController;
+
 import Event.EventManager;
 import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import Presenter.AttendeeController.AttendeeController;
+import Presenter.Central.SubMenu;
+import Presenter.OrganizerController.OrganizerController;
+import Request.RequestManager;
 
-import java.util.Scanner;
-
-abstract public class PersonController {
-    Scanner input = new Scanner(System.in);
+abstract public class PersonController extends SubMenu {
     public String currentUserID;
-    //public int typePerson;
     private PersonManager manager;
-    protected RoomManager roomManager;
-    protected EventManager eventManager;
-    protected MessageManager messageManager;
-    protected ChatManager chatManager;
-    private LoginController loginController;
     private int accountChoice;
     public boolean loggedIn =  false;
 
 
     public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
-                            MessageManager messageManager, ChatManager chatManager, int accountChoice) {
+                            MessageManager messageManager, ChatManager chatManager, RequestManager requestManager, int accountChoice) {
+        super(roomManager, eventManager, manager, messageManager, chatManager, requestManager);
         this.manager = manager;
-        this.roomManager = roomManager;
-        this.eventManager = eventManager;
-        this.messageManager = messageManager;
-        this.chatManager = chatManager;
         this.accountChoice = accountChoice;
     }
 
-    /**
-     * Allows user to login and see their account. Terminates if the user chooses to logout.
-     */
-    public void run() {
-        loginController = new LoginController(manager, accountChoice);
-        loginController.menuChoice();
-        if (loginController.loggedIn) {
-            loggedIn = true;
-            currentUserID = manager.getCurrentUserID(loginController.username);
-        }
+
+    public PersonController(SubMenu submenu, int accountChoice) {
+        super(submenu);
+        this.manager = personManager;
+        this.accountChoice = accountChoice;
+    }
+
+    public LoginController logIn() {
+        return new LoginController(this, accountChoice);
     }
 }

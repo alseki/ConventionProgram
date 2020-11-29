@@ -2,39 +2,27 @@ package Presenter.AttendeeController;
 
 // Programmer: Ran Yi, Sarah Kronenfeld, Karyn Komatsu
 // Description: For current AttendeeController (or OrganizerController) to view chat and message, create chat and send message.
-// Date Modified: 19/11/2020
+// Date Modified: 29/11/2020
 
 
 import Presenter.*;
+import Presenter.Central.SubMenu;
 import Presenter.PersonController.MessageController;
 import Event.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
-import Presenter.PersonController.SubMenu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AttMessageController extends MessageController {
     private AttendeeManager attendeeManager;
     private AttMessageMenu presenter;
 
-    public AttMessageController(String currentUserID, AttendeeManager attendeeManager, MessageManager mManager,
-                                ChatManager cManager, EventManager eventManager) {
-        super(currentUserID, attendeeManager, mManager, cManager, eventManager);
+    public AttMessageController(String currentUserID, AttendeeManager attendeeManager, SubMenu subMenu) {
+        super(subMenu, currentUserID);
         this.attendeeManager = attendeeManager;
-        presenter = new AttMessageMenu(attendeeManager, mManager, cManager, eventManager);
-    }
-
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        //currentRequest = SubMenu.readInteger(input);
+        presenter = new AttMessageMenu(attendeeManager, messageManager, chatManager, eventManager);
     }
 
     /**
@@ -43,7 +31,6 @@ public class AttMessageController extends MessageController {
     @Override
     public void menuChoice() {
         do {
-            menuOptions();
             switch (currentRequest) {
                 case 0:
                     // return to main menu

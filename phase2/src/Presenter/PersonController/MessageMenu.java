@@ -1,5 +1,7 @@
 package Presenter.PersonController;
 
+import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.InvalidChoiceException;
 import Presenter.NoDataException;
 import Event.EventManager;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 // Date Created: 11/11/2020
 // Date Modified: 19/11/2020
 
-public class MessageMenu implements printSubMenu {
+public class MessageMenu implements SubMenuPrinter {
 
     protected PersonManager personManager;
     protected ChatManager chatManager;
@@ -34,7 +36,7 @@ public class MessageMenu implements printSubMenu {
      * Prints the options for this menu.
      */
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println('\n' + "----- Message Menu -----");
         System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
         System.out.println("Check your inbox ----------------------------------- Enter '1'.");
@@ -42,6 +44,7 @@ public class MessageMenu implements printSubMenu {
         System.out.println("View the chat list --------------------------------- Enter '3'.");
         System.out.println("View the messages in a chat ------------------------ Enter '4'.");
         System.out.println("Send a message ------------------------------------- Enter '5'.");
+        return "";
     }
 
     // Prompts

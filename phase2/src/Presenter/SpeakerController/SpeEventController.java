@@ -5,55 +5,33 @@ package Presenter.SpeakerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
+import Person.Speaker;
 import Presenter.NoDataException;
-import Presenter.PersonController.SubMenu;
-import Event.EventManager;
-import Event.RoomManager;
-import Message.ChatManager;
-import Message.MessageManager;
+import Presenter.Central.SubMenu;
 import Person.SpeakerManager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class SpeEventController implements SubMenu {
+public class SpeEventController extends SubMenu {
 
     private String currentUserID;
-    private int currentRequest;
-    private SpeakerManager speakerManager;
-    private MessageManager messageManager;
-    private ChatManager chatManager;
-    private EventManager eventManager;
     private SpeEventMenu presenter;
+    private SpeakerManager speakerManager;
     Scanner input = new Scanner(System.in);
 
-    public SpeEventController(String currentUserID, SpeakerManager speakerManager, MessageManager messageManager,
-                              ChatManager chatManager, EventManager eventManager, RoomManager roomManager) {
+    public SpeEventController(SubMenu subMenu, SpeakerManager speakerManager, String currentUserID) {
+        super(subMenu);
         this.currentUserID = currentUserID;
         this.speakerManager = speakerManager;
-        this.messageManager = messageManager;
-        this.chatManager = chatManager;
-        this.eventManager = eventManager;
         presenter = new SpeEventMenu(roomManager, eventManager, speakerManager);
     }
-
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
-    }
-
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
-            switch (currentRequest){
+            switch (1){
                 case 0:
                     // return to main menu
                     break;
@@ -63,32 +41,32 @@ public class SpeEventController implements SubMenu {
                 case 2:
                     // Send message to all Attendees in an Event
                     presenter.printEventNamePrompt();
-                    String eventNameB = SubMenu.readInput(input);
+                    String eventNameB = "";//SubMenu.readInput(input);
                     presenter.printContentPrompt();
-                    String contentB = this.addSpeUsername(SubMenu.readInput(input));
+                    String contentB = this.addSpeUsername("");//SubMenu.readInput(input));
                     this.eventMessage(eventNameB, contentB);
                     presenter.printMessageSent();
                     break;
                 case 3:
                     // Send message to all Attendees in all of your Events
                     presenter.printContentPrompt();
-                    String contentC = this.addSpeUsername(SubMenu.readInput(input));
+                    String contentC = this.addSpeUsername("");//SubMenu.readInput(input));
                     this.allSpeakerEventsMessage(contentC);
                     presenter.printMessageSent();
                     break;
                 case 4:
                     // Send message to all Attendees in some of your Events
                     presenter.printContentPrompt();
-                    String contentD = this.addSpeUsername(SubMenu.readInput(input));
+                    String contentD = this.addSpeUsername("");//SubMenu.readInput(input));
                     presenter.printEventNamesPrompt();
-                    String eventNames = SubMenu.readInput(input);
+                    String eventNames ="";// SubMenu.readInput(input);
                     String[] someSpeakerEvents = eventNames.split(",");
                     this.multipleEventsAnnouncement(someSpeakerEvents, contentD);
                     presenter.printMessageSent();
                     break;
             }
         }
-        while (currentRequest != 0);
+        while (true);
     }
 
 

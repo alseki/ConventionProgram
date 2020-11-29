@@ -25,7 +25,7 @@ public class AttEventMenu extends EventMenu {
      * Prints the options for this menu.
      */
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println("\n----- AttendeeController Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To view the list of events, Enter '1'.");
@@ -34,6 +34,7 @@ public class AttEventMenu extends EventMenu {
         System.out.println("To view the events that you are currently signed up for, Enter '4'.");
 
         // TODO add print statements for all the other menu options
+        return "";
         
     }
 

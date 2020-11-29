@@ -1,6 +1,6 @@
 package Presenter;
 
-import Presenter.PersonController.SubMenu;
+import Presenter.Central.SubMenu;
 import Request.RequestManager;
 import java.util.Scanner;
 

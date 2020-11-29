@@ -1,49 +1,54 @@
-package Presenter.PersonController;
+package Presenter.Central;
 
 // Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: Classes that the Main Menu refers to
 // Date Created: 01/11/2020
-// Date Modified: 16/11/2020
+// Date Modified: 29/11/2020
+
+import Event.EventManager;
+import Event.RoomManager;
+import Message.ChatManager;
+import Message.MessageManager;
+import Person.PersonManager;
+import Request.RequestManager;
 
 import java.util.Scanner;
 
-public interface SubMenu {
+public abstract class SubMenu {
+
+    protected RoomManager roomManager;
+    protected EventManager eventManager;
+    protected PersonManager personManager;
+    protected MessageManager messageManager;
+    protected ChatManager chatManager;
+    protected RequestManager requestManager;
+
+    public SubMenu(RoomManager roomManager, EventManager eventManager, PersonManager personManager,
+                   MessageManager messageManager, ChatManager chatManager, RequestManager requestManager) {
+        this.roomManager = roomManager;
+        this.eventManager = eventManager;
+        this.personManager = personManager;
+        this.messageManager = messageManager;
+        this.chatManager = chatManager;
+        this.requestManager = requestManager;
+    }
+
+    public SubMenu(SubMenu otherMenu) {
+        this.roomManager = otherMenu.roomManager;
+        this.eventManager = otherMenu.eventManager;
+        this.personManager = otherMenu.personManager;
+        this.messageManager = otherMenu.messageManager;
+        this.chatManager = otherMenu.chatManager;
+        this.requestManager = otherMenu.requestManager;
+    }
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
      */
-    void menuOptions();
+    //void menuOptions();
 
     /**
      * Takes user input and calls appropriate methods, until user wants to return to Main Menu
      */
-    void menuChoice();
-
-    /**
-     * Reads in lines of the input until it recieves an integer
-     * @param in A scanner used to read in input
-     * @return The integer it eventually receives
-     */
-    static int readInteger(Scanner in) {
-        String i = in.nextLine();
-        try {
-            int returnValue = Integer.valueOf(i);
-            return returnValue;
-        } catch (NumberFormatException f) {
-            return readInteger(in);
-        }
-    }
-
-    /**
-     * Reads in lines of the input until it recieves input
-     * @param in A scanner used to read in input
-     * @return The input it eventually receives
-     */
-    static String readInput(Scanner in) {
-        String i = in.nextLine();
-        while (i == null || i.equals("")) {
-            i = in.nextLine();
-        }
-        return i;
-    }
+    //void menuChoice();
 }
