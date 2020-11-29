@@ -71,6 +71,7 @@ public class OrganizerController extends PersonController {
                                 this);
                         orgEventController.menuChoice();
                         break;
+                    case 5: //requeststuff
                 }
             }
             while (currentRequest != 0);
