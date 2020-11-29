@@ -1,24 +1,59 @@
 package Presenter.Central;
 
-// Programmers: Cara McNeil,
+// Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's login information
 // Date Created: 11/11/2020
-// Date Modified: 13/11/2020
+// Date Modified: 29/11/2020
 
 import javax.swing.*;
 
-public class LoginMenu {
+public class LoginMenu implements SubMenuPrinter {
 
-    // TODO either turn this into a helper class, or movw all the info into the Login Controller
+    private final int accountChoice;
+
+    public LoginMenu(int accountChoice) {
+        this.accountChoice = accountChoice;
+    }
+
+    /**
+     * Gives the type of the account the user is trying to use to log in
+     */
+    private String getAccountType() {
+        switch (accountChoice) {
+            case 1: return "Attendee";
+            case 2: return "Organizer";
+            case 3: return "Speaker";
+            default: return "";
+        }
+    }
+
+    /**
+     * Prints a title that says the user is logging in
+     */
+    public String loginMessageTitle() {
+        return "Logging in as " + getAccountType();
+    }
+
+    /**
+     * Prints a title that says the user is logging in
+     */
+    public String signupMessageTitle() {
+        return "Creating " + getAccountType() + " account";
+    }
+
+    /**
+     * Prints a title that says the user is logging in
+     */
+    public String mainMenuTitle() {
+        return getAccountType() + " login menu";
+    }
 
     /**
      * Prints the options for this menu.
      */
     public String printMenuOptions() {
-        String message = "\nTo return to start page, Enter '0'." + "\nTo Login, Enter '1'."
+        return "\nTo return to start page, Enter '0'." + "\nTo Login, Enter '1'."
                 + "\nTo Create a new account, Enter '2'.";
-        return JOptionPane.showInputDialog(null, message, "[User Type] Login Menu",
-                JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
@@ -70,14 +105,6 @@ public class LoginMenu {
                 "Login Menu...\n", "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
     }
 
-    /**
-     * Prints instructions for user to login
-     */
-    public void printLoginPrompt() {
-        JOptionPane.showMessageDialog(null, "\nTo login, enter the following: ",
-                "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
-    }
-
 
     /**
      * Prints confirmation that Login was successful
@@ -87,8 +114,4 @@ public class LoginMenu {
                 "Main Menu..." + '\n', "[User Type] Create Account", JOptionPane.PLAIN_MESSAGE);
     }
 
-    public void printException(Exception e) {
-        String message = "\nSorry! That didn't work." + '\n' + e.getMessage() + "\nPlease try again!";
-        JOptionPane.showMessageDialog(null, message, "[User Type] Login", JOptionPane.ERROR_MESSAGE);
-    }
 }
