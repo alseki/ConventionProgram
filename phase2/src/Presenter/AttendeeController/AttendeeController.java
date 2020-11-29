@@ -57,6 +57,7 @@ public class AttendeeController extends PersonController {
                                 this);
                         attEventController.menuChoice();
                         break;
+                    case 4: //request stuff.
                 }
             }
         while (true);
