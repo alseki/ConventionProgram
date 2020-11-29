@@ -15,11 +15,11 @@ import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.OrgEventMenu;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class OrgEventController implements SubMenu {
 
@@ -228,6 +228,7 @@ public class OrgEventController implements SubMenu {
             throw new OverwritingException("event");
         }
 
+
         if (eventPermissions.checkConflicts(start, type, roomID)) {
             String eventID = addEvent(name, speakerID, start, description, type);
 
@@ -236,6 +237,7 @@ public class OrgEventController implements SubMenu {
         }
         return false;
     }
+
 
     /**
      * Helper method - adds a newly created Event into the system

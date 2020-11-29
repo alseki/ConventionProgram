@@ -25,7 +25,6 @@ public class Speaker extends Person { //implements Person.Signupable
         this.typePerson = 3;
     }
 
-
     /**
      * adds an event ID to the Person.Person.Speaker's list of signed up Talks
      * @param eventID takes in the ID of the event
@@ -49,7 +48,6 @@ public class Speaker extends Person { //implements Person.Signupable
     public Map getAllTalksDictionary() {
         return allTalksDictionary;
     }
-
 
     /**
      *
