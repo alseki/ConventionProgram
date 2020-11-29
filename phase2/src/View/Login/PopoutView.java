@@ -1,7 +1,8 @@
-package View;
+package View.Login;
 
 import Controllers.InvalidChoiceException;
-import Controllers.ViewInterface;
+import View.Login.iViewPane;
+
 import javax.swing.*;
 
 // Contributors: Sarah Kronenfeld
@@ -10,7 +11,7 @@ import javax.swing.*;
 
 // Architecture Level - UI
 
-public class PopoutView implements ViewInterface{
+public class PopoutView implements iViewPane {
     @Override
     public Integer getIntegerInput(String title, String message) throws InvalidChoiceException {
         try {

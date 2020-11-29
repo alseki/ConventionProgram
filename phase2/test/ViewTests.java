@@ -1,11 +1,11 @@
 import Controllers.InvalidChoiceException;
-import Controllers.ViewInterface;
-import View.PopoutView;
+import View.Login.iViewPane;
+import View.Login.PopoutView;
 
 public class ViewTests {
 
     public static void main(String[] args) {
-        ViewInterface view = new PopoutView();
+        iViewPane view = new PopoutView();
 
         // Tests message printing
         testMessagePrint(view);
@@ -23,7 +23,7 @@ public class ViewTests {
         System.out.println(testOptionBox(view));
     }
 
-    static String testOptionBox(ViewInterface view) {
+    static String testOptionBox(iViewPane view) {
         String[] args = {"Molly", "Also Molly", "Still Molly", "Molly, of Course"};
         try {
             return view.getStringInput("Test", "Choose your favourite cat", args);
@@ -32,7 +32,7 @@ public class ViewTests {
         }
     }
 
-    static String testIntegerInput(ViewInterface view) {
+    static String testIntegerInput(iViewPane view) {
         try {
             return view.getIntegerInput("Test", "Choose an integer").toString();
         } catch (InvalidChoiceException e) {
@@ -40,11 +40,11 @@ public class ViewTests {
         }
     }
 
-    static String testStringInput(ViewInterface view) {
+    static String testStringInput(iViewPane view) {
         return view.getStringInput("Test", "What's your name?");
     }
 
-    static void testMessagePrint(ViewInterface view) {
+    static void testMessagePrint(iViewPane view) {
         view.printMessage("Test", "WOAH! A TEST!");
     }
 }

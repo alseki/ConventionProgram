@@ -2,7 +2,6 @@ package Events;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
 // Last edit: Nov 19 2020
@@ -79,23 +78,8 @@ public class EventPermissions {
      * @return True if the event doesn't conflict with any existing events
      */
     public boolean checkConflicts(LocalDateTime startTime, EventType type, String roomID) {
-        try {
-            String[] eventIDs = roomAccess.getEventIDs(roomID);
-            return checkConflicts(startTime, type, eventIDs);
-        } catch (NullPointerException n) {
-            return true;
-        }
-    }
-
-    /**
-     * Checks if the inputted Event conflicts with multiple other inputted Events
-     * @param startTime The time at which the event will start
-     * @param type The type of event, as an EventType
-     * @param events The the IDs of the events the new Event might conflict with
-     * @return True if the event doesn't conflict with any existing events
-     */
-    public boolean checkConflicts(LocalDateTime startTime, EventType type, String[] events) {
         Event event;
+        String[] eventIDs = roomAccess.getEventIDs(roomID);
         if (type.equals(EventType.WORKSHOP)) {
             event = new Workshop("", "", startTime, "");
         } else if (type.equals(EventType.TALK)) {
@@ -105,7 +89,7 @@ public class EventPermissions {
         }
 
         try {
-            for (String eID : events) {
+            for (String eID : eventIDs) {
                 if (eventAccess.getEvent(eID).conflictsWith(event)) {
                     return false;
                 }

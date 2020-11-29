@@ -1,4 +1,4 @@
-package Presenter;
+package View.Account;
 
 import Controllers.InvalidChoiceException;
 import Controllers.NoDataException;
@@ -7,6 +7,7 @@ import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import View.printSubMenu;
 
 import java.util.ArrayList;
 

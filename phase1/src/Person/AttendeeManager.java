@@ -137,11 +137,6 @@ public class AttendeeManager extends PersonManager {
 
     }
 
-    /**
-     *
-     * @param username
-     * @return
-     */
     public int confirmAttendee(String username){
         if (usernameToPerson.containsKey(username)) {
             return getPerson(username).getTypePerson();

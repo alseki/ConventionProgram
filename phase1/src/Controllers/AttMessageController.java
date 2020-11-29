@@ -182,8 +182,6 @@ public class AttMessageController extends MessageController {
         }
         else {
             String chatID = chatManager.createChat(currentUserID, contactIDs);
-            personManager.addChat(currentUserID, chatID);
-            for (String contact: contactIDs){personManager.addChat(contact, chatID);}
             return chatID;
         }
     }

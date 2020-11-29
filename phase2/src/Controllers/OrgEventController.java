@@ -13,7 +13,7 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
-import Presenter.OrgEventMenu;
+import View.Account.OrgEventMenu;
 
 import java.util.ArrayList;
 import java.util.Scanner;

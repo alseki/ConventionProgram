@@ -254,7 +254,7 @@ public class OrgEventController implements SubMenu {
 
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
-        speakerManager.addTalk(eventID, speakerID);
+        this.speakerManager.addTalkId(speakerID, eventID);
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID));
 
 

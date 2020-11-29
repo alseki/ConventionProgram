@@ -10,7 +10,7 @@ import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
-import Presenter.SpeEventMenu;
+import View.Account.SpeEventMenu;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

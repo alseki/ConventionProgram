@@ -8,7 +8,7 @@ package Controllers;
 
 
 import Person.PersonManager;
-import Presenter.ContactMenu;
+import View.Account.ContactMenu;
 
 import java.util.Scanner;
 import java.util.ArrayList;

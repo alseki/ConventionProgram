@@ -9,11 +9,10 @@ import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
-import Presenter.AttMessageMenu;
+import View.Account.AttMessageMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class AttMessageController extends MessageController {
     private AttendeeManager attendeeManager;

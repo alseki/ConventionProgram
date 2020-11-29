@@ -5,14 +5,12 @@ package Controllers;
 // Date Created: 01/11/2020
 // Date Modified: 17/11/2020
 
-import java.util.ArrayList;
-
 import Events.CapacityException;
 import Events.EventManager;
 import Events.EventPermissions;
 import Events.RoomManager;
 import Person.AttendeeManager;
-import Presenter.AttEventMenu;
+import View.Account.AttEventMenu;
 
 import java.util.Scanner;
 

@@ -79,12 +79,6 @@ public class OrganizerManager extends PersonManager {
         return false;
     }
 
-    /**
-     *
-     * @param username
-     * @return
-     */
-
     public int confirmOrganizer(String username){
         if (usernameToPerson.containsKey(username)) {
             return getPerson(username).getTypePerson();

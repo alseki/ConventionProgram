@@ -1,4 +1,4 @@
-package Presenter;
+package View.Account;
 
 // Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's message information

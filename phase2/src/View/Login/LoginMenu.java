@@ -1,4 +1,4 @@
-package Presenter;
+package View.Login;
 
 // Programmers: Cara McNeil,
 // Description: Prints information pertaining to a user's login information
@@ -6,8 +6,11 @@ package Presenter;
 // Date Modified: 13/11/2020
 
 import javax.swing.*;
+import View.View;
 
-public class LoginMenu {
+public class LoginMenu implements View {
+
+    // TODO either turn this into a helper class, or movw all the info into the Login Controller
 
     /**
      * Prints the options for this menu.

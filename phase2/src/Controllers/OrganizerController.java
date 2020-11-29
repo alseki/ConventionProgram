@@ -13,12 +13,14 @@ import Person.OrganizerManager;
 import Person.PersonManager;
 import Person.SpeakerManager;
 import Events.RoomManager;
-import Presenter.MainMenu;
+import View.Account.Account;
+import View.Account.iViewGUI;
+import View.Login.iViewPane;
 
 import java.util.Scanner;
 
 public class OrganizerController extends PersonController {
-    private MainMenu mainMenu = new MainMenu();
+    private Account mainMenu = new Account();
     private String currentUserID;
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
@@ -29,8 +31,9 @@ public class OrganizerController extends PersonController {
 
 
     public OrganizerController(PersonManager manager, SpeakerManager speakerManager, RoomManager rooms,
-                               EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am) {
-        super(manager, rooms, events, messages, chats, 2);
+                               EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am,
+                               iViewPane viewPane, iViewGUI viewGUI) {
+        super(manager, rooms, events, messages, chats, 2, viewPane, viewGUI);
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
         this.attendeeManager = am;
@@ -43,7 +46,7 @@ public class OrganizerController extends PersonController {
         this.currentUserID = super.currentUserID;
         if (super.loggedIn) {
             do {
-                mainMenu.printOrganizerMM();
+                // TODO replace this line with GUI equivalent: mainMenu.printOrganizerMM();
                 currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {

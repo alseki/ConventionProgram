@@ -10,6 +10,8 @@ import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
+import View.Account.iViewGUI;
+import View.Login.iViewPane;
 
 import java.util.Scanner;
 
@@ -25,23 +27,28 @@ abstract public class PersonController {
     private LoginController loginController;
     private int accountChoice;
     public boolean loggedIn =  false;
+    private iViewPane viewPane;
+    private iViewGUI viewGUI;
 
 
     public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
-                            MessageManager messageManager, ChatManager chatManager, int accountChoice) {
+                            MessageManager messageManager, ChatManager chatManager, int accountChoice,
+                            iViewPane viewPane, iViewGUI viewGUI) {
         this.manager = manager;
         this.roomManager = roomManager;
         this.eventManager = eventManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
         this.accountChoice = accountChoice;
+        this.viewPane = viewPane;
+        this.viewGUI = viewGUI;
     }
 
     /**
      * Allows user to login and see their account. Terminates if the user chooses to logout.
      */
     public void run() {
-        loginController = new LoginController(manager, accountChoice);
+        loginController = new LoginController(manager, accountChoice, viewPane);
         loginController.menuChoice();
         if (loginController.loggedIn) {
             loggedIn = true;

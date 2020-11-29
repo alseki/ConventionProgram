@@ -72,8 +72,8 @@ public class LoginController implements SubMenu {
         presenter.printLoginPrompt();
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
-        if(this.accountChoice != manager.typePerson(username)) {
-            throw new InvalidChoiceException("account");
+        if(accountChoice != manager.typePerson(username)) {
+            throw new InvalidChoiceException("logged in as wrong type of user");
         }
         presenter.printPasswordPrompt();
         String password = SubMenu.readInput(input);
@@ -92,9 +92,6 @@ public class LoginController implements SubMenu {
         presenter.printCreateAccountPrompt();
         presenter.printUsernamePrompt();
         username = SubMenu.readInput(input);
-        if(username.contains(",")) {
-            throw new InvalidChoiceException("username possible. Try again with NO comma(s)");
-        }
         if (manager.getCurrentUserID(username) != null) {
             throw new OverwritingException("username");
         }

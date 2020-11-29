@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 public class EventTests {
 
+    /*
     @Test (timeout = 500)
     public void testTalk() {
         Talk t = new Talk("The wonderful world of time management", "1", LocalDateTime.of(2017, 1, 14, 10, 34), "");

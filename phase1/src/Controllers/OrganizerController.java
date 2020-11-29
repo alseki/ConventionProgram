@@ -34,7 +34,7 @@ public class OrganizerController extends PersonController {
         this.manager = (OrganizerManager) manager;
         this.speakerManager = speakerManager;
         this.attendeeManager = am;
-        //this.typePerson = 2;
+        this.typePerson = 2;
     }
 
     @Override

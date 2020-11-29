@@ -1,10 +1,11 @@
-package Presenter;
+package View.Account;
 
 import Controllers.InvalidChoiceException;
 import Controllers.NoDataException;
 import Events.EventManager;
 import Events.RoomManager;
 import Person.PersonManager;
+import View.printSubMenu;
 
 public abstract class EventMenu implements printSubMenu {
     RoomManager rooms;

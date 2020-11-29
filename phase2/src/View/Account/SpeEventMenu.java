@@ -1,8 +1,9 @@
-package Presenter;
+package View.Account;
 
 import Events.EventManager;
 import Events.RoomManager;
 import Person.PersonManager;
+import View.Account.EventMenu;
 
 public class SpeEventMenu extends EventMenu {
 

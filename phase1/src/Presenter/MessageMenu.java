@@ -157,9 +157,6 @@ public class MessageMenu implements printSubMenu {
     } //TODO - updated. see if correct.
 
     public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
-        if (messageIDs == null || messageIDs.size() == 0) {
-            throw new NoDataException("message");
-        }
         ArrayList<String> messageInChat = new ArrayList<>();
         for (String mID : messageIDs) {
             messageInChat.add(formatMessage(mID));
@@ -176,6 +173,9 @@ public class MessageMenu implements printSubMenu {
      * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
     public void printChat(String chatID) throws InvalidChoiceException {
+        if (chatManager.isEmpty()) {
+            throw new NoDataException("chat");
+        }
         if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }

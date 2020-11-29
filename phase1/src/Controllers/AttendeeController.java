@@ -28,8 +28,8 @@ public class AttendeeController extends PersonController {
                               ChatManager chats) {
         super(manager, rooms, events, messages, chats, 1);
         this.manager = (AttendeeManager) manager;
-        //this.typePerson = 1;
-
+        this.typePerson = 1;
+        this.accountChoice = accountChoice;
     }
 
     /**

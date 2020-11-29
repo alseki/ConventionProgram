@@ -11,12 +11,14 @@ import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
-import Presenter.MainMenu;
+import View.Account.Account;
+import View.Account.iViewGUI;
+import View.Login.iViewPane;
 
 import java.util.Scanner;
 
 public class SpeakerController extends PersonController {
-    private MainMenu mainMenu = new MainMenu();
+    private Account mainMenu = new Account();
     private String currentUserID;
     private SpeakerManager manager;
     private int currentRequest;
@@ -24,8 +26,8 @@ public class SpeakerController extends PersonController {
     Scanner input = new Scanner(System.in);
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
-                             MessageManager messages, ChatManager chats) {
-        super(manager, rooms, events, messages, chats, 3);
+                             MessageManager messages, ChatManager chats, iViewPane viewPane, iViewGUI viewGUI) {
+        super(manager, rooms, events, messages, chats, 3, viewPane, viewGUI);
         this.manager = (SpeakerManager) manager;
         //this.typePerson = 3;
     }
@@ -37,7 +39,7 @@ public class SpeakerController extends PersonController {
         this.currentUserID = super.currentUserID;
         if (super.loggedIn) {
             do {
-                mainMenu.printSpeakerMM();
+                // TODO replace this line with GUI equivalent: mainMenu.printSpeakerMM();
                 currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {

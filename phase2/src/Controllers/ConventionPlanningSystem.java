@@ -10,7 +10,9 @@ import Events.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.*;
-import Presenter.CPSMenu;
+import View.Login.CPSMenu;
+import View.Account.iViewGUI;
+import View.Login.iViewPane;
 
 
 import java.util.HashMap;
@@ -22,6 +24,8 @@ public class ConventionPlanningSystem {
     private int accountChoice;
     private Scanner input = new Scanner(System.in);
     private CPSMenu presenter = new CPSMenu();
+    private iViewPane vp;
+    private iViewGUI vg;
 
     private MessageManager mm = new MessageManager();
     private ChatManager cm = new ChatManager();
@@ -44,10 +48,14 @@ public class ConventionPlanningSystem {
     /**
     * Calls appropriate Controllers based on user input.
     */
-    public void run() {
+    public void run(iViewPane viewPane, iViewGUI viewGUI) {
         load();
+        this.vp = viewPane;
+        this.vg = viewGUI;
 
         do {
+            // TODO get rid of CPSMenu class
+            // TODO call two methods in this.vp to present JOptionPane box greetings
             accountChoice = Integer.parseInt(presenter.printIntroMessage());
             setController(accountChoice);
         }
@@ -66,19 +74,19 @@ public class ConventionPlanningSystem {
                 break;
             case 1:
                 AttendeeManager am = new AttendeeManager(personByName, personByID);
-                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm);
+                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm, vp, vg);
                 AC.run();
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 AttendeeManager attMan = new AttendeeManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan);
+                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan, vp, vg);
                 OC.run();
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager(personByName, personByID);
-                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm);
+                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm, vp, vg);
                 SC.run();
                 break;
         }

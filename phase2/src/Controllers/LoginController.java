@@ -6,7 +6,8 @@ package Controllers;
 // Date Modified: 16/11/2020
 
 import Person.PersonManager;
-import Presenter.LoginMenu;
+import View.Login.LoginMenu;
+import View.Login.iViewPane;
 
 import java.util.Scanner;
 
@@ -14,14 +15,17 @@ public class LoginController implements SubMenu{
     private int currentRequest;
     private int accountChoice;
     private PersonManager manager;
+    // TODO get ride of following line
     private LoginMenu presenter = new LoginMenu();
+    private iViewPane viewPane;
     public String username;
     public boolean loggedIn = false;
     Scanner input = new Scanner(System.in);
 
-    public LoginController(PersonManager manager, int accountChoice) {
+    public LoginController(PersonManager manager, int accountChoice, iViewPane viewPane) {
         this.manager = manager;
         this.accountChoice = accountChoice;
+        this.viewPane = viewPane;
     }
 
     /**

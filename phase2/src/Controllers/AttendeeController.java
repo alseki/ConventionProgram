@@ -11,22 +11,22 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
 import Person.PersonManager;
-import Presenter.MainMenu;
+import View.Account.iViewGUI;
+import View.Login.iViewPane;
 
 import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     private AttendeeManager manager;
-    private MainMenu mainMenu = new MainMenu();
+    // TODO remove this: private MainMenu mainMenu = new MainMenu();
     private String currentUserID;
     private int currentRequest;
     private int typePerson;
-    private int accountChoice;
     Scanner input = new Scanner(System.in);
 
     public AttendeeController(PersonManager manager, RoomManager rooms, EventManager events, MessageManager messages,
-                              ChatManager chats) {
-        super(manager, rooms, events, messages, chats, 1);
+                              ChatManager chats, iViewPane viewPane, iViewGUI viewGUI) {
+        super(manager, rooms, events, messages, chats, 1, viewPane, viewGUI);
         this.manager = (AttendeeManager) manager;
         //this.typePerson = 1;
 
@@ -41,7 +41,7 @@ public class AttendeeController extends PersonController {
         this.currentUserID = super.currentUserID;
         if (super.loggedIn) {
             do {
-                mainMenu.printAttendeeMM();
+                // TODO replace this line with GUI equivalent: mainMenu.printAttendeeMM();
                 currentRequest = SubMenu.readInteger(input);
 
                 switch (currentRequest) {
@@ -49,7 +49,7 @@ public class AttendeeController extends PersonController {
                         break;
                     case 1:
                         ContactController contactController = new ContactController(currentUserID, manager);
-                        contactController.menuChoice();
+                        contactController.menuChoice(); // TODO replace the break structure with a method that asks the view what choice has been made
                         break;
                     case 2:
                         AttMessageController messageController = new AttMessageController(currentUserID, manager,

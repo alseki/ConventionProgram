@@ -43,7 +43,7 @@ public class AttMessageMenu extends MessageMenu {
      */
     public void printContactUsernamesPrompt(){
         System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
-                "\n(E.g. 'user1,user2,user3' without apostrophes (''). Please do not add spaces after commas)");
+                "\n(E.g. 'user1,user2,user3'; please do not add spaces after commas)");
     }
     //Method below is left here in case we use it in Phase 2
     /**

@@ -1,9 +1,10 @@
-package Presenter;
+package View.Account;
 
 import ReqestPackage.RequestEntity;
 import ReqestPackage.RequestManager;
+import View.printSubMenu;
 
-public class RequestMenu implements printSubMenu{
+public class RequestMenu implements printSubMenu {
     protected RequestManager reqm;
     public RequestMenu(RequestManager reqm){
         this.reqm=reqm;

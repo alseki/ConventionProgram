@@ -1,4 +1,4 @@
-package Presenter;
+package View.Account;
 
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an Organizer's Event planning
@@ -9,6 +9,7 @@ import Events.EventManager;
 import Events.EventType;
 import Events.RoomManager;
 import Person.PersonManager;
+import View.Account.EventMenu;
 
 public class OrgEventMenu extends EventMenu {
 

@@ -4,7 +4,7 @@ import Events.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
-import Presenter.MessageMenu;
+import View.Account.MessageMenu;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package Presenter;
+package View.Account;
 
 // Programmers: Cara McNeil, Allen Kim, Eytan Weinstein, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's attending Event information
@@ -9,8 +9,6 @@ package Presenter;
 import Events.EventManager;
 import Events.RoomManager;
 import Person.AttendeeManager;
-
-import java.util.ArrayList;
 
 public class AttEventMenu extends EventMenu {
     AttendeeManager attendeeManager;

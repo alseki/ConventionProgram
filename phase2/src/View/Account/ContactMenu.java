@@ -1,4 +1,4 @@
-package Presenter;
+package View.Account;
 
 // Programmers: Cara McNeil,
 // Description: Prints information pertaining to a user's contact information
@@ -6,6 +6,7 @@ package Presenter;
 // Date Modified: 11/11/2020
 
 import Controllers.InvalidChoiceException;
+import View.printSubMenu;
 
 import java.util.ArrayList;
 

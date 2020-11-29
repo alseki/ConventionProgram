@@ -1,4 +1,4 @@
-package Controllers;
+package View.Login;
 
 // Contributors: Sarah Kronenfeld
 // Created: Nov 26 2020
@@ -6,7 +6,10 @@ package Controllers;
 
 // Architecture Level - Presenter
 
-public interface ViewInterface {
+import Controllers.InvalidChoiceException;
+import View.View;
+
+public interface iViewPane extends View {
 
     Integer getIntegerInput(String title, String message) throws InvalidChoiceException;
 

@@ -150,7 +150,8 @@ public class AttEventController implements SubMenu {
      */
     private void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
         String event = eventManager.getEventID(eventName);
-        if (event == null) {
+        String room = roomManager.getEventRoom(eventName);
+        if (room == null || event == null) {
             throw new InvalidChoiceException("event");
         }
 

@@ -70,10 +70,6 @@ public abstract class Person implements Serializable {
         return this.password;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getTypePerson() {
         return this.typePerson;
     }
