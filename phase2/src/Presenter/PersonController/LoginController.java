@@ -26,14 +26,21 @@ public class LoginController extends SubMenu {
         presenter = new LoginMenu(accountChoice);
     }
 
+    /**
+     * Returns this controller's associated presenter
+     * @return The LoginMenu associated with this controller
+     */
     public LoginMenu getPresenter() {
         return this.presenter;
     }
 
     /**
-     * Attempts to log the user in
+     * Attempts to log the user in with a given username and password
+     * @param username The username
+     * @param password The password
+     * @return The user's ID, if successful
      */
-    public String  login (String username, String password) throws InvalidChoiceException {
+    public String login (String username, String password) throws InvalidChoiceException {
         if(this.accountChoice != manager.typePerson(username)) {
             throw new InvalidChoiceException("username");
         }
@@ -46,7 +53,11 @@ public class LoginController extends SubMenu {
     }
 
     /**
-     * Prompts user for relevant information and uses it to create a new account.
+     * Attempts to create a new user account with a given set of login information
+     * @param username The username for the new account
+     * @param password The password for the new account
+     * @param name The name associated with the new account
+     * @param email The email associated with the new account
      */
     public void createAccount(String username, String password, String name, String email) throws InvalidChoiceException {
         if(username.contains(",")) {

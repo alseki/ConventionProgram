@@ -1,5 +1,8 @@
 package Presenter;
 
+/**
+ * Exception to be thrown for when the User inputs an option that's not within the system
+ */
 public class InvalidChoiceException extends Exception {
     protected String type;
 

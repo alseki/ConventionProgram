@@ -1,5 +1,9 @@
 package Presenter;
 
+
+/**
+ * Exception to be thrown for when the User inputs an option that's incorrectly formatted
+ */
 public class InvalidFormatException extends InvalidChoiceException {
     protected String formatError;
 

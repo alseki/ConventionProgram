@@ -1,5 +1,8 @@
 package Presenter;
 
+/**
+ * Exception to be thrown for when the User tries to choose between options that don't yet exist
+ */
 public class NoDataException extends InvalidChoiceException {
 
     public NoDataException(String type) {
