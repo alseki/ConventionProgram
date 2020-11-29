@@ -16,21 +16,34 @@ public class RequestManager {
         idToRequest = new HashMap<String, RequestPackage.RequestEntity>();
         this.observable = new PropertyChangeSupport (this);
     }
+
     private void addRequest(RequestPackage.RequestEntity req){
         requestsList.add(req);
     }
+
+    private void updateMap(String str, RequestPackage.RequestEntity req){
+        idToRequest.put(str, req);
+    }
+
     public boolean createRequest(String reqUserId, String reqContent){
         RequestPackage.RequestEntity req = new RequestPackage.RequestEntity(reqContent, reqUserId);
         updateMap(reqUserId, req);
         addRequest(req);
         return true;
     }
-    private void updateMap(String str, RequestPackage.RequestEntity req){
-        idToRequest.put(str, req);
+
+    public boolean createRequest(String reqUserId, String reqContent, String eventName){
+        RequestPackage.RequestEntity req = new RequestPackage.RequestEntity(reqContent, reqUserId);
+        updateMap(reqUserId, req);
+        addRequest(req);
+        return true;
     }
+
+
     public RequestPackage.RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
+
     public void updateEntity(String reqId) {
         RequestPackage.RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
@@ -38,6 +51,7 @@ public class RequestManager {
                 this, reqId, false, true);
         notifyObservers(newEvent);
     }
+
     public ArrayList<RequestPackage.RequestEntity> getAllRequests(){
         return requestsList;
 
