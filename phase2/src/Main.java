@@ -1,20 +1,18 @@
 // Programmer: Cara McNeil
 // Description: The main method
 // Date Created: 01/11/2020
-// Date Modified: 11/11/2020
+// Date Modified: 29/11/2020
 
-import Presenter.Central.ConventionPlanningSystem;
-import View.Central.Account;
-import View.PopoutView;
+import View.GUIView;
 
 public class Main {
     public static void main(String[] args) {
-        ConventionPlanningSystem cps = new ConventionPlanningSystem();
+        GUIView view = new GUIView();
 
         javax.swing.SwingUtilities.invokeLater(new Runnable()
         {
             public void run() {
-                cps.run();
+                view.run();
             }
         });
     }

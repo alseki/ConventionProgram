@@ -1,29 +1,33 @@
 package Presenter.Central;
-
 // Programmer: Cara McNeil, Sarah Kronenfeld
-// Description: The central Controller of the Convention System. Calls all other Presenter.
+// Description: The central Controller of the Convention System. Calls all other Controllers.
 // Date Created: 01/11/2020
 // Date Modified: 18/11/2020
 
-import Presenter.AttendeeController.AttendeeController;
-import Presenter.OrganizerController.OrganizerController;
-import Presenter.SpeakerController.SpeakerController;
 import Event.EventManager;
 import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.*;
+import Presenter.AttendeeController.AttendeeController;
+import Presenter.OrganizerController.OrganizerController;
+import Presenter.PersonController.PersonController;
+import Presenter.SpeakerController.SpeakerController;
 
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ConventionPlanningSystem {
 
     private int accountChoice;
-    private Scanner input = new Scanner(System.in);
-    private CPSMenu presenter = new CPSMenu();
+    private PersonController PC;
+    String introTitle = "CONVENTION SYSTEM LOGIN";
+    String introMessage = "Welcome to convention system!";
+    String chooseAccountTitle = "User Account Selection";
+    String chooseAccountMessage = "To Login or create an account as an Attendee, Enter '1';" + "\nTo Login or create an " +
+            "account as an Organizer, Enter '2';" + "\nTo Login or create an account as a Speaker, Enter '3';" +
+            "\nTo Quit the program and save any changes made, Enter '0'.";
 
     private MessageManager mm = new MessageManager();
     private ChatManager cm = new ChatManager();
@@ -42,50 +46,51 @@ public class ConventionPlanningSystem {
     private static final FileGateway<Map<String, Person>> n2Person =
             new FileGateway<Map<String, Person>>("pByName.ser");
 
+    // TODO add requestManagers into controller instantiations
 
-    /**
-    * Calls appropriate Presenter based on user input.
-    */
-    public void run() {
+    public ConventionPlanningSystem() {
         load();
-
-        do {
-            // TODO get rid of CPSMenu class
-            // TODO call two methods in this.vp to present JOptionPane box greetings
-            accountChoice = Integer.parseInt(presenter.printIntroMessage());
-            setController(accountChoice);
-        }
-        while (accountChoice != 0);
     }
 
+    public String getIntroTitle() {
+        return introTitle;
+    }
+
+    public String getIntroMessage() {
+        return introMessage;
+    }
+
+    public String getChooseAccountTitle() {
+        return chooseAccountTitle;
+    }
+
+    public String getChooseAccountMessage() {
+        return chooseAccountMessage;
+    }
 
     /**
      * Set the user's controller based on login selection.
      */
-    private void setController(int choice) {
+    private PersonController getController(int choice) {
 
         switch (choice) {
-            case 0:
-                save(); // SAVE FILES
-                break;
+            // option 0 moved to view
             case 1:
                 AttendeeManager am = new AttendeeManager(personByName, personByID);
-                AttendeeController AC =  new AttendeeController(am, rm, em, mm, cm);
-                AC.run();
+                PC =  (AttendeeController) new AttendeeController(am, rm, em, mm, cm);
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 AttendeeManager attMan = new AttendeeManager(personByName, personByID);
-                OrganizerController OC = new OrganizerController(om, sm, rm, em, mm, cm, attMan);
-                OC.run();
+                PC = (OrganizerController) new OrganizerController(om, sm, rm, em, mm, cm, attMan);
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager(personByName, personByID);
-                SpeakerController SC = new SpeakerController(sman, rm, em, mm, cm);
-                SC.run();
+                PC = (SpeakerController) new SpeakerController(sman, rm, em, mm, cm);
                 break;
         }
+        return PC;
     }
 
     /**
@@ -115,7 +120,7 @@ public class ConventionPlanningSystem {
     /**
      * Saves data to a set filepath
      */
-    private void save() {
+    public void save() {
         roomLoader.writeFile(rm);
         eventLoader.writeFile(em);
         messageLoader.writeFile(mm);
