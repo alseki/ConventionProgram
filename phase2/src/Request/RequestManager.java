@@ -1,5 +1,7 @@
 package Request;
 
+import jdk.nashorn.internal.ir.RuntimeNode;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -14,7 +16,7 @@ public class RequestManager {
     public RequestManager(){
         this.requestsList = new ArrayList<RequestEntity>();
         idToRequest = new HashMap<String, RequestEntity>();
-        this.observable = new PropertyChangeSupport (this);
+
     }
     private void addRequest(RequestEntity req){
         requestsList.add(req);
@@ -31,33 +33,22 @@ public class RequestManager {
     public RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
-    public void updateEntity(String reqId) {
-        RequestEntity req = getRequestEntity(reqId);
-        req.setFulfilled();
-        PropertyChangeEvent newEvent = new PropertyChangeEvent(
-                this, reqId, false, true);
-        notifyObservers(newEvent);
-    }
-    public ArrayList<RequestEntity> getAllRequests(){
-        return requestsList;
-
-    }
 
     /**
      * Add a new observer to observe the changes to this class.
      * @param observer
      */
-    public void addObserver(PropertyChangeListener observer) {
-        //observable.addPropertyChangeListener(this.requestId, observer);
+    public void addObserver(PropertyChangeListener observer, String reqId) {
+        RequestEntity req = getRequestEntity(reqId);
+        req.addObserver(observer);
     }
-    /**
-     * Notify observers o the change event.
-     * @param newEvent
-     */
-    public void notifyObservers (PropertyChangeEvent newEvent)
-    {
-        for ( PropertyChangeListener observer : observable.getPropertyChangeListeners())
-            observer.propertyChange(newEvent);
+    public void updateEntity(String reqId){
+        RequestEntity req = getRequestEntity(reqId);
+        req.setFulfilled();
     }
 
 }
+
+
+
+

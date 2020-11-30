@@ -1,7 +1,7 @@
 package Presenter.OrganizerController;
 
 import Controllers.SubMenu;
-import ReqestPackage.RequestManager;
+import Presenter.Central.SubMenu;
 import Request.RequestManager;
 
 import java.util.Scanner;
@@ -66,6 +66,8 @@ public class OrgReqController implements SubMenu {
         presenter.enterIdPrompt();
         String id = SubMenu.readInput(input);
         reqM.createRequest(id, content);
+        // TODO reqM.addObserver(OrganizerManagerreqs);
+        // TODO reqM.addObeserver(currentPerson)
     }
 
 

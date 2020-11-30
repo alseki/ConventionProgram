@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrganizerManager extends PersonManager implements PropertyChangeListener{
-    private Map<String, Boolean> requestIdToStatus;
+public class OrganizerManager extends PersonManager{
+    private OrganizerManagerReqs reqs;
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
-        this.requestIdToStatus = new HashMap<String, Boolean>();
+        this.reqs =  new OrganizerManagerReqs();
     }
 
 
@@ -109,15 +109,9 @@ public class OrganizerManager extends PersonManager implements PropertyChangeLis
         usernameToPerson.put(username,org);
     }
 
-    public void addRequest(String requestId){
-        requestIdToStatus.put(requestId, false);
+    public boolean getStatus(String requestId){
+        return reqs.getStatus(requestId);
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
-        // should update the request status here, this is here so that
-        // all organizers can have access.
 
-    }
 }

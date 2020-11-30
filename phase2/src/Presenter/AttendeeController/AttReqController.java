@@ -2,7 +2,6 @@ package Presenter.AttendeeController;
 
 import Controllers.SubMenu;
 import Presenter.AttendeeController.AttReqMenu;
-import ReqestPackage.RequestManager;
 import Request.RequestManager;
 
 import java.util.Scanner;
@@ -46,6 +45,8 @@ public class AttReqController implements SubMenu {
         presenter.enterIdPrompt();
         String id = SubMenu.readInput(input);
         reqM.createRequest(id, content);
+        // TODO reqM.addObserver(OrganizerManagerreqs);
+        // TODO reqM.addObeserver(currentPerson)
     }
     protected void specificRequest(){
         presenter.seeSpecificRequestPrompt();
