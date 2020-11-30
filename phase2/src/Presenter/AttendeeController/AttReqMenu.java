@@ -1,21 +1,22 @@
 package Presenter.AttendeeController;
 
-import Presenter.printSubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Request.RequestEntity;
 import Request.RequestManager;
 
-public class AttReqMenu implements printSubMenu {
+public class AttReqMenu implements SubMenuPrinter {
     protected RequestManager reqM;
     public AttReqMenu(RequestManager reqM){
         this.reqM=reqM;
     }
 
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println("\n----- Requests Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To make a request, Enter '1'.");
         System.out.println("To see information about a specific request, Enter 2");
+        return "";
     }
 
     /**

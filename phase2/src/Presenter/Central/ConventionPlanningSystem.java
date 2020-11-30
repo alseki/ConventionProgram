@@ -13,6 +13,7 @@ import Presenter.AttendeeController.AttendeeController;
 import Presenter.OrganizerController.OrganizerController;
 import Presenter.PersonController.PersonController;
 import Presenter.SpeakerController.SpeakerController;
+import Request.RequestManager;
 
 
 import java.util.HashMap;
@@ -38,6 +39,9 @@ public class ConventionPlanningSystem {
     private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("rooms.ser");
     private EventManager em = new EventManager();
     private static final FileGateway<EventManager> eventLoader = new FileGateway<>("events.ser");
+
+    private RequestManager rqm = new RequestManager();
+    private static final FileGateway<RequestManager> requestLoader = new FileGateway<>("requests.ser");
 
     private Map<String, Person> personByName = new HashMap<>();
     private Map<String, Person> personByID = new HashMap<>();
@@ -77,17 +81,17 @@ public class ConventionPlanningSystem {
             // option 0 moved to view
             case 1:
                 AttendeeManager am = new AttendeeManager(personByName, personByID);
-                PC =  (AttendeeController) new AttendeeController(am, rm, em, mm, cm);
+                PC =  (AttendeeController) new AttendeeController(am, rm, em, mm, cm, rqm);
                 break;
             case 2:
                 OrganizerManager om = new OrganizerManager(personByName, personByID);
                 SpeakerManager sm = new SpeakerManager(personByName, personByID);
                 AttendeeManager attMan = new AttendeeManager(personByName, personByID);
-                PC = (OrganizerController) new OrganizerController(om, sm, rm, em, mm, cm, attMan);
+                PC = (OrganizerController) new OrganizerController(om, sm, rm, em, mm, cm, attMan, rqm);
                 break;
             case 3:
                 SpeakerManager sman = new SpeakerManager(personByName, personByID);
-                PC = (SpeakerController) new SpeakerController(sman, rm, em, mm, cm);
+                PC = (SpeakerController) new SpeakerController(sman, rm, em, mm, cm, rqm);
                 break;
         }
         return PC;
@@ -115,6 +119,9 @@ public class ConventionPlanningSystem {
         if (n2Person.readFile() != null) {
             personByName = n2Person.readFile();
         }
+        if (requestLoader.readFile() != null) {
+            rqm = requestLoader.readFile();
+        }
     }
 
     /**
@@ -127,6 +134,7 @@ public class ConventionPlanningSystem {
         chatLoader.writeFile(cm);
         id2Person.writeFile(personByID);
         n2Person.writeFile(personByName);
+        requestLoader.writeFile(rqm);
     }
 
 }

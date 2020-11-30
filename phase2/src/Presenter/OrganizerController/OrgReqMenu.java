@@ -1,30 +1,28 @@
 package Presenter.OrganizerController;
 
+import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.NoDataException;
-import Presenter.printSubMenu;
 import Request.RequestEntity;
 import Request.RequestManager;
 
-public class OrgReqMenu implements printSubMenu {
+public class OrgReqMenu implements SubMenuPrinter {
     private RequestManager reqM;
 
     public OrgReqMenu(RequestManager reqM){
         this.reqM=reqM;
     }
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println("\n----- Requests Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To see a specific request, Enter 1");
         System.out.println("To see requests, Enter '2'.");
         System.out.println("To fulfill a request, Enter '3'. ");
         System.out.println("To make a request, Enter '4'.");
+        return "";
     }
 
-    @Override
-    public void printException(Exception e) {
-
-    }
     public void makeRequestPrompt(){
         System.out.println("Please enter the content of the Request.");
     }
@@ -47,9 +45,9 @@ public class OrgReqMenu implements printSubMenu {
      */
     public void seeRequests() {
         StringBuilder reqs = new StringBuilder();
-        for (RequestEntity r : reqM.getAllRequests()) { //TODO see if this violates clean architecture
+        /*for (RequestEntity r : reqM.getAllRequests()) { //TODO see if this violates clean architecture
             reqs.append(printRequest(r));
-        }
+        }*/
         System.out.println(requestFormat() + reqs);
     }
     private StringBuilder printRequest(RequestEntity req) {

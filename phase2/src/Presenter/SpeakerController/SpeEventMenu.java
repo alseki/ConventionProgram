@@ -15,7 +15,7 @@ public class SpeEventMenu extends EventMenu {
      * Prints the options for this menu.
      */
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println('\n' + "----- SpeakerController Event Menu -----");
         System.out.println("Return to Main Menu ----------------------------------------- Enter '0'.");
         System.out.println("View your events -------------------------------------------- Enter '1'.");
@@ -23,16 +23,7 @@ public class SpeEventMenu extends EventMenu {
         System.out.println("Send message to all Attendees in all of your Event --------- Enter '3'.");
         System.out.println("Send message to all Attendees in a list of of your Event --- Enter '4'.");
         // TODO add print statements for all the other menu options
-        
-    }
-
-    /**
-     * Prints out an Exception thrown by the program to the user
-     * @param e The exception
-     */
-    public void printException(Exception e) {
-        System.out.println("\nSorry! That didn't work.");
-        System.out.println(e.getMessage());
+        return "";
     }
 
     /**

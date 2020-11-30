@@ -1,29 +1,25 @@
 package Presenter.AttendeeController;
 
-import Controllers.SubMenu;
 import Presenter.AttendeeController.AttReqMenu;
+import Presenter.Central.SubMenu;
 import Request.RequestManager;
 
 import java.util.Scanner;
 
-public class AttReqController implements SubMenu {
+public class AttReqController extends SubMenu {
     protected RequestManager reqM;
     protected int currentRequest;
     protected AttReqMenu presenter;
     Scanner input = new Scanner(System.in);
-    AttReqController(RequestManager reqM) {
-        this.reqM = reqM;
+
+    AttReqController(SubMenu subMenu) {
+        super(subMenu);
         this.presenter = new AttReqMenu(reqM);
     }
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
-    }
-    @Override
+
+
     public void menuChoice() {
         do {
-            menuOptions();
             switch (currentRequest) {
                 case 0:
                     // return to main menu
@@ -41,16 +37,16 @@ public class AttReqController implements SubMenu {
 
     protected void request(){
         presenter.makeRequestPrompt();
-        String content = SubMenu.readInput(input);
+        String content = "";//SubMenu.readInput(input);
         presenter.enterIdPrompt();
-        String id = SubMenu.readInput(input);
+        String id = "";//SubMenu.readInput(input);
         reqM.createRequest(id, content);
         // TODO reqM.addObserver(OrganizerManagerreqs);
         // TODO reqM.addObeserver(currentPerson)
     }
     protected void specificRequest(){
         presenter.seeSpecificRequestPrompt();
-        String id = SubMenu.readInput(input);
+        String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);
 
     }

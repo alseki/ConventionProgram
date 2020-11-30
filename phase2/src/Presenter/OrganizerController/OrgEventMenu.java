@@ -21,13 +21,14 @@ public class OrgEventMenu extends EventMenu {
      * Prints the options for this menu.
      */
     @Override
-    public void printMenuOptions() {
+    public String printMenuOptions() {
         System.out.println("\n----- OrganizerController Event Menu -----");
         System.out.println("To return to Main Menu, Enter '0'.");
         System.out.println("To create a new room, Enter 1");
         System.out.println("To create a new event, Enter 2");
         System.out.println("To create a speaker account, Enter 3");
         System.out.println("To make an announcement to the attendees of an event, Enter 4\n");
+        return "";
     }
 
     // OPTION 1

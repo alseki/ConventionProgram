@@ -15,10 +15,9 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
 import Request.RequestManager;
-import View.Central.Account;
 
 public class SpeakerController extends PersonController {
-    private Account mainMenu = new Account();
+    //private Account mainMenu = new Account();
     private String currentUserID;
     private SpeakerManager manager;
 

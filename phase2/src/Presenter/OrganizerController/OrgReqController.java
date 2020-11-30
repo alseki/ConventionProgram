@@ -1,31 +1,22 @@
 package Presenter.OrganizerController;
 
-import Controllers.SubMenu;
 import Presenter.Central.SubMenu;
 import Request.RequestManager;
 
 import java.util.Scanner;
 
-public class OrgReqController implements SubMenu {
-    protected RequestManager reqM;
+public class OrgReqController extends SubMenu {
     protected int currentRequest;
     protected OrgReqMenu presenter;
     Scanner input = new Scanner(System.in);
-    OrgReqController(RequestManager reqM) {
-        this.reqM = reqM;
-        this.presenter = new OrgReqMenu(reqM);
+
+    OrgReqController(SubMenu subMenu) {
+        super(subMenu);
+        this.presenter = new OrgReqMenu(requestManager);
     }
 
-    @Override
-    public void menuOptions() {
-        presenter.printMenuOptions();
-        currentRequest = SubMenu.readInteger(input);
-    }
-
-    @Override
     public void menuChoice() {
         do {
-            menuOptions();
             switch (currentRequest) {
                 case 0:
                     // return to main menu
@@ -49,23 +40,23 @@ public class OrgReqController implements SubMenu {
     }
     private void fulfillRequest(){
         presenter.fulfillRequestPrompt();
-        String id = SubMenu.readInput(input);
-        reqM.updateEntity(id);
+        String id = "";//SubMenu.readInput(input);
+        requestManager.updateEntity(id);
     }
     private void seeRequests(){
         presenter.seeRequests();
     }
     private void getRequest(){
         presenter.seeSpecificRequestPrompt();
-        String id = SubMenu.readInput(input);
+        String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);
     }
     protected void request(){
         presenter.makeRequestPrompt();
-        String content = SubMenu.readInput(input);
+        String content = "";//SubMenu.readInput(input);
         presenter.enterIdPrompt();
-        String id = SubMenu.readInput(input);
-        reqM.createRequest(id, content);
+        String id = "";//SubMenu.readInput(input);
+        requestManager.createRequest(id, content);
         // TODO reqM.addObserver(OrganizerManagerreqs);
         // TODO reqM.addObeserver(currentPerson)
     }
