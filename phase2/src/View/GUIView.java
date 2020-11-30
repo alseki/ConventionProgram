@@ -73,10 +73,11 @@ public class GUIView implements ActionListener {
     }
 
     private void login() {
-        // TODO loginController.loginPrompt
+        // TODO LoginView instantiation?
     }
 
-    private void mainMenu() {
+    private void account() {
+        // TODO switch case for type of AccountView
     }
 
     @Override
