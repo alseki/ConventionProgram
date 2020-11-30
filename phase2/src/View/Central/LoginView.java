@@ -1,6 +1,5 @@
 package View.Central;
 
-import Person.PersonManager;
 import Presenter.PersonController.LoginController;
 import Presenter.PersonController.LoginMenu;
 import Presenter.InvalidChoiceException;
@@ -22,6 +21,10 @@ public class LoginView {
         presenter =  controller.getPresenter();
     }
 
+    /**
+     * Runs this LoginView.
+     * @return A valid User ID, if the user has successfully logged into the system; "0", if not
+     */
     public String run() {
         int currentRequest = mainMenu();
         while (currentRequest != 0) {
@@ -38,9 +41,14 @@ public class LoginView {
                 return id;
             }
         }
-        return "";
+        return "0";
     }
 
+    /**
+     * Presents the main menu, as well as buttons the User can click to choose each option
+     * @return The option the User chose, as an integer value from 0-2. (0 = return to main menu, 1 = log in to
+     * existing account, 2 = sign up for new account)
+     */
     private Integer mainMenu() {
         Integer[] args = {0, 1, 2};
         return JOptionPane.showOptionDialog(null, presenter.printMenuOptions(),
@@ -48,6 +56,10 @@ public class LoginView {
                 null, args, args[0]);
     }
 
+    /**
+     * Presents the user with the ability to log into an existing account
+     * @return The User ID of the account the User logs into, if they're successful; null, if not
+     */
     private String logIn() {
         try {
             String username = JOptionPane.showInputDialog(null, presenter.printUsernamePrompt(),
@@ -68,6 +80,9 @@ public class LoginView {
         }
     }
 
+    /**
+     * Presents the user with the ability to create a new account
+     */
     private void signUp() {
         try {
             String username = JOptionPane.showInputDialog(null, presenter.printUsernamePrompt(),
