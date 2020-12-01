@@ -23,7 +23,7 @@ public class MessageManager implements Serializable {
      *
      * @return the messageId iff succeed.
      */
-    public String createMessage(String senderId, String recipientId, String content) {
+    public String createMessage(String senderId, String recipientId, String chatId, String content) {
         Message newMessage = new Message(senderId, recipientId, content);
         messageList.add(newMessage);
         return newMessage.getMessageId();
@@ -36,8 +36,8 @@ public class MessageManager implements Serializable {
      * @param content an string reprsenting the content
      * @return ID of the newly created Message object
      */
-    public String createMessage(String eventId, String content) {
-        Message newMessage = new Message(eventId, content);
+    public String createMessage(String eventId, String chatId, String content) {
+        Message newMessage = new Message(eventId, chatId, content);
         messageList.add(newMessage);
         return newMessage.getMessageId();
 
@@ -105,6 +105,27 @@ public class MessageManager implements Serializable {
      */
     public String getContent(String messageID) {
         return getMessage(messageID).getContent();
+    }
+
+    /**
+     * @return the status of this message, read or unread. By messageId.
+     */
+    public int getReadStatus(String messageID) {
+        return getMessage(messageID).getReadStatus();
+    }
+
+    /**
+     * change the status of this message to unread.
+     */
+    public void changeStatus(String messageID) {
+        getMessage(messageID).changeStatus();
+    }
+
+    /**
+     * @return the chatID of this message. By messageId.
+     */
+    public String getChatId(String messageID) {
+        return getMessage(messageID).getChatId();
     }
 
 }
