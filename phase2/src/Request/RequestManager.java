@@ -11,6 +11,10 @@ public class RequestManager {
     private ArrayList<RequestEntity> requestsList;
     private Map<String, RequestEntity> idToRequest;
     private PropertyChangeSupport observable;
+
+    /**
+     * contructor for the request manager
+     */
     public RequestManager(){
         this.requestsList = new ArrayList<RequestEntity>();
         idToRequest = new HashMap<String, RequestEntity>();
@@ -19,6 +23,13 @@ public class RequestManager {
     private void addRequest(RequestEntity req){
         requestsList.add(req);
     }
+
+    /**
+     * creates a reauest
+     * @param reqUserId the user who is making the request
+     * @param reqContent string fro the content of the request
+     * @return true
+     */
     public boolean createRequest(String reqUserId, String reqContent){
         RequestEntity req = new RequestEntity(reqContent, reqUserId);
         updateMap(reqUserId, req);
@@ -28,6 +39,12 @@ public class RequestManager {
     private void updateMap(String str, RequestEntity req){
         idToRequest.put(str, req);
     }
+
+    /**
+     * get a specific entity with reqid
+     * @param reqId string for request id
+     * @return the request entity with request id
+     */
     public RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
@@ -40,6 +57,11 @@ public class RequestManager {
         RequestEntity req = getRequestEntity(reqId);
         req.addObserver(observer);
     }
+
+    /**
+     * to update an entity
+     * @param reqId string for request id
+     */
     public void updateEntity(String reqId){
         RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
