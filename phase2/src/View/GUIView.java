@@ -2,7 +2,13 @@ package View;
 
 
 
+import Presenter.AttendeeController.AttEventMenu;
+import Presenter.AttendeeController.AttendeeController;
 import Presenter.Central.ConventionPlanningSystem;
+import View.Central.AttendeeAccount;
+import View.Central.LoginView;
+import View.Central.OrganizerAccount;
+import View.Central.SpeakerAccount;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,11 +79,20 @@ public class GUIView implements ActionListener {
     }
 
     private void login() {
-        // TODO LoginView instantiation?
+        LoginView view = new LoginView();
+        view.run();
     }
 
     private void account() {
-        // TODO switch case for type of AccountView
+        switch (accountChoice) {
+            case 1:
+                new AttendeeAccount(cps.getController(accountChoice)).run();
+            case 2:
+                new OrganizerAccount(cps.getController(accountChoice)).run();
+            case 3:
+                new SpeakerAccount(cps.getController(accountChoice)).run();
+        }
+
     }
 
     @Override

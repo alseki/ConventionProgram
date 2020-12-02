@@ -75,7 +75,7 @@ public class ConventionPlanningSystem {
     /**
      * Set the user's controller based on login selection.
      */
-    private PersonController getController(int choice) {
+    public PersonController getController(int choice) {
 
         switch (choice) {
             // option 0 moved to view
