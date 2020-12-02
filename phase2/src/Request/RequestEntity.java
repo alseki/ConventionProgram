@@ -24,6 +24,11 @@ public class RequestEntity {
 
     /*  Helper class for making this class as an observable  */
 
+    /**
+     * contructor for request entity
+     * @param requestContent string representing hte request content
+     * @param requestingUserId String representing the requesting user Id.
+     */
 
     public RequestEntity(String requestContent, String requestingUserId) {
         this.requestContent = requestContent;
@@ -34,6 +39,13 @@ public class RequestEntity {
         this.observable = new PropertyChangeSupport (this);
     }
 
+    /**
+     * contructor for request entity
+     * @param requestContent
+     * @param requestingUserId
+     * @param eventsConcerned
+     */
+
     public RequestEntity(String requestContent, String requestingUserId, ArrayList <String> eventsConcerned){
             this.requestContent = requestContent;
             this.requestingUserId = requestingUserId;
@@ -42,18 +54,36 @@ public class RequestEntity {
             this.requestId = UUID.randomUUID().toString();
 
     }
+
+    /**
+     * getter fir fulffiled status
+     * @return boolean
+     */
         public boolean getFulfilled () {
             return this.fulfilled;
         }
 
-        public String getRequestingUserId () {
+    /**
+     * getter for the requesting user id
+     * @return String representing the requesting user Id
+     */
+    public String getRequestingUserId () {
             return requestingUserId;
         }
-        public String getRequestContent () {
+
+    /**
+     * getter for request content
+     * @return string reqpresenting the request content
+     */
+    public String getRequestContent () {
             return requestContent;
         }
 
-        public String getRequestId () {
+    /**
+     * getter for the request id
+     * @return string representing the request id
+     */
+    public String getRequestId () {
             return this.requestingUserId;
         }
 
@@ -61,7 +91,10 @@ public class RequestEntity {
             return this.eventsConcerned;
         }
 
-        public void setFulfilled () {
+    /**
+     * sets this.fuflified to true, and notifiies observiers
+     */
+    public void setFulfilled () {
             PropertyChangeEvent newEvent = new PropertyChangeEvent(
                     this, this.requestId, false, true);
             notifyObservers(newEvent);

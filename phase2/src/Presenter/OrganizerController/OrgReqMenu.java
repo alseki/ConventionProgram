@@ -9,9 +9,18 @@ import Request.RequestManager;
 public class OrgReqMenu implements SubMenuPrinter {
     private RequestManager reqM;
 
+    /**
+     * contructor
+     * @param reqM a request manager
+     */
     public OrgReqMenu(RequestManager reqM){
         this.reqM=reqM;
     }
+
+    /**
+     * menu options
+     * @return empty string
+     */
     @Override
     public String printMenuOptions() {
         System.out.println("\n----- Requests Menu -----");
@@ -23,13 +32,27 @@ public class OrgReqMenu implements SubMenuPrinter {
         return "";
     }
 
+    /**
+     * prompt to make a request
+     */
+
     public void makeRequestPrompt(){
         System.out.println("Please enter the content of the Request.");
     }
+
+    /**
+     * prompt for user id
+     */
     public void enterIdPrompt(){
         System.out.println("please enter your user Id");
     }
 
+    /**
+     * this is just for proper inheritance
+     * @param list
+     * @param type
+     * @throws NoDataException
+     */
     @Override
     public void printList(String[] list, String type) throws NoDataException {
 
