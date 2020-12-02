@@ -3,7 +3,7 @@ package Presenter.PersonController;
 // Programmers: Cara McNeil, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's login information
 // Date Created: 11/11/2020
-// Date Modified: 29/11/2020
+// Date Modified: 02/12/2020
 
 import Presenter.Central.SubMenuPrinter;
 

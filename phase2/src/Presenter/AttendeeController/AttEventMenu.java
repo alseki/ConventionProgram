@@ -3,7 +3,7 @@ package Presenter.AttendeeController;
 // Programmers: Cara McNeil, Allen Kim, Eytan Weinstein, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's attending Event information
 // Date Created: 11/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 02/12/2020
 
 
 import Event.EventManager;

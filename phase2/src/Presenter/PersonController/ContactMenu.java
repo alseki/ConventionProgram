@@ -10,6 +10,11 @@ import Presenter.Exceptions.InvalidChoiceException;
 
 import java.util.ArrayList;
 
+// Programmers:
+// Description:
+// Date Created:
+// Date Modified: 02/12/2020
+
 public class ContactMenu implements SubMenuPrinter {
 
     @Override

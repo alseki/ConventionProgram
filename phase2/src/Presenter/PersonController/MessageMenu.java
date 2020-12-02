@@ -14,7 +14,7 @@ import java.util.ArrayList;
 // Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's message information
 // Date Created: 11/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 02/12/2020
 
 public class MessageMenu implements SubMenuPrinter {
 

@@ -4,6 +4,11 @@ import Presenter.Central.SubMenuPrinter;
 import Request.RequestEntity;
 import Request.RequestManager;
 
+// Programmers:
+// Description:
+// Date Created:
+// Date Modified: 02/12/2020
+
 public class AttReqMenu implements SubMenuPrinter {
     protected RequestManager reqM;
     public AttReqMenu(RequestManager reqM){

@@ -7,6 +7,11 @@ import Event.EventManager;
 import Event.RoomManager;
 import Person.PersonManager;
 
+// Programmers: Sarah Kronenfeld
+// Description: Abstract class to hold methods all EventMenus will need
+// Date Created:
+// Date Modified: 02/12/2020
+
 public abstract class EventMenu implements SubMenuPrinter {
     RoomManager rooms;
     EventManager events;

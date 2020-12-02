@@ -3,7 +3,7 @@ package Presenter.OrganizerController;
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an OrganizerController's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 02/12/2020
 
 import Event.EventManager;
 import Event.EventType;
