@@ -1,11 +1,13 @@
 package View;
 
+// Contributors: Cara McNeil, Sarah Kronenfeld
+// Last edit: December 2 2020
+
+// Architecture Level - UI
 
 
-import Presenter.AttendeeController.AttEventMenu;
-import Presenter.AttendeeController.AttendeeController;
+
 import Presenter.Central.ConventionPlanningSystem;
-import Presenter.PersonController.LoginController;
 import Presenter.PersonController.PersonController;
 import View.Central.*;
 
@@ -25,6 +27,10 @@ public class GUIView implements ActionListener {
     ConventionPlanningSystem cps = new ConventionPlanningSystem();
     // JComboBox<String> dropDownMenu;
 
+
+    /**
+     * Sets up the page
+     */
     public void run () {
         frame = new JFrame();// Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -51,6 +57,10 @@ public class GUIView implements ActionListener {
         frame.setVisible(true);
     }
 
+
+    /**
+     * Method that runs an intro for a user
+     */
     private void intro() {
         frame.setVisible(true);
         frame.setTitle(cps.getIntroTitle());
@@ -61,6 +71,10 @@ public class GUIView implements ActionListener {
         contentPane.add(continueButton);
     }
 
+
+    /**
+     * Method to get a choice of account from the user
+     */
     private void accountChoice() {
         frame.setTitle(cps.getChooseAccountTitle());
         accountChoiceMessage = new JLabel(cps.getChooseAccountMessage());
@@ -74,6 +88,11 @@ public class GUIView implements ActionListener {
         contentPane.add(submitAccountChoiceButton);
     }
 
+    /**
+     * Method to run a login program for the user
+     * @param controller The current personcontroller
+     * @return that controller, updated
+     */
     private PersonController login(PersonController controller) {
         LoginView view = new LoginView(controller.getLogin());
         String id = view.run();
@@ -85,6 +104,7 @@ public class GUIView implements ActionListener {
             return null;
         }
     }
+
 
     private PersonAccount account(PersonController controller) {
         switch (accountChoice) {
@@ -99,6 +119,10 @@ public class GUIView implements ActionListener {
         }
     }
 
+    /**
+     * Detects changes to component parts of the GUIView
+     * @param event the event that's happened
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();

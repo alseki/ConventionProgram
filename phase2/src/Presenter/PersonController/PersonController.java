@@ -3,7 +3,7 @@ package Presenter.PersonController;
 // Programmer: Cara McNeil, Sarah Kronenfeld
 // Description: abstract main account page for other controllers to inherit from
 // Date Created: 01/11/2020
-// Date Modified: 29/11/2020
+// Date Modified: 02/12/2020
 
 
 import Event.EventManager;

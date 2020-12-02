@@ -18,7 +18,6 @@ public class ContactController extends SubMenu {
 
     private String currentUserID;
     private ContactMenu presenter = new ContactMenu();
-    Scanner input = new Scanner(System.in);
 
     public ContactController(SubMenu subMenu, String currentUserID) {
         super(subMenu);

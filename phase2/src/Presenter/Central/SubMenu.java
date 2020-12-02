@@ -12,8 +12,6 @@ import Message.MessageManager;
 import Person.PersonManager;
 import Request.RequestManager;
 
-import java.util.Scanner;
-
 public abstract class SubMenu {
 
     protected RoomManager roomManager;
@@ -34,6 +32,11 @@ public abstract class SubMenu {
     }
 
     public SubMenu(SubMenu otherMenu) {
+        update(otherMenu);
+    }
+
+
+    public void update(SubMenu otherMenu) {
         this.roomManager = otherMenu.roomManager;
         this.eventManager = otherMenu.eventManager;
         this.personManager = otherMenu.personManager;
@@ -41,6 +44,7 @@ public abstract class SubMenu {
         this.chatManager = otherMenu.chatManager;
         this.requestManager = otherMenu.requestManager;
     }
+
 
     /**
      * Prompts user to choose a menu option, takes the input and calls the corresponding method
