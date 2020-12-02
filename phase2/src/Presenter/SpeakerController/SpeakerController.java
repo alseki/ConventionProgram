@@ -6,6 +6,10 @@ package Presenter.SpeakerController;
 // Date Modified: 19/11/2020
 
 
+import Presenter.AttendeeController.AttEventController;
+import Presenter.AttendeeController.AttMessageController;
+import Presenter.AttendeeController.AttReqController;
+import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
 import Presenter.PersonController.PersonController;
@@ -38,33 +42,30 @@ public class SpeakerController extends PersonController {
 
     }
 
-
-    public void run() {
-        this.currentUserID = super.currentUserID;
+    /**
+     * Creates the next controller according to the user's menu choice
+     */
+    @Override
+    public SubMenu createController(int choice) {
         if (super.loggedIn) {
-            do {
-                //currentRequest = SubMenu.readInteger(input);
-
-                switch (1) {
-                    case 0:
-                        break;
-                    case 1:
-                        ContactController contactController = new ContactController(this, currentUserID);
-                        contactController.menuChoice();
-                        break;
-                    case 2:
-                        MessageController messageController = new MessageController(this, currentUserID);
-                        messageController.menuChoice();
-                        break;
-                    case 3:
-                        SpeEventController speEventController = new SpeEventController(this, manager,
-                                currentUserID);
-                        speEventController.menuChoice();
-                        break;
-                }
+            switch (choice) {
+                case 1:
+                    return new ContactController(this, currentUserID);
+                case 2:
+                    return new MessageController(this, currentUserID);
+                case 3:
+                    return new SpeEventController(this, manager, currentUserID);
             }
-            while (true);
         }
+        return null;
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options  = new String[4];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        options[3] = "View your Event invormation";
+        return options;
     }
 
 }

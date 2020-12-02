@@ -1,18 +1,16 @@
 package Presenter.OrganizerController;
 
 import Presenter.Central.SubMenu;
-import Request.RequestManager;
-
-import java.util.Scanner;
 
 public class OrgReqController extends SubMenu {
     protected int currentRequest;
     protected OrgReqMenu presenter;
-    Scanner input = new Scanner(System.in);
+    private String currentUserID;
 
-    OrgReqController(SubMenu subMenu) {
+    OrgReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new OrgReqMenu(requestManager);
+        this.currentUserID = currentUserID;
     }
 
     public void menuChoice() {
