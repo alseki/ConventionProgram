@@ -5,6 +5,7 @@ package View;
 import Presenter.AttendeeController.AttEventMenu;
 import Presenter.AttendeeController.AttendeeController;
 import Presenter.Central.ConventionPlanningSystem;
+import Presenter.PersonController.LoginController;
 import View.Central.AttendeeAccount;
 import View.Central.LoginView;
 import View.Central.OrganizerAccount;
@@ -20,7 +21,7 @@ public class GUIView implements ActionListener {
     JTextField input;
     JPanel contentPane;
     JLabel introMessage, accountChoiceMessage, loginMessage, savedMessage;
-    JButton startButton, continueButton, submitAccountChoiceButton;
+    JButton startButton, continueButton, submitAccountChoiceButton, okayButton;
     String answer;
     int accountChoice;
     ConventionPlanningSystem cps = new ConventionPlanningSystem();
@@ -41,9 +42,17 @@ public class GUIView implements ActionListener {
         startButton.addActionListener(this);
         contentPane.add(startButton);
 
-        savedMessage = new JLabel("Your changes have been saved.");
+        savedMessage = new JLabel("Your changes have been saved. Exit the program or click 'okay' to go back to " +
+                "welcome screen.");
         contentPane.add(savedMessage);
         savedMessage.setVisible(false);
+
+        okayButton = new JButton("okay");
+        okayButton.setLocation(0, 0);
+        okayButton.setActionCommand("okay");
+        okayButton.addActionListener(this);
+        contentPane.add(okayButton);
+        okayButton.setVisible(false);
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
@@ -51,6 +60,7 @@ public class GUIView implements ActionListener {
     }
 
     private void intro() {
+        frame.setVisible(true);
         frame.setTitle(cps.getIntroTitle());
         introMessage = new JLabel(cps.getIntroMessage());
         contentPane.add(introMessage);
@@ -80,7 +90,10 @@ public class GUIView implements ActionListener {
 
     private void login() {
         LoginView view = new LoginView();
-        view.run();
+        if (!(view.run().equals("0"))) {
+            account();
+        }
+        // TODO else branch that throws an exception
     }
 
     private void account() {
@@ -115,15 +128,22 @@ public class GUIView implements ActionListener {
             submitAccountChoiceButton.setVisible(false);
             accountChoiceMessage.setVisible(false);
             input.setText("");
+            input.setVisible(false);
             if (accountChoice == 0) {
                 cps.save();
-                input.setVisible(false);
-
-                intro();
+                savedMessage.setVisible(true);
+                okayButton.setVisible(true);
             }
             else {
+                frame.setVisible(false);
                 login();
             }
+        }
+
+        if (eventName.equals("okay")) {
+            savedMessage.setVisible(false);
+            okayButton.setVisible(false);
+            intro();
         }
 
     }
