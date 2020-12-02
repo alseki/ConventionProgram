@@ -5,12 +5,10 @@ package Presenter.AttendeeController;
 // Date Created: 01/11/2020
 // Date Modified: 17/11/2020
 
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Central.SubMenu;
 import Event.CapacityException;
-import Event.EventManager;
 import Event.EventPermissions;
-import Event.RoomManager;
 import Person.AttendeeManager;
 
 import java.util.Scanner;
@@ -22,9 +20,8 @@ public class AttEventController extends SubMenu {
     private EventPermissions eventPermissions;
 
     private AttEventMenu presenter;
-    Scanner input = new Scanner(System.in);
 
-    public AttEventController(String currentUserID, AttendeeManager attendeeManager, SubMenu subMenu) {
+    public AttEventController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager) {
         super(subMenu);
         this.currentUserID = currentUserID;
         this.attendeeManager = attendeeManager;

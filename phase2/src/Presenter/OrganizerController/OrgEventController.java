@@ -5,16 +5,11 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Presenter.InvalidChoiceException;
-import Presenter.OverwritingException;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.OverwritingException;
 import Presenter.Central.SubMenu;
-import Event.EventManager;
 import Event.EventPermissions;
 import Event.EventType;
-import Event.RoomManager;
-import Message.ChatManager;
-import Message.MessageManager;
-import Person.PersonManager;
 import Person.SpeakerManager;
 
 import java.util.ArrayList;
@@ -32,8 +27,7 @@ public class OrgEventController extends SubMenu {
     private OrgEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public OrgEventController(String currentUserID, SpeakerManager speakerManager,
-                              SubMenu subMenu) {
+    public OrgEventController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager) {
         super(subMenu);
         this.currentUserID = currentUserID;
         this.speakerManager = speakerManager;

@@ -12,10 +12,11 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Request.RequestManager;
 
-abstract public class PersonController extends SubMenu {
-    public String currentUserID;
+abstract public class PersonController extends SubMenu implements SubMenuPrinter {
+    protected String currentUserID;
     private int accountChoice;
     public boolean loggedIn =  false;
 
@@ -41,5 +42,21 @@ abstract public class PersonController extends SubMenu {
             this.currentUserID = currentUserID;
             loggedIn = true;
         }
+    }
+
+    public abstract SubMenu createController(int choice);
+
+    @Override
+    public String getMenuTitle() {
+        return "----- Main Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options  = new String[3];
+        options[0] = "Save changes and return to the start page";
+        options[1] = "View your Contacts";
+        options[2] = "View your Messages";
+        return options;
     }
 }

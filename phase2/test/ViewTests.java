@@ -1,6 +1,3 @@
-import Presenter.InvalidChoiceException;
-import View.PopoutView;
-
 public class ViewTests {
 
     public static void main(String[] args) {

@@ -1,13 +1,21 @@
 package Presenter.Central;
 
-import Presenter.NoDataException;
+import Presenter.Exceptions.NoDataException;
 
 public interface SubMenuPrinter {
 
     /**
-     * Prints the options for this menu.
+     * Getter for menu option text
+     * @return The options for this menu, in the form of an array
      */
-    String printMenuOptions();
+    String[] getMenuOptions();
+
+
+    /**
+     * Getter for menu title test
+     * @return The title for this menu, in the form of a string
+     */
+    String getMenuTitle();
 
     /**
      * Writes out a default title for any exception message

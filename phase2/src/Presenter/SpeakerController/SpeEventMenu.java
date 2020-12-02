@@ -5,25 +5,27 @@ import Event.RoomManager;
 import Person.PersonManager;
 import Presenter.PersonController.EventMenu;
 
+// Programmers:
+// Description:
+// Date Created:
+// Date Modified: 02/12/2020
+
 public class SpeEventMenu extends EventMenu {
 
     public SpeEventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
         super(rooms, events, persons);
     }
 
-    /**
-     * Prints the options for this menu.
-     */
     @Override
-    public String printMenuOptions() {
-        System.out.println('\n' + "----- SpeakerController Event Menu -----");
-        System.out.println("Return to Main Menu ----------------------------------------- Enter '0'.");
-        System.out.println("View your events -------------------------------------------- Enter '1'.");
-        System.out.println("Send message to all Attendees in an Event ------------------- Enter '2'.");
-        System.out.println("Send message to all Attendees in all of your Event --------- Enter '3'.");
-        System.out.println("Send message to all Attendees in a list of of your Event --- Enter '4'.");
-        // TODO add print statements for all the other menu options
-        return "";
+    public String getMenuTitle() {
+        return "----- Speaker Event Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "View your events", "Make an announcement to one of your events",
+                "Make an announcement to some of your events", "Make an announcement to a list of your events"};
+        return options;
     }
 
     /**

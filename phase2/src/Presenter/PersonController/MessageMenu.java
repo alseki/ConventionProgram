@@ -1,9 +1,8 @@
 package Presenter.PersonController;
 
-import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
-import Presenter.InvalidChoiceException;
-import Presenter.NoDataException;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Event.EventManager;
 import Message.AnnouncementChat;
 import Message.ChatManager;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 // Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
 // Description: Prints information pertaining to a user's message information
 // Date Created: 11/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 02/12/2020
 
 public class MessageMenu implements SubMenuPrinter {
 
@@ -32,19 +31,16 @@ public class MessageMenu implements SubMenuPrinter {
         this.chatManager = chatManager;
     }
 
-    /**
-     * Prints the options for this menu.
-     */
     @Override
-    public String printMenuOptions() {
-        System.out.println('\n' + "----- Message Menu -----");
-        System.out.println("Return to Main Menu -------------------------------- Enter '0'.");
-        System.out.println("Check your inbox ----------------------------------- Enter '1'.");
-        System.out.println("Check your sent box -------------------------------- Enter '2'.");
-        System.out.println("View the chat list --------------------------------- Enter '3'.");
-        System.out.println("View the messages in a chat ------------------------ Enter '4'.");
-        System.out.println("Send a message ------------------------------------- Enter '5'.");
-        return "";
+    public String getMenuTitle() {
+        return "----- Message Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "Check your inbox", "Check your sent box", "View the chat list," +
+                "View the messages in a chat", "Send a message"};
+        return options;
     }
 
     // Prompts

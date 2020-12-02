@@ -10,11 +10,12 @@ public class AttReqController extends SubMenu {
     protected RequestManager reqM;
     protected int currentRequest;
     protected AttReqMenu presenter;
-    Scanner input = new Scanner(System.in);
+    private String currentUserID;
 
-    AttReqController(SubMenu subMenu) {
+    AttReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new AttReqMenu(reqM);
+        this.currentUserID = currentUserID;
     }
 
 

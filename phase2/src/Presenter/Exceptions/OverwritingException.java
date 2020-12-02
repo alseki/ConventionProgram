@@ -1,4 +1,4 @@
-package Presenter;
+package Presenter.Exceptions;
 
 /**
  * Exception to be thrown for when the User tries to create an object that's already within the system
