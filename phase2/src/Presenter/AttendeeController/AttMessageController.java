@@ -5,12 +5,11 @@ package Presenter.AttendeeController;
 // Date Modified: 29/11/2020
 
 
-import Presenter.*;
 import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
+import Presenter.Exceptions.OverwritingException;
 import Presenter.PersonController.MessageController;
-import Event.EventManager;
-import Message.ChatManager;
-import Message.MessageManager;
 import Person.AttendeeManager;
 
 import java.util.ArrayList;

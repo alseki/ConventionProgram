@@ -1,9 +1,8 @@
 package Presenter.PersonController;
 
-import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
-import Presenter.InvalidChoiceException;
-import Presenter.NoDataException;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Event.EventManager;
 import Message.AnnouncementChat;
 import Message.ChatManager;

@@ -6,7 +6,7 @@ package Presenter.PersonController;
 // Date Modified: 11/11/2020
 
 import Presenter.Central.SubMenuPrinter;
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import java.util.ArrayList;
 

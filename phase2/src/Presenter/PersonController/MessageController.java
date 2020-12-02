@@ -1,15 +1,10 @@
 package Presenter.PersonController;
 
 import Presenter.Central.SubMenu;
-import Presenter.InvalidChoiceException;
-import Presenter.NoDataException;
-import Event.EventManager;
-import Message.ChatManager;
-import Message.MessageManager;
-import Person.PersonManager;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 // Programmer: Ran Yi, Sarah Kronenfeld
 // Description: For current User to view chat and message, create chat and send message.

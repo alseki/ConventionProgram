@@ -27,33 +27,34 @@ public class LoginMenu implements SubMenuPrinter {
         }
     }
 
-    /**
-     * Prints a title that says the user is logging in
-     */
-    public String loginMessageTitle() {
-        return "Logging in as " + getAccountType();
-    }
+    // Main menu text
 
     /**
      * Prints a title that says the user is logging in
      */
-    public String signupMessageTitle() {
-        return "Creating " + getAccountType() + " account";
-    }
-
-    /**
-     * Prints a title that says the user is logging in
-     */
-    public String mainMenuTitle() {
+    @Override
+    public String getMenuTitle() {
         return getAccountType() + " login menu";
     }
 
     /**
      * Prints the options for this menu.
      */
-    public String printMenuOptions() {
-        return "\nTo return to start page, Enter '0'." + "\nTo Login, Enter '1'."
-                + "\nTo Create a new account, Enter '2'.";
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"To return to start page, Enter '0'.","To Login, Enter '1'.",
+                "To Create a new account, Enter '2'."};
+        return options;
+    }
+
+
+    // Login menu text
+
+    /**
+     * Prints a title that says the user is logging in
+     */
+    public String loginMessageTitle() {
+        return "Logging in as " + getAccountType();
     }
 
     /**
@@ -68,6 +69,23 @@ public class LoginMenu implements SubMenuPrinter {
      */
     public String printPasswordPrompt() {
         return "Please enter password: ";
+    }
+
+    /**
+     * Returns a written confirmation that Login was successful
+     */
+    public String printLoginSuccessful() {
+        return "Login successful! Redirecting back to account \nMain Menu...";
+    }
+
+
+    // Signup menu text
+
+    /**
+     * Prints a title that says the user is signing up
+     */
+    public String signupMessageTitle() {
+        return "Creating " + getAccountType() + " account";
     }
 
     /**
@@ -89,14 +107,6 @@ public class LoginMenu implements SubMenuPrinter {
      */
     public String printAccountCreationSuccessful() {
         return "Account creation successful! Redirecting back to account \nMain Menu...";
-    }
-
-
-    /**
-     * Returns a written confirmation that Login was successful
-     */
-    public String printLoginSuccessful() {
-        return "Login successful! Redirecting back to account \nMain Menu...";
     }
 
 }

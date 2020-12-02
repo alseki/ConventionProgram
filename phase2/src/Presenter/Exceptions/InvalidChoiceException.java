@@ -1,4 +1,4 @@
-package Presenter;
+package Presenter.Exceptions;
 
 /**
  * Exception to be thrown for when the User inputs an option that's not within the system

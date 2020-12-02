@@ -8,10 +8,8 @@ package Presenter.PersonController;
 
 
 import Presenter.Central.SubMenu;
-import Presenter.InvalidChoiceException;
-import Person.PersonManager;
+import Presenter.Exceptions.InvalidChoiceException;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class ContactController extends SubMenu {

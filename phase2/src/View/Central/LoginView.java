@@ -2,7 +2,7 @@ package View.Central;
 
 import Presenter.PersonController.LoginController;
 import Presenter.PersonController.LoginMenu;
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import javax.swing.*;
 
