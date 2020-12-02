@@ -32,8 +32,7 @@ public class OrgEventController extends SubMenu {
     private OrgEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public OrgEventController(String currentUserID, SpeakerManager speakerManager,
-                              SubMenu subMenu) {
+    public OrgEventController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager) {
         super(subMenu);
         this.currentUserID = currentUserID;
         this.speakerManager = speakerManager;

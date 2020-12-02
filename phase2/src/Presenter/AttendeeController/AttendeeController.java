@@ -19,8 +19,6 @@ import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     private AttendeeManager manager;
-    private String currentUserID;
-    Scanner input = new Scanner(System.in);
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {
@@ -34,33 +32,30 @@ public class AttendeeController extends PersonController {
     }
 
     /**
-     * Allows user to login and see their account. Terminates if the user chooses to logout.
+     * Creates the next controller according to the user's menu choice
      */
-    public void run() {
-        this.currentUserID = super.currentUserID;
+    public SubMenu createController(int choice) {
         if (super.loggedIn) {
-            do {
-                switch (1) {
-                    case 0:
-                        break;
-                    case 1:
-                        ContactController contactController = new ContactController(this, currentUserID);
-                        contactController.menuChoice(); // TODO replace the break structure with a method that asks the view what choice has been made
-                        break;
-                    case 2:
-                        AttMessageController messageController = new AttMessageController(currentUserID, manager,
-                               this);
-                        messageController.menuChoice();
-                        break;
-                    case 3:
-                        AttEventController attEventController = new AttEventController(currentUserID, manager,
-                                this);
-                        attEventController.menuChoice();
-                        break;
-                    case 4: //TODO allow for access to ATTReqController
-                }
+            switch (choice) {
+                case 1:
+                    return new ContactController(this, currentUserID);
+                case 2:
+                    return new AttMessageController(this, currentUserID, manager);
+                case 3:
+                    return new AttEventController(this, currentUserID, manager);
+                case 4:
+                    return new AttReqController(this, currentUserID);
             }
-        while (true);
         }
+        return null;
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options  = new String[5];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        options[3] = "View your Event information";
+        options[4] = "View your Requests";
+        return options;
     }
 }

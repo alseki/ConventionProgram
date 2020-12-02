@@ -19,7 +19,7 @@ public class AttMessageController extends MessageController {
     private AttendeeManager attendeeManager;
     private AttMessageMenu presenter;
 
-    public AttMessageController(String currentUserID, AttendeeManager attendeeManager, SubMenu subMenu) {
+    public AttMessageController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager) {
         super(subMenu, currentUserID);
         this.attendeeManager = attendeeManager;
         presenter = new AttMessageMenu(attendeeManager, messageManager, chatManager, eventManager);

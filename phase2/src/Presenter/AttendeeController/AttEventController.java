@@ -24,7 +24,7 @@ public class AttEventController extends SubMenu {
     private AttEventMenu presenter;
     Scanner input = new Scanner(System.in);
 
-    public AttEventController(String currentUserID, AttendeeManager attendeeManager, SubMenu subMenu) {
+    public AttEventController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager) {
         super(subMenu);
         this.currentUserID = currentUserID;
         this.attendeeManager = attendeeManager;

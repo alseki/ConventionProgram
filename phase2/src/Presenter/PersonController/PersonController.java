@@ -15,7 +15,7 @@ import Presenter.Central.SubMenu;
 import Request.RequestManager;
 
 abstract public class PersonController extends SubMenu {
-    public String currentUserID;
+    protected String currentUserID;
     private int accountChoice;
     public boolean loggedIn =  false;
 
@@ -41,5 +41,19 @@ abstract public class PersonController extends SubMenu {
             this.currentUserID = currentUserID;
             loggedIn = true;
         }
+    }
+
+    public abstract SubMenu createController(int choice);
+
+    public String getMenuTitle() {
+        return "----- Main Menu -----";
+    }
+
+    public String[] getMenuOptions() {
+        String[] options  = new String[3];
+        options[0] = "Save changes and return to the start page";
+        options[1] = "View your Contacts";
+        options[2] = "View your Messages";
+        return options;
     }
 }
