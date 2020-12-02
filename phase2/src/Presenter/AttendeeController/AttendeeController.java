@@ -21,16 +21,47 @@ public class AttendeeController extends PersonController {
     private AttendeeManager manager;
     private String currentUserID;
     Scanner input = new Scanner(System.in);
+    String[] arrMenuOptions;
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {
         super(manager, rooms, events, messages, chats, requests, 1);
         this.manager = manager;
+
+        // TODO make sure "Message Menu" option calls an AttMessageController
+        menuOptions.add("Event Menu"); // AttEventController
+        menuOptions.add("Request Menu"); // AttReqController
+
+        arrMenuOptions = new String[menuOptions.size()];
+        for (int i = 0; i < menuOptions.size(); i++) {
+            arrMenuOptions[i] = menuOptions.get(i);
+        }
     }
 
     public AttendeeController(AttendeeManager manager, SubMenu subMenu) {
         super(subMenu, 1);
         this.manager = manager;
+    }
+
+    @Override
+    public void MessageMenu() {
+
+    }
+
+    public void AttEventMenu() {
+
+    }
+
+    public void AttMessageMenu() {
+
+    }
+
+    public void EventMenu() {
+
+    }
+
+    public void RequestMenu() {
+
     }
 
     /**

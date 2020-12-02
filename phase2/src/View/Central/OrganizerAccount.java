@@ -9,18 +9,11 @@ public class OrganizerAccount extends AttendeeAccount {
     public OrganizerAccount(PersonController controller) {
         super(controller);
         menuOptions.add("OrgEventMenu");
-    }
 
-    @Override
-    public void run() {
-        // Make frame
-        frame.setContentPane(contentPane);// Add content pane to frame
-        frame.pack();// Size and then display the frame.
-        frame.setVisible(true);
-    }
-
-    public void OrgEventMenu() {
-
+        arrMenuOptions = new String[menuOptions.size()];
+        for (int i = 0; i < menuOptions.size(); i++) {
+            arrMenuOptions[i] = menuOptions.get(i);
+        }
     }
 
     @Override

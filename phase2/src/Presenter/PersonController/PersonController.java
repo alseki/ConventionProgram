@@ -14,16 +14,21 @@ import Person.PersonManager;
 import Presenter.Central.SubMenu;
 import Request.RequestManager;
 
+import java.util.ArrayList;
+
 abstract public class PersonController extends SubMenu {
     public String currentUserID;
     private int accountChoice;
     public boolean loggedIn =  false;
+    public ArrayList<String> menuOptions = new ArrayList<>();
 
 
     public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
                             MessageManager messageManager, ChatManager chatManager, RequestManager requestManager, int accountChoice) {
         super(roomManager, eventManager, manager, messageManager, chatManager, requestManager);
         this.accountChoice = accountChoice;
+        menuOptions.add("Contact Menu"); // ContactController
+        menuOptions.add("Message Menu"); // MessageController
     }
 
 
@@ -41,5 +46,12 @@ abstract public class PersonController extends SubMenu {
             this.currentUserID = currentUserID;
             loggedIn = true;
         }
+    }
+
+    public void ContactMenu() {
+    }
+
+    public void MessageMenu() {
+
     }
 }

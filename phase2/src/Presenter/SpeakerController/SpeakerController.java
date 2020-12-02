@@ -17,14 +17,25 @@ import Person.SpeakerManager;
 import Request.RequestManager;
 
 public class SpeakerController extends PersonController {
-    //private Account mainMenu = new Account();
     private String currentUserID;
     private SpeakerManager manager;
+    String[] arrMenuOptions;
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats, RequestManager requests) {
         super(manager, rooms, events, messages, chats, requests, 3);
         this.manager = manager;
+
+        menuOptions.add("Event Menu"); // SpeEventController
+
+        arrMenuOptions = new String[menuOptions.size()];
+        for (int i = 0; i < menuOptions.size(); i++) {
+            arrMenuOptions[i] = menuOptions.get(i);
+        }
+    }
+
+    public void SpeEventMenu() {
+
     }
 
 

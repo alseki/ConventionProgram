@@ -43,15 +43,17 @@ public abstract class PersonAccount implements ActionListener {
         logoutButton.setActionCommand("logout");
         logoutButton.addActionListener(this);
         contentPane.add(logoutButton);
-    }
 
-    public abstract void run();
+        dropDownMenu = new JComboBox<String>(arrMenuOptions);// Generates dropdown menu
+        dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
+        dropDownMenu.setSelectedIndex(0);
+        dropDownMenu.addActionListener(this);
+        contentPane.add(dropDownMenu);
 
-    public void ContactMenu() {
-    }
-
-    public void MessageMenu() {
-
+        // Make frame
+        frame.setContentPane(contentPane);// Add content pane to frame
+        frame.pack();// Size and then display the frame.
+        frame.setVisible(true);
     }
 
     @Override

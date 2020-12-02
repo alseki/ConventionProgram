@@ -22,6 +22,7 @@ public class OrganizerController extends PersonController {
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
+    String[] arrMenuOptions;
 
 
     public OrganizerController(OrganizerManager manager, SpeakerManager sm, RoomManager rooms,
@@ -31,6 +32,16 @@ public class OrganizerController extends PersonController {
         this.manager = manager;
         this.speakerManager = sm;
         this.attendeeManager = am;
+
+        // TODO make sure "Message Menu" option calls an AttMessageController
+        menuOptions.add("Attendee Event Menu"); // AttEventController
+        menuOptions.add("Organizer Event Menu"); // OrgEventController
+        menuOptions.add("Request Menu"); // OrgReqController
+
+        arrMenuOptions = new String[menuOptions.size()];
+        for (int i = 0; i < menuOptions.size(); i++) {
+            arrMenuOptions[i] = menuOptions.get(i);
+        }
     }
 
 
@@ -39,6 +50,10 @@ public class OrganizerController extends PersonController {
         this.manager = om;
         this.speakerManager = sm;
         this.attendeeManager = am;
+    }
+
+    public void OrgEventMenu() {
+
     }
 
     public void run() {
