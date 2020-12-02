@@ -7,12 +7,15 @@ public class EmployeeManager extends PersonManager {
 
     // This account is created by organizer or administrator
 
-    public EmployeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
-        super(usernameToPerson, idToPerson);
-    }
-
     // private List<Attendee> allAttendees;
     private ArrayList<String> requestIds;
+
+    public EmployeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+        super(usernameToPerson, idToPerson);
+        this.requestIds = new ArrayList<String>();
+    }
+
+
 
     @Override
     public boolean createAccount(String name, String username, String password, String email) {
@@ -24,4 +27,42 @@ public class EmployeeManager extends PersonManager {
         }
         return false;
     }
+
+    public boolean addAnnouncementChats(String personId, String acId) {
+        Speaker individual = (Speaker) idToPerson.get(personId);
+        if(!individual.getAnnouncementChats().contains(acId)) {
+            individual.announcementChatIds.add(acId);
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
+     * @param speakerID ID of the Speaker
+     * @return Arraylist of Strings corresponding to Talk Event IDs
+     */
+    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
+        Speaker spe = (Speaker) getPerson(speakerID);
+        return spe.getAllTalks();}
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+
+    public int confirmEmployee(String username) {
+        if(usernameToPerson.containsKey(username)) {
+            return getPerson.username(getTypePerson());
+        }
+        return -1;
+    }
+    /**
+     *
+     * @param username
+     * @return
+     */
+
+
+
 }

@@ -32,13 +32,12 @@ public class RequestManager {
         return true;
     }
 
-    public boolean createRequest(String reqUserId, String reqContent, String eventName){
-        RequestPackage.RequestEntity req = new RequestPackage.RequestEntity(reqContent, reqUserId);
+    public boolean createRequest(String reqUserId, String reqContent, String reqEventName){
+        RequestPackage.RequestEntity req = new RequestPackage.RequestEntity(reqContent, reqUserId, reqEventName);
         updateMap(reqUserId, req);
         addRequest(req);
         return true;
     }
-
 
     public RequestPackage.RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
@@ -65,15 +64,14 @@ public class RequestManager {
         //observable.addPropertyChangeListener(this.requestId, observer);
     }
     /**
-     * Notify observers o the change event.
+     * Notify observers of change of event.
      * @param newEvent
      */
     public void notifyObservers (PropertyChangeEvent newEvent)
     {
-        for ( PropertyChangeListener observer : observable.getPropertyChangeListeners())
+        for (PropertyChangeListener observer : observable.getPropertyChangeListeners())
             observer.propertyChange(newEvent);
     }
-
 
 
     }

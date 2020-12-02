@@ -1,5 +1,6 @@
 package Person;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +24,57 @@ public class Employee extends Person {
             this.requestIdToStatus = new HashMap<>();
         }
 
-        // apply notify observers
+    public ArrayList<String> getAnChatList() {
+        return anChatList;
+    }
 
-    // get messages from Organizer and from other Employees
+    public void setAnChatList(ArrayList<String> anChatList) {
+        this.anChatList = anChatList;
+    }
+
+    public Map<String, Boolean> getRequestIdToStatus() {
+        return requestIdToStatus;
+    }
+
+    public void setRequestIdToStatus(Map<String, Boolean> requestIdToStatus) {
+        this.requestIdToStatus = requestIdToStatus;
+    }
+
+    public ArrayList<String> getAnChatList() {
+        return anChatList;
+    }
+
+    public void addAnChat(String chatID) {
+        anChatList.add(chatID);
+    }
+
+    public void removeAnChat(String chatID) {
+        if (anChatList.contains(chatID)) {
+            anChatList.remove(chatID);
+        }
+    }
+    public String getRequestStatus(String requestId){
+        if (!requestIdToStatus.get(requestId)){
+            return "Pending";
+        }
+        else{
+            return "Fulfilled";
+        }
+    }
+    public void newRequest(String requestId){
+        requestIdToStatus.put(requestId, false);
+    }
+
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
+//        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
+//
+//    }
+
+    // apply notify observers
+
+    // get messages from Organizer and from other Employees /**
+
 
     // check request board
 
