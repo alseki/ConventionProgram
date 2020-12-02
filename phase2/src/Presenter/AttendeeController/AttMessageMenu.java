@@ -20,17 +20,15 @@ public class AttMessageMenu extends MessageMenu {
         super(personManager, messageManager, chatManager, eventManager);
     }
 
-    /**
-     * Prints the options for this menu.
-     */
     @Override
-    public String printMenuOptions() {
-        super.printMenuOptions();
-        System.out.println("View the announcement chat list -------------------- Enter '6'.");
-        System.out.println("View the announcements in an announcement chat ----- Enter '7'.");
-        System.out.println("Create a chat -------------------------------------- Enter '8'.");
-        System.out.println("Create a group chat -------------------------------- Enter '9'.");
-        return "";
+    public String[] getMenuOptions() {
+        String[] options = new String[10];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 6);
+        options[6] = "View your list of event announcement channels";
+        options[7] = "View the announcements from a particular event";
+        options[8] = "Create a new chat";
+        options[9] = "Create a new group chat";
+        return options;
     }
 
     /**

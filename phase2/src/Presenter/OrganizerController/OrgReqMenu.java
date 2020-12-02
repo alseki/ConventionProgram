@@ -16,19 +16,16 @@ public class OrgReqMenu implements SubMenuPrinter {
         this.reqM=reqM;
     }
 
-    /**
-     * menu options
-     * @return empty string
-     */
     @Override
-    public String printMenuOptions() {
-        System.out.println("\n----- Requests Menu -----");
-        System.out.println("To return to Main Menu, Enter '0'.");
-        System.out.println("To see a specific request, Enter 1");
-        System.out.println("To see requests, Enter '2'.");
-        System.out.println("To fulfill a request, Enter '3'. ");
-        System.out.println("To make a request, Enter '4'.");
-        return "";
+    public String getMenuTitle() {
+        return "----- Request Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "View a specific request", "View requests", "Fulfill a request",
+            "Make a request"};
+        return options;
     }
 
     /**

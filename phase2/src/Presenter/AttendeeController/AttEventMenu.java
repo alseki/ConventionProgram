@@ -21,23 +21,17 @@ public class AttEventMenu extends EventMenu {
         this.currentUserID = currentUserID;
     }
 
-    /**
-     * Prints the options for this menu.
-     */
     @Override
-    public String printMenuOptions() {
-        System.out.println("\n----- AttendeeController Event Menu -----");
-        System.out.println("To return to Main Menu, Enter '0'.");
-        System.out.println("To view the list of events, Enter '1'.");
-        System.out.println("To sign up for an event, Enter '2'.");
-        System.out.println("To cancel your spot from an event, Enter '3'.");
-        System.out.println("To view the events that you are currently signed up for, Enter '4'.");
-
-        // TODO add print statements for all the other menu options
-        return "";
-        
+    public String getMenuTitle() {
+        return "----- Attendee Event Menu -----";
     }
 
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "View conference event list", "Sign up for an event",
+                "Cancel your spot in an event", "View events you've signed up for"};
+        return options;
+    }
 
     // Option 1
 
