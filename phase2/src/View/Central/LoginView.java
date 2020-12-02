@@ -16,7 +16,7 @@ public class LoginView {
     private LoginController controller;
     private LoginMenu presenter;
 
-    public void LoginView(LoginController controller) {
+    public LoginView(LoginController controller) {
         this.controller = controller;
         presenter =  controller.getPresenter();
     }

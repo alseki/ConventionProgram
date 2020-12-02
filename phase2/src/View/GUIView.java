@@ -6,10 +6,8 @@ import Presenter.AttendeeController.AttEventMenu;
 import Presenter.AttendeeController.AttendeeController;
 import Presenter.Central.ConventionPlanningSystem;
 import Presenter.PersonController.LoginController;
-import View.Central.AttendeeAccount;
-import View.Central.LoginView;
-import View.Central.OrganizerAccount;
-import View.Central.SpeakerAccount;
+import Presenter.PersonController.PersonController;
+import View.Central.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,10 +34,7 @@ public class GUIView implements ActionListener {
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
         contentPane.setLayout(new FlowLayout());
 
-        startButton = new JButton("start");
-        startButton.setLocation(0, 0);
-        startButton.setActionCommand("start");
-        startButton.addActionListener(this);
+        startButton = newButton("start");
         contentPane.add(startButton);
 
         savedMessage = new JLabel("Your changes have been saved. Exit the program or click 'okay' to go back to " +
@@ -47,10 +42,7 @@ public class GUIView implements ActionListener {
         contentPane.add(savedMessage);
         savedMessage.setVisible(false);
 
-        okayButton = new JButton("okay");
-        okayButton.setLocation(0, 0);
-        okayButton.setActionCommand("okay");
-        okayButton.addActionListener(this);
+        okayButton = newButton("okay");
         contentPane.add(okayButton);
         okayButton.setVisible(false);
 
@@ -65,10 +57,7 @@ public class GUIView implements ActionListener {
         introMessage = new JLabel(cps.getIntroMessage());
         contentPane.add(introMessage);
 
-        continueButton = new JButton("continue");
-        continueButton.setLocation(0, 0);
-        continueButton.setActionCommand("continue");
-        continueButton.addActionListener(this);
+        continueButton = newButton("continue");
         contentPane.add(continueButton);
     }
 
@@ -81,31 +70,33 @@ public class GUIView implements ActionListener {
         input.setPreferredSize(new Dimension(400, 24));
         contentPane.add(input, BorderLayout.NORTH);
 
-        submitAccountChoiceButton = new JButton("submit account choice");
-        submitAccountChoiceButton.setLocation(0, 0);
-        submitAccountChoiceButton.setActionCommand("submit account choice");
-        submitAccountChoiceButton.addActionListener(this);
+        submitAccountChoiceButton = newButton("submit account choice");
         contentPane.add(submitAccountChoiceButton);
     }
 
-    private void login() {
-        LoginView view = new LoginView();
-        if (!(view.run().equals("0"))) {
-            account();
+    private PersonController login(PersonController controller) {
+        LoginView view = new LoginView(controller.getLogin());
+        String id = view.run();
+        if (!(id.equals("0"))) {
+            controller.logIn(id);
+            return controller;
         }
-        // TODO else branch that throws an exception
+        else {
+            return null;
+        }
     }
 
-    private void account() {
+    private PersonAccount account(PersonController controller) {
         switch (accountChoice) {
             case 1:
-                new AttendeeAccount(cps.getController(accountChoice)).run();
+                return new AttendeeAccount(controller);
             case 2:
-                new OrganizerAccount(cps.getController(accountChoice)).run();
+                return new OrganizerAccount(controller);
             case 3:
-                new SpeakerAccount(cps.getController(accountChoice)).run();
+                return new SpeakerAccount(controller);
+            default:
+                return null;
         }
-
     }
 
     @Override
@@ -135,8 +126,17 @@ public class GUIView implements ActionListener {
                 okayButton.setVisible(true);
             }
             else {
+                PersonController controller = cps.getController(accountChoice);
                 frame.setVisible(false);
-                login();
+                controller = login(controller);
+                if (controller == null) {
+                    frame.setVisible(true);
+                    accountChoice();
+                }
+                else {
+                    PersonAccount view = account(controller);
+                    view.run();
+                }
             }
         }
 
@@ -146,5 +146,13 @@ public class GUIView implements ActionListener {
             intro();
         }
 
+    }
+
+    private JButton newButton(String title) {
+        JButton newButton = new JButton(title);
+        newButton.setLocation(0, 0);
+        newButton.setActionCommand(title);
+        newButton.addActionListener(this);
+        return newButton;
     }
 }

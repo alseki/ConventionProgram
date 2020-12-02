@@ -1,5 +1,6 @@
 package View.Central;
 
+import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 // Date Created: 11/11/2020
 // Date Modified: 13/11/2020
 
-abstract class PersonAccount implements ActionListener {
+public abstract class PersonAccount implements ActionListener {
     PersonController controller;
     String[] arrMenuOptions;
     JFrame frame;

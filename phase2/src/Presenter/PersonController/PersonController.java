@@ -11,14 +11,11 @@ import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
-import Presenter.AttendeeController.AttendeeController;
 import Presenter.Central.SubMenu;
-import Presenter.OrganizerController.OrganizerController;
 import Request.RequestManager;
 
 abstract public class PersonController extends SubMenu {
     public String currentUserID;
-    private PersonManager manager;
     private int accountChoice;
     public boolean loggedIn =  false;
 
@@ -26,18 +23,23 @@ abstract public class PersonController extends SubMenu {
     public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
                             MessageManager messageManager, ChatManager chatManager, RequestManager requestManager, int accountChoice) {
         super(roomManager, eventManager, manager, messageManager, chatManager, requestManager);
-        this.manager = manager;
         this.accountChoice = accountChoice;
     }
 
 
     public PersonController(SubMenu submenu, int accountChoice) {
         super(submenu);
-        this.manager = personManager;
         this.accountChoice = accountChoice;
     }
 
-    public LoginController logIn() {
+    public LoginController getLogin() {
         return new LoginController(this, accountChoice);
+    }
+
+    public void logIn(String currentUserID) {
+        if (!currentUserID.equals("0")) {
+            this.currentUserID = currentUserID;
+            loggedIn = true;
+        }
     }
 }
