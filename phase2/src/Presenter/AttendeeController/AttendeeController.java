@@ -19,6 +19,7 @@ import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     private AttendeeManager manager;
+    private String[] options;
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {

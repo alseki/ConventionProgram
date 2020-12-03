@@ -82,8 +82,6 @@ public class Attendee extends Person implements Signupable, PropertyChangeListen
 
     // @Override
     public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
-        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
-
+        this.requestIdToStatus.replace(evt.getPropertyName(), (boolean) evt.getNewValue());
     }
-
 }

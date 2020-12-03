@@ -23,7 +23,7 @@ import Request.RequestManager;
 public class SpeakerController extends PersonController {
     private String currentUserID;
     private SpeakerManager manager;
-    String[] arrMenuOptions;
+    private String[] options;
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats, RequestManager requests) {
