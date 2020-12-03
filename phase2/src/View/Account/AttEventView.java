@@ -1,12 +1,12 @@
-package View.Central.Account;
+package View.Account;
 
 import Presenter.AttendeeController.AttEventController;
 import Presenter.Central.SubMenu;
 
-public class AttReqView implements AccountView {
+public class AttEventView implements AccountView {
     AttEventController controller;
 
-    public AttReqView(SubMenu controller) {
+    public AttEventView(SubMenu controller) {
         this.controller = (AttEventController) controller;
     }
 }

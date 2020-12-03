@@ -3,11 +3,12 @@ package Request;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestManager {
+public class RequestManager implements Serializable {
     private ArrayList<RequestEntity> requestsList;
     private Map<String, RequestEntity> idToRequest;
     private PropertyChangeSupport observable;

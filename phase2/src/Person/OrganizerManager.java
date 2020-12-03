@@ -90,7 +90,7 @@ public class OrganizerManager extends PersonManager{
 
     public int confirmOrganizer(String username){
         if (usernameToPerson.containsKey(username)) {
-            return getPerson(username).getTypePerson();
+            return getPersonByUsername(username).getTypePerson();
         }
         return -1;
     }

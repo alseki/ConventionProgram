@@ -3,6 +3,7 @@ package Request;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 // the parameters will be
 
-public class RequestEntity {
+public class RequestEntity implements Serializable {
     private String requestId;
     private String requestContent;
     private boolean fulfilled;

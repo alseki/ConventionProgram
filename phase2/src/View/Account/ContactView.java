@@ -1,4 +1,4 @@
-package View.Central.Account;
+package View.Account;
 
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;

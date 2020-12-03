@@ -45,14 +45,9 @@ public abstract class SubMenu {
         this.requestManager = otherMenu.requestManager;
     }
 
+    public ConventionSaver returnData() {
+        return new ConventionSaver(roomManager, eventManager, messageManager, chatManager, requestManager,
+                personManager);
+    }
 
-    /**
-     * Prompts user to choose a menu option, takes the input and calls the corresponding method
-     */
-    //void menuOptions();
-
-    /**
-     * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     */
-    //void menuChoice();
 }

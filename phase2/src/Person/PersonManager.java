@@ -21,6 +21,12 @@ public abstract class PersonManager {
         this.idToPerson = idToPerson;
     }
 
+    //TODO: make this better?
+    public Map[] unpack() {
+        Map[] rn = {usernameToPerson, idToPerson};
+        return rn;
+    }
+
     /**
      *
      * @param name
@@ -50,7 +56,7 @@ public abstract class PersonManager {
      * returns the Person object corresponding to currentUserId
      * @return Person
      */
-    Person getPerson(String currentUserID) {
+    protected Person getPerson(String currentUserID) {
         if (idToPerson.containsKey(currentUserID)) {
             return idToPerson.get(currentUserID);
         }

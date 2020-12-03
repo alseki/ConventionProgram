@@ -1,14 +1,12 @@
-package View.Central.Account;
+package View.Account;
 
 import Presenter.Central.SubMenu;
-import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 // Programmers: Cara McNeil,
 // Description: Prints the Main Menu options
@@ -29,6 +27,10 @@ public class Account implements ActionListener {
         this.controller = controller;
         this.menuOptions = controller.getMenuOptions();
 
+        setup();
+    }
+
+    public void setup() {
         frame = new JFrame(controller.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +42,6 @@ public class Account implements ActionListener {
         logoutButton = new JButton("logout"); // Generates logout button
         logoutButton.setLocation(0, 0);
         logoutButton.setActionCommand("logout");
-        logoutButton.addActionListener(this);
         contentPane.add(logoutButton);
 
         dropDownMenu = new JComboBox<String>(menuOptions);// Generates dropdown menu
@@ -48,11 +49,20 @@ public class Account implements ActionListener {
         dropDownMenu.setSelectedIndex(0);
         dropDownMenu.addActionListener(this);
         contentPane.add(dropDownMenu);
+    }
+
+    public void runFrom(ActionListener listener) {
+        logoutButton.addActionListener(listener);
 
         // Make frame
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
         frame.setVisible(true);
+    }
+
+    public PersonController returnController() {
+        frame.setVisible(false);
+        return controller;
     }
 
     @Override
@@ -62,14 +72,8 @@ public class Account implements ActionListener {
         JComboBox<String> comboBox = (JComboBox<String>)event.getSource();
         menuSelection = (String)comboBox.getSelectedItem();
 
-        if (eventName.equals("logout")) {
-            // TODO save, return to gui menu
-            return; // FIXME
-        }
-        else {
-            SubMenu subAccountController = controller.createController(menuSelection);
-            accountViewFactory.construct(subAccountController);
-        }
+        SubMenu subAccountController = controller.createController(menuSelection);
+        accountViewFactory.construct(subAccountController);
 
     }
 

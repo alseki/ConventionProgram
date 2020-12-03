@@ -8,16 +8,13 @@ package Presenter.OrganizerController;
 import Person.*;
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttMessageController;
-import Presenter.AttendeeController.AttReqController;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
-import Presenter.PersonController.MessageController;
 import Presenter.PersonController.PersonController;
 import Event.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Event.RoomManager;
-import Presenter.SpeakerController.SpeEventController;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
@@ -25,7 +22,6 @@ public class OrganizerController extends PersonController {
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
-    private String[] options;
 
     /**
      * contructor for organizer contorller
@@ -66,6 +62,7 @@ public class OrganizerController extends PersonController {
      */
     @Override
     public SubMenu createController(String choice) {
+        String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
                 return new ContactController(this, currentUserID);
@@ -91,11 +88,11 @@ public class OrganizerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] orgOptions  = {"View attendees' requests",
+        String[] orgOptions  = {"View your event information", "View attendees' requests",
                 "View & edit conference event list"};
         String[] options = new String[5];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        System.arraycopy(orgOptions, 0, options, 3, 2);
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
+        System.arraycopy(orgOptions, 0, options, 2, 3);
         return options;
     }
     

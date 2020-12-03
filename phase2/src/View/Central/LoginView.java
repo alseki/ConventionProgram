@@ -32,9 +32,9 @@ public class LoginView {
             switch (currentRequest) {
                 case 1: id = logIn(); break;
                 case 2: signUp();
-                default: id = "";
+                default: id = null;
             }
-            if (id.equals("")) {
+            if (id == null) {
                 currentRequest = mainMenu();
             }
             else {

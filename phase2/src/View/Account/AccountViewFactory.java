@@ -1,4 +1,4 @@
-package View.Central.Account;
+package View.Account;
 
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttMessageController;
@@ -8,7 +8,6 @@ import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
-import Presenter.PersonController.PersonController;
 import Presenter.SpeakerController.SpeEventController;
 
 public class AccountViewFactory {

@@ -15,11 +15,8 @@ import Message.MessageManager;
 import Person.AttendeeManager;
 import Request.RequestManager;
 
-import java.util.Scanner;
-
 public class AttendeeController extends PersonController {
     private AttendeeManager manager;
-    private String[] options;
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {
@@ -36,6 +33,7 @@ public class AttendeeController extends PersonController {
      * Creates the next controller according to the user's menu choice
      */
     public SubMenu createController(String choice) {
+        String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
                 return new ContactController(this, currentUserID);
@@ -55,10 +53,10 @@ public class AttendeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] attendeeOptions  = {"View your requests"};
+        String[] attendeeOptions  = {"View your event information", "View your requests"};
         String[] options = new String[4];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        System.arraycopy(attendeeOptions, 0, options, 3, 1);
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
+        System.arraycopy(attendeeOptions, 0, options, 2, 2);
         return options;
     }
 }

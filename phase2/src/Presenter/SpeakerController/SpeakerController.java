@@ -21,9 +21,7 @@ import Person.SpeakerManager;
 import Request.RequestManager;
 
 public class SpeakerController extends PersonController {
-    private String currentUserID;
     private SpeakerManager manager;
-    private String[] options;
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats, RequestManager requests) {
@@ -36,6 +34,7 @@ public class SpeakerController extends PersonController {
      */
     @Override
     public SubMenu createController(String choice) {
+        String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
                 return new ContactController(this, currentUserID);
@@ -50,5 +49,13 @@ public class SpeakerController extends PersonController {
         return null;
     }
 
+    @Override
+    public String[] getMenuOptions() {
+        String[] attendeeOptions  = {"View your event information"};
+        String[] options = new String[3];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
+        System.arraycopy(attendeeOptions, 0, options, 2, 1);
+        return options;
+    }
 
 }

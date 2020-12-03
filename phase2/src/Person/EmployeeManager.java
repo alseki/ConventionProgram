@@ -53,7 +53,7 @@ public class EmployeeManager extends PersonManager {
 
     public int confirmEmployee(String username) {
         if(usernameToPerson.containsKey(username)) {
-            return getPerson.username(getTypePerson());
+            return getPersonByUsername(username).getTypePerson();
         }
         return -1;
     }

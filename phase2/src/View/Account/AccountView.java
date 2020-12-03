@@ -1,4 +1,4 @@
-package View.Central.Account;
+package View.Account;
 
 /**
  * A view that is instantiated with a Controller and builds frame based on said Controller

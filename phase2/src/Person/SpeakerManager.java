@@ -146,7 +146,7 @@ public class SpeakerManager extends PersonManager {
 
     public int confirmSpeaker(String username){
         if (usernameToPerson.containsKey(username)) {
-            return getPerson(username).getTypePerson();
+            return getPersonByUsername(username).getTypePerson();
         }
         return -1;
     }

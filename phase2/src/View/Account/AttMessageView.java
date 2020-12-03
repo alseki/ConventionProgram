@@ -1,4 +1,4 @@
-package View.Central.Account;
+package View.Account;
 
 import Presenter.AttendeeController.AttMessageController;
 import Presenter.Central.SubMenu;
