@@ -6,22 +6,26 @@ package Presenter.PersonController;
 // Date Modified: 11/11/2020
 
 import Presenter.Central.SubMenuPrinter;
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import java.util.ArrayList;
 
+// Programmers:
+// Description:
+// Date Created:
+// Date Modified: 02/12/2020
+
 public class ContactMenu implements SubMenuPrinter {
 
-    /**
-     * Prints the options for this menu.
-     */
     @Override
-    public String printMenuOptions() {
-        System.out.println('\n' + "----- Contact Menu -----");
-        System.out.println("To return to Main Menu, Enter '0'.");
-        System.out.println("To view Contact List, Enter '1'");
-        System.out.println("To add a Contact, Enter '2'.");
-        return "";
+    public String getMenuTitle() {
+        return "----- Contact Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "View contact list", "Add a contact"};
+        return options;
     }
 
     /**

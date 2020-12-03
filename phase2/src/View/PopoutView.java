@@ -1,6 +1,6 @@
 package View;
 
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import javax.swing.*;
 

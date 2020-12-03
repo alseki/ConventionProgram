@@ -2,7 +2,7 @@ package View.Central;
 
 import Presenter.PersonController.LoginController;
 import Presenter.PersonController.LoginMenu;
-import Presenter.InvalidChoiceException;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import javax.swing.*;
 
@@ -51,8 +51,13 @@ public class LoginView {
      */
     private Integer mainMenu() {
         Integer[] args = {0, 1, 2};
-        return JOptionPane.showOptionDialog(null, presenter.printMenuOptions(),
-                presenter.mainMenuTitle(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+        StringBuilder menuOptions = new StringBuilder();
+        for (String option: presenter.getMenuOptions()) {
+            menuOptions.append(option);
+            menuOptions.append("\n");
+        }
+        return JOptionPane.showOptionDialog(null, menuOptions.toString(),
+                presenter.getMenuTitle(), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, args, args[0]);
     }
 

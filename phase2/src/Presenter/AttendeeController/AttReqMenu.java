@@ -4,6 +4,11 @@ import Presenter.Central.SubMenuPrinter;
 import Request.RequestEntity;
 import Request.RequestManager;
 
+// Programmers:
+// Description:
+// Date Created:
+// Date Modified: 02/12/2020
+
 public class AttReqMenu implements SubMenuPrinter {
     protected RequestManager reqM;
     public AttReqMenu(RequestManager reqM){
@@ -11,12 +16,14 @@ public class AttReqMenu implements SubMenuPrinter {
     }
 
     @Override
-    public String printMenuOptions() {
-        System.out.println("\n----- Requests Menu -----");
-        System.out.println("To return to Main Menu, Enter '0'.");
-        System.out.println("To make a request, Enter '1'.");
-        System.out.println("To see information about a specific request, Enter 2");
-        return "";
+    public String getMenuTitle() {
+        return "----- Request Menu -----";
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        String[] options = {"Return to Main Menu", "Make a request", "View information about a request"};
+        return options;
     }
 
     /**

@@ -87,9 +87,12 @@ public abstract class Person implements Serializable {
         return this.contactList;
     }
 
-
-    public void addContact(String userId){
-        this.contactList.add(userId);
+    /**
+     * add someone to the person's contact list
+     * @param userID the ID of the person we want to add
+     */
+    public void addContact(String userID){
+        this.contactList.add(userID);
     }
 
     /**

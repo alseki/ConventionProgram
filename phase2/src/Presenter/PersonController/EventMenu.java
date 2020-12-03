@@ -1,11 +1,16 @@
 package Presenter.PersonController;
 
 import Presenter.Central.SubMenuPrinter;
-import Presenter.InvalidChoiceException;
-import Presenter.NoDataException;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Event.EventManager;
 import Event.RoomManager;
 import Person.PersonManager;
+
+// Programmers: Sarah Kronenfeld
+// Description: Abstract class to hold methods all EventMenus will need
+// Date Created:
+// Date Modified: 02/12/2020
 
 public abstract class EventMenu implements SubMenuPrinter {
     RoomManager rooms;

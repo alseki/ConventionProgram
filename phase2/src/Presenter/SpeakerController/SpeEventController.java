@@ -5,8 +5,7 @@ package Presenter.SpeakerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Person.Speaker;
-import Presenter.NoDataException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.Central.SubMenu;
 import Person.SpeakerManager;
 
