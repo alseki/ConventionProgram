@@ -50,12 +50,5 @@ public class SpeakerController extends PersonController {
         return null;
     }
 
-    @Override
-    public String[] getMenuOptions() {
-        options  = new String[4];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "Event Menu";
-        return options;
-    }
 
 }

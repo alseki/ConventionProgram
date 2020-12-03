@@ -54,10 +54,10 @@ public class AttendeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[4];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        options[2] = "Events Menu";
-        options[3] = "Requests Menu";
+        String[] attendeeOptions  = {"View your requests"};
+        String[] options = new String[4];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        System.arraycopy(attendeeOptions, 0, options, 3, 1);
         return options;
     }
 }

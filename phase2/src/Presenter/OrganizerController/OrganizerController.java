@@ -74,11 +74,11 @@ public class OrganizerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[6];
+        String[] orgOptions  = {"View attendees' requests",
+                "View & edit conference event list"};
+        String[] options = new String[5];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "Attendee Event Menu";
-        options[4] = "Attendee Requests Menu";
-        options[5] = "Organizer Event Menu";
+        System.arraycopy(orgOptions, 0, options, 3, 2);
         return options;
     }
     
