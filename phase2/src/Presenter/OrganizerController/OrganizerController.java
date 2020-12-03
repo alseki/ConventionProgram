@@ -27,7 +27,17 @@ public class OrganizerController extends PersonController {
     private AttendeeManager attendeeManager;
     private String[] options;
 
-
+    /**
+     * contructor for organizer contorller
+     * @param manager OrganizerManager
+     * @param sm SpeakerManager
+     * @param rooms roomamanger
+     * @param events eventmanger
+     * @param messages messagemanerg
+     * @param chats chatmanager
+     * @param am attendeemanager
+     * @param rm requestmanager
+     */
     public OrganizerController(OrganizerManager manager, SpeakerManager sm, RoomManager rooms,
                                EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am,
                                RequestManager rm) {
@@ -37,7 +47,13 @@ public class OrganizerController extends PersonController {
         this.attendeeManager = am;
     }
 
-
+    /**
+     * contructor for organizer contoller
+     * @param subMenu submenu
+     * @param sm    speaker manager
+     * @param am attendee manaerg
+     * @param om organzermanager
+     */
     public OrganizerController(SubMenu subMenu, SpeakerManager sm, AttendeeManager am, OrganizerManager om) {
         super(subMenu, 2);
         this.manager = om;
