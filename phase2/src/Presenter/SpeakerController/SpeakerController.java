@@ -29,32 +29,22 @@ public class SpeakerController extends PersonController {
                              MessageManager messages, ChatManager chats, RequestManager requests) {
         super(manager, rooms, events, messages, chats, requests, 3);
         this.manager = manager;
-
-        menuOptions.add("Event Menu"); // SpeEventController
-
-        arrMenuOptions = new String[menuOptions.size()];
-        for (int i = 0; i < menuOptions.size(); i++) {
-            arrMenuOptions[i] = menuOptions.get(i);
-        }
-    }
-
-    public void SpeEventMenu() {
-
     }
 
     /**
      * Creates the next controller according to the user's menu choice
      */
     @Override
-    public SubMenu createController(int choice) {
+    public SubMenu createController(String choice) {
         if (super.loggedIn) {
-            switch (choice) {
-                case 1:
-                    return new ContactController(this, currentUserID);
-                case 2:
-                    return new MessageController(this, currentUserID);
-                case 3:
-                    return new SpeEventController(this, manager, currentUserID);
+            if (choice.equals(options[0])) {
+                return new ContactController(this, currentUserID);
+            }
+            else if (choice.equals(options[1])) {
+                return new MessageController(this, currentUserID);
+            }
+            else if (choice.equals(options[2])) {
+                return new SpeEventController(this, manager, currentUserID);
             }
         }
         return null;
@@ -62,9 +52,9 @@ public class SpeakerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options  = new String[4];
+        options  = new String[4];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "View your Event invormation";
+        options[3] = "Event Menu";
         return options;
     }
 

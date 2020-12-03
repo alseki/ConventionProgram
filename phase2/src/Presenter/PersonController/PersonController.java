@@ -19,6 +19,7 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
     protected String currentUserID;
     private int accountChoice;
     public boolean loggedIn =  false;
+    public String[] options;
 
 
     public PersonController(PersonManager manager, RoomManager roomManager, EventManager eventManager,
@@ -44,7 +45,7 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
         }
     }
 
-    public abstract SubMenu createController(int choice);
+    public abstract SubMenu createController(String choice);
 
     @Override
     public String getMenuTitle() {
@@ -53,10 +54,9 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
 
     @Override
     public String[] getMenuOptions() {
-        String[] options  = new String[3];
-        options[0] = "Save changes and return to the start page";
-        options[1] = "View your Contacts";
-        options[2] = "View your Messages";
+        options  = new String[2];
+        options[0] = "Contact Menu";
+        options[1] = "Message Menu";
         return options;
     }
 }

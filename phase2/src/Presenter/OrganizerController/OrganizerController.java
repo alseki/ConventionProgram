@@ -48,19 +48,25 @@ public class OrganizerController extends PersonController {
      * Creates the next controller according to the user's menu choice
      */
     @Override
-    public SubMenu createController(int choice) {
+    public SubMenu createController(String choice) {
         if (super.loggedIn) {
-            switch (choice) {
-                case 1:
-                    return new ContactController(this, currentUserID);
-                case 2:
-                    return new AttMessageController(this, currentUserID, attendeeManager);
-                case 3:
-                    return new AttEventController(this, currentUserID, attendeeManager);
-                case 4:
-                    return new OrgReqController(this, currentUserID);
-                case 5:
-                    return new OrgEventController(this, currentUserID, speakerManager);
+            if (choice.equals(options[0])) {
+                return new ContactController(this, currentUserID);
+            }
+            else if (choice.equals(options[1])) {
+                return new AttMessageController(this, currentUserID, attendeeManager);
+            }
+            else if (choice.equals(options[2])) {
+                return new AttEventController(this, currentUserID, attendeeManager);
+            }
+            else if (choice.equals(options[3])){
+                return new OrgReqController(this, currentUserID);
+            }
+            else if (choice.equals(options[4])) {
+                return new OrgReqController(this, currentUserID);
+            }
+            else if (choice.equals(options[5])) {
+                return new OrgEventController(this, currentUserID, speakerManager);
             }
         }
         return null;
@@ -68,11 +74,11 @@ public class OrganizerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options  = new String[6];
+        options  = new String[6];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "View your Event information";
-        options[4] = "View and manage Attendee Requests";
-        options[5] = "View and manage the conference's Event list";
+        options[3] = "Attendee Event Menu";
+        options[4] = "Attendee Requests Menu";
+        options[5] = "Organizer Event Menu";
         return options;
     }
     
