@@ -152,15 +152,6 @@ public class AttendeeManager extends PersonManager{
         return -1;
     }
 
-    public void addRequest(String attendeeId, String requestId){
-       Attendee at = (Attendee)getPerson(attendeeId);
-       at.newRequest(requestId);
-
-    }
-    public String getRequestStatus(String requestId, String attendeeId) {
-        Attendee at = (Attendee) getPerson(attendeeId);
-        return at.getRequestStatus(requestId);
-    }
 
 
 }

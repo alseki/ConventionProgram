@@ -13,6 +13,7 @@ import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
+import Request.AttReqController;
 import Request.RequestManager;
 
 public class AttendeeController extends PersonController {

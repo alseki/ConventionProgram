@@ -21,8 +21,6 @@ public class RequestEntity implements Serializable {
     private boolean fulfilled;
     private final String requestingUserId;
     private final ArrayList <String> eventsConcerned;
-    private PropertyChangeSupport observable;
-
     /*  Helper class for making this class as an observable  */
 
     /**
@@ -37,7 +35,6 @@ public class RequestEntity implements Serializable {
         this.fulfilled = false;
         this.requestId = UUID.randomUUID().toString();
         eventsConcerned = new ArrayList<String>(); //TAKEOUT
-        this.observable = new PropertyChangeSupport (this);
     }
 
     /**
@@ -96,27 +93,8 @@ public class RequestEntity implements Serializable {
      * sets this.fuflified to true, and notifiies observiers
      */
     public void setFulfilled () {
-            PropertyChangeEvent newEvent = new PropertyChangeEvent(
-                    this, this.requestId, false, true);
-            notifyObservers(newEvent);
             this.fulfilled = true;
         }
-    /**
-     * Add a new observer to observe the changes to this class.
-     * @param observer
-     */
-    public void addObserver(PropertyChangeListener observer) {
-        observable.addPropertyChangeListener(this.requestId, observer);
-    }
-    /**
-     * Notify observers o the change event.
-     * @param newEvent
-     */
-    public void notifyObservers (PropertyChangeEvent newEvent)
-    {
-        for ( PropertyChangeListener observer : observable.getPropertyChangeListeners())
-            observer.propertyChange(newEvent);
-    }
 
     }
 

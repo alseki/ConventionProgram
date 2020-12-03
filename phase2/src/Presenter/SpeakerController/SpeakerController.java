@@ -6,9 +6,6 @@ package Presenter.SpeakerController;
 // Date Modified: 19/11/2020
 
 
-import Presenter.AttendeeController.AttEventController;
-import Presenter.AttendeeController.AttMessageController;
-import Presenter.AttendeeController.AttReqController;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;

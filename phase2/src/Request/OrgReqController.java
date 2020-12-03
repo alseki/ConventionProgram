@@ -1,4 +1,4 @@
-package Presenter.OrganizerController;
+package Request;
 
 import Presenter.Central.SubMenu;
 
@@ -31,7 +31,9 @@ public class OrgReqController extends SubMenu {
                 case 4:
                     request();
                     break;
-
+                case 5:
+                    myRequests();
+                    break;
             }
         }
         while (currentRequest != 0);
@@ -49,15 +51,13 @@ public class OrgReqController extends SubMenu {
         String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);
     }
-    protected void request(){
+    private void request(){
         presenter.makeRequestPrompt();
         String content = "";//SubMenu.readInput(input);
-        presenter.enterIdPrompt();
-        String id = "";//SubMenu.readInput(input);
-        requestManager.createRequest(id, content);
-        // TODO reqM.addObserver(OrganizerManagerreqs);
-        // TODO reqM.addObeserver(currentPerson)
+        requestManager.createRequest(this.currentUserID, content);
     }
-
+    private void myRequests(){
+        presenter.myRequests(currentUserID);
+    }
 
 }

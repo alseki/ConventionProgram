@@ -11,7 +11,6 @@ import java.util.Map;
 public class RequestManager implements Serializable {
     private ArrayList<RequestEntity> requestsList;
     private Map<String, RequestEntity> idToRequest;
-    private PropertyChangeSupport observable;
 
     /**
      * contructor for the request manager
@@ -50,14 +49,6 @@ public class RequestManager implements Serializable {
         return idToRequest.get(reqId);
     }
 
-    /**
-     * Add a new observer to observe the changes to this class.
-     * @param observer
-     */
-    public void addObserver(PropertyChangeListener observer, String reqId) {
-        RequestEntity req = getRequestEntity(reqId);
-        req.addObserver(observer);
-    }
 
     /**
      * to update an entity
@@ -67,6 +58,16 @@ public class RequestManager implements Serializable {
         RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
     }
+    public ArrayList<RequestEntity> getRequestsForPersonId(String personId){
+        ArrayList<RequestEntity> lst = new ArrayList<RequestEntity>();
+        for(RequestEntity req: this.requestsList){
+            if(req.getRequestingUserId().equals(personId)){
+                lst.add(req);
+            }
+        }
+        return lst;
+    }
+
 
 }
 

@@ -2,10 +2,10 @@ package View.Account;
 
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttMessageController;
-import Presenter.AttendeeController.AttReqController;
+import Request.AttReqController;
 import Presenter.Central.SubMenu;
 import Presenter.OrganizerController.OrgEventController;
-import Presenter.OrganizerController.OrgReqController;
+import Request.OrgReqController;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
 import Presenter.SpeakerController.SpeEventController;

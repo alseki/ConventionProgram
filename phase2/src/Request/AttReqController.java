@@ -1,10 +1,6 @@
-package Presenter.AttendeeController;
+package Request;
 
-import Presenter.AttendeeController.AttReqMenu;
 import Presenter.Central.SubMenu;
-import Request.RequestManager;
-
-import java.util.Scanner;
 
 public class AttReqController extends SubMenu {
     protected RequestManager reqM;
@@ -12,7 +8,7 @@ public class AttReqController extends SubMenu {
     protected AttReqMenu presenter;
     private String currentUserID;
 
-    AttReqController(SubMenu subMenu, String currentUserID) {
+    public AttReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new AttReqMenu(reqM);
         this.currentUserID = currentUserID;
@@ -31,25 +27,27 @@ public class AttReqController extends SubMenu {
                 case 2:
                     specificRequest();
                     break;
+                    case 3:
+                        myRequests();
+                        break;
             }
         }
         while (currentRequest != 0);
     }
 
-    protected void request(){
+    private void request(){
         presenter.makeRequestPrompt();
         String content = "";//SubMenu.readInput(input);
-        presenter.enterIdPrompt();
-        String id = "";//SubMenu.readInput(input);
-        reqM.createRequest(id, content);
-        // TODO reqM.addObserver(OrganizerManagerreqs);
-        // TODO reqM.addObeserver(currentPerson)
+        reqM.createRequest(this.currentUserID, content);
     }
-    protected void specificRequest(){
+    private void specificRequest(){
         presenter.seeSpecificRequestPrompt();
         String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);
 
+    }
+    private void myRequests(){
+        presenter.myRequests(currentUserID);
     }
 
 

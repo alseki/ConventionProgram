@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager{
-    private OrganizerManagerReqs reqs;
+
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
-        this.reqs =  new OrganizerManagerReqs();
+
     }
 
 
@@ -109,9 +109,6 @@ public class OrganizerManager extends PersonManager{
         usernameToPerson.put(username,org);
     }
 
-    public boolean getStatus(String requestId){
-        return reqs.getStatus(requestId);
-    }
 
 
 }
