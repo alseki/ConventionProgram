@@ -19,6 +19,7 @@ import java.util.Scanner;
 
 public class AttendeeController extends PersonController {
     private AttendeeManager manager;
+    private String[] options;
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {
@@ -54,7 +55,7 @@ public class AttendeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[4];
+        options = new String[4];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
         options[2] = "Events Menu";
         options[3] = "Requests Menu";

@@ -23,7 +23,7 @@ import Request.RequestManager;
 public class SpeakerController extends PersonController {
     private String currentUserID;
     private SpeakerManager manager;
-    String[] arrMenuOptions;
+    private String[] options;
 
     public SpeakerController(SpeakerManager manager, RoomManager rooms, EventManager events,
                              MessageManager messages, ChatManager chats, RequestManager requests) {
@@ -52,8 +52,8 @@ public class SpeakerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[4];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        options  = new String[3];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
         options[3] = "Event Menu";
         return options;
     }

@@ -25,6 +25,7 @@ public class OrganizerController extends PersonController {
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
+    private String[] options;
 
 
     public OrganizerController(OrganizerManager manager, SpeakerManager sm, RoomManager rooms,
@@ -74,11 +75,11 @@ public class OrganizerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[6];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "Attendee Event Menu";
-        options[4] = "Attendee Requests Menu";
-        options[5] = "Organizer Event Menu";
+        options  = new String[5];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
+        options[2] = "Attendee Event Menu";
+        options[3] = "Attendee Requests Menu";
+        options[4] = "Organizer Event Menu";
         return options;
     }
     
