@@ -10,6 +10,7 @@ package View;
 import Presenter.Central.ConventionPlanningSystem;
 import Presenter.PersonController.PersonController;
 import View.Central.*;
+import View.Central.Account.Account;
 
 import javax.swing.*;
 import java.awt.*;
@@ -106,19 +107,6 @@ public class GUIView implements ActionListener {
     }
 
 
-    private PersonAccount account(PersonController controller) {
-        switch (accountChoice) {
-            case 1:
-                return new AttendeeAccount(controller);
-            case 2:
-                return new OrganizerAccount(controller);
-            case 3:
-                return new SpeakerAccount(controller);
-            default:
-                return null;
-        }
-    }
-
     /**
      * Detects changes to component parts of the GUIView
      * @param event the event that's happened
@@ -158,8 +146,7 @@ public class GUIView implements ActionListener {
                     accountChoice();
                 }
                 else {
-                    PersonAccount view = account(controller);
-                    view.run();
+                    new Account(controller);
                 }
             }
         }

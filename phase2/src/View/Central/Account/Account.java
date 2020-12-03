@@ -1,5 +1,6 @@
-package View.Central;
+package View.Central.Account;
 
+import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
 
@@ -14,23 +15,21 @@ import java.util.ArrayList;
 // Date Created: 11/11/2020
 // Date Modified: 13/11/2020
 
-public abstract class PersonAccount implements ActionListener {
+public class Account implements ActionListener {
     PersonController controller;
-    String[] arrMenuOptions;
+    AccountViewFactory accountViewFactory = new AccountViewFactory();
+    String[] menuOptions;
     JFrame frame;
     JPanel contentPane;
-    ArrayList<String> menuOptions = new ArrayList<>();
     JComboBox<String> dropDownMenu;
-    //JLabel ;
     JButton logoutButton;
     String menuSelection;
 
-    public PersonAccount(PersonController controller) {
+    public Account(PersonController controller) {
         this.controller = controller;
-        menuOptions.add("Contact Menu");
-        menuOptions.add("Message Menu");
+        this.menuOptions = controller.getMenuOptions();
 
-        frame = new JFrame(); // Create and set up the frame
+        frame = new JFrame(controller.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
@@ -43,37 +42,33 @@ public abstract class PersonAccount implements ActionListener {
         logoutButton.setActionCommand("logout");
         logoutButton.addActionListener(this);
         contentPane.add(logoutButton);
-    }
 
-    public abstract void run();
+        dropDownMenu = new JComboBox<String>(menuOptions);// Generates dropdown menu
+        dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
+        dropDownMenu.setSelectedIndex(0);
+        dropDownMenu.addActionListener(this);
+        contentPane.add(dropDownMenu);
 
-    public void ContactMenu() {
-    }
-
-    public void MessageMenu() {
-
+        // Make frame
+        frame.setContentPane(contentPane);// Add content pane to frame
+        frame.pack();// Size and then display the frame.
+        frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
+        JComboBox<String> comboBox = (JComboBox<String>)event.getSource();
+        menuSelection = (String)comboBox.getSelectedItem();
+
         if (eventName.equals("logout")) {
             // TODO save, return to gui menu
             return; // FIXME
         }
-
-        JComboBox<String> comboBox = (JComboBox<String>)event.getSource();
-        menuSelection = (String)comboBox.getSelectedItem();
-
-        if (menuSelection == "Contact Menu") {
-            // TODO call ContactMenu(), contactcontroller
-            return; // FIXME
-        }
-
-        if (menuSelection == "Message Menu") {
-            // TODO call MessageMenu(), messagecontroller
-            return; // FIXME
+        else {
+            SubMenu subAccountController = controller.createController(menuSelection);
+            accountViewFactory.construct(subAccountController);
         }
 
     }

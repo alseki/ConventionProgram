@@ -34,17 +34,19 @@ public class AttendeeController extends PersonController {
     /**
      * Creates the next controller according to the user's menu choice
      */
-    public SubMenu createController(int choice) {
+    public SubMenu createController(String choice) {
         if (super.loggedIn) {
-            switch (choice) {
-                case 1:
-                    return new ContactController(this, currentUserID);
-                case 2:
-                    return new AttMessageController(this, currentUserID, manager);
-                case 3:
-                    return new AttEventController(this, currentUserID, manager);
-                case 4:
-                    return new AttReqController(this, currentUserID);
+            if (choice.equals(options[0])) {
+                return new ContactController(this, currentUserID);
+            }
+            else if (choice.equals(options[1])) {
+                return new AttMessageController(this, currentUserID, manager);
+            }
+            else if (choice.equals(options[2])) {
+                return new AttEventController(this, currentUserID, manager);
+            }
+            else if (choice.equals(options[3])){
+                return new AttReqController(this, currentUserID);
             }
         }
         return null;
@@ -52,10 +54,10 @@ public class AttendeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options  = new String[5];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
-        options[3] = "View your Event information";
-        options[4] = "View your Requests";
+        options  = new String[4];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
+        options[2] = "Events Menu";
+        options[3] = "Requests Menu";
         return options;
     }
 }
