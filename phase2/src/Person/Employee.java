@@ -71,6 +71,12 @@ public class Employee extends Person {
 
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
+        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
+
+    }
+
     // apply notify observers
 
     // get messages from Organizer and from other Employees /**
