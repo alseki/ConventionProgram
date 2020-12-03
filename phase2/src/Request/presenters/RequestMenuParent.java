@@ -1,6 +1,8 @@
-package Request;
+package Request.presenters;
 
 import Presenter.Central.SubMenuPrinter;
+import Request.RequestEntity;
+import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
     protected RequestManager reqM;

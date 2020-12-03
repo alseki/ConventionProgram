@@ -1,13 +1,14 @@
-package Request;
+package Request.controllers;
 
 import Presenter.Central.SubMenu;
+import Request.presenters.OrgReqMenu;
 
 public class OrgReqController extends SubMenu {
     protected int currentRequest;
     protected OrgReqMenu presenter;
     private String currentUserID;
 
-    OrgReqController(SubMenu subMenu, String currentUserID) {
+    public OrgReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new OrgReqMenu(requestManager);
         this.currentUserID = currentUserID;
@@ -26,7 +27,7 @@ public class OrgReqController extends SubMenu {
                     fulfillRequest();
                     break;
                 case 3: // see a sepcific request
-                    getRequest();
+                    specificRequest();
                     break;
                 case 4:
                     request();
@@ -46,7 +47,7 @@ public class OrgReqController extends SubMenu {
     private void seeRequests(){
         presenter.seeRequests();
     }
-    private void getRequest(){
+    private void specificRequest(){
         presenter.seeSpecificRequestPrompt();
         String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);

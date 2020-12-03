@@ -1,15 +1,14 @@
-package Request;
+package Request.presenters;
 
-import Presenter.Central.SubMenuPrinter;
-import Request.RequestEntity;
 import Request.RequestManager;
+import Request.presenters.RequestMenuParent;
 
 // Programmers:
 // Description:
 // Date Created:
 // Date Modified: 02/12/2020
 
-public class AttReqMenu extends RequestMenuParent{
+public class AttReqMenu extends RequestMenuParent {
     protected RequestManager reqM;
     public AttReqMenu(RequestManager reqM){
         super(reqM);
