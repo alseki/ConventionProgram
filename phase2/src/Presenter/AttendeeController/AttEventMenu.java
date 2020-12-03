@@ -42,20 +42,17 @@ public class AttEventMenu extends EventMenu {
 
     /**
      * Prints the list of Events happening in a given room
-     * @param eventList a collection of Event information to be printed
      * @param roomName the name of the room in which the Events are being held
      */
-    public void printRoomEventList(String[] eventList, String roomName) {
-        printEventList(" IN ROOM " + roomName.toUpperCase(), eventList);
+    public String roomEventListTitle(String roomName) {
+        return getEventListTitle("IN ROOM " + roomName.toUpperCase());
     }
 
     /**
      * Prints the list of Events this AttendeeController user has signed up for
      */
-    public void printAttendeeEventList() {
-        String[] evList = {};
-        evList = attendeeManager.getSignedUpEvents(currentUserID).toArray(evList);
-        printEventList(" you have signed up for", evList);
+    public String ownEventListTitle() {
+        return getEventListTitle("you have signed up for");
     }
 
     /**

@@ -4,7 +4,6 @@ import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Event.EventManager;
-import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
@@ -22,13 +21,15 @@ public class MessageMenu implements SubMenuPrinter {
     protected ChatManager chatManager;
     protected MessageManager messageManager;
     protected EventManager eventManager;
+    protected String currentUserID;
 
     public MessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager,
-                       EventManager eventManager) {
+                       EventManager eventManager, String currentUserID) {
         this.eventManager = eventManager;
         this.personManager = personManager;
         this.messageManager = messageManager;
         this.chatManager = chatManager;
+        this.currentUserID = currentUserID;
     }
 
     @Override
@@ -43,39 +44,61 @@ public class MessageMenu implements SubMenuPrinter {
         return options;
     }
 
-    // Prompts
+    // Option 1
 
-    /**
-     * Prompts user to enter ID of the chat.
-     * @param type The type of chat to be printed
-     */
-    public void printChatIdPrompt(String type) {
-        System.out.println("Which " + type + "Chat do you want to check? Enter the chatID.");
+    public String getInboxTitle() {
+        return "-INBOX-";
     }
 
     /**
-     * Tell the User any action is succeed.
+     * Show all the messages this user received in presenter, **sorted by datetime.
      */
-    public void printJobDone(){
-        System.out.println("Done!");
+    protected String[] getInBox() throws NoDataException{
+        try {
+            ArrayList<String> receivedMessages = new ArrayList<>();
+            for (String message: messageManager.getMessageIDs()){
+                if (messageManager.getRecipientId(message).equals(currentUserID)){
+                    receivedMessages.add(message);
+                }
+            }
+
+            return formatMessages(receivedMessages);
+        } catch (NullPointerException e) {
+            throw new NoDataException("message");
+        }
+    }
+
+
+    // Option 2
+
+    public String getOutboxTitle() {
+        return "-OUTBOX-";
     }
 
     /**
-     * Prompts user to enter chatID of the chat want to send message in.
+     * Show all the messages this user sent in presenter, **sorted by datetime.
      */
-    public void printChatIdMessagePrompt(){
-        System.out.println("Which chat do you want to send message to? Enter the chatID.");
+    protected String[] getSentBox() throws NoDataException{
+        try {
+            ArrayList<String> sentMessages = new ArrayList<>();
+            for (String message: messageManager.getMessageIDs()){
+                if (messageManager.getSenderID(message).equals(currentUserID)){
+                    sentMessages.add(message);
+                }
+            }
+
+            return formatMessages(sentMessages);
+        } catch (NullPointerException e) {
+            throw new NoDataException("message");
+        }
     }
 
 
-    /**
-     * Prompts user to enter content of the message.
-     */
-    public void printContentPrompt(){
-        System.out.println("Please enter the content.");
-    }
+    // Option 3
 
-    // Chat summary formatting
+    public String getChatListTitle() {
+        return "-CHATS-";
+    }
 
     /**
      * Get chat formatted as: "[ID]: [ID of the chat]\new line
@@ -83,7 +106,7 @@ public class MessageMenu implements SubMenuPrinter {
      * @param chatID The ID of the Chat that is to be formatted
      * @return Formatted string representation of the chat.
      */
-    public String formatChatString(String chatID) {
+    protected String formatChatString(String chatID) {
         StringBuilder participants = new StringBuilder();
         for (String participantID : chatManager.getPersonIds(chatID)){
             participants.append("\n").append(personManager.getCurrentUsername(participantID));
@@ -92,37 +115,60 @@ public class MessageMenu implements SubMenuPrinter {
     }
 
     /**
-     * Get AnnouncementChat formatted as: "
-     *                                     [Event]: [Name of event]
-     *                                     [ID]: [ID of the chat]\new line
-     * @param chatID The ID of the Chat that is to be formatted
-     * @return Formatted string representation of the chat.
-     * */
-    public String formatAnChatString(String chatID) {
-        try {
-            return eventManager.getEventName(chatManager.getPersonIds(chatID).get(0)) + "\n" + chatID;
-        } catch (Exception e) {
-            return chatID;
-        }
-    } //TODO: update to the specified format(not updated 20/11, 10.50 a.m.)
-
-    /**
-     * Print out a list of formatted chat summaries
+     * Returns a list of formatted chat summaries
      * @param chatIDs The list of IDs the chats to print out
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
      */
-    public void printFormattedChatList(ArrayList<String> chatIDs) throws InvalidChoiceException {
+    public String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
-            if (chatManager.getChatClass(chatIDs.get(i)) != AnnouncementChat.class) {
-                chatList[i] = formatChatString(chat);
-            } else {
-                chatList[i] = formatAnChatString(chat);
-            }
+            chatList[i] = formatChatString(chat);
         }
-        printList(chatList, "chat");
+        return chatList;
+    }
 
+
+    // Option 4
+
+    /**
+     * Prompts user to enter ID of the chat.
+     */
+    public String printChatIdPrompt() {
+        return "Which Chat do you want to check? Enter the chatID.";
+    }
+
+    /**
+     * Show the messages in one chat by chatID.
+     * For Phase 1 we also use this to view Announcements in AnnouncementChat.
+     */
+    public String[] getChat(String chatID) throws InvalidChoiceException {
+        if (chatManager.isChatIDNull(chatID)) {
+            throw new InvalidChoiceException("chat");
+        }
+        return formatMessages(chatManager.getMessageIds(chatID));
+    }
+
+
+    // Option 5
+
+    /**
+     * Prompts user to enter chatID of the chat want to send message in.
+     */
+    public String printChatIdMessagePrompt(){
+        return "Which chat do you want to send message to? Enter the chatID.";
+    }
+
+
+    /**
+     * Prompts user to enter content of the message.
+     */
+    public void printContentPrompt(){
+        System.out.println("Please enter the content of your message.");
+    }
+
+    protected String messageSent() {
+        return "Message sent!";
     }
 
     // Message formatting
@@ -135,27 +181,18 @@ public class MessageMenu implements SubMenuPrinter {
      * @param messageId of the message that is to be formatted.
      * @return Formatted string representation of the message.
      */
-    private String formatMessage(String messageId) {
-        if (messageManager.getRecipientId(messageId) == null) { // TODO: if this check is correct phrase.
-            String eventName = eventManager.getEventName(messageManager.getSenderID(messageId));
-            String time = messageManager.getDateTime(messageId);
-            String message = messageManager.getContent(messageId);
-            return "From: " + eventName + "[Event]" + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
-        } else {
-            String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
-            String receiver = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
-            String time = messageManager.getDateTime(messageId);
-            String message = messageManager.getContent(messageId);
-            return "From: " + sender + "[Username]" + "\n" +
-                    "To: " + receiver + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
-        }
-    } //TODO - updated. see if correct.
+    protected String formatMessage(String messageId) {
+        String sender = personManager.getCurrentUsername(messageManager.getSenderID(messageId));
+        String receiver = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
+        String time = messageManager.getDateTime(messageId);
+        String message = messageManager.getContent(messageId);
+        return "From: " + sender + "[Username]" + "\n" +
+                "To: " + receiver + "\n" +
+                "Time sent:" + time + "\n" +
+                "Message:" + message + "\n";
+    }
 
-    public String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
+    private String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
         if (messageIDs == null || messageIDs.size() == 0) {
             throw new NoDataException("message");
         }
@@ -165,25 +202,5 @@ public class MessageMenu implements SubMenuPrinter {
         }
         String[] messages = {};
         return messageInChat.toArray(messages);
-    }
-
-
-    // Entire chat formatting
-
-    /**
-     * Show the messages in one chat by chatID.
-     * For Phase 1 we also use this to view Announcements in AnnouncementChat.
-     */
-    public void printChat(String chatID) throws InvalidChoiceException {
-        if (chatManager.isChatIDNull(chatID)) {
-            throw new InvalidChoiceException("chat");
-        }
-        if (chatManager.getChatClass(chatID) != AnnouncementChat.class) {
-            System.out.println("\n\n" + formatChatString(chatID));
-            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
-        } else  {
-            System.out.println("\n\n" + formatAnChatString(chatID));
-            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
-        }
     }
 }

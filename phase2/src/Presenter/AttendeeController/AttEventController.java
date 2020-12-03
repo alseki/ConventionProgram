@@ -39,7 +39,7 @@ public class AttEventController extends SubMenu {
                     // return to main menu
                     break;
                 case 1:
-                    try {
+                    /*try {
                         String roomID = this.getRoomChoice();
                         if (roomID.equals("1")) {
                             presenter.printEventList();
@@ -49,7 +49,7 @@ public class AttEventController extends SubMenu {
                         }
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
-                    }
+                    }*/
                     break;
                 case 2:
                     presenter.printAddEventPrompt();
@@ -70,7 +70,7 @@ public class AttEventController extends SubMenu {
                     }
                     break;
                 case 4:
-                    presenter.printAttendeeEventList();
+                    //presenter.printAttendeeEventList();
                     break;
             }
         }
@@ -84,7 +84,7 @@ public class AttEventController extends SubMenu {
      * Takes user input to pick a Room for which that user wishes to view the Events held there
      * @return the ID of the Room chosen
      */
-    private String getRoomChoice() throws InvalidChoiceException {
+   /* private String getRoomChoice() throws InvalidChoiceException {
         presenter.printRoomChoicePrompt();
         String room = "";//SubMenu.readInput(input);
         if (room.equals("0")) {
@@ -99,7 +99,7 @@ public class AttEventController extends SubMenu {
         } else {
             throw new InvalidChoiceException("room");
         }
-    }
+    }*/
 
     /**
      * Tries to sign user up for an Event

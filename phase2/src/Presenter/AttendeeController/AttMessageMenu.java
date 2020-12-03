@@ -9,6 +9,7 @@ package Presenter.AttendeeController;
 import Event.EventManager;
 import Message.*;
 import Person.PersonManager;
+import Presenter.Exceptions.OverwritingException;
 import Presenter.PersonController.MessageMenu;
 
 
@@ -16,8 +17,8 @@ public class AttMessageMenu extends MessageMenu {
 
 
     public AttMessageMenu(PersonManager personManager, MessageManager messageManager, ChatManager chatManager,
-                          EventManager eventManager) {
-        super(personManager, messageManager, chatManager, eventManager);
+                          EventManager eventManager, String currentUserID) {
+        super(personManager, messageManager, chatManager, eventManager, currentUserID);
     }
 
     @Override
@@ -49,32 +50,67 @@ public class AttMessageMenu extends MessageMenu {
     /**
      * Tell the User the chat is created and the ID.
      */
-    public void printChatCreated(String chatID) {
-        System.out.println("Chat created! The ID is: " + chatID);
+    public String printChatCreated(String chatID) {
+        return "Chat created! The ID is: " + chatID;
     }
-
-    /**
-     * Only tell the User that the chat is created.
-     */
-    public void printChatCreated(){System.out.println("Chat created!"); }
-
-    /**
-     * Tells the User the ID.
-     */
-    public void printID(String chatID){System.out.println("The ID is: " + chatID);}
 
     /**
      * Tell the User that the chat was NOT created.
      */
-    public void printChatNotCreated(){System.out.println("Whoops! The Chat was NOT created!");}
+    public String printChatNotCreated(Exception e){
+        return "Whoops! The Chat was NOT created!\n" + printException(e);
+    }
 
     /**
      * Tell the User that there already exists a Chat with same members as the input.
      */
-    public void printChatExists(){System.out.println("That Chat already exists."); }
+    public String printChatExists(String chatID){
+        return printChatNotCreated(new OverwritingException("chat")) + "\nThe ID is: " + chatID;
+    }
+}
+
+class AnnouncementMessageMenu extends AttMessageMenu {
+
+    protected AnnouncementMessageMenu(PersonManager personManager, MessageManager messageManager,
+                                          ChatManager chatManager, EventManager eventManager, String currentUserID) {
+        super(personManager, messageManager, chatManager, eventManager, currentUserID);
+    }
 
     /**
-     * Tell the User that a Chat cannot be created by yourself.
-     */
-    public void printSoloChatNotAllowed(){System.out.println("You cannot create a Chat by yourself.");}
+     * Get AnnouncementChat formatted as: "
+     *                                     [Event]: [Name of event]
+     *                                     [ID]: [ID of the chat]\new line
+     * @param chatID The ID of the Chat that is to be formatted
+     * @return Formatted string representation of the chat.
+     * */
+    @Override
+    protected String formatChatString(String chatID) {
+        try {
+            return eventManager.getEventName(chatManager.getPersonIds(chatID).get(0)) + "\n" + chatID;
+        } catch (Exception e) {
+            return chatID;
+        }
+    }
+
+    @Override
+    protected String formatMessage(String messageId) {
+        String eventName = eventManager.getEventName(messageManager.getSenderID(messageId));
+        String time = messageManager.getDateTime(messageId);
+        String message = messageManager.getContent(messageId);
+        return "From: " + eventName + "[Event]" + "\n" +
+                "Time sent:" + time + "\n" +
+                "Message:" + message + "\n";
+    }
+
+    @Override
+    public String getChatListTitle() {
+        return "-ANNOUNCEMENT CHANNELS-";
+    }
+
+    @Override
+    public String printChatIdPrompt() {
+        return "Which Announcement channel do you want to check? Enter the chatID.";
+    }
+
+
 }

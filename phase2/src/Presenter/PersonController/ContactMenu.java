@@ -31,11 +31,11 @@ public class ContactMenu implements SubMenuPrinter {
     /**
      * Prints a list of the user's contacts
      */
-    public void printContactList(ArrayList<String> contactList) throws InvalidChoiceException {
+    public String[] printContactList(ArrayList<String> contactList) throws InvalidChoiceException {
         System.out.println('\n' + "-CONTACTS-");
         String[] clist = {};
         clist = contactList.toArray(clist);
-        printList(clist, "contact");
+        return clist;
     }
 
     /**

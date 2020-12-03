@@ -17,144 +17,16 @@ public class MessageController extends SubMenu {
 
     public MessageController (SubMenu subMenu, String currentUserID) {
         super(subMenu);
-        presenter = new MessageMenu(personManager, messageManager, chatManager, eventManager);
+        presenter = new MessageMenu(personManager, messageManager, chatManager, eventManager, currentUserID);
         this.currentUserID = currentUserID;
     }
 
     /**
-     * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     */
-    public void menuChoice() {
-        do {
-            switch (1) {
-                case 0:
-                    // return to main menu
-                    break;
-                case 1: //Check your inbox
-                    inBox();
-                    break;
-                case 2: //Check your sent box
-                    sentBox();
-                    break;
-                case 3: //View the chat list
-                    try {
-                        viewChats(personManager.getChats(currentUserID));
-                    } catch (NullPointerException e) {
-                        System.out.println("huh?");
-                    }
-                    break;
-                case 4: //View the messages in a chat
-                    displayChat();
-                    break;
-                case 5: //Send a message
-                    sendMessageChoice();
-                    break;
-            }
-        }
-        while (currentRequest != 0);
-    }
-
-    // Option 1
-
-    /**
-     * Show all the messages this user received in presenter, **sorted by datetime.
-     */
-    protected void inBox(){
-        try {
-            ArrayList<String> receivedMessages = new ArrayList<>();
-            for (String message: messageManager.getMessageIDs()){
-                if (messageManager.getRecipientId(message).equals(currentUserID)){
-                    receivedMessages.add(message);
-                }
-            }
-
-            presenter.printList(presenter.formatMessages(receivedMessages), "message");
-        } catch (NullPointerException e) {
-            presenter.printException(new NoDataException("message"));
-        } catch (NoDataException e) {
-            presenter.printException(e);
-        }
-    }
-
-    // Option 2
-
-    /**
-     * Show all the messages this user sent in presenter, **sorted by datetime.
-     */
-    protected void sentBox(){
-        try {
-            ArrayList<String> sentMessages = new ArrayList<>();
-            for (String message: messageManager.getMessageIDs()){
-                if (messageManager.getSenderID(message).equals(currentUserID)){
-                    sentMessages.add(message);
-                }
-            }
-
-            presenter.printList(presenter.formatMessages(sentMessages), "message");
-        } catch (NullPointerException e) {
-            presenter.printException(new NoDataException("message"));
-        } catch (NoDataException e) {
-            presenter.printException(e);
-        }
-    }
-
-    // Option 3
-
-    /**
-     * Show the chatList with this User inside with its ID and participants' IDs.
-     * Chats formatted like so:
-     *              [ID]: [ID of the chat]\new line
-     *              [Participants]: [ID of the Participants]\newline
-     *              [ID]: [ID of the chat]\new line
-     *              [Participants]: [ID of the Participants]\newline
-     *              ...
-     *
-     */
-    protected void viewChats(ArrayList<String> chatIDs) {
-        try {
-            presenter.printFormattedChatList(chatIDs);
-        } catch (InvalidChoiceException e) {
-            presenter.printException(e);
-        }
-    }
-
-    // Option 4
-
-    /**
-     * Displays a chat
-     * @param type The type of chat it is (e.g. "" for a normal chat, "Announcement" for an AnnouncementChat)
-     */
-    protected void displayChat(String type) {
-        presenter.printChatIdPrompt(type);
-        try {
-            presenter.printChat("a");//SubMenu.readInput(input));
-        } catch (InvalidChoiceException e) {
-            presenter.printException(e);
-        }
-    }
-
-    /**
-     * Displays a chat
-     */
-    protected void displayChat() {
-        displayChat("");
-    }
-
-
-    /**
      * Sends a new Message
      */
-    protected void sendMessageChoice() {
-        presenter.printChatIdMessagePrompt();
-        String chatId = "";//= SubMenu.readInput(input);
-        presenter.printContentPrompt();
-        String content = "";// = SubMenu.readInput(input);
-        try {
-            sendMessage(chatId, content);
-            presenter.printJobDone();
-        } catch (InvalidChoiceException e) {
-            presenter.printException(e);
-        }
+    protected String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
+        sendMessage(ID, content);
+        return presenter.messageSent();
     }
 
 

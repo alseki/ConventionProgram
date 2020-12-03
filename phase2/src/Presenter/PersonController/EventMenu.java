@@ -13,9 +13,9 @@ import Person.PersonManager;
 // Date Modified: 02/12/2020
 
 public abstract class EventMenu implements SubMenuPrinter {
-    RoomManager rooms;
-    EventManager events;
-    PersonManager persons;
+    protected RoomManager rooms;
+    protected EventManager events;
+    protected PersonManager persons;
 
     public EventMenu(RoomManager rooms, EventManager events, PersonManager persons) {
         this.rooms = rooms;
@@ -23,37 +23,37 @@ public abstract class EventMenu implements SubMenuPrinter {
         this.persons = persons;
     }
 
-    public void printRoomList(){
+    public String[] getRoomList() throws NoDataException{
         try {
-            printList(rooms.getRoomNames(), "room");
+            return rooms.getRoomNames();
         }
-        catch (NoDataException e) {
-            printException(e);
+        catch (NullPointerException e) {
+            throw new NoDataException("room");
         }
     }
 
-    public void printEventList() {
-        printEventList("", events.getEventIDs());
+    public String getEventListTitle(){
+        return " -EVENTS-";
     }
 
-    public void printEventList(String condition, String[] eventIDList) {
-        System.out.println("\n-EVENTS" + condition.toUpperCase() + "-");
+    protected String getEventListTitle(String condition){
+        return "\n-EVENTS " + condition.toUpperCase() + "-";
+    }
+
+    protected String[] printEventList(String[] eventIDList) throws InvalidChoiceException {
         try {
             String[] events = new String[eventIDList.length];
             for (int i  = 0; i < eventIDList.length; i++) {
                 events[i] = formatEvent(eventIDList[i]);
             }
-            printList(events, "event");
+            return events;
         }
         catch (NullPointerException e) {
-            printException(new InvalidChoiceException("event"));
-        }
-        catch (InvalidChoiceException e) {
-            printException(e);
+            throw new InvalidChoiceException("event");
         }
     }
 
-    public String formatEvent(String eventID) throws InvalidChoiceException  {
+    private String formatEvent(String eventID) throws InvalidChoiceException  {
         try {
             StringBuilder e = new StringBuilder();
             e.append(events.getEventType(eventID).toString());

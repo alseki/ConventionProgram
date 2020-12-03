@@ -49,16 +49,6 @@ public class OrgReqMenu implements SubMenuPrinter {
     }
 
     /**
-     * this is just for proper inheritance
-     * @param list
-     * @param type
-     * @throws NoDataException
-     */
-    @Override
-    public void printList(String[] list, String type) throws NoDataException {
-
-    }
-    /**
      * prompt the get request Id for a request
      */
     public void seeSpecificRequestPrompt(){

@@ -51,11 +51,11 @@ public class OrgEventController extends SubMenu {
                     }
                     break;
                 case 2:
-                    try {
+                    /*try {
                         createEventPrompt();
                     } catch (InvalidChoiceException e) {
                         presenter.printException(e);
-                    }
+                    }*/
                     break;
                 case 3:
                     try {
@@ -104,7 +104,7 @@ public class OrgEventController extends SubMenu {
     /**
      * Prompts the user to input the information for the Event they wish to add
      */
-    private void createEventPrompt() throws InvalidChoiceException {
+    /*private void createEventPrompt() throws InvalidChoiceException {
         presenter.printCreateEventPrompt();
         presenter.printEventTypePrompt();
         EventType type = chooseEventType();
@@ -122,7 +122,7 @@ public class OrgEventController extends SubMenu {
         if (!created) {
             presenter.printCapacityError();
         }
-    }
+    }*/
 
     /**
      * Prompts the user to choose a type for the Event they wish to add
@@ -145,7 +145,7 @@ public class OrgEventController extends SubMenu {
      * Prompts the user to choose a Room from the list of existing Rooms
      * @return The name of the Room they have chosen
      */
-    private String chooseRoom() throws InvalidChoiceException {
+    /*private String chooseRoom() throws InvalidChoiceException {
         String name = "";//SubMenu.readInput(input);
         if (name.equals("0")) {
             presenter.printRoomList();
@@ -157,7 +157,7 @@ public class OrgEventController extends SubMenu {
         else {
             throw new InvalidChoiceException("room");
         }
-    }
+    }*/
 
     /**
      * Prompts the user to choose a valid start time for the new Event

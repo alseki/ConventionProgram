@@ -7,6 +7,7 @@ package Presenter.AttendeeController;
 
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.InvalidFormatException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.Exceptions.OverwritingException;
 import Presenter.PersonController.MessageController;
@@ -21,50 +22,15 @@ public class AttMessageController extends MessageController {
     public AttMessageController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager) {
         super(subMenu, currentUserID);
         this.attendeeManager = attendeeManager;
-        presenter = new AttMessageMenu(attendeeManager, messageManager, chatManager, eventManager);
+        presenter = new AttMessageMenu(attendeeManager, messageManager, chatManager, eventManager, currentUserID);
     }
 
-    /**
-     * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     */
-    @Override
-    public void menuChoice() {
-        do {
-            switch (currentRequest) {
-                case 0:
-                    // return to main menu
-                    break;
-                case 1: //Check your inbox
-                    inBox();
-                    break;
-                case 2: //Check your sent box
-                    sentBox();
-                    break;
-                case 3: //View the chat list
-                    viewChats(attendeeManager.getChats(currentUserID));
-                    break;
-                case 4: //View the messages in a chat
-                    displayChat();
-                    break;
-                case 5: //Send a message
-                    sendMessageChoice();
-                    break;
-                case 6: //View the announcement chat list
-                    viewChats(attendeeManager.getAnChats(currentUserID));
-                    break;
-                case 7:
-                    //View the announcements in an announcement chat
-                    displayChat("Announcement");
-                    break;
-                case 8: //Create a chat
-                    createChatChoice();
-                    break;
-                case 9: //Create a group chat
-                    createGroupchatChoice();
-                    break;
-            }
-        }
-        while (currentRequest != 0);
+    public AttMessageMenu getChatMenu() {
+        return presenter;
+    }
+
+    public AttMessageMenu getAnChatMenu() {
+        return new AnnouncementMessageMenu(personManager, messageManager, chatManager, eventManager, currentUserID);
     }
 
     // Option 8
@@ -72,45 +38,40 @@ public class AttMessageController extends MessageController {
     /**
      * Creates a new Chat
      */
-    private void createChatChoice() {
-        /*presenter.printContactUsernamePrompt();
+    /*private String createChatChoice(String username) {
         try {
-            String chatID = createChat(SubMenu.readInput(input));
-            if(chatID!=null){presenter.printID(chatID);}
+            String chatID = createChat(username);
+            if(chatID!=null){return presenter.printChatCreated(chatID);}
         } catch (InvalidChoiceException e) {
-            presenter.printException(e);
-        }*/
-    }
+            return presenter.printChatNotCreated(e);
+        }
+    }*/
 
 
     /**
      * Creates new Chat if contact is on contactList
      * @param contactUsername the username of the contact the current user wants create a Chat with
-     * @return chatID iff new Chat was created and added to user's Chat list and contact's contactList
+     * @return A message that contains the chat ID if the chat was created or already exists;
+     * an error message, otherwise
      */
 
     private String createChat(String contactUsername) throws InvalidChoiceException {
         String contactID = attendeeManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
-            throw new InvalidChoiceException("user");
+            return presenter.printChatNotCreated(new InvalidChoiceException("user"));
         }
         if (chatManager.existChat(currentUserID, contactID)){
             String chatID = chatManager.findChat(currentUserID, contactID);
-            presenter.printChatNotCreated();
-            presenter.printChatExists();
-            return chatID;
+            return presenter.printChatExists(chatID);
         }
         else if (currentUserID.equals(contactID)){
-            presenter.printChatNotCreated();
-            presenter.printSoloChatNotAllowed();
-            return null;
+            return presenter.printChatNotCreated(new
+                    InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
         }else {
             String chatID = chatManager.createChat(currentUserID, contactID);
             attendeeManager.addChat(contactID, chatID);
             attendeeManager.addChat(currentUserID, chatID);
-            presenter.printJobDone();
-            presenter.printChatCreated();
-            return chatID;
+            return presenter.printChatCreated(chatID);
         }
     }
 
@@ -119,9 +80,9 @@ public class AttMessageController extends MessageController {
     /**
      * Creates a new GroupChat
      */
-    private void createGroupchatChoice() {
+    /*private void createGroupchatChoice() {
         presenter.printContactUsernamesPrompt();
-        /*String contacts = SubMenu.readInput(input);
+        String contacts = SubMenu.readInput(input);
         String[] a = contacts.split(",");
         ArrayList<String> contactlist = new ArrayList<>(Arrays.asList(a));
         if (contactlist.isEmpty()) {
@@ -150,28 +111,32 @@ public class AttMessageController extends MessageController {
         } catch (InvalidChoiceException e) {
             presenter.printChatNotCreated();
             presenter.printException(e);
-        }*/
-    }
+        }
+    }*/
 
     /**
      * Create a new group chat if contacts are in this user's contactlist.
      * @param contactIDs the ArrayList of contacts' IDs.
-     * @return the chatID.
+     * @return A message that contains the chat ID if the chat was created or already exists;
+     * an error message, otherwise
      */
-    private String createGroupChat(ArrayList<String> contactIDs) throws InvalidChoiceException {
-        if (this.chatManager.existChat(currentUserID, contactIDs)) { //if there already exist a desired Chat
-            String chatID = chatManager.findChat(currentUserID, contactIDs);
-            presenter.printID(chatID);
-            throw new OverwritingException("chat");
+    private String createGroupChat(ArrayList<String> contactIDs) {
+        if (contactIDs == null || contactIDs.size() == 0) {
+            return presenter.printChatNotCreated(new InvalidChoiceException("user"));
         }
-        else if ((contactIDs.size()==1)&&(contactIDs.contains(currentUserID))){ //if it's trying to create Chat by itself
-            throw new NoDataException("user");
+        else if (contactIDs.size() == 1 && currentUserID.equals(contactIDs.get(0))){
+            return presenter.printChatNotCreated(new
+                    InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
+        }
+        else if (this.chatManager.existChat(currentUserID, contactIDs)) { //if there already exist a desired Chat
+            String chatID = chatManager.findChat(currentUserID, contactIDs);
+            return presenter.printChatExists(chatID);
         }
         else {
             String chatID = chatManager.createChat(currentUserID, contactIDs);
             personManager.addChat(currentUserID, chatID);
             for (String contact: contactIDs){personManager.addChat(contact, chatID);}
-            return chatID;
+            return presenter.printChatCreated(chatID);
         }
     }
 
