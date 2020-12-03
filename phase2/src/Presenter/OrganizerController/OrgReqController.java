@@ -7,20 +7,11 @@ public class OrgReqController extends SubMenu {
     protected OrgReqMenu presenter;
     private String currentUserID;
 
-    /**
-     * construcro roganizer equest controller
-     * @param subMenu submenu
-     * @param currentUserID currentuserID string
-     */
     OrgReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new OrgReqMenu(requestManager);
         this.currentUserID = currentUserID;
     }
-
-    /**
-     * menuchoices
-     */
 
     public void menuChoice() {
         do {
@@ -58,8 +49,7 @@ public class OrgReqController extends SubMenu {
         String id = "";//SubMenu.readInput(input);
         presenter.seeRequest(id);
     }
-
-    private void request(){
+    protected void request(){
         presenter.makeRequestPrompt();
         String content = "";//SubMenu.readInput(input);
         presenter.enterIdPrompt();

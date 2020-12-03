@@ -32,7 +32,6 @@ public class Account implements ActionListener {
 
     public void setup() {
         frame = new JFrame(controller.getMenuTitle()); // Create and set up the frame
-        JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
@@ -67,8 +66,6 @@ public class Account implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
-
         JComboBox<String> comboBox = (JComboBox<String>)event.getSource();
         menuSelection = (String)comboBox.getSelectedItem();
 

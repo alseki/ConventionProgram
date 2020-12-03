@@ -22,7 +22,7 @@ public class MainMenuView implements ActionListener {
     JFrame frame;
     JComboBox<String> dropDownMenu;
     JPanel contentPane;
-    JLabel introMessage, accountChoiceMessage, loginMessage, savedMessage;
+    JLabel introMessage, accountChoiceMessage, savedMessage;
     JButton startButton, continueButton, submitAccountChoiceButton, okayButton, saveButton;
     ConventionPlanningSystem cps;
     Account currAccount;
@@ -113,6 +113,7 @@ public class MainMenuView implements ActionListener {
         submitAccountChoiceButton.setVisible(false);
         saveButton.setVisible(false);
         accountChoiceMessage.setVisible(false);
+        dropDownMenu.setVisible(false);
 
         frame.setVisible(true);
         frame.setTitle(cps.getIntroTitle());

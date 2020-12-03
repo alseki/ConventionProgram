@@ -9,11 +9,6 @@ public class Main {
     public static void main(String[] args) {
         MainMenuView view = new MainMenuView();
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run() {
-                view.run();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(view::run);
     }
 }
