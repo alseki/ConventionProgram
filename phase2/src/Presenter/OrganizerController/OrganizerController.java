@@ -25,12 +25,12 @@ public class OrganizerController extends PersonController {
     private AttendeeManager attendeeManager;
 
     /**
-     * contructor for organizer contorller
+     * constructor for organizer controller
      * @param manager OrganizerManager
      * @param sm SpeakerManager
-     * @param rooms roomamanger
-     * @param events eventmanger
-     * @param messages messagemanerg
+     * @param rooms roommanager
+     * @param events eventmanager
+     * @param messages messagemanager
      * @param chats chatmanager
      * @param am attendeemanager
      * @param rm requestmanager
@@ -45,11 +45,11 @@ public class OrganizerController extends PersonController {
     }
 
     /**
-     * contructor for organizer contoller
+     * contructor for organizer controller
      * @param subMenu submenu
      * @param sm    speaker manager
-     * @param am attendee manaerg
-     * @param om organzermanager
+     * @param am attendee manager
+     * @param om organizermanager
      */
     public OrganizerController(SubMenu subMenu, SpeakerManager sm, AttendeeManager am, OrganizerManager om) {
         super(subMenu, 2);
@@ -77,10 +77,10 @@ public class OrganizerController extends PersonController {
             else if (choice.equals(options[3])){
                 return new OrgReqController(this, currentUserID);
             }
+//            else if (choice.equals(options[4])) {
+//                return new OrgReqController(this, currentUserID);
+//            }
             else if (choice.equals(options[4])) {
-                return new OrgReqController(this, currentUserID);
-            }
-            else if (choice.equals(options[5])) {
                 return new OrgEventController(this, currentUserID, speakerManager);
             }
         }

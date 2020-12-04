@@ -20,20 +20,20 @@ public class OrgReqController extends SubMenu {
                 case 0:
                     // return to main menu
                     break;
-                case 1: // see the requests --> must be an organizer
-                    seeRequests();
-                    break;
-                case 2: // fulfill requests --> must be an organizer
-                    fulfillRequest();
-                    break;
-                case 3: // see a specific request
+                case 1: // see the requests --> must be an organizer or an employee
                     specificRequest();
                     break;
+                case 2: // fulfill requests --> must be an organizer or an employee
+                    seeRequests();
+                    break;
+                case 3: // see a specific request
+                    fulfillRequest();
+                    break;
                 case 4:
-                    request();
+                    request(); // make a request
                     break;
                 case 5:
-                    myRequests();
+                    myRequests(); // see my requests till now
                     break;
             }
         }
