@@ -1,7 +1,6 @@
 package Request.presenters;
 
 import Presenter.Central.SubMenuPrinter;
-import Request.RequestEntity;
 import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
@@ -17,47 +16,39 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
 
     public abstract String[] getMenuOptions();
 
-    public void seeRequest(String reqId){
-        RequestEntity req = reqM.getRequestEntity(reqId);
-        System.out.println(requestFormat() + printRequest(req));
+    public String seeRequest(String reqId){
+        return requestFormat() + printRequest(reqId);
 
     }
     protected String requestFormat(){
-        return "Outstanding Request\n" + "Requests Content \t" + "Requests Id\n";
+        return "Request Id \t" + "Requests Content \t" + "Pending/Fulfilled \t" + "requesting User Id \n";
     }
-    public void myRequests(String userId){
+    public String myRequests(String userId){
         StringBuilder reqs = new StringBuilder();
-        for(RequestEntity req: reqM.getRequestsForPersonId(userId)){
-            reqs.append(printRequest(req));
+        for(String str: reqM.getAllRequestUserIds()){
+            if(printRequest(str).contains(userId)){
+                reqs.append(printRequest(str));
+            }
         }
-        System.out.println(requestFormat() + reqs);
+        return requestFormat() + reqs;
 
     }
-    protected StringBuilder printRequest(RequestEntity req) {
-        StringBuilder reqs = new StringBuilder();
-        reqs.append("\n").append(req.getRequestContent());
-        reqs.append("\t").append(req.getRequestId());
-        if (req.getFulfilled()) {
-            reqs.append("\t").append("Fulfilled");
-
-        } else {
-            reqs.append("\t").append("Pending");
-        }
-        return reqs;
+    protected String printRequest(String reqid) {
+        return reqM.getStringOfRequest(reqid);
     }
     /**
      * prompt for request content
      */
-    public void makeRequestPrompt(){
-        System.out.println("Please enter the content of the Request.");
+    public String makeRequestPrompt(){
+        return "Please enter the content of the Request.";
     }
 
 
     /**
      * prompt the get request Id for a request
      */
-    public void seeSpecificRequestPrompt(){
-        System.out.println("Please enter the request ID for the request you would like to see;");
+    public String seeSpecificRequestPrompt(){
+        return "Please enter the request ID for the request you would like to see;";
     }
 
 }

@@ -16,8 +16,8 @@ public class RequestManager implements Serializable {
      * contructor for the request manager
      */
     public RequestManager(){
-        this.requestsList = new ArrayList<RequestEntity>();
-        idToRequest = new HashMap<String, RequestEntity>();
+        this.requestsList = new ArrayList<>();
+        idToRequest = new HashMap<>();
 
     }
     private void addRequest(RequestEntity req){
@@ -59,7 +59,7 @@ public class RequestManager implements Serializable {
         req.setFulfilled();
     }
     public ArrayList<RequestEntity> getRequestsForPersonId(String personId){
-        ArrayList<RequestEntity> lst = new ArrayList<RequestEntity>();
+        ArrayList<RequestEntity> lst = new ArrayList<>();
         for(RequestEntity req: this.requestsList){
             if(req.getRequestingUserId().equals(personId)){
                 lst.add(req);
@@ -78,6 +78,13 @@ public class RequestManager implements Serializable {
         RequestEntity req = getRequestEntity(reqId);
         return req.toString();
 
+    }
+    public ArrayList<String> getAllRequestUserIds(){
+        ArrayList<String> lst = new ArrayList<>();
+        for(RequestEntity req: requestsList){
+            lst.add(req.getRequestingUserId());
+        }
+        return lst;
     }
 
 }
