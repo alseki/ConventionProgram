@@ -9,7 +9,6 @@ import Request.presenters.RequestMenuParent;
 // Date Modified: 02/12/2020
 
 public class AttReqMenu extends RequestMenuParent {
-    protected RequestManager reqM;
     public AttReqMenu(RequestManager reqM){
         super(reqM);
     }

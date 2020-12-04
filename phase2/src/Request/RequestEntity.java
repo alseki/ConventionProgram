@@ -1,6 +1,10 @@
 package Request;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -14,10 +18,9 @@ import java.util.UUID;
 public class RequestEntity implements Serializable {
     private String requestId;
     private String requestContent;
-    private String eventsConcerned;
     private boolean fulfilled;
     private final String requestingUserId;
-
+    private final ArrayList <String> eventsConcerned;
     /*  Helper class for making this class as an observable  */
 
     /**
@@ -31,7 +34,7 @@ public class RequestEntity implements Serializable {
         this.requestingUserId = requestingUserId;
         this.fulfilled = false;
         this.requestId = UUID.randomUUID().toString();
-
+        eventsConcerned = new ArrayList<String>(); //TAKEOUT
     }
 
     /**
@@ -41,7 +44,7 @@ public class RequestEntity implements Serializable {
      * @param eventsConcerned
      */
 
-    public RequestEntity(String requestContent, String requestingUserId, String eventsConcerned){
+    public RequestEntity(String requestContent, String requestingUserId, ArrayList <String> eventsConcerned){
             this.requestContent = requestContent;
             this.requestingUserId = requestingUserId;
             this.eventsConcerned = eventsConcerned;
@@ -51,7 +54,7 @@ public class RequestEntity implements Serializable {
     }
 
     /**
-     * getter fir fulfilled status
+     * getter fir fulffiled status
      * @return boolean
      */
         public boolean getFulfilled () {
@@ -68,7 +71,7 @@ public class RequestEntity implements Serializable {
 
     /**
      * getter for request content
-     * @return string representing the request content
+     * @return string reqpresenting the request content
      */
     public String getRequestContent () {
             return requestContent;
@@ -82,16 +85,12 @@ public class RequestEntity implements Serializable {
             return this.requestingUserId;
         }
 
-    /**
-     * getter for the events concerned
-     * @return array of strings representing the events indicated in the request
-     */
-    public String getEventsConcerned () {
+        public ArrayList<String> getEventsConcerned () {
             return this.eventsConcerned;
         }
 
     /**
-     * sets this.fulfilled to true, and notifies observers
+     * sets this.fuflified to true, and notifiies observiers
      */
     public void setFulfilled () {
             this.fulfilled = true;
