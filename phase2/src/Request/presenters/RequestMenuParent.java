@@ -1,6 +1,7 @@
 package Request.presenters;
 
 import Presenter.Central.SubMenuPrinter;
+import Request.RequestEntity;
 import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
@@ -65,6 +66,13 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
      */
     public String seeSpecificRequestPrompt(){
         return "Please enter the request ID for the request you would like to see;";
+    }
+
+    /**
+     * prompt the get eventName for a request - this is an option only for employees or organizers
+     */
+    public String seeSpecificRequestPromptByEventname(){
+        return "Please enter the event name to see all request pertaining to this event;";
     }
 
 }

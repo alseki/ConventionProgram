@@ -1,10 +1,6 @@
 package Request;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -20,7 +16,7 @@ public class RequestEntity implements Serializable {
     private String requestContent;
     private boolean fulfilled;
     private final String requestingUserId;
-    private final ArrayList <String> eventsConcerned;
+    private String eventsConcerned;
     /*  Helper class for making this class as an observable  */
 
     /**
@@ -34,17 +30,17 @@ public class RequestEntity implements Serializable {
         this.requestingUserId = requestingUserId;
         this.fulfilled = false;
         this.requestId = UUID.randomUUID().toString();
-        eventsConcerned = new ArrayList<String>(); //TAKEOUT
+
     }
 
     /**
-     * contructor for request entity
+     * contructor for request entity - 2nd type where event name can be entered
      * @param requestContent
      * @param requestingUserId
      * @param eventsConcerned
      */
 
-    public RequestEntity(String requestContent, String requestingUserId, ArrayList <String> eventsConcerned){
+    public RequestEntity(String requestContent, String requestingUserId, String eventsConcerned){
             this.requestContent = requestContent;
             this.requestingUserId = requestingUserId;
             this.eventsConcerned = eventsConcerned;
@@ -85,7 +81,7 @@ public class RequestEntity implements Serializable {
             return this.requestingUserId;
         }
 
-        public ArrayList<String> getEventsConcerned () {
+        public String getEventsConcerned () {
             return this.eventsConcerned;
         }
 
@@ -97,12 +93,12 @@ public class RequestEntity implements Serializable {
         }
 
     /**
-     * To string method for requestentity
+     * To string method for request entity
      * comes in the format of requestId     requestcontent      pending/fulfilled       requestingusedID
      * @return string
      */
     @Override
-    public String toString () {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(requestId);
         sb.append("\t");
@@ -116,7 +112,7 @@ public class RequestEntity implements Serializable {
         }
         sb.append("\t");
         sb.append(requestingUserId);
-        return sb;
+        return sb.toString();
     }
 
     }

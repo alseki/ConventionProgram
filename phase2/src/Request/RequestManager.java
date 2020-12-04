@@ -10,7 +10,7 @@ public class RequestManager implements Serializable {
     private Map<String, RequestEntity> idToRequest;
 
     /**
-     * contructor for the request manager
+     * constructor for the request manager
      */
     public RequestManager(){
         this.requestsList = new ArrayList<>();

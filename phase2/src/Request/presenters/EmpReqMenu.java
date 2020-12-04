@@ -28,7 +28,7 @@ public class EmpReqMenu extends RequestMenuParent {
                                                         // I BELIEVE violate c.a. because requestFormat() and printRequest are coming
                                                         // from an abstract class in the same layer, and (2) it is acceptable in the
                                                         // presenter/controller layer for there to be some interaction. I'll check with Lindsey
-            reqs.append(printRequest(r));
+            reqs.append(printRequest(r.getRequestId()));
         }
         System.out.println(requestFormat() + reqs);
     }
