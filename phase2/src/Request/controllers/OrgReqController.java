@@ -26,7 +26,7 @@ public class OrgReqController extends SubMenu {
                 case 2: // fulfill requests --> must be an organizer
                     fulfillRequest();
                     break;
-                case 3: // see a sepcific request
+                case 3: // see a specific request
                     specificRequest();
                     break;
                 case 4:

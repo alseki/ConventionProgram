@@ -6,7 +6,8 @@ import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
     protected RequestManager reqM;
-    RequestMenuParent(RequestManager reqM){
+
+    public RequestMenuParent(RequestManager reqM){
         this.reqM=reqM;
     }
 
@@ -45,6 +46,21 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
         }
         return reqs;
     }
+
+    protected StringBuilder printRequestWithEvent(RequestEntity req) {
+        StringBuilder reqs = new StringBuilder();
+        reqs.append("\n").append(req.getRequestContent());
+        reqs.append("\t").append(req.getRequestId());
+        reqs.append("\t").append(req.getEventsConcerned());
+        if (req.getFulfilled()) {
+            reqs.append("\t").append("Fulfilled");
+
+        } else {
+            reqs.append("\t").append("Pending");
+        }
+        return reqs;
+    }
+
     /**
      * prompt for request content
      */

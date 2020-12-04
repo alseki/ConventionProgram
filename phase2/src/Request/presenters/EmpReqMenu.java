@@ -8,21 +8,17 @@ import Request.RequestManager;
 // Date Created:
 // Date Modified: 02/12/2020
 
-public class OrgReqMenu extends RequestMenuParent {
-    private RequestManager reqM;
+public class EmpReqMenu extends RequestMenuParent {
+    protected RequestManager reqM;
 
-    /**
-     * contructor
-     * @param reqM a request manager
-     */
-    public OrgReqMenu(RequestManager reqM){
+    public EmpReqMenu(RequestManager reqM) {
         super(reqM);
     }
 
     @Override
     public String[] getMenuOptions() {
         String[] options = {"Return to Main Menu", "View a specific request", "View the Request Board", "Fulfill a request",
-            "Make a request", "See my requests"};
+                "Make a request", "See my requests"};
         return options;
     }
 
@@ -36,6 +32,8 @@ public class OrgReqMenu extends RequestMenuParent {
         }
         System.out.println(requestFormat() + reqs);
     }
+
+
     /**
      * prompt to get requestId for fulfilling
      */
@@ -47,3 +45,4 @@ public class OrgReqMenu extends RequestMenuParent {
         System.out.println("For which event would you like to see if there are outstanding requests, please enter event name.");
     }
 }
+
