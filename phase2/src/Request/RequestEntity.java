@@ -34,14 +34,14 @@ public class RequestEntity implements Serializable {
         this.requestingUserId = requestingUserId;
         this.fulfilled = false;
         this.requestId = UUID.randomUUID().toString();
-        eventsConcerned = new ArrayList<>(); //TAKEOUT
+        eventsConcerned = new ArrayList<String>(); //TAKEOUT
     }
 
     /**
      * contructor for request entity
-     * @param requestContent String representing content
-     * @param requestingUserId STring representinguser id
-     * @param eventsConcerned Arraylist of string with eventIds
+     * @param requestContent
+     * @param requestingUserId
+     * @param eventsConcerned
      */
 
     public RequestEntity(String requestContent, String requestingUserId, ArrayList <String> eventsConcerned){
@@ -116,7 +116,7 @@ public class RequestEntity implements Serializable {
         }
         sb.append("\t");
         sb.append(requestingUserId);
-        return sb.toString();
+        return sb;
     }
 
     }

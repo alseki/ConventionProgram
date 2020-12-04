@@ -5,18 +5,18 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Presenter.Exceptions.InvalidChoiceException;
-import Presenter.Exceptions.OverwritingException;
-import Presenter.Central.SubMenu;
 import Event.EventPermissions;
 import Event.EventType;
 import Person.SpeakerManager;
+import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.OverwritingException;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class OrgEventController extends SubMenu {
 
@@ -241,6 +241,7 @@ public class OrgEventController extends SubMenu {
      */
     private void updateSpeakerChat(String personID, String chatID) {
         this.speakerManager.addChat(personID, chatID);
+
     }
 
     /**
@@ -250,6 +251,7 @@ public class OrgEventController extends SubMenu {
      */
     private void updateSpeakerChatWithAnnouncement(String personID, String announcementChatID) {
         this.speakerManager.addAnnouncementChats(personID, announcementChatID);
+
     }
 
     // OPTION 3

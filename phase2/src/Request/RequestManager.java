@@ -1,8 +1,5 @@
 package Request;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +33,21 @@ public class RequestManager implements Serializable {
         addRequest(req);
         return true;
     }
+
+    /**
+     * creates a request: 2nd type
+     * @param reqUserId the user who is making the request
+     * @param reqContent string fro the content of the request
+     * @param eventsConcerned array of strings if user making request wants to specify the event or room in the heading
+     * @return true
+     */
+    public boolean createRequest(String reqUserId, String reqContent, String eventsConcerned){
+        RequestEntity req = new RequestEntity(reqContent, reqUserId, eventsConcerned);
+        updateMap(reqUserId, req);
+        addRequest(req);
+        return true;
+    }
+
     private void updateMap(String str, RequestEntity req){
         idToRequest.put(str, req);
     }
@@ -48,6 +60,11 @@ public class RequestManager implements Serializable {
     public RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
+
+    public ArrayList<RequestEntity> getAllRequests() {
+        return requestsList;
+    }
+
 
 
     /**

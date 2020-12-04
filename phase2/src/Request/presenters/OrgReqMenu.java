@@ -9,6 +9,7 @@ import Request.presenters.RequestMenuParent;
 // Date Modified: 02/12/2020
 
 public class OrgReqMenu extends RequestMenuParent {
+    private RequestManager reqM;
 
     /**
      * contructor
@@ -25,18 +26,18 @@ public class OrgReqMenu extends RequestMenuParent {
         return options;
     }
 
-    public String seeRequests() {
+    public void seeRequests() {
         StringBuilder reqs = new StringBuilder();
-        for (String str : reqM.getAllRequestUserIds()) {
-            reqs.append(printRequest(str));
-        }
-        return requestFormat() + reqs;
+        /*for (RequestEntity r : reqM.getAllRequests()) { //TODO see if this violates clean architecture
+            reqs.append(printRequest(r));
+        }*/
+        System.out.println(requestFormat() + reqs);
     }
     /**
      * prompt to get requestId for fullfilling
      */
-    public String fulfillRequestPrompt(){
-        return "Which Request Would you like to fulfill, please enter the ID.";
+    public void fulfillRequestPrompt(){
+        System.out.println("Which Request Would you like to fulfill, please enter the ID.");
     }
 
 
