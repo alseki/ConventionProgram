@@ -68,6 +68,17 @@ public class RequestManager implements Serializable {
         return lst;
     }
 
+    /**
+     * get the string format of request with request id
+     * @param reqId string representing the request id
+     * @return string format of request entity
+     */
+
+    public String getStringOfRequest(String reqId){
+        RequestEntity req = getRequestEntity(reqId);
+        return req.toString();
+
+    }
 
 }
 

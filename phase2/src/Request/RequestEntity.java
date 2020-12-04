@@ -96,5 +96,28 @@ public class RequestEntity implements Serializable {
             this.fulfilled = true;
         }
 
+    /**
+     * To string method for requestentity
+     * comes in the format of requestId     requestcontent      pending/fulfilled       requestingusedID
+     * @return string
+     */
+    @Override
+    public String toString () {
+        StringBuilder sb = new StringBuilder();
+        sb.append(requestId);
+        sb.append("\t");
+        sb.append(requestContent);
+        sb.append("\t");
+        if(!this.fulfilled){
+            sb.append("Pending");
+        }
+        else{
+            sb.append("Fulfilled");
+        }
+        sb.append("\t");
+        sb.append(requestingUserId);
+        return sb;
+    }
+
     }
 
