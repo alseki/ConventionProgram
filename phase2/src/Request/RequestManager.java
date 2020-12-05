@@ -57,11 +57,11 @@ public class RequestManager implements Serializable {
      * @param reqId string for request id
      * @return the request entity with request id
      */
-    public RequestEntity getRequestEntity(String reqId){
+    private RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
 
-    public ArrayList<RequestEntity> getAllRequests() {
+    private ArrayList<RequestEntity> getAllRequests() {
         return requestsList;
     }
 
@@ -75,14 +75,16 @@ public class RequestManager implements Serializable {
         RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
     }
-    public ArrayList<RequestEntity> getRequestsForPersonId(String personId){
-        ArrayList<RequestEntity> lst = new ArrayList<>();
+
+
+    public String getRequestStringForPerson(String personId){
+        StringBuilder reqs = new StringBuilder();
         for(RequestEntity req: this.requestsList){
             if(req.getRequestingUserId().equals(personId)){
-                lst.add(req);
+                reqs.append(req.toString());
             }
         }
-        return lst;
+        return reqs.toString();
     }
 
     /**
@@ -93,12 +95,21 @@ public class RequestManager implements Serializable {
 
     public String getStringOfRequest(String reqId){
         RequestEntity req = getRequestEntity(reqId);
-        return req.toString();
+        return req.toString() + "\n";
 
     }
+    public String getStringOfRequestEvent(String reqId){
+        RequestEntity req = getRequestEntity(reqId);
+        return req.toStringEvents();
+    }
+
+    /**
+     * way to get all the requsting user id's
+     * @return ArrrayLis of requesting user id's
+     */
     public ArrayList<String> getAllRequestUserIds(){
         ArrayList<String> lst = new ArrayList<>();
-        for(RequestEntity req: requestsList){
+        for(RequestEntity req: getAllRequests()){
             lst.add(req.getRequestingUserId());
         }
         return lst;

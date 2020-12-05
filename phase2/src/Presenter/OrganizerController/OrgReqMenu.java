@@ -27,10 +27,13 @@ public class OrgReqMenu extends RequestMenuParent {
         return options;
     }
 
+    /**
+     * see all the requests
+     */
     public void seeRequests() {
         StringBuilder reqs = new StringBuilder();
-        for (RequestEntity r : reqM.getAllRequests()) {
-            reqs.append(printRequest(r.getRequestId()));
+        for (String id: reqM.getAllRequestUserIds()) {
+            reqs.append(reqM.getRequestStringForPerson(id));
         }
         System.out.println(requestFormat() + reqs);
     }

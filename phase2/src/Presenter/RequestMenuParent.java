@@ -27,30 +27,16 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
     }
     public String myRequests(String userId){
         StringBuilder reqs = new StringBuilder();
-        for(String str: reqM.getAllRequestUserIds()){
-            if(printRequest(str).contains(userId)){
-                reqs.append(printRequest(str));
-            }
-        }
+        reqs.append(reqM.getRequestStringForPerson(userId));
         return requestFormat() + reqs;
 
     }
-    protected String printRequest(String reqid) {
-        return reqM.getStringOfRequest(reqid);
+    protected String printRequest(String reqId) {
+        return reqM.getStringOfRequest(reqId);
     }
 
-    protected StringBuilder printRequestWithEvent(RequestEntity req) {
-        StringBuilder reqs = new StringBuilder();
-        reqs.append("\n").append(req.getRequestContent());
-        reqs.append("\t").append(req.getRequestId());
-        reqs.append("\t").append(req.getEventsConcerned());
-        if (req.getFulfilled()) {
-            reqs.append("\t").append("Fulfilled");
-
-        } else {
-            reqs.append("\t").append("Pending");
-        }
-        return reqs;
+    protected String printRequestWithEvent(String reqId) {
+        return reqM.getStringOfRequestEvent(reqId);
     }
 
     /**
