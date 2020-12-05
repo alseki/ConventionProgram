@@ -20,7 +20,7 @@ public class Account implements ActionListener {
     JFrame frame;
     JPanel contentPane;
     JComboBox<String> dropDownMenu;
-    JButton logoutButton, okayButton;
+    JButton logoutButton, submitButton;
     String menuSelection;
 
     public Account(PersonController controller) {
@@ -43,10 +43,11 @@ public class Account implements ActionListener {
         logoutButton.setActionCommand("logout");
         contentPane.add(logoutButton);
 
-        okayButton = new JButton("okay"); // Generates okay button
-        okayButton.setLocation(0, 0);
-        okayButton.setActionCommand("okay");
-        contentPane.add(okayButton);
+        submitButton = new JButton("submit"); // Generates submit button
+        submitButton.setLocation(0, 0);
+        submitButton.setActionCommand("submit");
+        submitButton.addActionListener(this);
+        contentPane.add(submitButton);
 
         dropDownMenu = new JComboBox<>(menuOptions);// Generates dropdown menu
         dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
@@ -69,11 +70,14 @@ public class Account implements ActionListener {
         return controller;
     }
 
+    
     @Override
     public void actionPerformed(ActionEvent event) {
-        menuSelection = (String)dropDownMenu.getSelectedItem();
-        SubMenu subAccountController = controller.createController(menuSelection);
-        accountViewFactory.construct(subAccountController);
+        if (event.getActionCommand().equals("submit")) {
+            menuSelection = (String)dropDownMenu.getSelectedItem();
+            SubMenu subAccountController = controller.createController(menuSelection);
+            accountViewFactory.construct(subAccountController);
+        }
     }
 
 }

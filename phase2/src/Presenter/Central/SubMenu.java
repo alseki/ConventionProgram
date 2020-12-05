@@ -50,4 +50,6 @@ public abstract class SubMenu {
                 personManager);
     }
 
+    public abstract SubMenuPrinter getPresenter();
+
 }
