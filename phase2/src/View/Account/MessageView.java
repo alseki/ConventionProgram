@@ -3,10 +3,13 @@ package View.Account;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.MessageController;
 
-public class MessageView implements AccountView {
+import javax.swing.*;
+
+public class MessageView extends AccountView {
     MessageController controller;
 
     public MessageView(SubMenu controller) {
+        super();
         this.controller = (MessageController) controller;
     }
 }

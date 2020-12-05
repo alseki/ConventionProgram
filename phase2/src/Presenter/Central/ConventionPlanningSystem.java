@@ -41,6 +41,8 @@ public class ConventionPlanningSystem {
 
     public String[] getAccountOptions() {
         String [] options = {"Attendee", "Organizer", "Speaker"};
+        // TODO add Employee
+        // TODO add Administrator
         return options;
     }
 
@@ -66,6 +68,8 @@ public class ConventionPlanningSystem {
         } else if (choice == options[2]) {
             SpeakerManager sman = new SpeakerManager(c.personByName, c.personByID);
             PC = (SpeakerController) new SpeakerController(sman, c.rm, c.em, c.mm, c.cm, c.rqm);
+            // TODO add else if branch for Employee
+            // TODO add else if branch for Admin
         } else {
             return null;
         }

@@ -1,7 +1,7 @@
 package Presenter.AttendeeController;
 
 // Programmers: Cara McNeil, Karyn Komatsu, Ran Yi, Sarah Kronenfeld
-// Description: Prints information pertaining to a user's message information
+// Description: Returns information pertaining to a user's message information
 // Date Created: 11/11/2020
 // Date Modified: 02/12/2020
 

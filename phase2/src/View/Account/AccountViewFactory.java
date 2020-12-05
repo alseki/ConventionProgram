@@ -10,34 +10,35 @@ import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
 import Presenter.SpeakerController.SpeEventController;
 
+import javax.swing.*;
+
 public class AccountViewFactory {
 
-    public AccountView construct(SubMenu controller) {
+    public void construct(SubMenu controller) {
         AccountView view = null;
         if (controller instanceof ContactController) {
-            view = new ContactView(controller);
+            new ContactView(controller);
         }
         else if (controller instanceof AttMessageController) {
-            view = new AttMessageView(controller);
+            new AttMessageView(controller);
         }
         else if (controller instanceof AttEventController) {
-            view = new AttEventView(controller);
+            new AttEventView(controller);
         }
         else if (controller instanceof AttReqController) {
-            view = new AttReqView(controller);
+            new AttReqView(controller);
         }
         else if (controller instanceof OrgEventController) {
-            view = new OrgEventView(controller);
+            new OrgEventView(controller);
         }
         else if (controller instanceof OrgReqController) {
-            view = new OrgEventView(controller);
+            new OrgReqView(controller);
         }
         else if (controller instanceof MessageController) {
-            view = new MessageView(controller);
+            new MessageView(controller);
         }
         else if (controller instanceof SpeEventController) {
-            view = new SpeEventView(controller);
+            new SpeEventView(controller);
         }
-        return view;
     }
 }

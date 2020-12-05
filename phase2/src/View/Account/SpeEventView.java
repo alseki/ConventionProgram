@@ -3,10 +3,13 @@ package View.Account;
 import Presenter.Central.SubMenu;
 import Presenter.SpeakerController.SpeEventController;
 
-public class SpeEventView implements AccountView {
+import javax.swing.*;
+
+public class SpeEventView extends AccountView {
     SpeEventController controller;
 
     public SpeEventView(SubMenu controller) {
+        super();
         this.controller = (SpeEventController) controller;
     }
 }

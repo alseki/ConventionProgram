@@ -152,8 +152,6 @@ import Presenter.Exceptions.InvalidChoiceException;
         }
     }
 
-}
-
 //package Presenter.EmployeeController;
 //
 //// Programmer: Karyn Komatsu,
