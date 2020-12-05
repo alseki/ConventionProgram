@@ -1,6 +1,6 @@
 package Presenter.EmployeeController;
 
- Description: Main account page for EmployeeController users.
+ //Description: Main account page for EmployeeController users.
 
 import Event.EventManager;
 import Event.RoomManager;
@@ -12,9 +12,8 @@ import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
 import Presenter.PersonController.PersonController;
 import Request.RequestManager;
-import Presenter.EmployeeController.EmpReqController;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 
 /*
 // RETURN controllers; no void methods
@@ -35,16 +34,39 @@ public class EmployeeController extends PersonController {
 
     /**
      * Returns ID of the Employee-exclusive Chat newly created
-     * @param ownerId ID of the Employee user trying to create this Chat
+     *
+     * @param ownerId  ID of the Employee user trying to create this Chat
      * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
      * @return ID of the newly created Chat
      */
-    public String createEmpChat(String ownerId, ArrayList<String> guestIds){
-    if (manager.typePerson(manager.getCurrentUsername(ownerId))!=4){return null;}
-    for (String guest: guestIds){if (manager.typePerson(manager.getCurrentUsername(guest))!=4){return null;}}
-    return this.chatManager.createChat(ownerId, guestIds);}
-}
-    /*
+    public String createEmpChat(String ownerId, ArrayList<String> guestIds) {
+        if (manager.typePerson(manager.getCurrentUsername(ownerId)) != 4) {
+            return null;
+        }
+        for (String guest : guestIds) {
+            if (manager.typePerson(manager.getCurrentUsername(guest)) != 4) {
+                return null;
+            }
+        }
+        return this.chatManager.createChat(ownerId, guestIds);
+    }
+
+
+    /**
+     * Returns ID of the Organizer-exclusive Chat newly created
+     * @param ownerId ID of the Employee user trying to create this Chat
+     * @param guestIds ArrayList of IDs of the Organizers that wants to join the Chat
+     * @return ID of the newly created Chat
+     */
+    public String createEmpChatOrganizer(String ownerId, ArrayList<String> guestIds) {
+        if (manager.typePerson(manager.getCurrentUsername(ownerId))!=2){return null;}
+        for (String guest: guestIds){
+            if (manager.typePerson(manager.getCurrentUsername(guest))!=2) {
+                return null;}}
+            return this.chatManager.createChat(ownerId, guestIds);
+            }
+
+
 
     @Override
     public SubMenu createController(String choice){
@@ -72,5 +94,5 @@ public class EmployeeController extends PersonController {
         return options;
     }
 
-}*/
+}
 
