@@ -1,9 +1,7 @@
 package View.Account;
 
 import Presenter.Central.SubMenu;
-import Request.controllers.OrgReqController;
-
-import javax.swing.*;
+import Presenter.OrganizerController.OrgReqController;
 
 public class OrgReqView extends AccountView {
     OrgReqController controller;

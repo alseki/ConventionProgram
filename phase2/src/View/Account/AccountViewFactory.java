@@ -2,15 +2,13 @@ package View.Account;
 
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttMessageController;
-import Request.controllers.AttReqController;
+import Presenter.AttendeeController.AttReqController;
 import Presenter.Central.SubMenu;
 import Presenter.OrganizerController.OrgEventController;
-import Request.controllers.OrgReqController;
+import Presenter.OrganizerController.OrgReqController;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
 import Presenter.SpeakerController.SpeEventController;
-
-import javax.swing.*;
 
 public class AccountViewFactory {
 

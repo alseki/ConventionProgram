@@ -1,18 +1,20 @@
-package Request.controllers;
+package Presenter.EmployeeController;
 
 import Presenter.Central.SubMenu;
-import Request.presenters.OrgReqMenu;
+import Request.RequestManager;
 
-public class OrgReqController extends SubMenu {
+public class EmpReqController extends SubMenu {
+    protected RequestManager reqM;
     protected int currentRequest;
-    protected OrgReqMenu presenter;
+    protected EmpReqMenu presenter;
     private String currentUserID;
 
-    public OrgReqController(SubMenu subMenu, String currentUserID) {
+    public EmpReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
-        this.presenter = new OrgReqMenu(requestManager);
+        this.presenter = new EmpReqMenu(reqM);
         this.currentUserID = currentUserID;
     }
+
 
     public void menuChoice() {
         do {
@@ -20,10 +22,10 @@ public class OrgReqController extends SubMenu {
                 case 0:
                     // return to main menu
                     break;
-                case 1: // see the requests --> must be an organizer or an employee
+                case 1: // see the requests --> must be an organizer
                     specificRequest();
                     break;
-                case 2: // fulfill requests --> must be an organizer or an employee
+                case 2: // fulfill requests --> must be an organizer
                     seeRequests();
                     break;
                 case 3: // see a specific request
@@ -33,12 +35,13 @@ public class OrgReqController extends SubMenu {
                     request(); // make a request
                     break;
                 case 5:
-                    myRequests(); // see my requests till now
+                    myRequests(); // see my request till now
                     break;
             }
         }
         while (currentRequest != 0);
     }
+
     private void fulfillRequest(){
         presenter.fulfillRequestPrompt();
         String id = "";//SubMenu.readInput(input);
@@ -60,5 +63,6 @@ public class OrgReqController extends SubMenu {
     private void myRequests(){
         presenter.myRequests(currentUserID);
     }
+
 
 }

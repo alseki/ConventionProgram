@@ -1,7 +1,6 @@
-package Request.controllers;
+package Presenter.AttendeeController;
 
 import Presenter.Central.SubMenu;
-import Request.presenters.AttReqMenu;
 import Request.RequestManager;
 
 public class AttReqController extends SubMenu {

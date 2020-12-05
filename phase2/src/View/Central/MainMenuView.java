@@ -1,4 +1,4 @@
-package View;
+package View.Central;
 
 // Contributors: Cara McNeil, Sarah Kronenfeld
 // Last edit: December 2 2020

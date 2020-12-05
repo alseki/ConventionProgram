@@ -1,21 +1,17 @@
-package Request.controllers;
+package Presenter.OrganizerController;
 
 import Presenter.Central.SubMenu;
-import Request.RequestManager;
-import Request.presenters.EmpReqMenu;
 
-public class EmpReqController extends SubMenu {
-    protected RequestManager reqM;
+public class OrgReqController extends SubMenu {
     protected int currentRequest;
-    protected EmpReqMenu presenter;
+    protected OrgReqMenu presenter;
     private String currentUserID;
 
-    public EmpReqController(SubMenu subMenu, String currentUserID) {
+    public OrgReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
-        this.presenter = new EmpReqMenu(reqM);
+        this.presenter = new OrgReqMenu(requestManager);
         this.currentUserID = currentUserID;
     }
-
 
     public void menuChoice() {
         do {
@@ -23,10 +19,10 @@ public class EmpReqController extends SubMenu {
                 case 0:
                     // return to main menu
                     break;
-                case 1: // see the requests --> must be an organizer
+                case 1: // see the requests --> must be an organizer or an employee
                     specificRequest();
                     break;
-                case 2: // fulfill requests --> must be an organizer
+                case 2: // fulfill requests --> must be an organizer or an employee
                     seeRequests();
                     break;
                 case 3: // see a specific request
@@ -36,13 +32,12 @@ public class EmpReqController extends SubMenu {
                     request(); // make a request
                     break;
                 case 5:
-                    myRequests(); // see my request till now
+                    myRequests(); // see my requests till now
                     break;
             }
         }
         while (currentRequest != 0);
     }
-
     private void fulfillRequest(){
         presenter.fulfillRequestPrompt();
         String id = "";//SubMenu.readInput(input);
@@ -64,6 +59,5 @@ public class EmpReqController extends SubMenu {
     private void myRequests(){
         presenter.myRequests(currentUserID);
     }
-
 
 }

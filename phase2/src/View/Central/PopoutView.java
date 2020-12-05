@@ -1,4 +1,4 @@
-package View;
+package View.Central;
 
 import Presenter.Exceptions.InvalidChoiceException;
 

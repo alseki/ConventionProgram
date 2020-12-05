@@ -15,7 +15,6 @@ import Event.EventManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Event.RoomManager;
-import Request.controllers.OrgReqController;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
