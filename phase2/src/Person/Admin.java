@@ -11,7 +11,7 @@ public class Admin extends Person {
     public Admin(String adminUN, String adminPW) {
         this.username = adminUN;
         this.password = adminPW;
-        this.typePerson = 4;
+        this.typePerson = 5;
     }
 
     /*
