@@ -140,4 +140,9 @@ public class AttMessageController extends MessageController {
         }
     }
 
+    @Override
+    public AttMessageMenu getPresenter() {
+        return this.presenter;
+    }
+
 }

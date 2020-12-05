@@ -1,6 +1,7 @@
 package Presenter.EmployeeController;
 
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Request.RequestManager;
 
 public class EmpReqController extends SubMenu {
@@ -65,4 +66,8 @@ public class EmpReqController extends SubMenu {
     }
 
 
+    @Override
+    public EmpReqMenu getPresenter() {
+        return this.presenter;
+    }
 }

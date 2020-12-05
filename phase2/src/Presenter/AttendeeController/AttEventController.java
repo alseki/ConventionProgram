@@ -5,6 +5,7 @@ package Presenter.AttendeeController;
 // Date Created: 01/11/2020
 // Date Modified: 17/11/2020
 
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Central.SubMenu;
 import Event.CapacityException;
@@ -139,5 +140,10 @@ public class AttEventController extends SubMenu {
         if(personRemovedFromEvent && eventRemovedFromPerson) {
             presenter.printEventRemoved();
         }
+    }
+
+    @Override
+    public SubMenuPrinter getPresenter() {
+        return this.presenter;
     }
 }

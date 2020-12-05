@@ -1,6 +1,7 @@
 package Presenter.PersonController;
 
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 
@@ -52,4 +53,8 @@ public class MessageController extends SubMenu {
         }
     }
 
+    @Override
+    public MessageMenu getPresenter() {
+        return this.presenter;
+    }
 }

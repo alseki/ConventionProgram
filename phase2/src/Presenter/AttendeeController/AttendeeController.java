@@ -5,6 +5,7 @@ package Presenter.AttendeeController;
 // Date Created: 01/11/2020
 // Date Modified: 16/11/2020
 
+import Presenter.Central.SubMenuPrinter;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
 import Presenter.Central.SubMenu;

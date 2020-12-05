@@ -5,6 +5,7 @@ import Event.EventPermissions;
 import Person.AttendeeManager;
 import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 
 
@@ -149,6 +150,12 @@ import Presenter.Exceptions.InvalidChoiceException;
             if(personRemovedFromEvent && eventRemovedFromPerson) {
                 presenter.printEventRemoved();
             }
+        }
+
+        @Override
+        // TODO change return type to EmpEventMenu
+        public SubMenuPrinter getPresenter() {
+            return this.presenter;
         }
     }
 

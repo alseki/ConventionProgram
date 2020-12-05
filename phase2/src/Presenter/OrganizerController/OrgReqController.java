@@ -1,6 +1,7 @@
 package Presenter.OrganizerController;
 
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 
 public class OrgReqController extends SubMenu {
     protected int currentRequest;
@@ -60,4 +61,8 @@ public class OrgReqController extends SubMenu {
         presenter.myRequests(currentUserID);
     }
 
+    @Override
+    public OrgReqMenu getPresenter() {
+        return this.presenter;
+    }
 }

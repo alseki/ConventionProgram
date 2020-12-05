@@ -1,6 +1,7 @@
 package Presenter.AttendeeController;
 
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Request.RequestManager;
 
 public class AttReqController extends SubMenu {
@@ -52,6 +53,10 @@ public class AttReqController extends SubMenu {
     }
 
 
+    @Override
+    public AttReqMenu getPresenter() {
+        return this.presenter;
+    }
 }
 
 

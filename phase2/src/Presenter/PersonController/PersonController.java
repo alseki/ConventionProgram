@@ -59,4 +59,9 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
         options[1] = "View your messages";
         return options;
     }
+
+    @Override
+    public SubMenuPrinter getPresenter() {
+        return null;
+    }
 }

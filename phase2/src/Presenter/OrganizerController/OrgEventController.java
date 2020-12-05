@@ -9,6 +9,7 @@ import Event.EventPermissions;
 import Event.EventType;
 import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.OverwritingException;
 
@@ -315,4 +316,8 @@ public class OrgEventController extends SubMenu {
     }
 
 
+    @Override
+    public OrgEventMenu getPresenter() {
+        return this.presenter;
+    }
 }

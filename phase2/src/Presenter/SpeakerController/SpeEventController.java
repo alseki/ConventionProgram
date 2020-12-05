@@ -5,6 +5,7 @@ package Presenter.SpeakerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.Central.SubMenu;
@@ -76,5 +77,10 @@ public class SpeEventController extends SubMenu {
         String[] allTalks = {};
         allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
         return multipleEventsAnnouncement(allTalks, messageContent);
+    }
+
+    @Override
+    public SpeEventMenu getPresenter() {
+        return this.presenter;
     }
 }
