@@ -31,24 +31,24 @@ public class ContactMenu implements SubMenuPrinter {
     /**
      * Prints a list of the user's contacts
      */
-    public String[] printContactList(ArrayList<String> contactList) throws InvalidChoiceException {
-        System.out.println('\n' + "-CONTACTS-");
+    public String[] printContactList(ArrayList<String> contactList) {
         String[] clist = {};
         clist = contactList.toArray(clist);
         return clist;
+        // TODO exception if list is empty
     }
 
     /**
      * Prompts user to enter contact information
      */
-    public void printAddContactPrompt() {
-        System.out.println("Enter the username of the person you would like to add as a contact: ");
+    public String printAddContactPrompt() {
+        return "Enter the username of the person you would like to add as a contact: ";
     }
 
     /**
      * Prints that a contact was successfully added
      */
-    public void printContactAdded() {
-        System.out.println("Contact has been successfully added.");
+    public String printContactAdded() {
+        return "Contact has been successfully added.";
     }
 }

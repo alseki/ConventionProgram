@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class ContactController extends SubMenu {
 
-    private String currentUserID;
-    private ContactMenu presenter = new ContactMenu();
+    private final String currentUserID;
+    private final ContactMenu presenter = new ContactMenu();
 
     public ContactController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
@@ -54,16 +54,16 @@ public class ContactController extends SubMenu {
     /**
      * Get's the current user's contactList
      */
-    private void getContactList() throws InvalidChoiceException {
+    public String[] getContactList() throws InvalidChoiceException {
         ArrayList<String> listOfContacts = personManager.getContactList(currentUserID);
-        presenter.printContactList(listOfContacts);
+        return presenter.printContactList(listOfContacts);
     }
 
     /**
      * Add a contact to the current user's contactList
      * @param contactUsername the username of the contact the current user wants to add to their contactList
      */
-    private void addContact(String contactUsername) throws InvalidChoiceException{
+    public String addContact(String contactUsername) throws InvalidChoiceException{
         String contactID = personManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             throw new InvalidChoiceException("user");
@@ -72,8 +72,9 @@ public class ContactController extends SubMenu {
         boolean b = personManager.addContactToPerson(contactID, currentUserID);
 
         if(a && b) {
-            presenter.printContactAdded();
+            return presenter.printContactAdded();
         }
+     return null;
     }
 
 }

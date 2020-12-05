@@ -45,7 +45,7 @@ public abstract class PersonManager {
      * returns the contact list of the user
      * @return ArrayList<String> contactList the contacts with people that user has gotten
     */
-    public ArrayList getContactList(String id) {
+    public ArrayList<String> getContactList(String id) {
         return getPerson(id).getContactList();
     }
 

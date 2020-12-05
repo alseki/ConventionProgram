@@ -51,6 +51,8 @@ public class LoginView {
      */
     private Integer mainMenu() {
         Integer[] args = {0, 1, 2};
+        // TODO add 3 for employee
+        // TODO add 4 for admin
         StringBuilder menuOptions = new StringBuilder();
         for (String option: presenter.getMenuOptions()) {
             menuOptions.append(option);
