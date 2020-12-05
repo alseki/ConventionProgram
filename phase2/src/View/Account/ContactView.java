@@ -15,11 +15,10 @@ public class ContactView extends AccountView {
 
     Scanner input = new Scanner(System.in);
 
-    String[] menuOptions;
     JFrame frame;
     JPanel contentPane;
     JButton addContactButton, viewContactListButton;
-    String menuSelection;
+    JTextField inputAddContact;
 
     public ContactView(SubMenu controller) {
         super();
@@ -40,7 +39,7 @@ public class ContactView extends AccountView {
         addContactButton.setActionCommand("add");
         contentPane.add(addContactButton);
 
-        viewContactListButton = new JButton("View your contact list"); // Generates okay button
+        viewContactListButton = new JButton("View your contact list"); // Generates "view list" button
         viewContactListButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
         viewContactListButton.setActionCommand("view");
         contentPane.add(viewContactListButton);
