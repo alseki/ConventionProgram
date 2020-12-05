@@ -1,12 +1,21 @@
 package Person;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class AdminManager {
 
-    ArrayList<String> allAdmins;
+    protected Map<String, Admin> usernameToAdmin;
 
-    public AdminManager(ArrayList<String> admins) {
-        allAdmins = admins;
+    public AdminManager(Map<String, Admin> admins) {
+        usernameToAdmin = admins;
+    }
+
+    public boolean createAccount(String username, String password) {
+        if(!usernameToAdmin.containsKey(username)) {
+            Admin newAdm = new Admin(username, password);
+            usernameToAdmin.put(newAdm.getID(), newAdm);
+            return true;
+        }
+        return false;
     }
 }
