@@ -14,6 +14,7 @@ public class Admin extends Person {
         this.typePerson = 4;
     }
 
+    /*
     public ArrayList<String> getEmptyEventIDs() {
         return emptyEventIDs;
     }
@@ -29,4 +30,5 @@ public class Admin extends Person {
     public void addEmptyChatToList(String chatID) {
         emptyChatIDs.add(chatID);
     }
+    */
 }
