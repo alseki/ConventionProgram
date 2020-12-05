@@ -20,7 +20,8 @@ public class ContactView extends AccountView {
 
     JFrame frame;
     JPanel contentPane;
-    JButton addContactButton, viewContactListButton;
+    JLabel enterUsernameMsg, allContacts;
+    JButton addContactButton, viewContactListButton, submitButton, okayButton;
     JTextField inputAddContact;
 
     public ContactView(SubMenu controller) {
@@ -29,36 +30,62 @@ public class ContactView extends AccountView {
         this.presenter = ((ContactController) controller).getPresenter();
     }
 
-    public void setup() {
+    public void run() {
         frame = new JFrame(this.presenter.getMenuTitle()); // Create and set up the frame
+        //JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(0, 255, 0));// Sets background colour to ugly green
+        contentPane.setBackground(new Color(255, 200, 0));// Sets background colour
         contentPane.setLayout(new FlowLayout());
 
-        viewContactListButton = new JButton(this.presenter.getMenuOptions()[1]); // Generates "view list" button
-        viewContactListButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        viewContactListButton.setActionCommand("view");
+        viewContactListButton = newButton(this.presenter.getMenuOptions()[1]); // Generates "view list" button
         contentPane.add(viewContactListButton);
 
-        addContactButton = new JButton(this.presenter.getMenuOptions()[2]); // Generates "add contact" button
-        addContactButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-        addContactButton.setActionCommand("add");
+        addContactButton = newButton(this.presenter.getMenuOptions()[2]); // Generates "add contact" button
         contentPane.add(addContactButton);
 
+        okayButton = newButton("okay");
+        contentPane.add(okayButton);
+        okayButton.setVisible(false);
 
-        //frame.setContentPane(contentPane);
-        //frame.pack();
-        //frame.setVisible(true);
+        setupAddContact();
+        setupViewContacts();
+
+        frame.setContentPane(contentPane);
+        frame.pack();
+        frame.setVisible(true);
     }
+
+    private void setupAddContact() {
+        enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
+        contentPane.add(enterUsernameMsg);
+        enterUsernameMsg.setVisible(false);
+
+        submitButton = newButton("submit");
+        contentPane.add(submitButton);
+        submitButton.setVisible(false);
+    }
+
+    private void setupViewContacts() {
+        //enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
+        //contentPane.add(enterUsernameMsg);
+        //enterUsernameMsg.setVisible(false);
+    }
+
 
     /**
      * Calls the Contact Controller to retrieve the current user's contact list
      * @return a non-empty array of strings that represent the user's contacts
      */
     private String[] getContactList() {
+        enterUsernameMsg.setVisible(false);
+        addContactButton.setVisible(false);
+        viewContactListButton.setVisible(false);
+
+        okayButton.setVisible(true);
+
         try {
             return controller.getContactList();
         } catch (InvalidChoiceException e) {
@@ -72,6 +99,12 @@ public class ContactView extends AccountView {
      * Calls the Contact Controller to try to add a contact to the user's contact list
      */
     private void addContact() {
+        addContactButton.setVisible(false);
+        viewContactListButton.setVisible(false);
+
+        enterUsernameMsg.setVisible(true);
+        submitButton.setVisible(true);
+
         String contactUsername = input.nextLine();
         try {
             controller.addContact(contactUsername);
@@ -85,19 +118,32 @@ public class ContactView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
-        if (eventName.equals("view")) {
+        if (eventName.equals(this.presenter.getMenuOptions()[1])) {
             String[] myContacts = getContactList();
-            viewContactListButton.setVisible(false);
-            //viewContactListButton.setText("jgfjhgfd");
-            //viewContactListButton.setActionCommand("test");
+            String contacts = "";
+            for(int i = 0; i < myContacts.length - 1; i++) {
+                contacts += myContacts[i] + ", ";
+            }
 
-        } else if (eventName.equals("add")) {
-            addContactButton.setVisible(false);
-
-            //controller.addContact();
-            //addContactButton.setText("test text");
-            //addContactButton.setActionCommand("asdffsgdfh");
+            allContacts = new JLabel(contacts);//Create and add label that is centered and has empty borders
+            allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            allContacts.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+            contentPane.add(allContacts);
 
         }
+
+        if (eventName.equals(this.presenter.getMenuOptions()[2])) {
+
+            addContact();
+
+        }
+    }
+
+    private JButton newButton(String title) {
+        JButton newButton = new JButton(title);
+        newButton.setLocation(0, 0);
+        newButton.setActionCommand(title);
+        //newButton.addActionListener(this);
+        return newButton;
     }
 }
