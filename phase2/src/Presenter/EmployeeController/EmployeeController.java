@@ -1,8 +1,6 @@
 package Presenter.EmployeeController;
 
-// Description: Main account page for EmployeeController users.
-/*
-// RETURN controllers; no void methods
+ Description: Main account page for EmployeeController users.
 
 import Event.EventManager;
 import Event.RoomManager;
@@ -16,10 +14,14 @@ import Presenter.PersonController.PersonController;
 import Request.RequestManager;
 import Presenter.EmployeeController.EmpReqController;
 
+ import java.util.ArrayList;
+
+/*
+// RETURN controllers; no void methods
 
 // create request
 // work with constraints
-
+*/
 
 public class EmployeeController extends PersonController {
 
@@ -30,6 +32,19 @@ public class EmployeeController extends PersonController {
         super(manager, rooms, events, messages, chats, requests, 4);
         this.manager = manager;
     }
+
+    /**
+     * Returns ID of the Employee-exclusive Chat newly created
+     * @param ownerId ID of the Employee user trying to create this Chat
+     * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
+     * @return ID of the newly created Chat
+     */
+    public String createEmpChat(String ownerId, ArrayList<String> guestIds){
+    if (manager.typePerson(manager.getCurrentUsername(ownerId))!=4){return null;}
+    for (String guest: guestIds){if (manager.typePerson(manager.getCurrentUsername(guest))!=4){return null;}}
+    return this.chatManager.createChat(ownerId, guestIds);}
+}
+    /*
 
     @Override
     public SubMenu createController(String choice){

@@ -47,6 +47,9 @@ public class Chat implements Serializable {
         this.password = UUID.randomUUID().toString();
     }
 
+    public Chat(String ownerId, ArrayList<String> guestIds) {
+    }
+
     /**
      * Add the Id of the Message to messageIds list.
      * @param messageId - the Id of the Message object that we want to add.

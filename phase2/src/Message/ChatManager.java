@@ -300,6 +300,7 @@ public class ChatManager implements Serializable {
         }
         return null;
     }
+
 }
 
 // CRC Card Definition

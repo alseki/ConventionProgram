@@ -46,19 +46,19 @@ public class EmployeeManager extends PersonManager {
         Speaker spe = (Speaker) getPerson(speakerID);
         return spe.getAllTalks();}
 
-    /**
-     *
-     * @param username
-     * @return
-     */
 
+    // I believe confirmEmployee is EXACT same method as typePerson in Person Class.
+    /*
     public int confirmEmployee(String username) {
         if(usernameToPerson.containsKey(username)) {
             return getPersonByUsername(username).getTypePerson();
         }
         return -1;
-    }
+    }*/
 
+    public String IDtoUsername(String Id){
+        return getPerson(Id).getUsername();
+    }
     // apply notify observers
 
     // get messages from Organizer and from other Employees /**
