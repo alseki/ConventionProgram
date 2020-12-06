@@ -35,9 +35,9 @@ public class AttEventMenu extends EventMenu {
 
     // Option 1
 
-    public void printRoomChoicePrompt() {
-        System.out.println("\n Which room's schedule do you want to see? \n (Press 0 for options, or press 1 to see " +
-                "all events in the conference.)");
+    public String printRoomChoicePrompt() {
+        return "\n Which room's schedule do you want to see? \n (Press 0 for options, or press 1 to see " +
+                "all events in the conference.)";
     }
 
     /**
@@ -45,7 +45,8 @@ public class AttEventMenu extends EventMenu {
      * @param roomName the name of the room in which the Events are being held
      */
     public String roomEventListTitle(String roomName) {
-        return getEventListTitle("IN ROOM " + roomName.toUpperCase());
+        return getEventListTitle("IN ROOM " +
+                roomName.toUpperCase());
     }
 
     /**
@@ -58,36 +59,36 @@ public class AttEventMenu extends EventMenu {
     /**
      * Prompts the user to enter the name of the Event they want to sign up for
      */
-    public void printAddEventPrompt() {
-        System.out.println("Enter the exact name of the event that you would like to sign up for: ");
+    public String printAddEventPrompt() {
+        return "Enter the exact name of the event that you would like to sign up for: ";
     }
 
     /**
      * Prints a confirmation that the user has been signed up for an Event
      */
-    public void printEventAdded() {
-        System.out.println("Event sign-up successful.");
+    public String printEventAdded() {
+        return "Event sign-up successful.";
     }
 
     /**
      * Prints a notice to the user that the Event they intended to sign up is full
      */
-    public void printEventFull() {
-        System.out.println("Event sign-up unsuccessful. This event is full.");
+    public String printEventFull() {
+        return "Event sign-up unsuccessful. This event is full.";
     }
 
     /**
      * Prompts the user to enter the name of the Event they wish to remove from their Event list
      */
-    public void printRemoveEventPrompt() {
-        System.out.println("Enter the exact name of the event that you would like to cancel your spot from: ");
+    public String printRemoveEventPrompt() {
+        return "Enter the exact name of the event that you would like to cancel your spot from: ";
     }
 
     /**
      * Prints a confirmation that the user has removed an Event from their Event list
      */
-    public void printEventRemoved() {
-        System.out.println("Event spot cancellation successful.");
+    public String printEventRemoved() {
+        return "Event spot cancellation successful.";
     }
     
 }

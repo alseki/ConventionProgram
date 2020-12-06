@@ -60,7 +60,8 @@ public abstract class EventMenu implements SubMenuPrinter {
             e.append(": ");
             e.append(events.getEventName(eventID));
             e.append("\nby ");
-            e.append(persons.getName(events.getSpeakerID(eventID)));
+            // FIXME
+            // e.append(persons.getName(events.getSpeakerID(eventID)));
             e.append(" in room ");
             e.append(rooms.getEventRoom(eventID));
             e.append("\nfrom ");
