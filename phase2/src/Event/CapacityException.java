@@ -6,4 +6,5 @@ public class CapacityException extends Exception {
     public String getMessage() {
         return "That event is over capacity!";
     }
+
 }

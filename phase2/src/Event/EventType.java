@@ -1,5 +1,5 @@
 package Event;
 
 public enum EventType {
-    TALK, WORKSHOP
+    TALK, WORKSHOP, PANEL, PARTY
 }

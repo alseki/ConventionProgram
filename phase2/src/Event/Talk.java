@@ -3,14 +3,14 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 5 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Entity
 
 public class Talk extends Event {
 
     // A Talk is a presentation given by one Speaker, and cannot take place in the same Room as any other Event while
-    // that Event occurring.
+    // that Event is occurring.
 
     private String speakerID;
 
@@ -21,9 +21,12 @@ public class Talk extends Event {
      * @param startTime The time when the Talk starts
      * @param endTime The time when the Talk ends
      * @param description The description of this Talk
+     * @param capacity The capacity of this Talk
      */
-    public Talk (String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description) {
-        super(name, startTime, endTime, description);
+    public Talk (String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description,
+                 int capacity)
+    {
+        super(name, startTime, endTime, description, capacity);
         this.speakerID = speakerID;
     }
 

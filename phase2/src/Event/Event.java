@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 5 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Entity
 
@@ -19,6 +19,7 @@ public abstract class Event implements Serializable {
     private String ID;
     private String password;
     private String chatID;
+    private int capacity;
     private ArrayList<String> attendees;
 
     /**
@@ -27,16 +28,18 @@ public abstract class Event implements Serializable {
      * @param startTime The time when the Event starts
      * @param endTime The time when the Event ends
      * @param description A description for this Event
+     * @param capacity The capacity of this Event
      */
-    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description) {
+    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description, int capacity) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
-        ID = UUID.randomUUID().toString();
+        this.ID = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString().replace("-", "");
         this.chatID = UUID.randomUUID().toString();
-        attendees = new ArrayList<String>();
+        this.capacity = capacity;
+        this.attendees = new ArrayList<String>();
     }
 
     /**
@@ -44,7 +47,7 @@ public abstract class Event implements Serializable {
      * @return the name of the Event (as a String)
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -60,7 +63,7 @@ public abstract class Event implements Serializable {
      * @return the start time of this Event
      */
     public LocalDateTime getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
     /**
@@ -74,7 +77,7 @@ public abstract class Event implements Serializable {
      * @return the end time of this Event
      */
     public LocalDateTime getEndTime() {
-        return endTime;
+        return this.endTime;
     }
 
     /**
@@ -102,7 +105,7 @@ public abstract class Event implements Serializable {
      * @return the ID of the event
      */
     public String getID() {
-        return ID;
+        return this.ID;
     }
 
     /**
@@ -130,11 +133,27 @@ public abstract class Event implements Serializable {
     }
 
     /**
-     * Getter for the Attendees attending this Event
-     * @return an array of these Attendees
+     * Getter for the capacity of this Event
+     * @return the capacity of this Event (as an int)
+     */
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+    /**
+     * Setter for the capacity of this Event
+     * @return the capacity of this Event (as an int)
+     */
+    public int setCapacity() {
+        return this.capacity;
+    }
+
+    /**
+     * Getter for the IDs of the Attendees attending this Event
+     * @return an array of these Attendee IDs
      */
     public ArrayList<String> getAttendeeIDs() {
-        return attendees;
+        return this.attendees;
     }
 
     /**
@@ -142,7 +161,7 @@ public abstract class Event implements Serializable {
      * @param ID The ID of the new Attendee
      */
     public void addAttendee(String ID) {
-        attendees.add(ID);
+        this.attendees.add(ID);
     }
 
     /**
@@ -150,8 +169,15 @@ public abstract class Event implements Serializable {
      * @param ID The ID of the Attendee being removed
      */
     public void removeAttendee(String ID) {
-        attendees.remove(ID);
+        this.attendees.remove(ID);
     }
+
+    /**
+     * Returns whether or not another Event conflicts with this one.
+     * @param event The other Event. (NOTE: the other event is presumed to be in the same Room.)
+     * @return True or false.
+     */
+    protected abstract boolean conflictsWith(Event event);
 
     /**
      * A textual representation of this event
@@ -161,12 +187,5 @@ public abstract class Event implements Serializable {
     public String toString() {
         return "Title: " + getName() + "\n" + getDescription();
     }
-
-    /**
-     * Returns whether or not another Event conflicts with this one.
-     * @param event The other Event. (NOTE: the other event is presumed to be in the same Room.)
-     * @return True or false.
-     */
-    protected abstract boolean conflictsWith(Event event);
 
 }

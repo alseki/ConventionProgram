@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 18 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Entity
 
@@ -26,6 +26,14 @@ class Room implements Serializable {
     }
 
     /**
+     * Getter for the name of this Room
+     * @return the name of this Room (as a String)
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Getter for the capacity of this Room
      * @return the capacity of the Room (as an int)
      */
@@ -39,14 +47,6 @@ class Room implements Serializable {
      */
     public String getID() {
         return ID;
-    }
-
-    /**
-     * Getter for the name of this Room
-     * @return the name of the Room (as a String)
-     */
-    public String getName() {
-        return name;
     }
 
 }

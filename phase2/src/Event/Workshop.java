@@ -3,7 +3,7 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Eytan Weinstein
-// Last edit: Dec 5 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Entity
 
@@ -21,23 +21,26 @@ public class Workshop extends Event {
      * @param speakerID The ID of the speaker at this Workshop
      * @param startTime The time when the Workshop starts
      * @param endTime The time when the Workshop ends
-     * @param description The description of this Talk
+     * @param description The description of this Workshop
+     * @param capacity The capacity of this Workshop
      */
-    public Workshop (String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description)
+    public Workshop (String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description,
+                     int capacity)
     {
-        super(name, startTime, endTime, description);
+        super(name, startTime, endTime, description, capacity);
         this.speakerID = speakerID;
     }
 
     /**
-     * Checks if the inputted Event conflicts in time with this Workshop (recall that only a Talk can conflict)
+     * Checks if the inputted Event conflicts in time with this Workshop
      * @param event The event which is being checked for conflicts with this Workshop
      * @return whether or not there is a conflict (true or false)
      */
     public boolean conflictsWith(Event event) {
-        if (event instanceof Talk) {
+        if (!(event instanceof Workshop)) {
             if (this.getStartTime().isBefore(event.getEndTime())) {
-                if (this.getEndTime().isAfter(event.getStartTime()) || this.getStartTime().isAfter(event.getStartTime())) {
+                if (this.getEndTime().isAfter(event.getStartTime()) || this.getStartTime().isAfter(event.getStartTime())
+                ) {
                     return true;
                 }
             }
