@@ -22,14 +22,14 @@ public class AttReqController extends SubMenu {
         String content = "";//SubMenu.readInput(input);
         reqM.createRequest(this.currentUserID, content);
     }
-    private void specificRequest(String reqId){
-        presenter.seeSpecificRequestPrompt(reqId);
+    private String specificRequest(String reqId){
+        return presenter.seeSpecificRequestPrompt(reqId);
         //String id = "";//SubMenu.readInput(input);
         //presenter.seeRequest(id);
 
     }
-    private void myRequests(){
-        presenter.myRequests(currentUserID);
+    private String myRequests(){
+        return presenter.myRequests(currentUserID);
     }
 
 

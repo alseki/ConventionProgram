@@ -17,11 +17,11 @@ public class EmpReqController extends SubMenu {
     }
 
 
-    private void seeRequests(){
-        presenter.seeRequests();
+    private String seeRequests(){
+        return presenter.seeRequests();
     }
-    private void specificRequest(String reqId){
-        presenter.seeSpecificRequestPrompt(reqId);
+    private String specificRequest(String reqId){
+        return presenter.seeSpecificRequestPrompt(reqId);
         //String id = "";//SubMenu.readInput(input);
         //presenter.seeRequest(id);
     }
@@ -30,8 +30,8 @@ public class EmpReqController extends SubMenu {
         String content = "";//SubMenu.readInput(input);
         requestManager.createRequest(this.currentUserID, content);
     }
-    private void myRequests(){
-        presenter.myRequests(currentUserID);
+    private String myRequests(){
+        return presenter.myRequests(currentUserID);
     }
 
 
