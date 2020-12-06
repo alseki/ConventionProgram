@@ -24,7 +24,7 @@ public class ContactController extends SubMenu {
     /**
      * Get's the current user's contactList
      */
-    public String[] getContactList() throws InvalidChoiceException {
+    public String[] getContactList() {
         ArrayList<String> listOfContacts = personManager.getContactList(currentUserID);
         return presenter.printContactList(listOfContacts);
     }
