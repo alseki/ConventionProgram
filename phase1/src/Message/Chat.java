@@ -25,7 +25,7 @@ public class Chat implements Serializable {
         personIds.add(ownerId);
         personIds.add(guestId);
         this.Id = UUID.randomUUID().toString();
-        this.password = UUID.randomUUID().toString(); //FIXME: fix the password things for these 3 constructors.
+        this.password = UUID.randomUUID().toString();
     }
     public Chat(String ownerId, ArrayList <String> guestIds, String name){
         messageIds = new ArrayList<>();
@@ -47,8 +47,6 @@ public class Chat implements Serializable {
         this.password = UUID.randomUUID().toString();
     }
 
-    public Chat(String ownerId, ArrayList<String> guestIds) {
-    }
 
     /**
      * Add the Id of the Message to messageIds list.
@@ -61,13 +59,33 @@ public class Chat implements Serializable {
     }
 
     /**
-     * Add the Id of the Message to messageIds list.
+     * Add the Id of the Person to personIds list.
      * @param personId - the Id of the Message object that we want to add.
      * @return True iff messageId was successfully added to messageIds.
      *
      */
     public boolean addPersonIds(String personId) {
         this.personIds.add(personId);
+        return true;
+    }
+
+    /**
+     * Remove the Id of the Person from personIds list.
+     * @param personId - the Id of the Message object that we want to remove.
+     * @return True iff personId was successfully removed from personIds.
+     *
+     */
+    public boolean removePersonIds(String personId) {
+        this.personIds.remove(personId);
+        return true;
+    }
+
+    /**
+     * Reset personIds list to empty Arraylist
+     * @return True iff
+     */
+    public boolean removeAllPersonIds() {
+        this.personIds.removeAll(this.personIds = new ArrayList<>());
         return true;
     }
 
@@ -95,7 +113,7 @@ public class Chat implements Serializable {
 
     /**
      *  a getter for the password
-     * @return a String representign the annoucement Chat's password
+     * @return a String represent the announcement Chat's password
      */
     public String getPassword() {
         return password;
@@ -106,7 +124,7 @@ public class Chat implements Serializable {
      * @param pass inputted password
      * @return true iff the inputted password is correct
      */
-    private boolean checkPassword(String pass) {
+    public boolean checkPassword(String pass) {
         return pass.equals(password);
     }
 

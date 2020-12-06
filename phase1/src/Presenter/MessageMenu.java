@@ -3,7 +3,6 @@ package Presenter;
 import Controllers.InvalidChoiceException;
 import Controllers.NoDataException;
 import Events.EventManager;
-import Message.AnnouncementChat;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;

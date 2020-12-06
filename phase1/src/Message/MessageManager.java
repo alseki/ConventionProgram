@@ -24,7 +24,7 @@ public class MessageManager implements Serializable {
      * @return the messageId iff succeed.
      */
     public String createMessage(String senderId, String recipientId, String chatId, String content) {
-        Message newMessage = new Message(senderId, recipientId, content);
+        Message newMessage = new Message(senderId, recipientId, chatId, content);
         messageList.add(newMessage);
         return newMessage.getMessageId();
     }

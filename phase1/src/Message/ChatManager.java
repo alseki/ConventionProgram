@@ -62,14 +62,14 @@ public class ChatManager implements Serializable {
 
 
     /**
-     * creates and returns an annoucment chat with eventid and attendeeids
-     * @param eventid id representign the event for the annoucement
-     * @param attendeeids the id's of the attendess
+     * creates and returns an announcement chat with eventId and attendeeIds
+     * @param eventId id represent the event for the announcement
+     * @param attendeeIds the id's of the attendees
      * @param chatName the name of this group chat, set up by who create it.
-     * @return the chatID of AnnocuementChat made
+     * @return the chatID of announcementChat made
      */
-    public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids, String chatName){
-        Chat ac = new Chat(eventid, attendeeids, chatName);
+    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
+        Chat ac = new Chat(eventId, attendeeIds, chatName);
         aChatsList.add(ac);
         return ac.getId();
     }
@@ -81,16 +81,12 @@ public class ChatManager implements Serializable {
      * @return true iff the message ID was added to the Chat
      *         false iff no Chat in ChatList has the inputted chatId
      */
-    // FIXME: fix here. if we need password and check type of chat by 'announcementOrNot' in chat class.
     public boolean addMessageIds(String chatId, String messageId){
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){
-            if (chat.getClass()==(AnnouncementChat.class)) {
-            ((AnnouncementChat) chat).addMessageIds(messageId,((AnnouncementChat) chat).getPassword());
-            } else if(chat.getClass()==(Chat.class)){
-                chat.addMessageIds(messageId);
-            }
-            return true; }
+        if(chat != null) {
+            chat.addMessageIds(messageId);
+            return true;
+        }
         return false;
     }
 
@@ -101,9 +97,11 @@ public class ChatManager implements Serializable {
      * @return ArrayList of messageIDs stored in the Message.Message.Chat with inputted chatID
      *         null iff no Message.Message.Chat in ChatList has the inputted chatId
      */
-    public ArrayList<String> getMessageIds(String chatId){
+    public ArrayList<String> getMessageIds(String chatId) {
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){return chat.getMessageIds();}
+        if(chat != null) {
+            return chat.getMessageIds();
+        }
         return null;
     }
 
@@ -114,20 +112,51 @@ public class ChatManager implements Serializable {
      * @return true iff senders (personIds) list of Message.Message.Chat is successfully updated
      */
     //The senders list and related methods in Message.Message.Chat class must be fixed so that it contains ID instead of Person.Person
-    public boolean addPersonIds(String chatId, String personId){
+    public boolean addPersonIds(String chatId, String personId) {
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){
+        if(chat != null) {
             chat.addPersonIds(personId);
-            return true; }
+            return true;
+        }
         return false;
     }
 
-    //TODO: This is a new method.
     /**
      * @return the name of this chat, by its Id.
      */
     public String getChatName(String chatId) {
         return Objects.requireNonNull(getUnknownTypeChat(chatId)).getName();
+    }
+
+    /**
+     * Remove an ID of a Person from personId of a Chat
+     *
+     * @param chatId   the ID of the Chat
+     * @param personId the ID of the Person object to be removed from the Chat's personIds list
+     * @return true iff personId is successfully removed form the personIds list of Chat
+     */
+    public boolean removePersonIds(String chatId, String personId) {
+        Chat chat = getUnknownTypeChat(chatId);
+        if (chat != null) {
+            chat.removePersonIds(personId);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Remove all person Ids from personId list of a Chat
+     *
+     * @param chatId Id of Chat
+     * @return True iff all Person Id removed from personIds list
+     */
+    public boolean removeAllPersonIds(String chatId) {
+        Chat chat = getUnknownTypeChat(chatId);
+        if (chat != null) {
+            chat.removeAllPersonIds();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -141,18 +170,13 @@ public class ChatManager implements Serializable {
          return null;
      }
 
-     //TODO: maybe we wont need it.
     /**
      * Get class of the Chat item corresponding to the inputted chat ID
      * @param chatID ID of the Chat object
-     * @return Class type
+     * @return Class type, 1 for announcement, 0 for chat
      */
-     public Class<?> getChatClass(String chatID){
-         try {
-             return Objects.requireNonNull(getUnknownTypeChat(chatID)).getClass();
-         } catch (NullPointerException n) {
-             return null;
-         }
+     public int getChatType(String chatID){
+         return Objects.requireNonNull(getUnknownTypeChat(chatID)).getAnnouncementOrNot();
      }
 
     /**
@@ -309,13 +333,6 @@ public class ChatManager implements Serializable {
         return null;
     }
 
-    //TODO: This is a new method.
-    /**
-     * @return the type of the chat by its Id. 1 for announcement, 0 for others.
-     */
-    public int getChatType(String chatId) {
-        return Objects.requireNonNull(getUnknownTypeChat(chatId)).getAnnouncementOrNot();
-    }
 }
 
 // CRC Card Definition

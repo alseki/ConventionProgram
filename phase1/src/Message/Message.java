@@ -48,7 +48,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * This gives access to the sender of this Message.Message.
+     * This gives access to the senderId of this Message.Message, or the eventId.
      *
      * @return the sender of this Message.Message.
      */

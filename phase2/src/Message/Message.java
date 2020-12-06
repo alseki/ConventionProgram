@@ -11,25 +11,31 @@ import java.util.UUID;
 
 public class Message implements Serializable {
     private String Id;
-    private String senderId;
+    private String senderId;  // a sender is a person or an event.
     private String recipientId;
     private LocalDateTime dateTime;
     private String content;
+    private int readStatus; // read is 0, unread is 1.
+    private String chatId; // the chat this message belongs to.
 
-    public Message(String senderId, String recipientId, String content){
+    public Message(String senderId, String recipientId, String chatId, String content){
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
+        this.readStatus = 1;
+        this.chatId = chatId;
     }
     // this is for event announcements.
-    public Message(String eventId, String content){
+    public Message(String eventId, String chatId, String content){
         this.senderId = eventId;
         this.content = content;
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
         this.recipientId = null;
+        this.readStatus = 1;
+        this.chatId = chatId;
     }
 
     /**
@@ -42,7 +48,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * This gives access to the sender of this Message.Message.
+     * This gives access to the senderId of this Message.Message, or the eventId.
      *
      * @return the sender of this Message.Message.
      */
@@ -79,5 +85,28 @@ public class Message implements Serializable {
      */
     public String getContent(){
         return this.content;
+    }
+
+    /**
+     * @return the status of the message. 1 is unread, 0 is read.
+     */
+    public int getReadStatus() {
+        return this.readStatus;
+    }
+
+    /**
+     * change the status of this message to unread.
+     */
+    public void changeStatus() {
+        this.readStatus = 1;
+    }
+
+    /**
+     * getter for the chatId of this message.
+     *
+     * @return String of the chat name.
+     */
+    public String getChatId() {
+        return this.chatId;
     }
 }
