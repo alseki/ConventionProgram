@@ -1,10 +1,12 @@
 package Event;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.TreeMap;
-import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
 // Last edit: Dec 6 2020
@@ -138,18 +140,19 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
-    /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
-     */
-    public String getSpeakerID(String eventID){
-        try {
-            return events.get(eventID).getSpeakerID();
-        } catch (NullPointerException n) {
-            return null;
-        }
-    }
+    // TODO this does not seem to be necessary. As only  the actual event types have a speakerID
+//    /**
+//     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
+//     * @param eventID The Event we are interested in
+//     * @return an array list of the IDs of all Attendees
+//     */
+//    public String getSpeakerID(String eventID){
+//        try {
+//            return events.get(eventID).getSpeakerID();
+//        } catch (NullPointerException n) {
+//            return null;
+//        }
+//    }
 
     /**
      * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
