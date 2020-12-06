@@ -117,6 +117,34 @@ public class ChatManager implements Serializable {
         return false;
     }
 
+    /** Remove an ID of a Person from personId of a Chat
+     * @param chatId the ID of the Chat
+     * @param personId the ID of the Person object to be removed from the Chat's personIds list
+     * @return true iff personId is successfully removed form the personIds list of Chat
+     */
+    public boolean removePersonIds(String chatId, String personId){
+        Chat chat = getUnknownTypeChat(chatId);
+        if(chat != null){
+            chat.removePersonIds(personId);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Remove all person Ids from personId list of a Chat
+     * @param chatId Id of Chat
+     * @return True iff all Person Id removed from personIds list
+     */
+    public boolean removeAllPersonIds(String chatId){
+        Chat chat = getUnknownTypeChat(chatId);
+        if(chat != null){
+            chat.removeAllPersonIds();
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Get personIds list of Chat corresponding to the inputted chatId
      * @param chatId Id of the target Chat object
@@ -301,6 +329,12 @@ public class ChatManager implements Serializable {
         return null;
     }
 
+    public int getChatSize(String chatId){return Objects.requireNonNull(this.getChat(chatId)).getPersonIds().size();}
+
+    public boolean nullifyChatID(String chatId){
+        Objects.requireNonNull(this.getChat(chatId)).Id = null;
+        return true;
+    }
 }
 
 // CRC Card Definition

@@ -50,6 +50,18 @@ public class EmployeeController extends PersonController {
         return this.chatManager.createChat(ownerId, guestIds);
     }
 
+    /**
+     * Returns ID of the Employee-exclusive Chat newly created
+     *
+     * @param ownerId  ID of the Employee user trying to create this Chat
+     * @param guestId An ID of the Employee that wants to join the Chat
+     * @return ID of the newly created Chat. If Chat was not created, returns null.
+     */
+    public String createEmpChat(String ownerId, String guestId) {
+        ArrayList<String> guest = new ArrayList<>();
+        guest.add(guestId);
+        return createEmpChat(ownerId, guest);
+    }
 
     /**
      * Returns ID of the Organizer-exclusive Chat newly created
