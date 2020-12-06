@@ -16,11 +16,11 @@ public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
 
-    Scanner input = new Scanner(System.in);
+    //Scanner input = new Scanner(System.in);
 
     JFrame frame;
     JPanel contentPane;
-    JLabel enterUsernameMsg, allContacts;
+    JLabel enterUsernameMsg, allContacts, noContactsMsg, viewC;
     JButton addContactButton, viewContactListButton, submitButton, okayButton;
     JTextField inputAddContact;
 
@@ -66,20 +66,33 @@ public class ContactView extends AccountView {
     }
      */
 
+    private void contactMain() {
+        okayButton.setVisible(false);
+        viewC.setVisible(false);
+
+        viewContactListButton.setVisible(true);
+        addContactButton.setVisible(true);
+    }
+
     private void setupAddContact() {
         enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
         contentPane.add(enterUsernameMsg);
         enterUsernameMsg.setVisible(false);
 
+        inputAddContact = new JTextField(20);
+        contentPane.add(inputAddContact);
+        inputAddContact.setVisible(false);
+
         submitButton = newButton("submit");
         contentPane.add(submitButton);
         submitButton.setVisible(false);
+
     }
 
     private void setupViewContacts() {
-        //enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
-        //contentPane.add(enterUsernameMsg);
-        //enterUsernameMsg.setVisible(false);
+        viewC = new JLabel("viewing your contacts...");
+        contentPane.add(viewC);
+        viewC.setVisible(false);
     }
 
 
@@ -93,6 +106,7 @@ public class ContactView extends AccountView {
         viewContactListButton.setVisible(false);
 
         okayButton.setVisible(true);
+        viewC.setVisible(true);
 
         try {
             return controller.getContactList();
@@ -112,8 +126,10 @@ public class ContactView extends AccountView {
 
         enterUsernameMsg.setVisible(true);
         submitButton.setVisible(true);
+        inputAddContact.setVisible(true);
 
-        String contactUsername = input.nextLine();
+        String contactUsername = inputAddContact.getText();
+
         try {
             controller.addContact(contactUsername);
         } catch (InvalidChoiceException e) {
@@ -128,15 +144,22 @@ public class ContactView extends AccountView {
 
         if (eventName.equals(this.presenter.getMenuOptions()[1])) {
             String[] myContacts = getContactList();
-            String contacts = "";
-            for(int i = 0; i < myContacts.length - 1; i++) {
-                contacts += myContacts[i] + ", ";
-            }
 
-            allContacts = new JLabel(contacts);//Create and add label that is centered and has empty borders
-            allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            allContacts.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-            contentPane.add(allContacts);
+            if(myContacts != null) {
+                String contacts = "";
+                for(int i = 0; i < myContacts.length - 1; i++) {
+                    contacts += myContacts[i] + ", ";
+                }
+
+                allContacts = new JLabel(contacts);//Create and add label that is centered and has empty borders
+                allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+                allContacts.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+                contentPane.add(allContacts);
+            } else {
+                noContactsMsg = new JLabel("oops! no contacts");
+                contentPane.add(noContactsMsg);
+                noContactsMsg.setVisible(true);
+            }
 
         }
 
@@ -145,13 +168,21 @@ public class ContactView extends AccountView {
             addContact();
 
         }
+
+        if(eventName.equals("okay")) {
+            contactMain();
+        }
+
+        if(eventName.equals("submit")) {
+
+        }
     }
 
     private JButton newButton(String title) {
         JButton newButton = new JButton(title);
         newButton.setLocation(0, 0);
         newButton.setActionCommand(title);
-        //newButton.addActionListener(this);
+        newButton.addActionListener(this);
         return newButton;
     }
 }
