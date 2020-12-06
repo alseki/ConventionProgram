@@ -15,17 +15,18 @@ public class OrgReqController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
-    private void fulfillRequest(String reqId){
-        presenter.fulfillRequestPrompt(reqId);
-        //String id = "";//SubMenu.readInput(input);
+    private String fulfillRequest(String reqId){
         requestManager.updateEntity(reqId);
+        return presenter.fulfillRequestPrompt(reqId);
+        //String id = "";//SubMenu.readInput(input);
+
     }
-    private void seeRequests(){
-        presenter.seeRequests();
+    private String seeRequests(){
+        return presenter.seeRequests();
     }
-    private void specificRequest(String reqID) throws InvalidChoiceException {
+    private String specificRequest(String reqID) throws InvalidChoiceException {
         if (requestManager.requestExists(reqID)) {
-            presenter.seeSpecificRequestPrompt(reqID);
+            return presenter.seeSpecificRequestPrompt(reqID);
             //String id = "";//SubMenu.readInput(input);
             //presenter.seeRequest(id);
         }
