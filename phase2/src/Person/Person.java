@@ -15,6 +15,8 @@ public abstract class Person implements Serializable {
     protected ArrayList<String> contactList = new ArrayList<>();
     protected ArrayList<String> eventList = new ArrayList<>();
     protected ArrayList<String> chatList = new ArrayList<>();
+    protected ArrayList<String> archivedChatList = new ArrayList<>(); //TODO: delete this comment.
+    protected ArrayList<String> favorites = new ArrayList<>(); //TODO: delete this comment. this list contains the archived messages' IDs.
 
     /**
      * this allows for access to the person's username
@@ -119,6 +121,58 @@ public abstract class Person implements Serializable {
         if (chatList.contains(chatID)) {
             chatList.remove(chatID);
         }
+    }
+
+    //TODO: delete this comment.
+    /**
+     * @return ArrayList returns the list of string corresponding to the archived chat Ids
+     */
+    public ArrayList<String> getArchivedChatList() {
+        return archivedChatList;
+    }
+
+    //TODO: delete this comment.
+    /**
+     * Adds a Chat to the list of the user's archived chats
+     * @param chatID the ID of the chat
+     */
+    public void addArchivedChat(String chatID) {
+        archivedChatList.add(chatID);
+    }
+
+    //TODO: delete this comment.
+    /**
+     * Removes a Chat from the list of the user's archived chats
+     * @param chatID the ID of the chat
+     */
+    public void removeArchivedChat(String chatID) {
+        archivedChatList.remove(chatID);
+    }
+
+    //TODO: delete this comment.
+    /**
+     * @return ArrayList returns the list of string corresponding to the archived message Ids
+     */
+    public ArrayList<String> getFavorites() {
+        return favorites;
+    }
+
+    //TODO: delete this comment.
+    /**
+     * Adds a message to the list of the user's favorites folder.
+     * @param messageId the ID of the message
+     */
+    public void addFavoritesMessage(String messageId) {
+        favorites.add(messageId);
+    }
+
+    //TODO: delete this comment.
+    /**
+     * Removes a message from the list of the user's archived messages
+     * @param messageId the ID of the chat
+     */
+    public void removeFavorites(String messageId) {
+        favorites.remove(messageId);
     }
 
     /**
