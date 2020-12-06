@@ -95,5 +95,6 @@ public class OrganizerController extends PersonController {
         System.arraycopy(orgOptions, 0, options, 2, 3);
         return options;
     }
+
     
 }

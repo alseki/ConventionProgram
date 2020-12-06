@@ -28,9 +28,8 @@ public class ContactView extends AccountView {
         super();
         this.controller = (ContactController) controller;
         this.presenter = ((ContactController) controller).getPresenter();
-    }
 
-    public void run() {
+
         frame = new JFrame(this.presenter.getMenuTitle()); // Create and set up the frame
         //JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +55,16 @@ public class ContactView extends AccountView {
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setVisible(true);
+
     }
+
+    // ok so lines 33-57 used to be in this run method until i moved it into the constructor
+    // and it worked that way lol hmmmm
+    /*
+    public void run() {
+
+    }
+     */
 
     private void setupAddContact() {
         enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
