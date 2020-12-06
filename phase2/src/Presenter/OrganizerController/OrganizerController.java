@@ -5,16 +5,19 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 29/11/2020
 
-import Person.*;
+import Event.EventManager;
+import Event.RoomManager;
+import Message.ChatManager;
+import Message.MessageManager;
+import Person.AttendeeManager;
+import Person.EmployeeManager;
+import Person.OrganizerManager;
+import Person.SpeakerManager;
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttMessageController;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
-import Event.EventManager;
-import Message.ChatManager;
-import Message.MessageManager;
-import Event.RoomManager;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
@@ -22,6 +25,7 @@ public class OrganizerController extends PersonController {
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
+    private EmployeeManager employeemanager;
 
     /**
      * constructor for organizer controller
@@ -36,11 +40,12 @@ public class OrganizerController extends PersonController {
      */
     public OrganizerController(OrganizerManager manager, SpeakerManager sm, RoomManager rooms,
                                EventManager events, MessageManager messages, ChatManager chats, AttendeeManager am,
-                               RequestManager rm) {
+                               EmployeeManager em, RequestManager rm) {
         super(manager, rooms, events, messages, chats, rm, 2);
         this.manager = manager;
         this.speakerManager = sm;
         this.attendeeManager = am;
+        this.employeemanager = em;
     }
 
     /**
