@@ -70,6 +70,14 @@ public class MessageController extends SubMenu {
         chatManager.removePersonIds(chatID, currentUserID);}
     }
 
+    protected boolean archiveChat(String chatID){
+        return chatManager.archiveChat(chatID);
+    }
+
+    protected boolean dearchiveChat(String chatID){
+        return chatManager.dearchiveChat(chatID);
+    }
+
     @Override
     public MessageMenu getPresenter() {
         return this.presenter;
