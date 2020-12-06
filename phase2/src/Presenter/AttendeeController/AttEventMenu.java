@@ -28,7 +28,7 @@ public class AttEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "View conference event list", "Sign up for an event",
+        String[] options = {"Return to Main Menu", "View conference events list", "Sign up for an event",
                 "Cancel your spot in an event", "View events you've signed up for"};
         return options;
     }
