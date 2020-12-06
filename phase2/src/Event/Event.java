@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 
 public abstract class Event implements Serializable {
 
+    // Event is an abstract class implemented by different types of Events.
+
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -181,7 +183,7 @@ public abstract class Event implements Serializable {
 
     /**
      * A textual representation of this event
-     * @return a description of this event (as a String)
+     * @return The name and description of this event (as a String)
      */
     @Override
     public String toString() {

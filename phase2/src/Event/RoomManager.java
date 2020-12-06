@@ -6,16 +6,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 19 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Use Class
 
-/**
- * Abstract class representing an object that can find Rooms by RoomID
- */
 abstract class RoomAccess {
+
+    // RoomAccess is an abstract class representing an object that can find Rooms at this convention by RoomID.
+
     protected abstract Room getRoom(String roomID);
     abstract String[] getEventIDs(String roomID);
+
 }
 
 public class RoomManager extends RoomAccess implements Serializable {
@@ -34,12 +35,9 @@ public class RoomManager extends RoomAccess implements Serializable {
      */
     public RoomManager() {
         roomEventList = new TreeMap<String, ArrayList<String>>();
-        roomsByName = new TreeMap<String, String>();
         roomList = new TreeMap<String, Room>();
+        roomsByName = new TreeMap<String, String>();
     }
-
-
-    // Protected getters
 
     /**
      * Returns the Room associated with this RoomID
@@ -48,13 +46,11 @@ public class RoomManager extends RoomAccess implements Serializable {
      */
     protected Room getRoom(String roomID) {
         try {
-            return roomList.get(roomID);
+            return this.roomList.get(roomID);
         } catch (NullPointerException e) {
             return null;
         }
     }
-
-    // Public getters
 
     /**
      * Finds the ID of a specific Room (by name)
@@ -63,7 +59,7 @@ public class RoomManager extends RoomAccess implements Serializable {
      */
     public String getRoomID (String name) {
         try {
-            return roomsByName.get(name);
+            return this.roomsByName.get(name);
         } catch (NullPointerException e) {
             return null;
         }
@@ -76,15 +72,15 @@ public class RoomManager extends RoomAccess implements Serializable {
      */
     public String getRoomName (String ID) {
         try {
-            return roomList.get(ID).getName();
+            return this.roomList.get(ID).getName();
         } catch (NullPointerException e) {
             return null;
         }
     }
 
     /**
-     * Returns a list of the names of all Rooms currently established at this conference
-     * @return The Room's EventManager
+     * Returns a list of the names of all Rooms currently established at this convention
+     * @return An array of the Room names at this convention
      */
     public String[] getRoomNames() {
         String[] names = {};
@@ -136,8 +132,6 @@ public class RoomManager extends RoomAccess implements Serializable {
         return roomList.size();
     }
 
-    // Adding methods
-
     /**
      * Creates a new Room with the inputted capacity
      * @param name The name of the new room
@@ -153,22 +147,20 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Adds an event in a certain Room to that Room's EventIDs list
+     * Adds an Event to a certain Room's list of Event IDs
      * @param roomID The Room's ID
      * @param eventID The Event's ID
-     * @return True if successful
+     * @return True if successful, false if unsuccessful (i.e. Room does not have the capacity for this Event)
      */
     public boolean addEvent(String roomID, String eventID) {
         try {
-            ArrayList<String> room = roomEventList.get(roomID);
+            ArrayList<String> events = roomEventList.get(roomID);
             room.add(eventID);
             return true;
         } catch (NullPointerException e) {
             return false;
         }
     }
-
-    // comparison methods
 
     /**
      * Checks to see if this RoomManager contains a room of a certain name

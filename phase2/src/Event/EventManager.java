@@ -7,14 +7,14 @@ import java.util.TreeMap;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 19 2020
+// Last edit: Dec 6 2020
 
 // Architecture Level - Use Class
 
-/**
- * Abstract class representing an object that can find events by EventID
- */
 abstract class EventAccess {
+
+    // EventAccess is an abstract class representing an object that can find Events at this convention by ID.
+
     protected abstract Event getEvent(String eventID);
 }
 
@@ -34,13 +34,10 @@ public class EventManager extends EventAccess implements Serializable {
         eventsByName = new TreeMap<String, String>();
     }
 
-
-    // Protected getters (of Event objects)
-
     /**
-     * Returns a textual representation of an event
-     * @param eventID The ID of the event
-     * @return The event, as a String
+     * Returns an Event, given its ID
+     * @param eventID The ID of the Event
+     * @return The Event
      */
     protected Event getEvent(String eventID) {
         try {
@@ -51,16 +48,16 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Returns all the events from a list of IDs
-     * @param ids The IDs of the events you want to get
-     * @return The events, as an array of their String representations
+     * Returns all the Events from a list of IDs
+     * @param IDs The IDs of the Events you want to get
+     * @return The Events, as an array of their String representations
      */
-    protected Event[] getEventList(String[] ids) {
+    protected Event[] getEventList(String[] IDs) {
         try {
-            if (ids != null && ids.length > 0) {
-                Event[] eventInfoArray = new Event[ids.length];
-                for (int i = 0; i < ids.length; i++) {
-                    eventInfoArray[i] = events.get(ids[i]);
+            if (IDs != null && IDs.length > 0) {
+                Event[] eventInfoArray = new Event[IDs.length];
+                for (int i = 0; i < IDs.length; i++) {
+                    eventInfoArray[i] = events.get(IDs[i]);
                 }
                 return eventInfoArray;
             }
@@ -70,13 +67,10 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
-
-    // Public getters (of ids)
-
     /**
-     * Returns the ID of an event given its name
-     * @param name The event's name
-     * @return The ID
+     * Returns the ID of an Event given its name
+     * @param name The Event's name
+     * @return The ID of that Event
      */
     public String getEventID(String name) {
         try {
@@ -87,8 +81,8 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Helper getter for the all the events in this EventManager
-     * @return an array of all events in this EventManager
+     * Helper getter for the all the Events in this EventManager
+     * @return an array of all Events in this EventManager
      */
     public String[] getEventIDs() {
         String[] eventArray = {};
