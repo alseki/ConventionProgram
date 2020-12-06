@@ -101,10 +101,10 @@ public class EmployeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] employeeOptions  = {"View the request board"};
-        String[] options = new String[3];
+        String[] employeeOptions  = {"View event information", "View the request board"};
+        String[] options = new String[4];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(employeeOptions, 0, options, 2, 1);
+        System.arraycopy(employeeOptions, 0, options, 2, 2);
         return options;
     }
 

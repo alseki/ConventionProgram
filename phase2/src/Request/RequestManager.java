@@ -34,6 +34,22 @@ public class RequestManager implements Serializable {
         return true;
     }
 
+    /**
+     * allows user to change/modify the request that is still pending
+     * @param reqUserId the user who is changing the request
+     * @param reqId of the request content to be brought into a string
+     * @return true
+     */
+    public boolean modifyRequest(String reqUserId, String reqId) {
+        RequestEntity req = getRequestEntity(reqId);
+        if(!req.getFulfilled()) {
+            String oldRequest = getStringOfRequest(reqId);
+            createRequest(oldRequest, reqUserId);
+        }
+        return true;
+
+    }
+
 
     private void updateMap(String str, RequestEntity req){
         idToRequest.put(str, req);

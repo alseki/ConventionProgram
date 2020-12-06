@@ -33,24 +33,9 @@ public class RequestEntity implements Serializable {
 
     }
 
-    /**
-     * contructor for request entity - 2nd type where event name can be entered
-     * @param requestContent
-     * @param requestingUserId
-     * @param eventsConcerned
-     */
-
-    public RequestEntity(String requestContent, String requestingUserId, String eventsConcerned){
-            this.requestContent = requestContent;
-            this.requestingUserId = requestingUserId;
-            this.eventsConcerned = eventsConcerned;
-            this.fulfilled = false;
-            this.requestId = UUID.randomUUID().toString();
-
-    }
 
     /**
-     * getter fir fulffiled status
+     * getter for fulfilled status
      * @return boolean
      */
         public boolean getFulfilled () {
@@ -90,7 +75,7 @@ public class RequestEntity implements Serializable {
         }
 
     /**
-     * sets this.fuflified to true, and notifiies observiers
+     * sets this.fulfilled to true, and notifies observers
      */
     public void setFulfilled () {
             this.fulfilled = true;

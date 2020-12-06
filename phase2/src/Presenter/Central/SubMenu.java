@@ -21,6 +21,8 @@ public abstract class SubMenu {
     protected ChatManager chatManager;
     protected RequestManager requestManager;
 
+    // removed AdminManager from the class. Administrator is no longer a user in the system.
+
     public SubMenu(RoomManager roomManager, EventManager eventManager, PersonManager personManager,
                    MessageManager messageManager, ChatManager chatManager, RequestManager requestManager) {
         this.roomManager = roomManager;
