@@ -20,28 +20,8 @@ public class AttEventView extends AccountView {
         super();
         this.controller = (AttEventController) controller;
         this.presenter = (AttEventMenu) controller.getPresenter();
-    }
-
-    private void setupEventMenuOptions() {
-        dropDownMenu = new JComboBox<>(presenter.getMenuOptions());// Generates dropdown menu
-        dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
-        dropDownMenu.setSelectedIndex(0);
-        dropDownMenu.addActionListener(this);
-        contentPane.add(dropDownMenu);
-        dropDownMenu.setVisible(false);
-    }
-
-    /*
-    private void setupViewAllEvents() {
-
-    }
-     */
 
 
-    /**
-     * Sets up the page
-     */
-    public void run () {
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,6 +44,28 @@ public class AttEventView extends AccountView {
         frame.pack();// Size and then display the frame.
         frame.setVisible(true);
     }
+
+    private void setupEventMenuOptions() {
+        dropDownMenu = new JComboBox<>(presenter.getMenuOptions());// Generates dropdown menu
+        dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
+        dropDownMenu.setSelectedIndex(0);
+        dropDownMenu.addActionListener(this);
+        contentPane.add(dropDownMenu);
+        dropDownMenu.setVisible(false);
+    }
+
+    /*
+    private void setupViewAllEvents() {
+
+    }
+     */
+
+
+    /*
+    public void run () {
+    }
+
+     */
 
     @Override
     public void actionPerformed(ActionEvent event) {
