@@ -1,7 +1,5 @@
 package Event;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -273,7 +271,9 @@ public class EventManager extends EventAccess implements Serializable {
      * Helper method for addEvent
      */
     private Event createTalk(String name, String speakerID, LocalDateTime startTime, String description) {
-        return new Talk(name, speakerID, startTime, description);
+        // FIXME
+        // return new Talk(name, speakerID, startTime, description);
+        return  null;
     }
 
     /**
@@ -281,7 +281,9 @@ public class EventManager extends EventAccess implements Serializable {
      * Helper method for addEvent
      */
     private Event createWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
-        return new Workshop(name, speakerID, startTime, description);
+        // FIXME
+        // return new Workshop(name, speakerID, startTime, description);
+        return null;
     }
 
 

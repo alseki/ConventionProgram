@@ -93,7 +93,8 @@ public class EmployeeController extends PersonController {
                 return new EmpReqController(this, currentUserID);
             }
             else if (choice.equals(options[3])){
-                return new EmpEventController(this, currentUserID, manager);
+                return null; // FIXME
+                //return new EmpEventController(this, currentUserID, manager);
             }
         }
         return null;

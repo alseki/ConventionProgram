@@ -96,18 +96,21 @@ public class EventPermissions {
     public boolean checkConflicts(LocalDateTime startTime, EventType type, String[] events) {
         Event event;
         if (type.equals(EventType.WORKSHOP)) {
-            event = new Workshop("", "", startTime, "");
+            // FIXME
+            // event = new Workshop("", "", startTime, "");
         } else if (type.equals(EventType.TALK)) {
-            event = new Talk("", "", startTime, "");
+            // FIXME
+            // event = new Talk("", "", startTime, "");
         } else {
             return false;
         }
 
         try {
             for (String eID : events) {
-                if (eventAccess.getEvent(eID).conflictsWith(event)) {
-                    return false;
-                }
+                // TODO uncomment when fixed
+                //if (eventAccess.getEvent(eID).conflictsWith(event)) {
+                    //return false;
+                //}
             }
             return true;
         } catch (NullPointerException n) {
