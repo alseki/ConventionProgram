@@ -3,24 +3,30 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Eytan Weinstein
-// Last edit: Nov 17 2020
+// Last edit: Dec 5 2020
 
 // Architecture Level - Entity
 
 public class Workshop extends Event {
 
-    // A Workshop is exactly one half hour long, and can take place in the same Room as other Workshops (but not Talks!)
-    // so long as the number of its attendees does not exceed the capacity of that Room.
+    // A Workshop is a session on a particular topic delivered to a group of Attendees by one Speaker. It can take place
+    // in the same Room as other Workshops (but not Talks, Parties, or Panels!) so long as the number of its attendees
+    // does not exceed the capacity of that Room.
+
+    private String speakerID;
 
     /**
      * Constructor for Workshop objects
      * @param name The Workshop's name
      * @param speakerID The ID of the speaker at this Workshop
      * @param startTime The time when the Workshop starts
+     * @param endTime The time when the Workshop ends
      * @param description The description of this Talk
      */
-    public Workshop (String name, String speakerID, LocalDateTime startTime, String description) {
-        super(name, startTime,startTime.plusMinutes(30), description, speakerID);
+    public Workshop (String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description)
+    {
+        super(name, startTime, endTime, description);
+        this.speakerID = speakerID;
     }
 
     /**
@@ -37,6 +43,22 @@ public class Workshop extends Event {
             }
         }
         return false;
+    }
+
+    /**
+     * Getter for the ID of the Speaker at this Talk
+     * @return the ID of the Speaker at this Talk (as a String)
+     */
+    public String getSpeakerID() {
+        return this.speakerID;
+    }
+
+    /**
+     * Setter for the ID of the Speaker at this Talk
+     * @param speakerID The new ID of the Speaker at this Talk (as a String)
+     */
+    public void setSpeakerID(String speakerID) {
+        this.speakerID = speakerID;
     }
 
 }

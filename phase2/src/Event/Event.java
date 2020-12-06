@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 17 2020
+// Last edit: Dec 5 2020
 
 // Architecture Level - Entity
 
@@ -17,10 +17,9 @@ public abstract class Event implements Serializable {
     private LocalDateTime endTime;
     private String description;
     private String ID;
-    private String speakerID;
-    private ArrayList<String> attendees;
-    private String chatID;
     private String password;
+    private String chatID;
+    private ArrayList<String> attendees;
 
     /**
      * Constructor for Event objects
@@ -28,23 +27,21 @@ public abstract class Event implements Serializable {
      * @param startTime The time when the Event starts
      * @param endTime The time when the Event ends
      * @param description A description for this Event
-     * @param speakerID The ID of the Speaker holding this event
      */
-    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description, String speakerID) {
+    protected Event(String name, LocalDateTime startTime, LocalDateTime endTime, String description) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
         ID = UUID.randomUUID().toString();
-        this.speakerID = speakerID;
-        attendees = new ArrayList<String>();
-        this.chatID = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString().replace("-", "");
+        this.chatID = UUID.randomUUID().toString();
+        attendees = new ArrayList<String>();
     }
 
     /**
      * Getter for the name of this Event
-     * @return the name of the Event (as a string)
+     * @return the name of the Event (as a String)
      */
     public String getName() {
         return name;
@@ -54,7 +51,7 @@ public abstract class Event implements Serializable {
      * Setter for the name of this Event
      * @param name The new name of this Event
      */
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -67,11 +64,37 @@ public abstract class Event implements Serializable {
     }
 
     /**
+     * Setter for the start time of this Event
+     * @param startTime The new start time of this Event
+     */
+    public void setStartTime(LocalDateTime startTime) {this.startTime = startTime;}
+
+    /**
      * Getter for the end time of this Event
      * @return the end time of this Event
      */
     public LocalDateTime getEndTime() {
         return endTime;
+    }
+
+    /**
+     * Setter for the end time of this Event
+     * @param endTime The new end time of this Event
+     */
+    public void setEndTime(LocalDateTime endTime) {this.endTime = endTime;}
+
+    /**
+     * A getter for the description of this Event
+     * @return a description of this Event (as a String)
+     */
+    public String getDescription() {return this.description;};
+
+    /**
+     * Setter for the description of this Talk
+     * @param description A new description for this Talk
+     */
+    protected void setDescription(String description){
+        this.description = description;
     }
 
     /**
@@ -83,40 +106,11 @@ public abstract class Event implements Serializable {
     }
 
     /**
-     * Getter for the speaker running this Event
-     * @return an array of IDs corresponding to speakers in the system
+     * Getter for this Event's password
+     * @return String representing the Event's password
      */
-    public String getSpeaker() {
-        if (speakerID == null) {
-            return "";
-        }
-        else{
-            return speakerID;
-        }
-    }
-
-    /**
-     * Getter for the attendees attending this Event
-     * @return an array of these attendees
-     */
-    public ArrayList<String> getAttendeeIDs() {
-        return attendees;
-    }
-
-    /**
-     * Adds an attendee to this Event's attendee list
-     * @param ID The ID of the new attendee
-     */
-    public void addAttendee(String ID) {
-        attendees.add(ID);
-    }
-
-    /**
-     * Removes an attendee from this Event's attendee list
-     * @param ID The ID of the attendee being removed
-     */
-    public void removeAttendee(String ID) {
-        attendees.remove(ID);
+    public String getPassword(){
+        return this.password;
     }
 
     /**
@@ -136,31 +130,32 @@ public abstract class Event implements Serializable {
     }
 
     /**
-     * Getter for this Event's password
-     * @return String representing the Event's password
+     * Getter for the Attendees attending this Event
+     * @return an array of these Attendees
      */
-    public String getPassword(){
-        return this.password;
+    public ArrayList<String> getAttendeeIDs() {
+        return attendees;
     }
 
     /**
-     * A getter for the description of this Event
-     * @return a description of this Event in the form of a String
+     * Adds an Attendee to this Event's list of Attendees
+     * @param ID The ID of the new Attendee
      */
-    public String getDescription() {return this.description;};
-
+    public void addAttendee(String ID) {
+        attendees.add(ID);
+    }
 
     /**
-     * Setter for the description of this Talk
-     * @param description A new description for this Talk
+     * Removes an Attendee from this Event's list of Attendees
+     * @param ID The ID of the Attendee being removed
      */
-    protected void setDescription(String description){
-        this.description = description;
+    public void removeAttendee(String ID) {
+        attendees.remove(ID);
     }
 
     /**
      * A textual representation of this event
-     * @return a description of this event in the form of a String
+     * @return a description of this event (as a String)
      */
     @Override
     public String toString() {

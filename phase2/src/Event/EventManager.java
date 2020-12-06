@@ -151,7 +151,7 @@ public class EventManager extends EventAccess implements Serializable {
      */
     public String getSpeakerID(String eventID){
         try {
-            return events.get(eventID).getSpeaker();
+            return events.get(eventID).getSpeakerID();
         } catch (NullPointerException n) {
             return null;
         }
