@@ -116,26 +116,11 @@ public class RequestEntity implements Serializable {
         }
         sb.append("\t");
         sb.append(requestingUserId);
-        return sb.toString();
-    }
-
-    /**
-     * To string method for request entity with events concerned
-     * comes in the format of requestId     requestcontent      pending/fulfilled       requestingusedID
-     * ( this is not on a new line)Events concerned
-     *
-     *
-     * @return String
-     */
-
-    public String toStringEvents(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(toString());
-        sb.append("\t");
-        sb.append(this.eventsConcerned);
         sb.append("\n");
         return sb.toString();
     }
+
+
 
 
     }

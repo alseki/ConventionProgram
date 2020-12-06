@@ -17,35 +17,15 @@ public class AttReqController extends SubMenu {
     }
 
 
-    public void menuChoice() {
-        do {
-            switch (currentRequest) {
-                case 0:
-                    // return to main menu
-                    break;
-                case 1: //make request
-                    request();
-                    break;
-                case 2:
-                    specificRequest();
-                    break;
-                    case 3:
-                        myRequests();
-                        break;
-            }
-        }
-        while (currentRequest != 0);
-    }
-
     private void request(){
         presenter.makeRequestPrompt();
         String content = "";//SubMenu.readInput(input);
         reqM.createRequest(this.currentUserID, content);
     }
-    private void specificRequest(){
-        presenter.seeSpecificRequestPrompt();
-        String id = "";//SubMenu.readInput(input);
-        presenter.seeRequest(id);
+    private void specificRequest(String reqId){
+        presenter.seeSpecificRequestPrompt(reqId);
+        //String id = "";//SubMenu.readInput(input);
+        //presenter.seeRequest(id);
 
     }
     private void myRequests(){

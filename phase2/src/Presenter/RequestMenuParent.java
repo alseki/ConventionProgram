@@ -35,9 +35,6 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
         return reqM.getStringOfRequest(reqId);
     }
 
-    protected String printRequestWithEvent(String reqId) {
-        return reqM.getStringOfRequestEvent(reqId);
-    }
 
     /**
      * prompt for request content
@@ -50,15 +47,9 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
     /**
      * prompt the get request Id for a request
      */
-    public String seeSpecificRequestPrompt(){
-        return "Please enter the request ID for the request you would like to see;";
+    public String seeSpecificRequestPrompt(String reqId){
+        return "This is the request with id" + reqId;
     }
 
-    /**
-     * prompt the get eventName for a request - this is an option only for employees or organizers
-     */
-    public String seeSpecificRequestPromptByEventname(){
-        return "Please enter the event name to see all request pertaining to this event;";
-    }
 
 }

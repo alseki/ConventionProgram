@@ -2,6 +2,7 @@ package Presenter.OrganizerController;
 
 import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
+import Presenter.Exceptions.InvalidChoiceException;
 
 public class OrgReqController extends SubMenu {
     protected int currentRequest;
@@ -14,43 +15,23 @@ public class OrgReqController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
-    public void menuChoice() {
-        do {
-            switch (currentRequest) {
-                case 0:
-                    // return to main menu
-                    break;
-                case 1: // see the requests --> must be an organizer or an employee
-                    specificRequest();
-                    break;
-                case 2: // fulfill requests --> must be an organizer or an employee
-                    seeRequests();
-                    break;
-                case 3: // see a specific request
-                    fulfillRequest();
-                    break;
-                case 4:
-                    request(); // make a request
-                    break;
-                case 5:
-                    myRequests(); // see my requests till now
-                    break;
-            }
-        }
-        while (currentRequest != 0);
-    }
-    private void fulfillRequest(){
-        presenter.fulfillRequestPrompt();
-        String id = "";//SubMenu.readInput(input);
-        requestManager.updateEntity(id);
+    private void fulfillRequest(String reqId){
+        presenter.fulfillRequestPrompt(reqId);
+        //String id = "";//SubMenu.readInput(input);
+        requestManager.updateEntity(reqId);
     }
     private void seeRequests(){
         presenter.seeRequests();
     }
-    private void specificRequest(){
-        presenter.seeSpecificRequestPrompt();
-        String id = "";//SubMenu.readInput(input);
-        presenter.seeRequest(id);
+    private void specificRequest(String reqID) throws InvalidChoiceException {
+        if (requestManager.requestExists(reqID)) {
+            presenter.seeSpecificRequestPrompt(reqID);
+            //String id = "";//SubMenu.readInput(input);
+            //presenter.seeRequest(id);
+        }
+        else{
+            throw new InvalidChoiceException("request");
+        }
     }
     private void request(){
         presenter.makeRequestPrompt();

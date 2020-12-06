@@ -30,18 +30,18 @@ public class OrgReqMenu extends RequestMenuParent {
     /**
      * see all the requests
      */
-    public void seeRequests() {
+    public String seeRequests() {
         StringBuilder reqs = new StringBuilder();
         for (String id: reqM.getAllRequestUserIds()) {
             reqs.append(reqM.getRequestStringForPerson(id));
         }
-        System.out.println(requestFormat() + reqs);
+        return requestFormat() + reqs;
     }
     /**
      * prompt to get requestId for fullfilling
      */
-    public void fulfillRequestPrompt(){
-        System.out.println("Which Request Would you like to fulfill, please enter the ID.");
+    public String fulfillRequestPrompt(String reqId){
+        return "The request with id" + reqId + "has been fulfilled";
     }
 
 
