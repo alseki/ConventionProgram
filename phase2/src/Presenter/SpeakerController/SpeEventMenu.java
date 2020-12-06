@@ -2,7 +2,6 @@ package Presenter.SpeakerController;
 
 import Event.EventManager;
 import Event.RoomManager;
-import Person.PersonManager;
 import Person.SpeakerManager;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
@@ -16,8 +15,8 @@ import Presenter.PersonController.EventMenu;
 public class SpeEventMenu extends EventMenu {
     String currentUserID;
 
-    public SpeEventMenu(RoomManager rooms, EventManager events, SpeakerManager persons, String currentUserID) {
-        super(rooms, events, persons);
+    public SpeEventMenu(RoomManager rooms, EventManager events, SpeakerManager speakers, String currentUserID) {
+        super(rooms, events, speakers);
         this.currentUserID = currentUserID;
     }
 

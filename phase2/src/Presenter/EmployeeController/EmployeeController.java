@@ -34,7 +34,6 @@ public class EmployeeController extends PersonController {
 
     /**
      * Returns ID of the Employee-exclusive Chat newly created
-     *
      * @param ownerId  ID of the Employee user trying to create this Chat
      * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
      * @return ID of the newly created Chat
@@ -80,6 +79,9 @@ public class EmployeeController extends PersonController {
             }
             else if (choice.equals(options[2])){
                 return new EmpReqController(this, currentUserID);
+            }
+            else if (choice.equals(options[3])){
+                return new EmpEventController(this, currentUserID, manager);
             }
         }
         return null;
