@@ -9,6 +9,11 @@ public class OrgReqController extends SubMenu {
     protected OrgReqMenu presenter;
     private String currentUserID;
 
+    /**
+     * constructor for OrgReqController
+     * @param subMenu submenu
+     * @param currentUserID String
+     */
     public OrgReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new OrgReqMenu(requestManager);
@@ -43,6 +48,10 @@ public class OrgReqController extends SubMenu {
         presenter.myRequests(currentUserID);
     }
 
+    /**
+     * getter for the presenter
+     * @return this.presenter (OrgReqMenu)
+     */
     @Override
     public OrgReqMenu getPresenter() {
         return this.presenter;

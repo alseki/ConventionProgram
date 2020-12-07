@@ -10,6 +10,11 @@ public class AttReqController extends SubMenu {
     protected AttReqMenu presenter;
     private String currentUserID;
 
+    /**
+     * constructor for AttReqController
+     * @param subMenu SubMenu
+     * @param currentUserID string
+     */
     public AttReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.presenter = new AttReqMenu(reqM);
@@ -32,7 +37,10 @@ public class AttReqController extends SubMenu {
         return presenter.myRequests(currentUserID);
     }
 
-
+    /**
+     * getter for the presenter
+     * @return this.presenter (AttReqMenu)
+     */
     @Override
     public AttReqMenu getPresenter() {
         return this.presenter;

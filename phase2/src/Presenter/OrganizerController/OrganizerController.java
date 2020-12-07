@@ -91,6 +91,10 @@ public class OrganizerController extends PersonController {
         return null;
     }
 
+    /**
+     * getter for the menu options for the Organizr contorller
+     * @return list of strings representing the menu opetions
+     */
     @Override
     public String[] getMenuOptions() {
         String[] orgOptions  = {"View your event information", "View attendees' requests",

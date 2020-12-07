@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager{
+    /**
+     * constructor for OrganizerManager
+     * @param usernameToPerson a map of String reping username to organizer object
+     * @param idToPerson a map of String reping id to ogranizer object
+     */
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -84,8 +89,8 @@ public class OrganizerManager extends PersonManager{
 
     /**
      *
-     * @param username
-     * @return
+     * @param username String representing the username
+     * @return returns an int depending on the type of username
      */
 
     public int confirmOrganizer(String username){

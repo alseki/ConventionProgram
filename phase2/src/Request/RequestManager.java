@@ -55,11 +55,6 @@ public class RequestManager implements Serializable {
         idToRequest.put(str, req);
     }
 
-    /**
-     * get a specific entity with reqid
-     * @param reqId string for request id
-     * @return the request entity with request id
-     */
     private RequestEntity getRequestEntity(String reqId){
         return idToRequest.get(reqId);
     }
@@ -79,7 +74,11 @@ public class RequestManager implements Serializable {
         req.setFulfilled();
     }
 
-
+    /**
+     * allows you to get all the requests for the person with person id
+     * @param personId String
+     * @return format of requests for all the requests for this person.
+     */
     public String getRequestStringForPerson(String personId){
         StringBuilder reqs = new StringBuilder();
         for(RequestEntity req: this.requestsList){
@@ -113,6 +112,12 @@ public class RequestManager implements Serializable {
         }
         return lst;
     }
+
+    /**
+     * lets you know if a request with reqId exists
+     * @param reqID String
+     * @return true iff the requests sexists
+     */
     public boolean requestExists(String reqID){
         return idToRequest.containsKey(reqID);
     }

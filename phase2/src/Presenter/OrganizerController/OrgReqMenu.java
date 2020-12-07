@@ -20,6 +20,10 @@ public class OrgReqMenu extends RequestMenuParent {
         super(reqM);
     }
 
+    /**
+     * getter for the menu options
+     * @return the menu options
+     */
     @Override
     public String[] getMenuOptions() {
         String[] options = {"Return to Main Menu", "View a specific request", "View requests", "Fulfill a request",
@@ -28,7 +32,7 @@ public class OrgReqMenu extends RequestMenuParent {
     }
 
     /**
-     * see all the requests
+     * see all the requests that are in the system
      */
     public String seeRequests() {
         StringBuilder reqs = new StringBuilder();
@@ -37,8 +41,11 @@ public class OrgReqMenu extends RequestMenuParent {
         }
         return requestFormat() + reqs;
     }
+
     /**
-     * prompt to get requestId for fullfilling
+     * fulfills request for reqId
+     * @param reqId String
+     * @return "The request with id" + reqId + "has been fulfilled"
      */
     public String fulfillRequestPrompt(String reqId){
         return "The request with id" + reqId + "has been fulfilled";
