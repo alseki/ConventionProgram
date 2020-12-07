@@ -3,6 +3,7 @@ package Event;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -138,7 +139,7 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
-    // TODO this does not seem to be necessary. As only  the actual event types have a speakerID
+    // TODO this does not seem to be necessary. As only the actual event types have a speakerID
 //    /**
 //     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
 //     * @param eventID The Event we are interested in
@@ -151,6 +152,15 @@ public class EventManager extends EventAccess implements Serializable {
 //            return null;
 //        }
 //    }
+
+
+    /**
+     * Getter for the IDs of the Attendees attending this Event
+     * @return an array of these Attendee IDs
+     */
+    public ArrayList<String> getAttendeeIDs(String eventId) {
+        return getEvent(eventId).getAttendeeIDs();
+    }
 
     /**
      * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID

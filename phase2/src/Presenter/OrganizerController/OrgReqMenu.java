@@ -1,8 +1,7 @@
 package Presenter.OrganizerController;
 
-import Request.RequestEntity;
-import Request.RequestManager;
 import Presenter.RequestMenuParent;
+import Request.RequestManager;
 
 // Programmers:
 // Description:
@@ -23,7 +22,7 @@ public class OrgReqMenu extends RequestMenuParent {
     @Override
     public String[] getMenuOptions() {
         String[] options = {"Return to Main Menu", "View a specific request", "View requests", "Fulfill a request",
-            "Make a request", "See my requests"};
+            "Make a request", "See my requests", "Modify a request"};
         return options;
     }
 

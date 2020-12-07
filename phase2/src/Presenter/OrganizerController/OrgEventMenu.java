@@ -93,6 +93,10 @@ public class OrgEventMenu extends EventMenu {
         System.out.println("\nWhat is the name of this event?");
     }
 
+    public void printChatNamePrompt(){
+        System.out.println("\nWhat is the ");
+    }
+
     /**
      * Prompts the user to enter a description for the new Event
      */
