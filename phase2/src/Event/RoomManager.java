@@ -157,18 +157,19 @@ public class RoomManager extends RoomAccess implements Serializable {
             int current_occupancy = 0;
             for (String ID : this.getEventIDs(roomID)) {
                 int event_capacity;
-                event_capacity = EventManager.getCapacity(ID);
+                // FIXME
+                // event_capacity = EventManager.getCapacity(ID);
 
             }
 
 
-
-            int current_occupancy =
-
-
+            // FIXME
+            //int current_occupancy =
 
 
-            String[] getEventIDs(String roomID)
+
+            // FIXME
+            // String[] getEventIDs(String roomID)
 
             ArrayList<String> events = roomEventList.get(roomID);
             // FIXME

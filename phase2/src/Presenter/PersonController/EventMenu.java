@@ -77,7 +77,8 @@ public abstract class EventMenu implements SubMenuPrinter {
     }
 
     private String formatEvent(String eventID) throws InvalidChoiceException  {
-        try {
+        // FIXME
+        /*try {
             StringBuilder e = new StringBuilder();
             e.append(events.getEventType(eventID).toString());
             e.append(": ");
@@ -96,7 +97,8 @@ public abstract class EventMenu implements SubMenuPrinter {
             return e.toString();
         } catch (NullPointerException n) {
             throw new InvalidChoiceException("event");
-        }
+        }*/
+        return null; // TODO delete this line when above is fixed
     }
 
 }

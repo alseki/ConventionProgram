@@ -12,7 +12,6 @@ public class AttEventView extends AccountView {
     AttEventController controller;
     AttEventMenu presenter;
 
-    JComboBox<String> dropDownMenu;
     JLabel enterEventNameMsg, allEvents, yourEvents;
     JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton;
     JTextField inputEventName;
@@ -49,12 +48,7 @@ public class AttEventView extends AccountView {
     }
 
     private void setupEventMenuOptions() {
-        dropDownMenu = new JComboBox<>(presenter.getMenuOptions());// Generates dropdown menu
-        dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
-        dropDownMenu.setSelectedIndex(0);
-        dropDownMenu.addActionListener(this);
-        contentPane.add(dropDownMenu);
-        dropDownMenu.setVisible(false);
+        makeDropDownMenu(presenter);
     }
 
     private void setupViewAllEvents() {
@@ -111,15 +105,15 @@ public class AttEventView extends AccountView {
         yourEvents.setVisible(false);
     }
 
-
-    private void showAttEventMain() {
-        hideAll();
-        dropDownMenu.setVisible(true);
+    @Override
+    public void showMainDropDownMenu() {
+        super.showMainDropDownMenu();
         continueButton.setVisible(true);
     }
 
-    private void hideAttEventMenu() {
-        dropDownMenu.setVisible(false);
+    @Override
+    public void hideMainDropDownMenu() {
+        super.hideMainDropDownMenu();
         continueButton.setVisible(false);
     }
 
@@ -169,20 +163,20 @@ public class AttEventView extends AccountView {
 
 
         if(eventName.equals("back")) { //can probably combine this with the next if statement
-            showAttEventMain();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(presenter.getMenuOptions()[0])) { // return to Att main menu
-            showAttEventMain();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(presenter.getMenuOptions()[1])) { // view list of all Events
-            hideAttEventMenu();
+            hideMainDropDownMenu();
             showViewAllEvents();
         }
 
         if(eventName.equals(presenter.getMenuOptions()[2])) { // sign up for an Event
-            hideAttEventMenu();
+            hideMainDropDownMenu();
             showSignUp();
         }
 
@@ -191,7 +185,7 @@ public class AttEventView extends AccountView {
         }
 
         if(eventName.equals(presenter.getMenuOptions()[3])) { // cancel your spot from an Event
-            hideAttEventMenu();
+            hideMainDropDownMenu();
             showCancelSpot();
         }
 
@@ -200,7 +194,7 @@ public class AttEventView extends AccountView {
         }
 
         if(eventName.equals(presenter.getMenuOptions()[4])) { // get list of your signed up events
-            hideAttEventMenu();
+            hideMainDropDownMenu();
             showYourEvents();
         }
     }

@@ -41,26 +41,7 @@ public class ContactView extends AccountView {
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setVisible(true);
-        showContactMain();
-    }
-
-    /**
-     * Shows the main Contact Menu screen
-     */
-    private void showContactMain() {
-        hideAll();
-        for (JButton button: menuButtons) {
-            button.setVisible(true);
-        }
-    }
-
-    /**
-     * Hides the main screen button options
-     */
-    private void hideContactMain() {
-        for (JButton button: menuButtons) {
-            button.setVisible(false);
-        }
+        showMainMenuButtons();
     }
 
     /**
@@ -154,7 +135,7 @@ public class ContactView extends AccountView {
         } catch (InvalidChoiceException e) {
             JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
                     JOptionPane.DEFAULT_OPTION);
-            showContactMain();
+            showMainMenuButtons();
         }
     }
 
@@ -165,17 +146,17 @@ public class ContactView extends AccountView {
         // [0] = View Contacts
         // [1] = Add Contact
         if (eventName.equals(menuButtons.get(0).getActionCommand())) {
-            hideContactMain();
+            hideMainMenuButtons();
             showViewContacts();
         }
 
         if (eventName.equals(menuButtons.get(1).getActionCommand())) {
-            hideContactMain();
+            hideMainMenuButtons();
             showAddContact();
         }
 
         if(eventName.equals("okay")) {
-            showContactMain();
+            showMainMenuButtons();
         }
 
         if(eventName.equals("submit")) {

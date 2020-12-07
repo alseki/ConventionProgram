@@ -194,12 +194,14 @@ public class EventManager extends EventAccess implements Serializable {
      * @return an array list of the IDs of all Attendees
      */
     public String getEndTime(String eventID){
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            return formatter.format(events.get(eventID).getEndTime());
+        // FIXME
+        //try {
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            //return formatter.format(events.get(eventID).getEndTime());
             //       } catch (NullPointerException n) {
             //          return Integer.parseInt(null);
-        }
+        //}
+        return null; // TODO delete this line when above is fixed
     }
 
 
@@ -212,12 +214,14 @@ public class EventManager extends EventAccess implements Serializable {
      * @return The event's chat ID
      */
     public String getEventChat(String id) {
-        try {
-            Event event = events.get(id);
-            return event.getChatID();
+        // FIXME
+        //try {
+            //Event event = events.get(id);
+            //return event.getChatID();
             //     } catch (NullPointerException n) {
             //         return Integer.parseInt(null);
             //      }
+        return null; // TODO delete this line when above is fixed
     }
 
     /**
@@ -230,7 +234,7 @@ public class EventManager extends EventAccess implements Serializable {
             //        events.get(eventID).setChatID(chatID);
         //     } catch (NullPointerException n) {
             //        return null;
-        }
+        //}
     //  }
 
     /**

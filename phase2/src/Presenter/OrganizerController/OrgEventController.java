@@ -130,8 +130,8 @@ public class OrgEventController extends SubMenu {
      */
     private String addEvent(String name, String speakerID, LocalDateTime start, String description,
                             EventType type) {
-
-        String eventID = eventManager.addEvent(name, speakerID, start, description, type);
+        // FIXME
+        /*String eventID = eventManager.addEvent(name, speakerID, start, description, type);
 
         ArrayList<String> attendeesID = eventManager.getAttendeeIDs(eventID);
 
@@ -144,7 +144,8 @@ public class OrgEventController extends SubMenu {
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID));
 
 
-        return eventID;
+        return eventID;*/
+        return null; // TODO delete this line when above is fixed
     }
 
     // TODO private String?? event ID
