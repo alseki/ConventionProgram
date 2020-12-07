@@ -35,13 +35,15 @@ public class SpeEventController extends SubMenu {
      */
     public String eventMessage(String eventName, String messageContent) {
         String eID = eventManager.getEventID(eventName);
-        if (eID != null) {
+        // FIXME
+        /*if (eID != null) {
             String messageID = messageManager.createMessage(eID, presenter.addSpeUsername(messageContent));
             String acID = eventManager.getEventChat(eID);
             chatManager.addMessageIds(acID, messageID);
             return presenter.printMessageSent();
         }
-        return presenter.printException(new InvalidChoiceException("event"));
+        return presenter.printException(new InvalidChoiceException("event"));*/
+        return null; // TODO delete this line after above is fixed
     }
 
     /**

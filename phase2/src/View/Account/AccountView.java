@@ -12,7 +12,7 @@ public abstract class AccountView implements ActionListener {
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
 
     public AccountView() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**

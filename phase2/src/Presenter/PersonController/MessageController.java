@@ -60,22 +60,28 @@ public class MessageController extends SubMenu {
      * @param chatID ID of the Chat the user wants to exit from
      */
     protected void deleteChat(String chatID){
-        if (chatManager.getChatSize(chatID) <= 2){
+        // FIXME
+        /*if (chatManager.getChatSize(chatID) <= 2){
             for(String personId: chatManager.getPersonIds(chatID)){
                 personManager.removeChat(personId, chatID);}
             chatManager.removeAllPersonIds(chatID);
             chatManager.nullifyChatID(chatID);
         }
         else {personManager.removeChat(currentUserID, chatID);
-        chatManager.removePersonIds(chatID, currentUserID);}
+        chatManager.removePersonIds(chatID, currentUserID);}*/
     }
 
+
     protected boolean archiveChat(String chatID){
-        return chatManager.archiveChat(chatID);
+        // FIXME
+        // return chatManager.archiveChat(chatID);
+        return false; // TODO delete this line after above is fixed
     }
 
     protected boolean dearchiveChat(String chatID){
-        return chatManager.dearchiveChat(chatID);
+        // FIXME
+        // return chatManager.dearchiveChat(chatID);
+        return false; // TODO delete this line after above is fixed
     }
 
     @Override

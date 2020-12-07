@@ -38,7 +38,7 @@ public class EmployeeController extends PersonController {
      * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
      * @return ID of the newly created Chat
      */
-    public String createEmpChat(String ownerId, ArrayList<String> guestIds) {
+    public String createEmpChat(String ownerId, ArrayList<String> guestIds, String chatName) {
         if (manager.typePerson(manager.getCurrentUsername(ownerId)) != 4) {
             return null;
         }
@@ -47,7 +47,7 @@ public class EmployeeController extends PersonController {
                 return null;
             }
         }
-        return this.chatManager.createChat(ownerId, guestIds);
+        return this.chatManager.createChat(ownerId, guestIds, chatName);
     }
 
     /**
@@ -60,7 +60,9 @@ public class EmployeeController extends PersonController {
     public String createEmpChat(String ownerId, String guestId) {
         ArrayList<String> guest = new ArrayList<>();
         guest.add(guestId);
-        return createEmpChat(ownerId, guest);
+        // FIXME
+        // return createEmpChat(ownerId, guest);
+        return null; // TODO delete this line after the above is fixed
     }
 
     /**
@@ -74,8 +76,10 @@ public class EmployeeController extends PersonController {
         for (String guest: guestIds){
             if (manager.typePerson(manager.getCurrentUsername(guest))!=2) {
                 return null;}}
-            return this.chatManager.createChat(ownerId, guestIds);
-            }
+        // FIXME
+        // return this.chatManager.createChat(ownerId, guestIds);
+        return null; // TODO delete this line after above is fixed
+    }
 
 
 
@@ -93,8 +97,9 @@ public class EmployeeController extends PersonController {
                 return new EmpReqController(this, currentUserID);
             }
             else if (choice.equals(options[3])){
-                return null; // FIXME
+                // FIXME
                 //return new EmpEventController(this, currentUserID, manager);
+                return null; // TODO delete this line after above is fixed
             }
         }
         return null;

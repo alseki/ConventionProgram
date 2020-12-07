@@ -25,7 +25,11 @@ public abstract class EventMenu implements SubMenuPrinter {
 
     public String[] getRoomList() throws NoDataException{
         try {
-            return rooms.getRoomNames();
+            String[] opt1  = {"0"};
+            String[] options = new String[rooms.getRoomNames().length+1];
+            System.arraycopy(opt1, 0, options, 0, 1);
+            System.arraycopy(rooms.getRoomNames(), 0, options, 1, rooms.getRoomNames().length);
+            return options;
         }
         catch (NullPointerException e) {
             throw new NoDataException("room");
@@ -50,6 +54,25 @@ public abstract class EventMenu implements SubMenuPrinter {
         }
         catch (NullPointerException e) {
             throw new InvalidChoiceException("event");
+        }
+    }
+
+    public String[] printEventsInRoom(String name) throws InvalidChoiceException {
+        try {
+            if (name.equals("0")) {
+                return printEventList(events.getEventIDs());
+            }
+
+            String id = rooms.getRoomID(name);
+            if(id != null) {
+                return printEventList(rooms.getEventIDs(id));
+            }
+            else {
+                throw new InvalidChoiceException("room");
+            }
+        }
+        catch (NullPointerException e) {
+            throw new NoDataException("room");
         }
     }
 
