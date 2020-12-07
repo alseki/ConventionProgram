@@ -115,7 +115,7 @@ public class MessageMenu implements printSubMenu {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
-            if (chatManager.getChatClass(chatIDs.get(i)) != AnnouncementChat.class) {
+            if (chatManager.getChatType(chat) == 0) {
                 chatList[i] = formatChatString(chat);
             } else {
                 chatList[i] = formatAnChatString(chat);
@@ -178,12 +178,11 @@ public class MessageMenu implements printSubMenu {
         if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
-        if (chatManager.getChatClass(chatID) != AnnouncementChat.class) {
+        if (chatManager.getChatType(chatID) == 0) {
             System.out.println("\n\n" + formatChatString(chatID));
-            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
         } else  {
             System.out.println("\n\n" + formatAnChatString(chatID));
-            printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
         }
+        printList(formatMessages(chatManager.getMessageIds(chatID)), "message");
     }
 }

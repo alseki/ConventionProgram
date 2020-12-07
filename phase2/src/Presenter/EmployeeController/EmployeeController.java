@@ -38,7 +38,7 @@ public class EmployeeController extends PersonController {
      * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
      * @return ID of the newly created Chat
      */
-    public String createEmpChat(String ownerId, ArrayList<String> guestIds) {
+    public String createEmpChat(String ownerId, ArrayList<String> guestIds, String chatName) {
         if (manager.typePerson(manager.getCurrentUsername(ownerId)) != 4) {
             return null;
         }
@@ -47,9 +47,7 @@ public class EmployeeController extends PersonController {
                 return null;
             }
         }
-        // FIXME
-        // return this.chatManager.createChat(ownerId, guestIds);
-        return null;
+        return this.chatManager.createChat(ownerId, guestIds, chatName);
     }
 
     /**
