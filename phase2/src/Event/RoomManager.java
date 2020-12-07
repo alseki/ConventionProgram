@@ -21,10 +21,10 @@ abstract class RoomAccess {
 
 public class RoomManager extends RoomAccess implements Serializable {
 
-    /** A mapping of Room IDs to their lists of EventIDs. */
+    /** A mapping of Room IDs to the lists of IDs for Events taking place in those Rooms. */
     private Map<String, ArrayList<String>> roomEventList;
 
-    /** A mapping of Room IDs to their lists of EventIDs. */
+    /** A mapping of Room IDs to their respective Room objects. */
     private Map<String, Room> roomList;
 
     /** A mapping of Room names to their respective IDs. */
@@ -85,7 +85,7 @@ public class RoomManager extends RoomAccess implements Serializable {
     public String[] getRoomNames() {
         String[] names = {};
         try {
-            return roomsByName.keySet().toArray(names);
+            return this.roomsByName.keySet().toArray(names);
         } catch (NullPointerException e) {
             return null;
         }
@@ -93,13 +93,13 @@ public class RoomManager extends RoomAccess implements Serializable {
 
     /**
      * Gets the Room an Event is held in
-     * @param ID the ID of the event
-     * @return the ID of the room
+     * @param ID the ID of the Event
+     * @return the ID of the Room
      */
     public String getEventRoom(String ID) {
         try {
             for (String room : getRoomNames()) {
-                ArrayList<String> events = roomEventList.get(roomsByName.get(room));
+                ArrayList<String> events = this.roomEventList.get(roomsByName.get(room));
                 if (events.contains(ID)) {
                     return room;
                 }
@@ -111,38 +111,38 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Finds the EventManager object for a specific Room's Events (by ID)
+     * Finds the list of IDs of the Events taking place in a specific Room
      * @param roomID The ID of the Room
-     * @return The Room's EventManager
+     * @return The list of IDs of the Events taking place in that Room
      */
     public String[] getEventIDs(String roomID) {
         try {
             String[] evList = {};
-            return roomEventList.get(roomID).toArray(evList);
+            return this.roomEventList.get(roomID).toArray(evList);
         } catch (NullPointerException n) {
             return null;
         }
     }
 
     /**
-     * Returns the number of Rooms this RoomManager contains
-     * @return ^
+     * Returns the number of Rooms currently in this convention
+     * @return the number of Rooms currently in this convention
      */
     public int numRooms() {
-        return roomList.size();
+        return this.roomList.size();
     }
 
     /**
      * Creates a new Room with the inputted capacity
-     * @param name The name of the new room
+     * @param name The name of the new Room
      * @param capacity The capacity of the new Room
      * @return The ID of the new Room
      */
     public String addRoom(String name, int capacity) {
         Room thisRoom = new Room(name, capacity);
-        roomList.put(thisRoom.getID(), thisRoom);
-        roomsByName.put(thisRoom.getName(), thisRoom.getID());
-        roomEventList.put(thisRoom.getID(), new ArrayList<String>());
+        this.roomList.put(thisRoom.getID(), thisRoom);
+        this.roomsByName.put(thisRoom.getName(), thisRoom.getID());
+        this.roomEventList.put(thisRoom.getID(), new ArrayList<String>());
         return thisRoom.getID();
     }
 
@@ -154,6 +154,22 @@ public class RoomManager extends RoomAccess implements Serializable {
      */
     public boolean addEvent(String roomID, String eventID) {
         try {
+            int current_occupancy = 0;
+            for (String ID : this.getEventIDs(roomID)) {
+                int event_capacity;
+                event_capacity = EventManager.getCapacity(ID);
+
+            }
+
+
+
+            int current_occupancy =
+
+
+
+
+            String[] getEventIDs(String roomID)
+
             ArrayList<String> events = roomEventList.get(roomID);
             // FIXME
             // room.add(eventID);
@@ -164,9 +180,9 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Checks to see if this RoomManager contains a room of a certain name
+     * Checks to see if this convention contains a Room of a certain name
      * @param name The name
-     * @return True if an event with this name exists; false if not
+     * @return True if an Room with this name exists; false if not
      */
     public boolean contains(String name) {
         if (getRoomID(name)!= null) {
