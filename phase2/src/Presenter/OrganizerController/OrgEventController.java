@@ -210,6 +210,7 @@ public class OrgEventController extends SubMenu {
                 personManager.addChat(organizerID, newChatID);
                 messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
             }
+            speakerManager.removeTalk(speakerID, eventID);
             return true;
         }
         return false;
