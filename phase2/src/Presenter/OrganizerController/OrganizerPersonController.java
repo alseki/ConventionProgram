@@ -2,14 +2,37 @@ package Presenter.OrganizerController;
 
 
 // Programmers:
-// Description: All the methods that deals with userAccounts in OrganizerController Event Menu
+// Description: All the methods that deal with userAccounts in OrganizerController Event Menu
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
 
+import Event.EventPermissions;
+import Person.AttendeeManager;
+import Person.EmployeeManager;
+import Person.OrganizerManager;
+import Person.SpeakerManager;
+import Presenter.Central.SubMenu;
+import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.OverwritingException;
 
-public class OrganizerPersonController {
+public class OrganizerPersonController extends SubMenu {
+
+    private String currentUserID;
+    private SpeakerManager speakerManager;
+    private EmployeeManager employeeManager;
+    private AttendeeManager attendeeManager;
+    private OrganizerManager organizerManager;
+
+    public OrganizerPersonController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
+                              EmployeeManager employeeManager, AttendeeManager attendeeManager) {
+        super(subMenu);
+        this.currentUserID = currentUserID;
+        this.speakerManager = speakerManager;
+        this.employeeManager = employeeManager;
+        this.attendeeManager = attendeeManager;
+        this.organizerManager = (OrganizerManager)personManager;
+    }
 
     /**
      * Creates a new Person.SpeakerController account and adds it to the system
@@ -102,5 +125,10 @@ public class OrganizerPersonController {
 
     public void cancelEmployeeAccountByUsername(String username){
         employeeManager.cancelEmployeeAccount(username);
+    }
+
+    @Override
+    public SubMenuPrinter getPresenter() {
+        return null;
     }
 }

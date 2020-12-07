@@ -81,7 +81,7 @@ public class LoginView {
         }
 
         catch (InvalidChoiceException e) {
-            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
+            JOptionPane.showConfirmDialog(null, presenter.printException(e), presenter.exceptionTitle(),
                     JOptionPane.DEFAULT_OPTION);
             return null;
         }
@@ -107,7 +107,7 @@ public class LoginView {
         }
 
         catch (InvalidChoiceException e) {
-            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
+            JOptionPane.showConfirmDialog(null, presenter.printException(e), presenter.exceptionTitle(),
                     JOptionPane.DEFAULT_OPTION);
         }
 

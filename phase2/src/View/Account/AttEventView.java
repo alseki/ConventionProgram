@@ -44,6 +44,8 @@ public class AttEventView extends AccountView {
         setupCancelFromEvent();
         setupGetYourEvents();
 
+        showMainDropDownMenu();
+
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
         frame.setVisible(true);
@@ -199,6 +201,18 @@ public class AttEventView extends AccountView {
             showMainDropDownMenu();
         }
 
+        if(eventName.equals(signupButton.getActionCommand())) {
+            signup();
+        }
+
+        if(eventName.equals(cancelSpotButton.getActionCommand())) {
+            cancelSpot();
+        }
+
+        if(eventName.equals("continue")) {
+            eventName = (String)dropDownMenu.getSelectedItem();
+        }
+
         if(eventName.equals(presenter.getMenuOptions()[0])) { // return to Att main menu
             showMainDropDownMenu();
         }
@@ -213,17 +227,9 @@ public class AttEventView extends AccountView {
             showSignUp();
         }
 
-        if(eventName.equals(signupButton.getActionCommand())) {
-            signup();
-        }
-
         if(eventName.equals(presenter.getMenuOptions()[3])) { // cancel your spot from an Event
             hideMainDropDownMenu();
             showCancelSpot();
-        }
-
-        if(eventName.equals(cancelSpotButton.getActionCommand())) {
-            cancelSpot();
         }
 
         if(eventName.equals(presenter.getMenuOptions()[4])) { // get list of your signed up events

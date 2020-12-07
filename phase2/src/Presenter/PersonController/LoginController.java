@@ -63,6 +63,18 @@ public class LoginController extends SubMenu {
         if(username.contains(",")) {
             throw new InvalidFormatException("username", "no commas");
         }
+        if(username.equals("")) {
+            throw new InvalidFormatException("username", "a username that is at least 1 character long");
+        }
+        if(password.equals("")) {
+            throw new InvalidFormatException("password", "a password that is at least 1 character long");
+        }
+        if(name.equals("")) {
+            throw new InvalidFormatException("name", "a name that is at least 1 character long");
+        }
+        if(!email.matches("[a-z,A-Z]*@[a-z,A-Z]*[.][a-z]*")) {
+            throw new InvalidFormatException("email", "an email of the form [address]@[domain].[something]");
+        }
         if (manager.getCurrentUserID(username) != null) {
             throw new OverwritingException("username");
         }
