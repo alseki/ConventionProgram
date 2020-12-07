@@ -133,10 +133,12 @@ public class AttMessageController extends MessageController {
             return presenter.printChatExists(chatID);
         }
         else {
-            String chatID = chatManager.createChat(currentUserID, contactIDs);
+            // FIXME
+            /*String chatID = chatManager.createChat(currentUserID, contactIDs);
             personManager.addChat(currentUserID, chatID);
             for (String contact: contactIDs){personManager.addChat(contact, chatID);}
-            return presenter.printChatCreated(chatID);
+            return presenter.printChatCreated(chatID);*/
+            return null; // TODO delete this line after above is fixed
         }
     }
 

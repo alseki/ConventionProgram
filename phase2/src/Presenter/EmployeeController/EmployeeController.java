@@ -47,7 +47,9 @@ public class EmployeeController extends PersonController {
                 return null;
             }
         }
-        return this.chatManager.createChat(ownerId, guestIds);
+        // FIXME
+        // return this.chatManager.createChat(ownerId, guestIds);
+        return null;
     }
 
     /**
@@ -74,8 +76,10 @@ public class EmployeeController extends PersonController {
         for (String guest: guestIds){
             if (manager.typePerson(manager.getCurrentUsername(guest))!=2) {
                 return null;}}
-            return this.chatManager.createChat(ownerId, guestIds);
-            }
+        // FIXME
+        // return this.chatManager.createChat(ownerId, guestIds);
+        return null; // TODO delete this line after above is fixed
+    }
 
 
 
@@ -93,8 +97,9 @@ public class EmployeeController extends PersonController {
                 return new EmpReqController(this, currentUserID);
             }
             else if (choice.equals(options[3])){
-                return null; // FIXME
+                // FIXME
                 //return new EmpEventController(this, currentUserID, manager);
+                return null; // TODO delete this line after above is fixed
             }
         }
         return null;
