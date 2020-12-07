@@ -25,7 +25,7 @@ public class OrganizerController extends PersonController {
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;
-    private EmployeeManager employeemanager;
+    private EmployeeManager employeeManager;
 
     /**
      * constructor for organizer controller
@@ -45,7 +45,7 @@ public class OrganizerController extends PersonController {
         this.manager = manager;
         this.speakerManager = sm;
         this.attendeeManager = am;
-        this.employeemanager = em;
+        this.employeeManager = em;
     }
 
     /**
@@ -60,7 +60,7 @@ public class OrganizerController extends PersonController {
         this.manager = om;
         this.speakerManager = sm;
         this.attendeeManager = am;
-        this.employeemanager = em;
+        this.employeeManager = em;
     }
 
     /**
@@ -86,7 +86,7 @@ public class OrganizerController extends PersonController {
 //                return new OrgReqController(this, currentUserID);
 //            }
             else if (choice.equals(options[4])) {
-                return new OrgEventController(this, currentUserID, speakerManager, employeemanager);
+                return new OrgEventController(this, currentUserID, speakerManager, employeeManager);
             }
         }
         return null;
