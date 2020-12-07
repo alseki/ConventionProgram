@@ -60,7 +60,9 @@ public class EmployeeController extends PersonController {
     public String createEmpChat(String ownerId, String guestId) {
         ArrayList<String> guest = new ArrayList<>();
         guest.add(guestId);
-        return createEmpChat(ownerId, guest);
+        // FIXME
+        // return createEmpChat(ownerId, guest);
+        return null; // TODO delete this line after the above is fixed
     }
 
     /**
