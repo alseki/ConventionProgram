@@ -8,6 +8,7 @@ package Presenter.OrganizerController;
 import Event.Event;
 import Event.EventPermissions;
 import Event.EventType;
+import Event.EventManager;
 import Person.EmployeeManager;
 import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
@@ -18,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class OrgEventController extends SubMenu {
 
@@ -26,6 +26,7 @@ public class OrgEventController extends SubMenu {
     private SpeakerManager speakerManager;
     private EmployeeManager employeeManager;
     private EventPermissions eventPermissions;
+    private EventManager eventManager;
     private OrgEventMenu presenter;
 
     public OrgEventController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
@@ -42,7 +43,8 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Adds a room to the list of rooms in this convention
-     * @param name The name of the new Room in the convention (likely its number)
+     *
+     * @param name     The name of the new Room in the convention (likely its number)
      * @param capacity The capacity of the new Room in the convention
      * @return true iff Room was added to the convention successfully
      */
@@ -61,14 +63,14 @@ public class OrgEventController extends SubMenu {
     private String getRoom(String name) throws InvalidChoiceException {
         if (roomManager.getRoomID(name) != null) {
             return roomManager.getRoomID(name);
-        }
-        else {
+        } else {
             throw new InvalidChoiceException("room");
         }
     }
 
     /**
      * Prompts the user to choose a valid start time for the new Event
+     *
      * @return The start time as a LocalDateTime object
      */
     private LocalDateTime getStartTime(String time) throws DateTimeParseException {
@@ -78,6 +80,7 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Prompts the user to choose a valid end time for the new Event
+     *
      * @return The end time as a LocalDateTime object
      */
     private LocalDateTime getEndTime(String time) throws DateTimeParseException {
@@ -87,6 +90,7 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Prompts the user to choose a valid start time for the new Event
+     *
      * @return The start time as a LocalDateTime object
      */
     private EventType getEventType(String type) throws InvalidChoiceException {
@@ -100,38 +104,31 @@ public class OrgEventController extends SubMenu {
     /**
      * Creates a new Event in this convention; also creates a new chat for this Event and sets the Event's chatID to the
      * ID of this new chat.
-     * @param name The name of the Event to be created
-     * @param startTime The start time of the Event to be created, as a LocalDateTime object
-     * @param endTime The end time of the Event to be created, as a LocalDateTime object
+     *
+     * @param name        The name of the Event to be created
+     * @param startTime   The start time of the Event to be created, as a LocalDateTime object
+     * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
-     * @param capacity The capacity of the Event to be created
-     * @param type The Type of the Event to be created, as an EventType
-     * @param room The name of the Room the Event is in
+     * @param capacity    The capacity of the Event to be created
+     * @param type        The Type of the Event to be created, as an EventType
+     * @param room        The name of the Room the Event is in
      * @return true iff the Talk was created successfully
      */
-    public boolean createEvent(String name, LocalDateTime startTime, LocalDateTime endTime, String description, int
+    public boolean createEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String description, int
             capacity, EventType type, String room)
             throws InvalidChoiceException {
         String roomID = roomManager.getRoomID(room);
         if (roomID == null) {
             throw new InvalidChoiceException("room");
         }
-
-
-
-        // TODO FIX THIS LINE!!!
-        String speakerID = speakerManager.getCurrentUserID(currentUserID);
-
-
-
+        // TODO FIX THIS LINE!!! The line has been removed, and speakerID added as parameter.
+        //String speakerID = speakerManager.getCurrentUserID(currentUserID);
         if (speakerID == null) {
             throw new InvalidChoiceException("speaker");
         }
-
         if (eventManager.contains(name)) {
             throw new OverwritingException("event");
         }
-
         if (eventPermissions.checkConflicts(startTime, endTime, type, roomID)) {
             String eventID = addEvent(name, speakerID, startTime, endTime, description, capacity, type);
 
@@ -143,13 +140,14 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Helper method - adds a newly created Event into EventManager
-     * @param name The name of the Event to be created
-     * @param speakerID The ID of the Speaker of the Event to be created, or "" if there is no Speaker
-     * @param startTime The start time of the Event to be created, as a LocalDateTime object
-     * @param endTime The end time of the Event to be created, as a LocalDateTime object
+     *
+     * @param name        The name of the Event to be created
+     * @param speakerID   The ID of the Speaker of the Event to be created, or "" if there is no Speaker
+     * @param startTime   The start time of the Event to be created, as a LocalDateTime object
+     * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
-     * @param capacity The capacity of the Event to be created
-     * @param type The Type of the Event to be created, as an EventType
+     * @param capacity    The capacity of the Event to be created
+     * @param type        The Type of the Event to be created, as an EventType
      */
     private String addEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime,
                             String description, int capacity, EventType type) {
@@ -166,102 +164,93 @@ public class OrgEventController extends SubMenu {
         speakerManager.addTalk(eventID, speakerID);
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID));
 
-
         return eventID;
     }
 
     // TODO private String?? event ID
 
-    /**
-     * This is a helper method for the methods above; updates SpeakerController's chat list
-     * @param personID The  id of the person
-     * @param chatID
-     */
-    private void updateSpeakerChat(String personID, String chatID) {
-        this.speakerManager.addChat(personID, chatID);
+    private boolean cancelEvent(String eventID) {
+        String eventName = eventManager.getEventID(eventID);
+        String chatName = eventManager.getEventChat(eventID);
+        LocalDateTime now = LocalDateTime.now();
+        int dayHour = now.getHour();
+        int dayMinute = now.getMinute();
 
-    }
+        // TODO fix when getStartTime is back
+        LocalDateTime startTime = getStartTime(eventID);
+        int eventHour = startTime.getHour();
+        int eventMinute = startTime.getMinute();
 
-    /**
-     * This is helper method for the methods above; updates SpeakerController's announcementChatIDs
-     * @param personID the id of the person
-     * @param announcementChatID the id of the annoucnemchat
-     */
-    private void updateSpeakerChatWithAnnouncement(String personID, String announcementChatID) {
-        this.speakerManager.addAnnouncementChats(personID, announcementChatID);
+        if (eventHour < dayHour && eventMinute < dayMinute) {
+            eventManager.removeEvent(eventID);
+            String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be made shortly.";
+            eventMessage (eventName, chatName, messageContent);
+            return true;
 
-    }
+            // TODO will do - do we want to send automatic announcementChat or will Organizer proceed to that method himself once he's done with this method?
 
-    // OPTION 3
+            // TODO will do - instead of update Speaker's TalkList, and send out message/announcement to Speaker and Employees
 
-    /**
-     * Prompts the user to input the information required to create a new SpeakerController account
-     */
-    public void addSpeaker(String name, String email, String username, String password) throws InvalidChoiceException {
-        if (!speakerManager.findPerson(username)) {
-            speakerManager.createAccount(name, username, password, email);
+
         }
-        else {
-            throw new OverwritingException("account");
+        return false;
+    }
+
+        //char eventManger
+
+        /**
+         * This is a helper method for the methods above; updates SpeakerController's chat list
+         * @param personID The  id of the person
+         * @param chatID
+         */
+        private void updateSpeakerChat (String personID, String chatID){
+            this.speakerManager.addChat(personID, chatID);
+
         }
-    }
 
-    // OPTION 4
+        /**
+         * This is helper method for the methods above; updates SpeakerController's announcementChatIDs
+         * @param personID the id of the person
+         * @param announcementChatID the id of the announcementChat
+         */
+        private void updateSpeakerChatWithAnnouncement (String personID, String announcementChatID){
+            this.speakerManager.addAnnouncementChats(personID, announcementChatID);
 
-    /**
-     * Creates a new Person.Employee account and adds it to the system (including into a specific dictionary of employees solely)
-     * @param name The name of the employee
-     * @param username The username of the employee
-     * @param password The password of the employee
-     * @param email The email of the employee
-     * @return true iff a new employee object was created
-     */
-    public void createEmployee(String name, String username, String password, String email) throws InvalidChoiceException {
-        if (!employeeManager.findPerson(username)) {
-            employeeManager.createAccount(name, username, password, email);
         }
-        else {
-            throw new OverwritingException("account");
+
+        // OPTION 4
+
+        /**
+         * Prompts the user to input the information required to create an Event Message
+         */
+        public void eventMessagePrompt () {
+            presenter.printEventMessageIntro();
+            presenter.printEventNamePrompt();
+            String name = "";//SubMenu.readInput(input);
+            presenter.printChatNamePrompt();
+            String chatName = "";//SubMenu.readInput(input);
+            presenter.printMessageContentPrompt();
+            String content = "";//SubMenu.readInput(input);
+            eventMessage(name, chatName, content);
         }
-    }
 
-    // TODO createAttendee
-
-
-    // **** createEmployee will be in AdminEventController. Only administrators will create employees along with organizers
-
-    // OPTION 4
-
-    /**
-     * Prompts the user to input the information required to create an Event Message
-     */
-    public void eventMessagePrompt() {
-        presenter.printEventMessageIntro();
-        presenter.printEventNamePrompt();
-        String name = "";//SubMenu.readInput(input);
-        presenter.printChatNamePrompt();
-        String chatName = "";//SubMenu.readInput(input);
-        presenter.printMessageContentPrompt();
-        String content = "";//SubMenu.readInput(input);
-        eventMessage(name, chatName, content);
-    }
-
-    /**
-     * Adds a Message with content content the AnnouncementChat contained within the Event with eventName
-     * @param eventName The name of the Event
-     */
-    private void eventMessage(String eventName, String chatName, String messageContent){
-        String eventId =  eventManager.getEventID(eventName); // eventId
-        String chatID = eventManager.getEventChat(chatName);
-        String ev = eventManager.getEventChat(eventId); // chatid
-        String m = messageManager.createMessage(eventId, chatID, messageContent); // creating message for event
-        chatManager.addMessageIds(ev,m);// adding message to event chat
-    }
+        /**
+         * Adds a Message with content the AnnouncementChat contained within the Event with eventName
+         * @param eventName The name of the Event
+         */
+        private void eventMessage (String eventName, String chatName, String messageContent){
+            String eventId = eventManager.getEventID(eventName); // eventId
+            String chatID = eventManager.getEventChat(chatName);
+            String ev = eventManager.getEventChat(eventId); // chatid
+            String m = messageManager.createMessage(eventId, chatID, messageContent); // creating message for event
+            chatManager.addMessageIds(ev, m);// adding message to event chat
+        }
 
 
-    @Override
-    public OrgEventMenu getPresenter() {
-        return this.presenter;
+        @Override
+        public OrgEventMenu getPresenter () {
+            return this.presenter;
+        }
     }
 }
 
