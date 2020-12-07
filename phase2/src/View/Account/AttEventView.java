@@ -3,6 +3,8 @@ package View.Account;
 import Presenter.AttendeeController.AttEventController;
 import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
+import Event.CapacityException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,7 +100,7 @@ public class AttEventView extends AccountView {
     }
 
     private void setupGetYourEvents() {
-        yourEvents = new JLabel();//Create and add label that is centered and has empty borders
+        yourEvents = new JLabel(); //Create and add label that is centered and has empty borders
         yourEvents.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         yourEvents.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         contentPane.add(yourEvents);
@@ -142,16 +144,47 @@ public class AttEventView extends AccountView {
     }
 
 
+    /**
+     * Uses the controller to try and sign up the user for an event (add event to their event list)
+     */
     private void signup() {
         String event = inputEventName.getText();
+        // FIXME turn this into a label
+        // presenter.printAddEventPrompt();
 
-        //controller.signupForEvent(event);
+        try {
+            if (controller.signupForEvent(event)) {
+                // FIXME turn this into a Label
+                // presenter.printEventAdded()
+            }
+            else {
+                JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), "Unexpected Error",
+                        JOptionPane.DEFAULT_OPTION);
+            }
+
+        } catch (InvalidChoiceException e) {
+            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
+                    JOptionPane.DEFAULT_OPTION);
+        } catch (CapacityException c) {
+            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printEventFull(),
+                    JOptionPane.DEFAULT_OPTION);
+        }
     }
 
     private void cancelSpot() {
         String event = inputEventName.getText();
+        // FIXME turn this into a label
+        // presenter.printRemoveEventPrompt();
 
-        //controller.cancelSpotFromEvent(event);
+        try {
+            if (controller.cancelSpotFromEvent(event)) {
+                // FIXME turn this into a Label
+                // presenter.printEventRemoved()
+            }
+        } catch (InvalidChoiceException e) {
+            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
+                    JOptionPane.DEFAULT_OPTION);
+        }
     }
 
     @Override

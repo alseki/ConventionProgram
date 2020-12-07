@@ -36,10 +36,8 @@ public class AttEventController extends SubMenu {
     public void menuChoice() {
         do {
             switch(1) {
-                case 0:
-                    // return to main menu
-                    break;
                 case 1:
+                    // TODO reformat see event list option
                     /*try {
                         String roomID = this.getRoomChoice();
                         if (roomID.equals("1")) {
@@ -52,25 +50,8 @@ public class AttEventController extends SubMenu {
                         presenter.printException(e);
                     }*/
                     break;
-                case 2:
-                    presenter.printAddEventPrompt();
-                    String addingEventInput = "";//SubMenu.readInput(input);
-                    try {
-                        signupForEvent(addingEventInput);
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
-                    break;
-                case 3:
-                    presenter.printRemoveEventPrompt();
-                    String removingEventInput = "";//SubMenu.readInput(input);
-                    try {
-                         cancelSpotFromEvent(removingEventInput);
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }
-                    break;
                 case 4:
+                    // TODO figure out how to print AttendeeEventList
                     //presenter.printAttendeeEventList();
                     break;
             }
@@ -78,8 +59,6 @@ public class AttEventController extends SubMenu {
         while (true);
 
     }
-
-    // TODO change, delete and/or add to the methods below
 
     /**
      * Takes user input to pick a Room for which that user wishes to view the Events held there
@@ -100,36 +79,30 @@ public class AttEventController extends SubMenu {
         } else {
             throw new InvalidChoiceException("room");
         }
-    }*/
+    }
 
     /**
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      */
-    public String signupForEvent(String eventName) throws InvalidChoiceException  {
+    public boolean signupForEvent(String eventName) throws InvalidChoiceException, CapacityException  {
         String event = eventManager.getEventID(eventName);
         String room = roomManager.getEventRoom(event);
         if (room == null || event == null) {
             throw new InvalidChoiceException("event");
         }
-        try {
-            eventPermissions.signUpForEvent(currentUserID, event, room);
-            boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
-            attendeeManager.addAnChat(currentUserID, eventManager.getEventChat(event));
-            if (eventAddedToPerson) {
-                return presenter.printEventAdded();
-            }
-        } catch (CapacityException c) {
-            presenter.printEventFull();
-        }
-     return null;
+
+        eventPermissions.signUpForEvent(currentUserID, event, room);
+        boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
+        attendeeManager.addAnChat(currentUserID, eventManager.getEventChat(event));
+        return eventAddedToPerson;
     }
 
     /**
      * Remove this user from Event
      * @param eventName The name of the Event the current user requested to cancel
      */
-    private void cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
+    public boolean cancelSpotFromEvent(String eventName) throws InvalidChoiceException {
         String event = eventManager.getEventID(eventName);
         if (event == null) {
             throw new InvalidChoiceException("event");
@@ -138,9 +111,7 @@ public class AttEventController extends SubMenu {
         boolean personRemovedFromEvent = eventPermissions.removeFromEvent(currentUserID, event);
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
         attendeeManager.removeAnChat(currentUserID, eventManager.getEventChat(event));
-        if(personRemovedFromEvent && eventRemovedFromPerson) {
-            presenter.printEventRemoved();
-        }
+        return personRemovedFromEvent && eventRemovedFromPerson;
     }
 
     @Override

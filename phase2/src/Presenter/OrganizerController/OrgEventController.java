@@ -12,7 +12,6 @@ import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.OverwritingException;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
