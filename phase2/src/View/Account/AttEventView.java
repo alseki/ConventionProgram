@@ -130,14 +130,14 @@ public class AttEventView extends AccountView {
         enterEventNameMsg.setVisible(true);
         inputEventName.setVisible(true);
         signupButton.setVisible(true);
-        // set Go Back button to visible
+        backButton.setVisible(true);
     }
 
     private void showCancelSpot() {
         enterEventNameMsg.setVisible(true);
         inputEventName.setVisible(true);
         cancelSpotButton.setVisible(true);
-        // set Go Back button to visible
+        backButton.setVisible(true);
     }
 
     private void showYourEvents() {
@@ -194,10 +194,11 @@ public class AttEventView extends AccountView {
         String eventName = event.getActionCommand();
 
 
-        // if statements for when "okay" and continue buttons are pressed
+        // if statement for when continue button is pressed
 
 
-        if(eventName.equals("back")) { //can probably combine this with the next if statement
+        if(eventName.equals(backButton.getActionCommand()) ||
+                eventName.equals(okayButton.getActionCommand())) {
             showMainDropDownMenu();
         }
 

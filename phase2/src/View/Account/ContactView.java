@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
-    JLabel enterUsernameMsg, allContacts, viewC, contactAdded;
+    JLabel enterUsernameMsg, allContacts, contactAdded;
     JButton submitButton, okayButton;
     JTextField inputAddContact;
 
@@ -66,11 +66,7 @@ public class ContactView extends AccountView {
     /**
      * ???
      */
-    // FIXME what's the point of viewC?
     private void setupViewContacts() {
-        viewC = new JLabel("viewing your contacts...");
-        contentPane.add(viewC);
-        viewC.setVisible(false);
 
         okayButton = newButton("okay");
 
@@ -86,7 +82,6 @@ public class ContactView extends AccountView {
      */
     private void showViewContacts() {
         okayButton.setVisible(true);
-        viewC.setVisible(true);
         String[] myContacts = getContactList();
 
         if (myContacts != null && myContacts.length > 0) {
