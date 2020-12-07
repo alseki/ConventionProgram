@@ -15,8 +15,6 @@ import java.awt.event.ActionEvent;
 public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
-
-    JFrame frame;
     JLabel enterUsernameMsg, allContacts, viewC, contactAdded;
     JButton addContactButton, viewContactListButton, submitButton, okayButton;
     JTextField inputAddContact;

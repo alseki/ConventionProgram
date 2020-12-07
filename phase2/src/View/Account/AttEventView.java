@@ -53,6 +53,26 @@ public class AttEventView extends AccountView {
         dropDownMenu.setVisible(false);
     }
 
+
+
+    /**
+     * Calls controller and attempts to add event to user's event list (signup user for event)
+     */
+    private void addEvent() {}
+
+    /**
+     * Calls controller and attempts to remove an event from user's event list (remove user signup for event)
+     */
+    private void removeEvent() {}
+
+    /**
+     * Calls the controller to retrieve the list of events the user has signed up for
+     * @return aan array of strings of Event names
+     */
+    private String[] getEventList() {
+        return null; // FIXME
+    }
+
     /*
     private void setupViewAllEvents() {
 
