@@ -38,6 +38,32 @@ public abstract class PersonManager {
      */
     public abstract boolean createAccount(String name, String username, String password, String email);
 
+    public boolean cancelAccount(String userID){
+        if(idToPerson.containsKey((userID))){
+        String username = getPerson(userID).getUsername();
+        int typeUser = getPerson(userID).typePerson;
+        if(typeUser == 1 || typeUser == 3) {
+            usernameToPerson.remove(username);
+            idToPerson.remove(userID);
+            return true;
+        }
+        }
+        return false;
+    }
+
+    public boolean cancelAccountByUsername(String username){
+        if(usernameToPerson.containsKey(getPerson(username))){
+        String userID = getPerson(username).getID();
+        int typeUser = getPerson(userID).typePerson;
+        if(typeUser == 1 || typeUser == 3) {
+            usernameToPerson.remove(username);
+            idToPerson.remove(userID);
+            return true;
+        }
+        }
+        return false;
+    }
+
 
     /**
      *
