@@ -55,11 +55,12 @@ public class OrganizerController extends PersonController {
      * @param am attendee manager
      * @param om organizermanager
      */
-    public OrganizerController(SubMenu subMenu, SpeakerManager sm, AttendeeManager am, OrganizerManager om) {
+    public OrganizerController(SubMenu subMenu, SpeakerManager sm, AttendeeManager am, OrganizerManager om, EmployeeManager em) {
         super(subMenu, 2);
         this.manager = om;
         this.speakerManager = sm;
         this.attendeeManager = am;
+        this.employeemanager = em;
     }
 
     /**

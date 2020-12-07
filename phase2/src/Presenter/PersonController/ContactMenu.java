@@ -24,7 +24,7 @@ public class ContactMenu implements SubMenuPrinter {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "View contact list", "Add a contact"};
+        String[] options = {"View contact list", "Add a contact"};
         return options;
     }
 
@@ -32,6 +32,7 @@ public class ContactMenu implements SubMenuPrinter {
      * Prints a list of the user's contacts
      */
     public String[] printContactList(ArrayList<String> contactList) {
+        contactList.toArray();
         String[] clist = {};
         clist = contactList.toArray(clist);
         return clist;
@@ -50,5 +51,12 @@ public class ContactMenu implements SubMenuPrinter {
      */
     public String printContactAdded() {
         return "Contact has been successfully added.";
+    }
+
+    /**
+     * Prints that the user has no contacts
+     */
+    public String printNoContacts() {
+        return "No Contacts";
     }
 }

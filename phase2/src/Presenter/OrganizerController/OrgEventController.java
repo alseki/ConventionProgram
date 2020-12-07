@@ -189,7 +189,7 @@ public class OrgEventController extends SubMenu {
      * @return true iff the Talk was created successfully
      */
     private boolean createEvent(String name, String speaker, LocalDateTime start, String description, String room,
-                                EventType type)
+                                EventType type, String chatName)
             throws InvalidChoiceException {
         String roomID = roomManager.getRoomID(room);
         if (roomID == null) {
@@ -206,7 +206,7 @@ public class OrgEventController extends SubMenu {
         }
 
         if (eventPermissions.checkConflicts(start, type, roomID)) {
-            String eventID = addEvent(name, speakerID, start, description, type);
+            String eventID = addEvent(name, speakerID, start, description, type, chatName);
 
             roomManager.addEvent(roomID, eventID);
             return true;
@@ -219,12 +219,13 @@ public class OrgEventController extends SubMenu {
      * @param speakerID The ID of the speaker holding the event
      */
     private String addEvent(String name, String speakerID, LocalDateTime start, String description,
-                            EventType type) {
+                            EventType type, String chatName) {
 
         String eventID = eventManager.addEvent(name, speakerID, start, description, type);
 
+        ArrayList<String> attendeesID = eventManager.getAttendeeIDs(eventID);
 
-        String announcementChatID = chatManager.createAnnouncementChat(eventID, new ArrayList<String>());
+        String announcementChatID = chatManager.createAnnouncementChat(eventID, attendeesID, chatName);
         eventManager.setEventChat(eventID, announcementChatID);
 
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
@@ -235,6 +236,13 @@ public class OrgEventController extends SubMenu {
 
         return eventID;
     }
+
+//    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
+//        Chat ac = new Chat(eventId, attendeeIds, chatName);
+//        aChatsList.add(ac);
+//        return ac.getId();
+
+    // TODO private String?? event ID
 
     /**
      * This is a helper method for the methods above; updates SpeakerController's chat list
@@ -308,6 +316,8 @@ public class OrgEventController extends SubMenu {
         }
     }
 
+    // TODO createAttendee
+
 
     // **** createEmployee will be in AdminEventController. Only administrators will create employees along with organizers
 
@@ -320,19 +330,22 @@ public class OrgEventController extends SubMenu {
         presenter.printEventMessageIntro();
         presenter.printEventNamePrompt();
         String name = "";//SubMenu.readInput(input);
+        presenter.printChatNamePrompt();
+        String chatName = "";//SubMenu.readInput(input);
         presenter.printMessageContentPrompt();
         String content = "";//SubMenu.readInput(input);
-        eventMessage(name, content);
+        eventMessage(name, chatName, content);
     }
 
     /**
      * Adds a Message with content content the AnnouncementChat contained within the Event with eventName
      * @param eventName The name of the Event
      */
-    private void eventMessage(String eventName, String messageContent){
+    private void eventMessage(String eventName, String chatName, String messageContent){
         String eventId =  eventManager.getEventID(eventName); // eventId
+        String chatID = eventManager.getEventChat(chatName);
         String ev = eventManager.getEventChat(eventId); // chatid
-        String m = messageManager.createMessage(eventId, messageContent); // creating message for event
+        String m = messageManager.createMessage(eventId, chatID, messageContent); // creating message for event
         chatManager.addMessageIds(ev,m);// adding message to event chat
     }
 

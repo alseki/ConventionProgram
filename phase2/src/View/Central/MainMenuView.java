@@ -102,18 +102,21 @@ public class MainMenuView implements ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Hides every component stored in contentPane
+     */
+    private void hideAll() {
+        for (Component item: contentPane.getComponents()) {
+            item.setVisible(false);
+        }
+    }
+
 
     /**
      * Method that runs an intro for a user
      */
     private void intro() {
-        savedMessage.setVisible(false);
-        okayButton.setVisible(false);
-        startButton.setVisible(false);
-        submitAccountChoiceButton.setVisible(false);
-        saveButton.setVisible(false);
-        accountChoiceMessage.setVisible(false);
-        dropDownMenu.setVisible(false);
+        hideAll();
 
         frame.setVisible(true);
         frame.setTitle(cps.getIntroTitle());

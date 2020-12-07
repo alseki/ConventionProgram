@@ -155,7 +155,8 @@ public class RoomManager extends RoomAccess implements Serializable {
     public boolean addEvent(String roomID, String eventID) {
         try {
             ArrayList<String> events = roomEventList.get(roomID);
-            room.add(eventID);
+            // FIXME
+            // room.add(eventID);
             return true;
         } catch (NullPointerException e) {
             return false;

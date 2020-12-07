@@ -50,6 +50,18 @@ public class EmployeeController extends PersonController {
         return this.chatManager.createChat(ownerId, guestIds);
     }
 
+    /**
+     * Returns ID of the Employee-exclusive Chat newly created
+     *
+     * @param ownerId  ID of the Employee user trying to create this Chat
+     * @param guestId An ID of the Employee that wants to join the Chat
+     * @return ID of the newly created Chat. If Chat was not created, returns null.
+     */
+    public String createEmpChat(String ownerId, String guestId) {
+        ArrayList<String> guest = new ArrayList<>();
+        guest.add(guestId);
+        return createEmpChat(ownerId, guest);
+    }
 
     /**
      * Returns ID of the Organizer-exclusive Chat newly created
@@ -81,7 +93,8 @@ public class EmployeeController extends PersonController {
                 return new EmpReqController(this, currentUserID);
             }
             else if (choice.equals(options[3])){
-                return new EmpEventController(this, currentUserID, manager);
+                return null; // FIXME
+                //return new EmpEventController(this, currentUserID, manager);
             }
         }
         return null;
@@ -89,10 +102,10 @@ public class EmployeeController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] employeeOptions  = {"View the request board"};
-        String[] options = new String[3];
+        String[] employeeOptions  = {"View event information", "View the request board"};
+        String[] options = new String[4];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(employeeOptions, 0, options, 2, 1);
+        System.arraycopy(employeeOptions, 0, options, 2, 2);
         return options;
     }
 

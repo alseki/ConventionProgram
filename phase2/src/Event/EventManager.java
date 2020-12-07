@@ -1,10 +1,11 @@
 package Event;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
 // Last edit: Dec 6 2020
@@ -138,17 +139,27 @@ public class EventManager extends EventAccess implements Serializable {
         }
     }
 
+    // TODO this does not seem to be necessary. As only the actual event types have a speakerID
+//    /**
+//     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
+//     * @param eventID The Event we are interested in
+//     * @return an array list of the IDs of all Attendees
+//     */
+//    public String getSpeakerID(String eventID){
+//        try {
+//            return events.get(eventID).getSpeakerID();
+//        } catch (NullPointerException n) {
+//            return null;
+//        }
+//    }
+
+
     /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
+     * Getter for the IDs of the Attendees attending this Event
+     * @return an array of these Attendee IDs
      */
-    public String getSpeakerID(String eventID){
-        try {
-            return events.get(eventID).getSpeakerID();
-        } catch (NullPointerException n) {
-            return null;
-        }
+    public ArrayList<String> getAttendeeIDs(String eventId) {
+        return getEvent(eventId).getAttendeeIDs();
     }
 
     /**
@@ -270,7 +281,9 @@ public class EventManager extends EventAccess implements Serializable {
      * Helper method for addEvent
      */
     private Event createTalk(String name, String speakerID, LocalDateTime startTime, String description) {
-        return new Talk(name, speakerID, startTime, description);
+        // FIXME
+        // return new Talk(name, speakerID, startTime, description);
+        return  null;
     }
 
     /**
@@ -278,7 +291,9 @@ public class EventManager extends EventAccess implements Serializable {
      * Helper method for addEvent
      */
     private Event createWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
-        return new Workshop(name, speakerID, startTime, description);
+        // FIXME
+        // return new Workshop(name, speakerID, startTime, description);
+        return null;
     }
 
 

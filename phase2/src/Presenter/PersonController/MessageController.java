@@ -52,9 +52,31 @@ public class MessageController extends SubMenu {
             }
         }
     }
+//TODO double check with Ran and other regarding what to do when the group is equal to 2 ppl or less
+    //Currently remove the ID of this Chat from the chatList of all Person in Chat, let personIds list of this Chat be
+    // new empty arraylist, and make the chatID become null.
+    /**
+     * Allows the user to exit from a Chat. If the Chat only contains two members,
+     * @param chatID ID of the Chat the user wants to exit from
+     */
+    protected void deleteChat(String chatID){
+        if (chatManager.getChatSize(chatID) <= 2){
+            for(String personId: chatManager.getPersonIds(chatID)){
+                personManager.removeChat(personId, chatID);}
+            chatManager.removeAllPersonIds(chatID);
+            chatManager.nullifyChatID(chatID);
+        }
+        else {personManager.removeChat(currentUserID, chatID);
+        chatManager.removePersonIds(chatID, currentUserID);}
+    }
 
+    protected boolean archiveChat(String chatID){
+        return chatManager.archiveChat(chatID);
+    }
 
-
+    protected boolean dearchiveChat(String chatID){
+        return chatManager.dearchiveChat(chatID);
+    }
 
     @Override
     public MessageMenu getPresenter() {

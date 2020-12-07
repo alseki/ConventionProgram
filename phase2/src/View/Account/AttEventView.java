@@ -24,7 +24,6 @@ public class AttEventView extends AccountView {
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
@@ -89,13 +88,5 @@ public class AttEventView extends AccountView {
         if(eventName.equals(presenter.getMenuOptions()[4])) { // get list of your signed up events
             //view list of your signed up events
         }
-    }
-
-    private JButton newButton(String title) {
-        JButton newButton = new JButton(title);
-        newButton.setLocation(0, 0);
-        newButton.setActionCommand(title);
-        newButton.addActionListener(this);
-        return newButton;
     }
 }

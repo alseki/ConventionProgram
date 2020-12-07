@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class ChatManager implements Serializable {
     private ArrayList<Chat> chatsList; // list for storing a collection of all Message.Message.Chat objects
-    private ArrayList<AnnouncementChat> aChatsList; // list for storing a collection of all AnnouncementChat objects
+    private ArrayList<Chat> aChatsList; // list for storing a collection of all AnnouncementChat objects
     public ChatManager(){
         chatsList = new ArrayList<>();
         aChatsList = new ArrayList<>();
@@ -50,24 +50,26 @@ public class ChatManager implements Serializable {
      * Create new Message.Message.Chat object among user and a group of friends, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestIds Collection of IDs of (one or more) guests
+     * @param chatName the name of this group chat, set up by who create it.
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      *         null iff (ArrayList guestIds only contain ownerId) OR (a group Chat with same member exists)
      */
-    public String createChat(String ownerId, ArrayList <String> guestIds){
+    public String createChat(String ownerId, ArrayList <String> guestIds, String chatName){
         //if (((guestIds.size()==1) && guestIds.contains(ownerId))||(this.existChat(ownerId, guestIds))){return null;}
-        Chat newC = new Chat(ownerId, guestIds);
+        Chat newC = new Chat(ownerId, guestIds, chatName);
         chatsList.add(newC);
         return newC.getId();}
 
 
     /**
-     * creates and returns an annoucment chat with eventid and attendeeids
-     * @param eventid id representign the event for the annoucement
-     * @param attendeeids the id's of the attendess
-     * @return the chatID of AnnocuementChat made
+     * creates and returns an announcement chat with eventId and attendeeIds
+     * @param eventId id represent the event for the announcement
+     * @param attendeeIds the id's of the attendees
+     * @param chatName the name of this group chat, set up by who create it.
+     * @return the chatID of announcementChat made
      */
-    public String createAnnouncementChat(String eventid, ArrayList<String> attendeeids){
-        AnnouncementChat ac = new AnnouncementChat(eventid, attendeeids);
+    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
+        Chat ac = new Chat(eventId, attendeeIds, chatName);
         aChatsList.add(ac);
         return ac.getId();
     }
@@ -81,11 +83,10 @@ public class ChatManager implements Serializable {
      */
     public boolean addMessageIds(String chatId, String messageId){
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){
-            if (chat.getClass()==(AnnouncementChat.class)) {
-            ((AnnouncementChat) chat).addMessageIds(messageId,((AnnouncementChat) chat).getPassword());}
-            else if(chat.getClass()==(Chat.class)){chat.addMessageIds(messageId);}
-            return true; }
+        if(chat != null) {
+            chat.addMessageIds(messageId);
+            return true;
+        }
         return false;
     }
 
@@ -96,9 +97,11 @@ public class ChatManager implements Serializable {
      * @return ArrayList of messageIDs stored in the Message.Message.Chat with inputted chatID
      *         null iff no Message.Message.Chat in ChatList has the inputted chatId
      */
-    public ArrayList<String> getMessageIds(String chatId){
+    public ArrayList<String> getMessageIds(String chatId) {
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){return chat.getMessageIds();}
+        if(chat != null) {
+            return chat.getMessageIds();
+        }
         return null;
     }
 
@@ -109,11 +112,50 @@ public class ChatManager implements Serializable {
      * @return true iff senders (personIds) list of Message.Message.Chat is successfully updated
      */
     //The senders list and related methods in Message.Message.Chat class must be fixed so that it contains ID instead of Person.Person
-    public boolean addPersonIds(String chatId, String personId){
+    public boolean addPersonIds(String chatId, String personId) {
         Chat chat = getUnknownTypeChat(chatId);
-        if(chat != null){
+        if(chat != null) {
             chat.addPersonIds(personId);
-            return true; }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return the name of this chat, by its Id.
+     */
+    public String getChatName(String chatId) {
+        return Objects.requireNonNull(getUnknownTypeChat(chatId)).getName();
+    }
+
+    /**
+     * Remove an ID of a Person from personId of a Chat
+     *
+     * @param chatId   the ID of the Chat
+     * @param personId the ID of the Person object to be removed from the Chat's personIds list
+     * @return true iff personId is successfully removed form the personIds list of Chat
+     */
+    public boolean removePersonIds(String chatId, String personId) {
+        Chat chat = getUnknownTypeChat(chatId);
+        if (chat != null) {
+            chat.removePersonIds(personId);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Remove all person Ids from personId list of a Chat
+     *
+     * @param chatId Id of Chat
+     * @return True iff all Person Id removed from personIds list
+     */
+    public boolean removeAllPersonIds(String chatId) {
+        Chat chat = getUnknownTypeChat(chatId);
+        if (chat != null) {
+            chat.removeAllPersonIds();
+            return true;
+        }
         return false;
     }
 
@@ -122,37 +164,33 @@ public class ChatManager implements Serializable {
      * @param chatId Id of the target Chat object
      * @return ArrayList of Strings representing Person IDs contained in the Chat
      */
-     public ArrayList<String> getPersonIds(String chatId){
-         Chat chat = getUnknownTypeChat(chatId);
-         if(chat != null){return chat.getPersonIds();}
-         return null;
-     }
+    public ArrayList<String> getPersonIds(String chatId){
+        Chat chat = getUnknownTypeChat(chatId);
+        if(chat != null){return chat.getPersonIds();}
+        return null;
+    }
 
     /**
      * Get class of the Chat item corresponding to the inputted chat ID
      * @param chatID ID of the Chat object
-     * @return Class type
+     * @return Class type, 1 for announcement, 0 for chat
      */
-     public Class<?> getChatClass(String chatID){
-         try {
-             return Objects.requireNonNull(getUnknownTypeChat(chatID)).getClass();
-         } catch (NullPointerException n) {
-             return null;
-         }
-     }
+    public int getChatType(String chatID){
+        return Objects.requireNonNull(getUnknownTypeChat(chatID)).getAnnouncementOrNot();
+    }
 
     /**
      * Figures if chat ID corresponds to null object (i.e. There is no Chat object associated with the inputted ID)
      * @param chatID ID of the chat
      * @return true iff chat ID corresponds to null object.
      */
-     public boolean isChatIDNull(String chatID) {
-         try {
-             return getUnknownTypeChat(chatID) == null;
-         } catch (NullPointerException n) {
-             return true;
-         }
-     }
+    public boolean isChatIDNull(String chatID) {
+        try {
+            return getUnknownTypeChat(chatID) == null;
+        } catch (NullPointerException n) {
+            return true;
+        }
+    }
 
     /**
      * Return collection of all Chats where the inputted person ID is part of the member.
@@ -188,11 +226,11 @@ public class ChatManager implements Serializable {
     /**
      * Finds the AnnouncementChat object with input aChatId
      * @param aChatId of the AnnouncementChat object we are trying to find
-     * @return AnnouncementChat object corresponding to the aChatId inputted
+     * @return Chat object corresponding to the aChatId inputted
      *         null if aChatId invalid
      */
-    private AnnouncementChat getAnChat(String aChatId){
-        for(AnnouncementChat ac: aChatsList){
+    private Chat getAnChat(String aChatId){
+        for(Chat ac: aChatsList){
             if (ac.getId().equals(aChatId)){
                 return ac;
             }
@@ -201,15 +239,15 @@ public class ChatManager implements Serializable {
     }
 
     /**
-     * Finds the Chat or Announcement Chat object with the inputted chatID
+     * Finds the Chat object with the inputted chatID
      * @param chatId ID of a Chat object that may be Chat or AnnouncementChat
-     * @returns Chat or AnnouncementChat object corresponding to the chatId. Null is returned if the ID is invalid.
+     * @return Chat object corresponding to the chatId. Null is returned if the ID is invalid.
      */
     private Chat getUnknownTypeChat(String chatId){
         for(Chat c: chatsList){
             if(c.getId().equals(chatId)){
                 return c;} }
-        for(AnnouncementChat ac: aChatsList){
+        for(Chat ac: aChatsList){
             if(ac.getId().equals(chatId)){
                 return ac;} }
         return null;
@@ -232,7 +270,7 @@ public class ChatManager implements Serializable {
      */
     public ArrayList<String> getAnnouncementChatIDs(){
         ArrayList<String> aChatIDs = new ArrayList<>();
-        for (AnnouncementChat c : aChatsList){
+        for (Chat c : aChatsList){
             aChatIDs.add(c.getId());
         }
         return aChatIDs;
@@ -246,10 +284,7 @@ public class ChatManager implements Serializable {
      *         False iff there does not exist a Chat with the exact same group members inputted
      */
     public boolean existChat(String currentId, String guestId) {
-        if (findChat(currentId, guestId) != null) {
-            return true;
-        }
-        return false;
+        return findChat(currentId, guestId) != null;
     }
 
     /**
@@ -260,10 +295,7 @@ public class ChatManager implements Serializable {
      *         False iff there does not exist a Chat with the exact same group members inputted
      */
     public boolean existChat(String currentId, ArrayList<String> guestsId) {
-        if (findChat(currentId, guestsId) != null) {
-            return true;
-        }
-        return false;
+        return findChat(currentId, guestsId) != null;
     }
 
     /**
@@ -289,12 +321,12 @@ public class ChatManager implements Serializable {
      */
     public String findChat(String currentId, ArrayList<String> guestsId) {
         ArrayList<String> personIds = new ArrayList<>(guestsId);
-        if (!(guestsId.contains(currentId))){personIds.add(currentId);}
-        Collections.sort(personIds);
+        personIds.add(currentId);
+        Collections.sort(guestsId);
         for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);
-            if (members.equals(personIds)) {
+            if (members.equals(guestsId)) {
                 return c.getId();
             }
         }

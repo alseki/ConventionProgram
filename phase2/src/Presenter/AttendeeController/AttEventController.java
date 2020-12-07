@@ -106,7 +106,7 @@ public class AttEventController extends SubMenu {
      * Tries to sign user up for an Event
      * @param eventName The name of the Event the current user requested to sign up for
      */
-    private void signupForEvent (String eventName) throws InvalidChoiceException  {
+    public String signupForEvent(String eventName) throws InvalidChoiceException  {
         String event = eventManager.getEventID(eventName);
         String room = roomManager.getEventRoom(event);
         if (room == null || event == null) {
@@ -117,11 +117,12 @@ public class AttEventController extends SubMenu {
             boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
             attendeeManager.addAnChat(currentUserID, eventManager.getEventChat(event));
             if (eventAddedToPerson) {
-                presenter.printEventAdded();
+                return presenter.printEventAdded();
             }
         } catch (CapacityException c) {
             presenter.printEventFull();
         }
+     return null;
     }
 
     /**
@@ -143,7 +144,7 @@ public class AttEventController extends SubMenu {
     }
 
     @Override
-    public SubMenuPrinter getPresenter() {
+    public AttEventMenu getPresenter() {
         return this.presenter;
     }
 }
