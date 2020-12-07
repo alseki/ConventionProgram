@@ -6,6 +6,7 @@ import Presenter.PersonController.ContactController;
 import Presenter.PersonController.ContactMenu;
 import Presenter.PersonController.PersonController;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
     JLabel enterUsernameMsg, allContacts, viewC, contactAdded;
-    JButton addContactButton, viewContactListButton, submitButton, okayButton;
+    JButton submitButton, okayButton;
     JTextField inputAddContact;
 
     public ContactView(SubMenu controller) {
@@ -32,15 +33,7 @@ public class ContactView extends AccountView {
         contentPane.setBackground(new Color(255, 200, 0));// Sets background colour
         contentPane.setLayout(new FlowLayout());
 
-        viewContactListButton = newButton(this.presenter.getMenuOptions()[0]); // Generates "view list" button
-        contentPane.add(viewContactListButton);
-
-        addContactButton = newButton(this.presenter.getMenuOptions()[1]); // Generates "add contact" button
-        contentPane.add(addContactButton);
-
-        okayButton = newButton("okay");
-        contentPane.add(okayButton);
-        okayButton.setVisible(false);
+        makeMenuButtons(presenter);
 
         setupAddContact();
         setupViewContacts();
@@ -48,7 +41,7 @@ public class ContactView extends AccountView {
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setVisible(true);
-
+        showContactMain();
     }
 
     /**
@@ -56,16 +49,18 @@ public class ContactView extends AccountView {
      */
     private void showContactMain() {
         hideAll();
-        viewContactListButton.setVisible(true);
-        addContactButton.setVisible(true);
+        for (JButton button: menuButtons) {
+            button.setVisible(true);
+        }
     }
 
     /**
      * Hides the main screen button options
      */
     private void hideContactMain() {
-        addContactButton.setVisible(false);
-        viewContactListButton.setVisible(false);
+        for (JButton button: menuButtons) {
+            button.setVisible(false);
+        }
     }
 
     /**
@@ -81,8 +76,6 @@ public class ContactView extends AccountView {
         inputAddContact.setVisible(false);
 
         submitButton = newButton("submit");
-        contentPane.add(submitButton);
-        submitButton.setVisible(false);
 
         contactAdded = new JLabel(this.presenter.printContactAdded());
         contentPane.add(contactAdded);
@@ -97,6 +90,8 @@ public class ContactView extends AccountView {
         viewC = new JLabel("viewing your contacts...");
         contentPane.add(viewC);
         viewC.setVisible(false);
+
+        okayButton = newButton("okay");
 
         allContacts = new JLabel();//Create and add label that is centered and has empty borders
         allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -167,12 +162,14 @@ public class ContactView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
-        if (eventName.equals(this.presenter.getMenuOptions()[0])) {
+        // [0] = View Contacts
+        // [1] = Add Contact
+        if (eventName.equals(menuButtons.get(0).getActionCommand())) {
             hideContactMain();
             showViewContacts();
         }
 
-        if (eventName.equals(this.presenter.getMenuOptions()[1])) {
+        if (eventName.equals(menuButtons.get(1).getActionCommand())) {
             hideContactMain();
             showAddContact();
         }

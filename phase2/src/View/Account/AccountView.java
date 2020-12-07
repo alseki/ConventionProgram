@@ -1,8 +1,11 @@
 package View.Account;
 
+import Presenter.Central.SubMenuPrinter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * A view that is instantiated with a Controller and builds frame based on said Controller
@@ -10,10 +13,7 @@ import java.awt.event.ActionListener;
 public abstract class AccountView implements ActionListener {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-
-    public AccountView() {
-        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+    ArrayList<JButton> menuButtons = new ArrayList<>();
 
     /**
      * Hides every component stored in contentPane
@@ -21,6 +21,15 @@ public abstract class AccountView implements ActionListener {
     public void hideAll() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(false);
+        }
+    }
+
+    /**
+     * Builds all the menu buttons for this view
+     */
+    public void makeMenuButtons(SubMenuPrinter presenter) {
+        for (String option: presenter.getMenuOptions()) {
+            menuButtons.add(newButton(option));
         }
     }
 
@@ -34,6 +43,8 @@ public abstract class AccountView implements ActionListener {
         newButton.setLocation(0, 0);
         newButton.setActionCommand(title);
         newButton.addActionListener(this);
+        contentPane.add(newButton);
+        newButton.setVisible(false);
         return newButton;
     }
 }
