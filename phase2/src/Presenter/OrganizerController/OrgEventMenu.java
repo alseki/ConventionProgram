@@ -9,6 +9,8 @@ import Event.EventManager;
 import Event.EventType;
 import Event.RoomManager;
 import Person.PersonManager;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.EventMenu;
 
 public class OrgEventMenu extends EventMenu {
@@ -69,14 +71,26 @@ public class OrgEventMenu extends EventMenu {
     }
 
     /**
-     * Presents to the user the list of possible Event types to choose from
+     * Prompts the user to choose a type for the Event they wish to add
+     * @return the type of event they have chosen (as an EventType object)
      */
-    public void printEventTypes() {
-        System.out.println();
-        for(EventType t: EventType.values()) {
-            System.out.println(t.toString());
+    private String[] eventTypes(String type) throws InvalidChoiceException {
+        EventType[] values = EventType.values();
+        String[] types = new String[values.length];
+        for (int i = 0; i < types.length; i++) {
+            types[i] = values[i].toString();
         }
-        System.out.println();
+        return types;
+    }
+
+    @Override
+    public String[] getRoomList() throws NoDataException {
+        try {
+            return rooms.getRoomNames();
+        }
+        catch (NullPointerException e) {
+            throw new NoDataException("room");
+        }
     }
 
     /**
