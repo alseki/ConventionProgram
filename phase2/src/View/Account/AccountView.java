@@ -23,4 +23,17 @@ public abstract class AccountView implements ActionListener {
             item.setVisible(false);
         }
     }
+
+    /**
+     * Creates a new button component with an ActionListener
+     * @param title the text and action listener of the button
+     * @return a button with text and action listener 'title'
+     */
+    public JButton newButton(String title) {
+        JButton newButton = new JButton(title);
+        newButton.setLocation(0, 0);
+        newButton.setActionCommand(title);
+        newButton.addActionListener(this);
+        return newButton;
+    }
 }

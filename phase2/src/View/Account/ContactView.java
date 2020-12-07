@@ -16,10 +16,8 @@ public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
 
-    //Scanner input = new Scanner(System.in);
-
     JFrame frame;
-    JLabel enterUsernameMsg, allContacts, noContactsMsg, viewC, contactAdded;
+    JLabel enterUsernameMsg, allContacts, viewC, contactAdded;
     JButton addContactButton, viewContactListButton, submitButton, okayButton;
     JTextField inputAddContact;
 
@@ -29,7 +27,7 @@ public class ContactView extends AccountView {
         this.presenter = ((ContactController) controller).getPresenter();
 
 
-        frame = new JFrame(this.presenter.getMenuTitle()); // Create and set up the frame
+        frame.setTitle(this.presenter.getMenuTitle()); // Create and set up the frame
         //JFrame.setDefaultLookAndFeelDecorated(true);
 
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
@@ -55,16 +53,8 @@ public class ContactView extends AccountView {
 
     }
 
-    // ok so lines 33-57 used to be in this run method until i moved it into the constructor
-    // and it worked that way lol hmmmm
-    /*
-    public void run() {
-
-    }
-     */
-
     /**
-     *
+     * Shows the main Contact Menu screen
      */
     private void showContactMain() {
         hideAll();
@@ -80,6 +70,9 @@ public class ContactView extends AccountView {
         viewContactListButton.setVisible(false);
     }
 
+    /**
+     * Adds addContact components to contentPane
+     */
     private void setupAddContact() {
         enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
         contentPane.add(enterUsernameMsg);
@@ -142,6 +135,9 @@ public class ContactView extends AccountView {
         return controller.getContactList();
     }
 
+    /**
+     * Shows components that prompt a user to add contact information
+     */
     private void showAddContact() {
         enterUsernameMsg.setVisible(true);
         submitButton.setVisible(true);
@@ -190,13 +186,5 @@ public class ContactView extends AccountView {
         if(eventName.equals("submit")) {
             addContact();
         }
-    }
-
-    private JButton newButton(String title) {
-        JButton newButton = new JButton(title);
-        newButton.setLocation(0, 0);
-        newButton.setActionCommand(title);
-        newButton.addActionListener(this);
-        return newButton;
     }
 }

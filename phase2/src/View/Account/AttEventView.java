@@ -89,12 +89,4 @@ public class AttEventView extends AccountView {
             //view list of your signed up events
         }
     }
-
-    private JButton newButton(String title) {
-        JButton newButton = new JButton(title);
-        newButton.setLocation(0, 0);
-        newButton.setActionCommand(title);
-        newButton.addActionListener(this);
-        return newButton;
-    }
 }
