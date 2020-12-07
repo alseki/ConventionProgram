@@ -56,15 +56,13 @@ public class AttEventView extends AccountView {
     }
 
     private void setupViewAllEvents() {
-        allEvents = new JLabel();//Create and add label that is centered and has empty borders
+        allEvents = new JLabel("-ALL EVENTS-");
         allEvents.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         allEvents.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         contentPane.add(allEvents);
         allEvents.setVisible(false);
 
         okayButton = newButton("okay");
-        contentPane.add(okayButton);
-        okayButton.setVisible(false);
 
         // return to AttEventMenu button
     }
@@ -79,8 +77,6 @@ public class AttEventView extends AccountView {
         inputEventName.setVisible(false);
 
         signupButton = newButton("signup");
-        contentPane.add(signupButton);
-        signupButton.setVisible(false);
 
         // also a "return to AttEventMenu" button
     }
@@ -95,14 +91,12 @@ public class AttEventView extends AccountView {
         inputEventName.setVisible(false);
 
         cancelSpotButton = newButton("cancelSpot");
-        contentPane.add(cancelSpotButton);
-        cancelSpotButton.setVisible(false);
 
         // and maybe also a "return to AttEventMenu" button
     }
 
     private void setupGetYourEvents() {
-        yourEvents = new JLabel(); //Create and add label that is centered and has empty borders
+        yourEvents = new JLabel(this.presenter.ownEventListTitle());
         yourEvents.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         yourEvents.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         contentPane.add(yourEvents);

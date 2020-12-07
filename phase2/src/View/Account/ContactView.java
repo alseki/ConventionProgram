@@ -70,7 +70,7 @@ public class ContactView extends AccountView {
 
         okayButton = newButton("okay");
 
-        allContacts = new JLabel();//Create and add label that is centered and has empty borders
+        allContacts = new JLabel("-YOUR CONTACTS-");
         allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         allContacts.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         contentPane.add(allContacts);
