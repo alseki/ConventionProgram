@@ -136,20 +136,20 @@ public class EventManager extends EventAccess implements Serializable {
      * @param eventID The ID of the Event
      * @return The type of the Event, as an EventType
      */
-    public EventType getEventType(String eventID){
-        try {
-            Event event = getEvent(eventID);
-            if (event.getClass().equals(Talk.class)) {
-                return EventType.TALK;
-            } else if (event.getClass().equals(Workshop.class)) {
-                return EventType.WORKSHOP;
-            } else {
-                return Integer.parseInt(null);
-            }
-        } catch (NullPointerException n) {
-            return Integer.parseInt(null);
-        }
-    }
+        //   public EventType getEventType(String eventID){
+        //     try {
+        //         Event event = getEvent(eventID);
+        //       if (event.getClass().equals(Talk.class)) {
+        //            return EventType.TALK;
+        //         } else if (event.getClass().equals(Workshop.class)) {
+        //             return EventType.WORKSHOP;
+        //         } else {
+        //            return Integer.parseInt(null);
+        //         }
+        //      } catch (NullPointerException n) {
+        //         return Integer.parseInt(null);
+        //     }
+        //  }
 
     // TODO this does not seem to be necessary. As only the actual event types have a speakerID
 //    /**
@@ -170,8 +170,8 @@ public class EventManager extends EventAccess implements Serializable {
      * Getter for the IDs of the Attendees attending this Event
      * @return an array of these Attendee IDs
      */
-    public ArrayList<String> getAttendeeIDs(String eventId) {
-        return getEvent(eventId).getAttendeeIDs();
+        //   public ArrayList<String> getAttendeeIDs(String eventId) {
+        //       return getEvent(eventId).getAttendeeIDs();
     }
 
     /**
@@ -179,14 +179,14 @@ public class EventManager extends EventAccess implements Serializable {
      * @param eventID The Event we are interested in
      * @return an array list of the IDs of all Attendees
      */
-    public String getStartTime(String eventID){
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            return formatter.format(events.get(eventID).getStartTime());
-        } catch (NullPointerException n) {
-            return Integer.parseInt(null);
-        }
-    }
+//    public String getStartTime(String eventID){
+ //       try {
+ //          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//            return formatter.format(events.get(eventID).getStartTime());
+ //       } catch (NullPointerException n) {
+//            return Integer.parseInt(null);
+ //       }
+ //   }
 
     /**
      * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
@@ -197,8 +197,8 @@ public class EventManager extends EventAccess implements Serializable {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return formatter.format(events.get(eventID).getEndTime());
-        } catch (NullPointerException n) {
-            return Integer.parseInt(null);
+            //       } catch (NullPointerException n) {
+            //          return Integer.parseInt(null);
         }
     }
 
@@ -215,9 +215,9 @@ public class EventManager extends EventAccess implements Serializable {
         try {
             Event event = events.get(id);
             return event.getChatID();
-        } catch (NullPointerException n) {
-            return Integer.parseInt(null);
-        }
+            //     } catch (NullPointerException n) {
+            //         return Integer.parseInt(null);
+            //      }
     }
 
     /**
@@ -225,13 +225,13 @@ public class EventManager extends EventAccess implements Serializable {
      * @param eventID The ID of the Event for which we want to set the chatID
      * @param chatID The chatID
      */
-    public void setEventChat(String eventID, String chatID) {
-        try {
-            events.get(eventID).setChatID(chatID);
-        } catch (NullPointerException n) {
-            return null;
+        //  public void setEventChat(String eventID, String chatID) {
+        //     try {
+            //        events.get(eventID).setChatID(chatID);
+        //     } catch (NullPointerException n) {
+            //        return null;
         }
-    }
+    //  }
 
     /**
      * Getter for this password of the Event with the inputted eventID

@@ -1,28 +1,97 @@
 package Person;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class EmployeeManager extends PersonManager {
 
     // This account is created by organizer or administrator
 
-    // private List<Attendee> allAttendees;
+
     private ArrayList<String> requestIds;
+
+    // dictionary of all employees; this is under the theme of creating a restricted chat for employees with employees only
+    protected Map<String, Employee> usernameToEmployee = new HashMap<String, Employee>();
+
+
+    String name = getName();
+
+    private String getName() {
+        return this.name;
+    }
 
     public EmployeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
         this.requestIds = new ArrayList<String>();
+
+
     }
+
+    public boolean cancelEmployeeAccount(String userID){
+        if(idToPerson.containsKey((userID))){
+            String username = getPerson(userID).getUsername();
+            int typeUser = getPerson(userID).typePerson;
+            if(typeUser == 4) {
+                usernameToPerson.remove(username);
+                idToPerson.remove(userID);
+                usernameToEmployee.remove(username);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean cancelEmployeeAccountByUsername(String username){
+        if(usernameToPerson.containsKey(getPerson(username))){
+            String userID = getPerson(username).getID();
+            int typeUser = getPerson(userID).typePerson;
+            if(typeUser == 1 || typeUser == 3) {
+                usernameToPerson.remove(username);
+                idToPerson.remove(userID);
+                usernameToEmployee.remove(username);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<String, Employee> getUsernameToEmployee(){
+        return usernameToEmployee;
+    }
+
+    // TODO WIll fix this up
+//    public String getEmployeeName(String userID) {
+//        return usernameToEmployee.getEmployee(userID).getName();
+//    }
+//
+//    public String getEmployeeID(String userName) {
+//        return usernameToEmployee.getEmployee(userName).getID();
+//    }
+//
+//    public String getUsername(String userID) {
+//        return usernameToEmployee.getEmployee(userID).username;
+//    }
+//
+//    public ArrayList<String> getAllEmployees() {
+//        ArrayList<String> nameUsernamePassword = new ArrayList<>();
+//        Map<String, Employee> map = getUsernameToEmployee();
+//        for (String key : map.keySet()){
+//            nameUsernamePassword.add("(" + key.name + "; " + key.username + "; " + key.currentUserID)+")";
+//        }
+//        return nameUsernamePassword;
+//
+//    }
 
 
 
     @Override
     public boolean createAccount(String name, String username, String password, String email) {
         if (!usernameToPerson.containsKey(username)) {
-            Speaker newSpeaker = new Speaker(name, username, password, email);
-            usernameToPerson.put(username, newSpeaker);
-            idToPerson.put(newSpeaker.getID(), newSpeaker);
+            Employee newEmployee = new Employee(name, username, password, email);
+            usernameToPerson.put(username, newEmployee);
+            idToPerson.put(newEmployee.getID(), newEmployee);
+            usernameToEmployee.put(username, newEmployee);
             return true;
         }
         return false;
@@ -47,14 +116,6 @@ public class EmployeeManager extends PersonManager {
         return spe.getAllTalks();}
 
 
-    // I believe confirmEmployee is EXACT same method as typePerson in Person Class.
-    /*
-    public int confirmEmployee(String username) {
-        if(usernameToPerson.containsKey(username)) {
-            return getPersonByUsername(username).getTypePerson();
-        }
-        return -1;
-    }*/
 
     public String IDtoUsername(String Id){
         return getPerson(Id).getUsername();
