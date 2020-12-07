@@ -206,8 +206,9 @@ public class OrgEventController extends SubMenu {
                 String existingChatID = chatManager.findChat(organizerID, speakerID);
                 messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
             } else {
-                String chatID = chatManager.createChat(organizerID, speakerID);
-                messageManager.createMessage(organizerID, speakerID, chatID, messageContentToSpeaker);
+                String newChatID = chatManager.createChat(organizerID, speakerID);
+                personManager.addChat(organizerID, newChatID);
+                messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
             }
             return true;
         }
