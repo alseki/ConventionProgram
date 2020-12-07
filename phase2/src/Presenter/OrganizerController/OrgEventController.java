@@ -5,11 +5,11 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Event.Event;
+import Event.EventManager;
 import Event.EventPermissions;
 import Event.EventType;
-import Event.EventManager;
 import Person.EmployeeManager;
+import Person.OrganizerManager;
 import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
@@ -25,6 +25,7 @@ public class OrgEventController extends SubMenu {
     private String currentUserID;
     private SpeakerManager speakerManager;
     private EmployeeManager employeeManager;
+    private OrganizerManager organizerManager;
     private EventPermissions eventPermissions;
     private EventManager eventManager;
     private OrgEventMenu presenter;
@@ -169,14 +170,26 @@ public class OrgEventController extends SubMenu {
 
     // TODO private String?? event ID
 
+
+    // TODO make sure that Organizer is given the proper messages: "Event cancellation successful or not, Attendees notified or not..."
+
+    /**
+     * This is one of the MANDATORY implementations - Organizer can cancel an event. 1st part: the time of the day and the time
+     * of the event are compared and decision is taken. The Attendees are notified, then the event is removed from Speaker's two
+     * Events lists, and then finally Speaker is notified in message from the organizer personally.
+     * @param eventID
+     * @return boolean; if all cancellation and contacting were successful. This many change
+     */
+
     private boolean cancelEvent(String eventID) {
-        String eventName = eventManager.getEventID(eventID);
+        String eventName = eventManager.getEventName(eventID);
         String chatName = eventManager.getEventChat(eventID);
+        String speakerID = eventManager.getSpeakerID(eventID);
+
         LocalDateTime now = LocalDateTime.now();
         int dayHour = now.getHour();
         int dayMinute = now.getMinute();
 
-        // TODO fix when getStartTime is back
         LocalDateTime startTime = getStartTime(eventID);
         int eventHour = startTime.getHour();
         int eventMinute = startTime.getMinute();
@@ -184,17 +197,25 @@ public class OrgEventController extends SubMenu {
         if (eventHour < dayHour && eventMinute < dayMinute) {
             eventManager.removeEvent(eventID);
             String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be made shortly.";
-            eventMessage (eventName, chatName, messageContent);
+            eventMessage(eventName, chatName, messageContent);
+
+            String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been notified. I will call you very soon.";
+            String organizerID = this.currentUserID;
+            ArrayList<String> contacts = personManager.getContactList(organizerID);
+            if (chatManager.existChat(organizerID, speakerID)) {
+                String existingChatID = chatManager.findChat(organizerID, speakerID);
+                messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
+            } else {
+                String chatID = chatManager.createChat(organizerID, speakerID);
+                messageManager.createMessage(organizerID, speakerID, chatID, messageContentToSpeaker);
+            }
             return true;
-
-            // TODO will do - do we want to send automatic announcementChat or will Organizer proceed to that method himself once he's done with this method?
-
-            // TODO will do - instead of update Speaker's TalkList, and send out message/announcement to Speaker and Employees
+        }
+        return false;
 
 
         }
-        return false;
-    }
+
 
         //char eventManger
 

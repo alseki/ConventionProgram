@@ -21,6 +21,7 @@ public abstract class Event implements Serializable {
     private String ID;
     private String password;
     private String chatID;
+    private String speakerID;
     private int capacity;
     private ArrayList<String> attendees;
 
@@ -42,6 +43,7 @@ public abstract class Event implements Serializable {
         this.chatID = UUID.randomUUID().toString();
         this.capacity = capacity;
         this.attendees = new ArrayList<String>();
+        this.speakerID = speakerID;
     }
 
     /**
@@ -124,6 +126,15 @@ public abstract class Event implements Serializable {
      */
     public void setChatID(String ID){
         this.chatID = ID;
+    }
+
+    /**
+     * Getter for this Events' speaker's ID - this is for OrgEventController
+     * @param ID
+     * @return
+     */
+    public String getSpeakerID(String ID) {
+        return this.speakerID;
     }
 
     /**

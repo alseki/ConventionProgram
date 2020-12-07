@@ -138,6 +138,21 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
+     * Returns the ID of speaker of Event in this EventManager, given event's ID - for OrgEventController
+     *
+     * @param eventID The ID of the Event
+     * @return The ID of the speaker, as a String
+     */
+    public String getSpeakerID(String eventID) {
+        try {
+            return getSpeakerID(eventID);
+        }
+        catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
      * Getter for the start time of the Event of inputted ID
      * @param eventID The ID of the Event
      * @return The start time of the Event (as a LocalDateTime object)
