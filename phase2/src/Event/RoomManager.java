@@ -147,33 +147,15 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Adds an Event to a certain Room's list of Event IDs
+     * Adds an Event to a certain Room's list of Event IDs *
      * @param roomID The Room's ID
      * @param eventID The Event's ID
-     * @return True if successful, false if unsuccessful (i.e. Room does not have the capacity for this Event)
+     * @return True if successful, false if unsuccessful
      */
     public boolean addEvent(String roomID, String eventID) {
         try {
-            int current_occupancy = 0;
-            for (String ID : this.getEventIDs(roomID)) {
-                int event_capacity;
-                // FIXME
-                // event_capacity = EventManager.getCapacity(ID);
-
-            }
-
-
-            // FIXME
-            //int current_occupancy =
-
-
-
-            // FIXME
-            // String[] getEventIDs(String roomID)
-
             ArrayList<String> events = roomEventList.get(roomID);
-            // FIXME
-            // room.add(eventID);
+            events.add(eventID);
             return true;
         } catch (NullPointerException e) {
             return false;
@@ -217,3 +199,4 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
 }
+

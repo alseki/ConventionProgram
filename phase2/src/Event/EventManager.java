@@ -2,13 +2,12 @@ package Event;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 6 2020
+// Last edit: Dec 7 2020
 
 // Architecture Level - Use Class
 
@@ -21,10 +20,14 @@ abstract class EventAccess {
 
 public class EventManager extends EventAccess implements Serializable {
 
-    /** A mapping of event names to their respective IDs. */
+    /**
+     * A mapping of event names to their respective IDs.
+     */
     private Map<String, String> eventsByName;
 
-    /** A mapping of IDs to the respective events they represent. */
+    /**
+     * A mapping of IDs to the respective events they represent.
+     */
     private Map<String, Event> events;
 
     /**
@@ -35,8 +38,11 @@ public class EventManager extends EventAccess implements Serializable {
         eventsByName = new TreeMap<String, String>();
     }
 
+    // Methods for accessing Events in EventManager
+
     /**
      * Returns an Event, given its ID
+     *
      * @param eventID The ID of the Event
      * @return The Event
      */
@@ -50,6 +56,7 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns all the Events from a list of IDs
+     *
      * @param IDs The IDs of the Events you want to get
      * @return The Events, as an array of their String representations
      */
@@ -70,6 +77,7 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the ID of an Event given its name
+     *
      * @param name The Event's name
      * @return The ID of that Event
      */
@@ -83,6 +91,7 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Helper getter for the all the Events in this EventManager
+     *
      * @return an array of all Events in this EventManager
      */
     public String[] getEventIDs() {
@@ -94,7 +103,33 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
+     * Returns the type of an Event stored in this EventManager, given its ID
+     *
+     * @param eventID The ID of the Event
+     * @return The type of the Event, as an EventType
+     */
+    public EventType getEventType(String eventID) {
+        try {
+            Event event = getEvent(eventID);
+            if (event.getClass().equals(Talk.class)) {
+                return EventType.TALK;
+            } else if (event.getClass().equals(Workshop.class)) {
+                return EventType.WORKSHOP;
+            } else if (event.getClass().equals(Panel.class)) {
+                return EventType.PANEL;
+            } else {
+                return EventType.PARTY;
+            }
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    // Getters and setters for Events stored in EventManager
+
+    /**
      * Returns the name of an Event stored in this EventManager, given its ID
+     *
      * @param eventID The ID of the Event
      * @return The name of the Event, as a String
      */
@@ -107,11 +142,40 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
+     * Getter for the start time of the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @return The start time of the Event (as a LocalDateTime object)
+     */
+    public LocalDateTime getStartTime(String eventID) {
+        try {
+            return this.getEvent(eventID).getStartTime();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
+     * Getter for the end time of the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @return The end time of the Event (as a LocalDateTime object)
+     */
+    public LocalDateTime getEndTime(String eventID) {
+        try {
+            return this.getEvent(eventID).getEndTime();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
      * Returns the description of an Event stored in this EventManager, given its ID
+     *
      * @param eventID The ID of the Event
      * @return The description of the Event, as a String
      */
-    public String getDescription(String eventID){
+    public String getDescription(String eventID) {
         try {
             return events.get(eventID).getDescription();
         } catch (NullPointerException n) {
@@ -120,155 +184,113 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Returns the capacity of an Event stored in this EventManager, given its ID
-     * @param eventID The ID of the Event
-     * @return The capacity of the Event, as an int
-     */
-    public int getCapacity(String eventID){
-        try {
-            return events.get(eventID).getCapacity();
-        } catch (NullPointerException n) {
-            return Integer.parseInt(null);
-    }
-
-    /**
-     * Returns the type of an Event stored in this EventManager, given its ID
-     * @param eventID The ID of the Event
-     * @return The type of the Event, as an EventType
-     */
-        //   public EventType getEventType(String eventID){
-        //     try {
-        //         Event event = getEvent(eventID);
-        //       if (event.getClass().equals(Talk.class)) {
-        //            return EventType.TALK;
-        //         } else if (event.getClass().equals(Workshop.class)) {
-        //             return EventType.WORKSHOP;
-        //         } else {
-        //            return Integer.parseInt(null);
-        //         }
-        //      } catch (NullPointerException n) {
-        //         return Integer.parseInt(null);
-        //     }
-        //  }
-
-    // TODO this does not seem to be necessary. As only the actual event types have a speakerID
-//    /**
-//     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-//     * @param eventID The Event we are interested in
-//     * @return an array list of the IDs of all Attendees
-//     */
-//    public String getSpeakerID(String eventID){
-//        try {
-//            return events.get(eventID).getSpeakerID();
-//        } catch (NullPointerException n) {
-//            return null;
-//        }
-//    }
-
-
-    /**
-     * Getter for the IDs of the Attendees attending this Event
-     * @return an array of these Attendee IDs
-     */
-        //   public ArrayList<String> getAttendeeIDs(String eventId) {
-        //       return getEvent(eventId).getAttendeeIDs();
-    }
-
-    /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
-     */
-//    public String getStartTime(String eventID){
- //       try {
- //          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//            return formatter.format(events.get(eventID).getStartTime());
- //       } catch (NullPointerException n) {
-//            return Integer.parseInt(null);
- //       }
- //   }
-
-    /**
-     * Returns an array list of all the Attendees (by ID) signed up to the Event with the inputted eventID
-     * @param eventID The Event we are interested in
-     * @return an array list of the IDs of all Attendees
-     */
-    public String getEndTime(String eventID){
-        // FIXME
-        //try {
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            //return formatter.format(events.get(eventID).getEndTime());
-            //       } catch (NullPointerException n) {
-            //          return Integer.parseInt(null);
-        //}
-        return null; // TODO delete this line when above is fixed
-    }
-
-
-
-    // Chat settings
-
-    /**
-     * Getter for the ID of an event's chat
-     * @param id The event's ID
-     * @return The event's chat ID
-     */
-    public String getEventChat(String id) {
-        // FIXME
-        //try {
-            //Event event = events.get(id);
-            //return event.getChatID();
-            //     } catch (NullPointerException n) {
-            //         return Integer.parseInt(null);
-            //      }
-        return null; // TODO delete this line when above is fixed
-    }
-
-    /**
-     * Sets the chatID for the Event with the inputted eventID
-     * @param eventID The ID of the Event for which we want to set the chatID
-     * @param chatID The chatID
-     */
-        //  public void setEventChat(String eventID, String chatID) {
-        //     try {
-            //        events.get(eventID).setChatID(chatID);
-        //     } catch (NullPointerException n) {
-            //        return null;
-        //}
-    //  }
-
-    /**
      * Getter for this password of the Event with the inputted eventID
-     * @param eventID The ID of the Event for which we want the password
-     * @return String representing the Event's password
+     *
+     * @param eventID The ID of the Event
+     * @return The Event's password (as a String)
      */
     public String getEventPassword(String eventID) {
-        Event ev = events.get(eventID);
-        return ev.getPassword();
+        try {
+            return this.getEvent(eventID).getPassword();
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
+    /**
+     * Getter for the chatID of the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @return The Event's chatID
+     */
+    public String getEventChat(String eventID) {
+        try {
+            return this.getEvent(eventID).getChatID();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
 
+    /**
+     * Setter for the chatID of the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @param chatID  The new chatID
+     */
+    public void setEventChat(String eventID, String chatID) {
+        try {
+            this.getEvent(eventID).setChatID(chatID);
+        } catch (NullPointerException n) {
+        }
+    }
 
-    // Event-adding settings
+    /**
+     * Getter for the capacity of the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @return The Event's capacity
+     */
+    public int getCapacity(String eventID) {
+        try {
+            return this.getEvent(eventID).getCapacity();
+        } catch (NullPointerException n) {
+            return -1;
+        }
+    }
+
+    /**
+     * Setter for the capacity of the Event of inputted ID
+     *
+     * @param eventID  The ID of the Event
+     * @param capacity The new capacity of the Event
+     */
+    public void setCapacity(String eventID, int capacity) {
+        try {
+            this.getEvent(eventID).setCapacity(capacity);
+        } catch (NullPointerException n) {
+        }
+    }
+
+    /**
+     * Getter for the IDs of the Attendees attending the Event of inputted ID
+     *
+     * @param eventID The ID of the Event
+     * @return an array of the IDs of the Attendees at that Event
+     */
+    public ArrayList<String> getAttendeeIDs(String eventID) {
+        try {
+            return this.getEvent(eventID).getAttendeeIDs();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    // Methods for adding/removing Events to/from this EventManager
 
     /**
      * Adds an Event to this EventManager
-     * @param name The name of the Event to be created
-     * @param speakerID The ID of the speaker of the Event to be created
-     * @param startTime The start time of the Event to be created, as a LocalDateTime object
+     *
+     * @param name        The name of the Event to be created
+     * @param speakerID   The ID of the Speaker of the Event to be created, or "" if there is no Speaker
+     * @param startTime   The start time of the Event to be created, as a LocalDateTime object
+     * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
-     * @param type The Type of the Event to be created, as an EventType
+     * @param capacity    The capacity of the Event to be created
+     * @param type        The Type of the Event to be created, as an EventType
      * @return The new Event's ID
      */
-    public String addEvent(String name, String speakerID, LocalDateTime startTime, String description, EventType type) {
+    public String addEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String
+            description, int capacity, EventType type) {
         Event event;
         if (type.equals(EventType.TALK)) {
-            event = createTalk(name, speakerID, startTime, description);
-        }
-        else if (type.equals(EventType.WORKSHOP)) {
-            event = createWorkshop(name, speakerID, startTime, description);
-        }
-        else {
+            event = new Talk(name, speakerID, startTime, endTime, description, capacity);
+        } else if (type.equals(EventType.WORKSHOP)) {
+            event = new Workshop(name, speakerID, startTime, endTime, description, capacity);
+        } else if (type.equals(EventType.PANEL)) {
+            event = new Panel(name, startTime, endTime, description, capacity);
+        } else if (type.equals(EventType.PARTY)) {
+            event = new Party(name, startTime, endTime, description, capacity);
+        } else {
             return null;
         }
         events.put(event.getID(), event);
@@ -278,6 +300,7 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Deletes an Event
+     *
      * @param ID The Event's ID
      * @return whether the Event has been successfully deleted
      */
@@ -286,37 +309,16 @@ public class EventManager extends EventAccess implements Serializable {
             eventsByName.remove(events.get(ID).getName());
             events.remove(ID);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    /**
-     * Creates a Talk to add to EventManager
-     * Helper method for addEvent
-     */
-    private Event createTalk(String name, String speakerID, LocalDateTime startTime, String description) {
-        // FIXME
-        // return new Talk(name, speakerID, startTime, description);
-        return  null;
-    }
-
-    /**
-     * Creates a Workshop to add to EventManager
-     * Helper method for addEvent
-     */
-    private Event createWorkshop(String name, String speakerID, LocalDateTime startTime, String description) {
-        // FIXME
-        // return new Workshop(name, speakerID, startTime, description);
-        return null;
-    }
-
-
-    // comparison methods
+    // Methods to compare Events in EventManager
 
     /**
      * Checks to see if this EventManager contains an event of a certain name
+     *
      * @param name The name
      * @return True if an event with this name exists; false if not
      */
@@ -346,4 +348,5 @@ public class EventManager extends EventAccess implements Serializable {
             return false;
         }
     }
+
 }

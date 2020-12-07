@@ -1,6 +1,5 @@
 package Event;
 
-
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
@@ -14,7 +13,7 @@ public class EventPermissions {
     private EventAccess eventAccess;
 
     /**
-     * Constructor for a RoomPermissions object
+     * Constructor for an EventPermissions object
      */
     public EventPermissions (RoomAccess roomAccess, EventAccess eventAccess) {
         this.roomAccess = roomAccess;
@@ -22,15 +21,15 @@ public class EventPermissions {
     }
 
     /**
-     * Signs an individual AttendeeController up for an Event
-     * @param personID The ID of the AttendeeController
+     * Signs an individual Attendee up for an Event
+     * @param personID The ID of the Attendee
      * @param eventID The ID of the Event
      * @param roomID  The ID of the Room the Event is in
-     * @return Whether the Event exists
+     * @return Whether the Attendee was signed up
      */
     public boolean signUpForEvent(String personID, String eventID, String roomID) throws CapacityException {
         try {
-            if (checkRoomCapacity(eventID, roomID)) {
+            if (checkEventCapacity(eventID)) {
                 Event event = eventAccess.getEvent(eventID);
                 event.addAttendee(personID);
                 return true;
@@ -42,10 +41,10 @@ public class EventPermissions {
     }
 
     /**
-     * Takes an individual AttendeeController off an Event's list of attendees
-     * @param personID The AttendeeController
-     * @param ID The Event
-     * @return whether the AttendeeController was removed from the Event (true or false)
+     * Takes an individual Attendee off an Event's list of attendees
+     * @param personID The ID of the Attendee to be removed
+     * @param ID The Event to remove the Attendee from
+     * @return whether the Attendee was removed from the Event (true or false)
      */
     public boolean removeFromEvent(String personID, String ID) {
         Event event = eventAccess.getEvent(ID);
@@ -59,63 +58,65 @@ public class EventPermissions {
     }
 
     /**
-     * Checks if an event is full
+     * Checks if an Event is full
      * @param eventID The ID of the Event
-     * @param roomID The ID of the Room the Event is in
-     * @return True if there is still space for more Attendees to register
+     * @return True if there is still space for more Attendees to register in this Event
      */
-    private boolean checkRoomCapacity(String eventID, String roomID) {
+    private boolean checkEventCapacity(String eventID) {
         Event event = eventAccess.getEvent(eventID);
-        Room room = roomAccess.getRoom(roomID);
-        return (room.getCapacity() - event.getAttendeeIDs().size()) > 0;
+        return ((event.getCapacity() - event.getAttendeeIDs().size()) > 0);
     }
 
     /**
      * Checks if the inputted Event conflicts with multiple other inputted Events
-     * @param startTime The time at which the event will start
-     * @param type The type of event, as an EventType
+     * @param startTime The time at which the Event will start
+     * @param endTime The time at which the Event will end
+     * @param type The type of Event, as an EventType
      * @param roomID The the ID of the room the Event will be held in
      * @return True if the event doesn't conflict with any existing events
      */
-    public boolean checkConflicts(LocalDateTime startTime, EventType type, String roomID) {
+    public boolean checkConflicts(LocalDateTime startTime, LocalDateTime endTime, EventType type, String roomID) {
         try {
             String[] eventIDs = roomAccess.getEventIDs(roomID);
-            return checkConflicts(startTime, type, eventIDs);
+            return checkConflicts(startTime, endTime, type, eventIDs);
         } catch (NullPointerException n) {
             return true;
         }
     }
 
     /**
-     * Checks if the inputted Event conflicts with multiple other inputted Events
-     * @param startTime The time at which the event will start
-     * @param type The type of event, as an EventType
-     * @param events The the IDs of the events the new Event might conflict with
-     * @return True if the event doesn't conflict with any existing events
+     * Checks if the inputted Event conflicts with any other Events in its Room and time slot
+     * @param startTime The time at which the inputted Event will start
+     * @param endTime The time at which the inputted Event will end
+     * @param type The type of the inputted Event, as an EventType
+     * @param events The IDs of the Events with which the new Event might conflict
+     * @return True if the event does not conflict with any existing Events
      */
-    public boolean checkConflicts(LocalDateTime startTime, EventType type, String[] events) {
+    public boolean checkConflicts(LocalDateTime startTime, LocalDateTime endTime, EventType type, String[] events) {
         Event event;
         if (type.equals(EventType.WORKSHOP)) {
-            // FIXME
-            // event = new Workshop("", "", startTime, "");
+            event = new Workshop("", "", startTime, endTime, "", 0);
         } else if (type.equals(EventType.TALK)) {
-            // FIXME
-            // event = new Talk("", "", startTime, "");
+            event = new Talk("", "", startTime, endTime, "", 0);
+        } else if (type.equals(EventType.PARTY)) {
+            event = new Party("", startTime, endTime, "", 0);
+        } else if (type.equals(EventType.PANEL)) {
+            event = new Panel("", startTime, endTime, "", 0);
         } else {
             return false;
         }
-
         try {
-            for (String eID : events) {
-                // TODO uncomment when fixed
-                //if (eventAccess.getEvent(eID).conflictsWith(event)) {
-                    //return false;
-                //}
+            for (String eventID : events) {
+                if (this.eventAccess.getEvent(eventID).conflictsWith(event)) {
+                    return false;
+                }
+                return true;
             }
-            return true;
         } catch (NullPointerException n) {
             return true;
         }
+        return true;
     }
 
 }
+

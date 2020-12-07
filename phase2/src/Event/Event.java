@@ -95,14 +95,6 @@ public abstract class Event implements Serializable {
     public String getDescription() {return this.description;};
 
     /**
-     * Setter for the description of this Talk
-     * @param description A new description for this Talk
-     */
-    protected void setDescription(String description){
-        this.description = description;
-    }
-
-    /**
      * Getter for the ID of this Event
      * @return the ID of the event
      */
@@ -144,10 +136,10 @@ public abstract class Event implements Serializable {
 
     /**
      * Setter for the capacity of this Event
-     * @return the capacity of this Event (as an int)
+     * @param capacity The new capacity of this Event
      */
-    public int setCapacity() {
-        return this.capacity;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     /**
