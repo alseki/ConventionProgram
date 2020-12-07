@@ -58,9 +58,7 @@ public class EmployeeController extends PersonController {
      * @return ID of the newly created Chat. If Chat was not created, returns null.
      */
     public String createEmpChat(String ownerId, String guestId) {
-        ArrayList<String> guest = new ArrayList<>();
-        guest.add(guestId);
-        return createEmpChat(ownerId, guest);
+        return chatManager.createChat(ownerId, guestId);
     }
 
     /**
