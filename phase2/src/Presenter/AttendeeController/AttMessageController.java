@@ -120,7 +120,7 @@ public class AttMessageController extends MessageController {
      * @return A message that contains the chat ID if the chat was created or already exists;
      * an error message, otherwise
      */
-    private String createGroupChat(ArrayList<String> contactIDs) {
+    private String createGroupChat(ArrayList<String> contactIDs, String chatName) {
         if (contactIDs == null || contactIDs.size() == 0) {
             return presenter.printChatNotCreated(new InvalidChoiceException("user"));
         }
@@ -133,12 +133,12 @@ public class AttMessageController extends MessageController {
             return presenter.printChatExists(chatID);
         }
         else {
-            // FIXME
-            /*String chatID = chatManager.createChat(currentUserID, contactIDs);
+            String chatID = chatManager.createChat(currentUserID, contactIDs, chatName);
             personManager.addChat(currentUserID, chatID);
-            for (String contact: contactIDs){personManager.addChat(contact, chatID);}
-            return presenter.printChatCreated(chatID);*/
-            return null; // TODO delete this line after above is fixed
+            for (String contact: contactIDs) {
+                personManager.addChat(contact, chatID);
+            }
+            return presenter.printChatCreated(chatID);
         }
     }
 
