@@ -120,6 +120,18 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
+     * Returns the capacity of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The capacity of the Event, as an int
+     */
+    public int getCapacity(String eventID){
+        try {
+            return events.get(eventID).getCapacity();
+        } catch (NullPointerException n) {
+            return Integer.parseInt(null);
+    }
+
+    /**
      * Returns the type of an Event stored in this EventManager, given its ID
      * @param eventID The ID of the Event
      * @return The type of the Event, as an EventType
@@ -132,10 +144,10 @@ public class EventManager extends EventAccess implements Serializable {
             } else if (event.getClass().equals(Workshop.class)) {
                 return EventType.WORKSHOP;
             } else {
-                return null;
+                return Integer.parseInt(null);
             }
         } catch (NullPointerException n) {
-            return null;
+            return Integer.parseInt(null);
         }
     }
 
@@ -172,7 +184,7 @@ public class EventManager extends EventAccess implements Serializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return formatter.format(events.get(eventID).getStartTime());
         } catch (NullPointerException n) {
-            return null;
+            return Integer.parseInt(null);
         }
     }
 
@@ -186,7 +198,7 @@ public class EventManager extends EventAccess implements Serializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return formatter.format(events.get(eventID).getEndTime());
         } catch (NullPointerException n) {
-            return null;
+            return Integer.parseInt(null);
         }
     }
 
@@ -204,7 +216,7 @@ public class EventManager extends EventAccess implements Serializable {
             Event event = events.get(id);
             return event.getChatID();
         } catch (NullPointerException n) {
-            return null;
+            return Integer.parseInt(null);
         }
     }
 
@@ -217,7 +229,7 @@ public class EventManager extends EventAccess implements Serializable {
         try {
             events.get(eventID).setChatID(chatID);
         } catch (NullPointerException n) {
-            return;
+            return null;
         }
     }
 
