@@ -42,7 +42,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns an Event, given its ID
-     *
      * @param eventID The ID of the Event
      * @return The Event
      */
@@ -56,7 +55,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns all the Events from a list of IDs
-     *
      * @param IDs The IDs of the Events you want to get
      * @return The Events, as an array of their String representations
      */
@@ -104,7 +102,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the type of an Event stored in this EventManager, given its ID
-     *
      * @param eventID The ID of the Event
      * @return The type of the Event, as an EventType
      */
@@ -129,7 +126,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the name of an Event stored in this EventManager, given its ID
-     *
      * @param eventID The ID of the Event
      * @return The name of the Event, as a String
      */
@@ -143,7 +139,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for the start time of the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @return The start time of the Event (as a LocalDateTime object)
      */
@@ -157,7 +152,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for the end time of the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @return The end time of the Event (as a LocalDateTime object)
      */
@@ -171,7 +165,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the description of an Event stored in this EventManager, given its ID
-     *
      * @param eventID The ID of the Event
      * @return The description of the Event, as a String
      */
@@ -185,7 +178,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for this password of the Event with the inputted eventID
-     *
      * @param eventID The ID of the Event
      * @return The Event's password (as a String)
      */
@@ -199,7 +191,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for the chatID of the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @return The Event's chatID
      */
@@ -213,7 +204,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Setter for the chatID of the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @param chatID  The new chatID
      */
@@ -226,7 +216,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for the capacity of the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @return The Event's capacity
      */
@@ -240,7 +229,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Setter for the capacity of the Event of inputted ID
-     *
      * @param eventID  The ID of the Event
      * @param capacity The new capacity of the Event
      */
@@ -253,7 +241,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Getter for the IDs of the Attendees attending the Event of inputted ID
-     *
      * @param eventID The ID of the Event
      * @return an array of the IDs of the Attendees at that Event
      */
@@ -269,7 +256,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Adds an Event to this EventManager
-     *
      * @param name        The name of the Event to be created
      * @param speakerID   The ID of the Speaker of the Event to be created, or "" if there is no Speaker
      * @param startTime   The start time of the Event to be created, as a LocalDateTime object
@@ -300,7 +286,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Deletes an Event
-     *
      * @param ID The Event's ID
      * @return whether the Event has been successfully deleted
      */
@@ -318,7 +303,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Checks to see if this EventManager contains an event of a certain name
-     *
      * @param name The name
      * @return True if an event with this name exists; false if not
      */
