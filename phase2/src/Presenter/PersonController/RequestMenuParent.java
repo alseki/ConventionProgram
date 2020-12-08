@@ -1,4 +1,4 @@
-package Presenter;
+package Presenter.PersonController;
 
 import Presenter.Central.SubMenuPrinter;
 import Request.RequestEntity;

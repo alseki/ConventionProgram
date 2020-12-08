@@ -25,7 +25,7 @@ public abstract class EventMenu implements SubMenuPrinter {
 
     public String[] getRoomList() throws NoDataException{
         try {
-            String[] opt1  = {"0"};
+            String[] opt1  = {"See all events"};
             String[] options = new String[rooms.getRoomNames().length+1];
             System.arraycopy(opt1, 0, options, 0, 1);
             System.arraycopy(rooms.getRoomNames(), 0, options, 1, rooms.getRoomNames().length);
@@ -37,7 +37,7 @@ public abstract class EventMenu implements SubMenuPrinter {
     }
 
     public String getEventListTitle(){
-        return " -EVENTS-";
+        return "-EVENTS-";
     }
 
     protected String getEventListTitle(String condition){
@@ -76,15 +76,22 @@ public abstract class EventMenu implements SubMenuPrinter {
         }
     }
 
+    public String[] printAllEvents() throws InvalidChoiceException {
+        try {
+            return printEventList(events.getEventIDs());
+        }
+        catch (NullPointerException e) {
+            throw new NoDataException("event");
+        }
+    }
+
     private String formatEvent(String eventID) throws InvalidChoiceException  {
-        // FIXME
-        /*try {
+        try {
             StringBuilder e = new StringBuilder();
             e.append(events.getEventType(eventID).toString());
             e.append(": ");
             e.append(events.getEventName(eventID));
             e.append("\nby ");
-            // FIXME
             // e.append(persons.getName(events.getSpeakerID(eventID)));
             e.append(" in room ");
             e.append(rooms.getEventRoom(eventID));
@@ -97,8 +104,7 @@ public abstract class EventMenu implements SubMenuPrinter {
             return e.toString();
         } catch (NullPointerException n) {
             throw new InvalidChoiceException("event");
-        }*/
-        return null; // TODO delete this line when above is fixed
+        }
     }
 
 }

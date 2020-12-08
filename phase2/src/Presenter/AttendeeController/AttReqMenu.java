@@ -1,7 +1,7 @@
 package Presenter.AttendeeController;
 
 import Request.RequestManager;
-import Presenter.RequestMenuParent;
+import Presenter.PersonController.RequestMenuParent;
 
 // Programmers:
 // Description:

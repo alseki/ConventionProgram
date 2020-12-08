@@ -96,4 +96,14 @@ public abstract class AccountView implements ActionListener {
         newButton.setVisible(false);
         return newButton;
     }
+
+    /**
+     * Opens a JOptionPane box that displays the exception message
+     * @param exceptionTitle A title for the box
+     * @param exceptionText The text the box should display
+     */
+    public void exceptionDialogBox(String exceptionTitle, String exceptionText) {
+        JOptionPane.showConfirmDialog(null, exceptionText, exceptionTitle,
+                JOptionPane.DEFAULT_OPTION);
+    }
 }

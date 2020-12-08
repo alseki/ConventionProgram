@@ -25,7 +25,7 @@ public class AttMessageView extends AccountView{
     public AttMessageView(SubMenu controller) {
         super();
         this.controller = (AttMessageController) controller;
-        this.presenter = (AttMessageMenu) controller.getPresenter();
+        this.presenter = ((AttMessageController) controller).getPresenter();
 
         this.menuOp = this.presenter.getMenuOptions();
 
