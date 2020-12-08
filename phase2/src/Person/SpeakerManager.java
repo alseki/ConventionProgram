@@ -1,13 +1,16 @@
 package Person;
 
+import Event.EventType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SpeakerManager extends PersonManager {
 
 
-    protected Map<String, ArrayList<String>> allTalksBySpeaker = new HashMap<String, ArrayList<String>>();
+    protected Map<String, String[]> allTalksBySpeaker = new HashMap<String, String[]>();
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
 
@@ -60,10 +63,11 @@ public class SpeakerManager extends PersonManager {
      * @return boolean; takes eventId created in OrgEventController method createEvent, and adds it to Speaker's allTalksId list
      */
 
-    public boolean addTalk(String eventId, String userId) {
+    public boolean addTalk(String eventId, String userId, EventType eventType, String eventName) {
         Speaker sp = (Speaker) idToPerson.get(userId);
         if (!(sp.getAllTalks().contains(eventId))) {
             sp.signUp(eventId);
+            allTalksBySpeaker.put(eventId, [eventName, eventType]);
             return true;
         }
         return false;
@@ -81,10 +85,24 @@ public class SpeakerManager extends PersonManager {
      */
 
 
-    public boolean addTalkIdToDictionary(String userID, String eventID, String eventName) {
+    public boolean addTalkIdToDictionary(String userID, String eventID, String eventName, EventType eventType) {
         Speaker sp = (Speaker) idToPerson.get(userID);
         if (!(sp.getAllTalksDictionary().containsKey(eventID))) {
-            sp.getAllTalksDictionary().put(eventID, eventName);
+            //sp.getAllTalksDictionary().put(eventID, eventName, eventType);
+            //String eventTypeString = (String) eventType;
+            //Object[] eventInfo = new Object(eventName, eventType);
+            Object[] eventInfo = new Object[] { eventID, eventType };
+            //eventInfo.add(eventName, eventType);
+            sp.allTalksDictionary.put(eventID, eventInfo);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addToAllTalksID(String userID, String eventID) {
+        Speaker sp = (Speaker) idToPerson.get(userID);
+        if(!(sp.getAllTalks().contains(eventID))) {
+            sp.getAllTalks().add(eventID);
             return true;
         }
         return false;
@@ -123,8 +141,6 @@ public class SpeakerManager extends PersonManager {
         }
         return false;
     }
-
-
 
 
     /**
