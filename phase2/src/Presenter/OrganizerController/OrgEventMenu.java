@@ -3,7 +3,7 @@ package Presenter.OrganizerController;
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an OrganizerController's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 02/12/2020
+// Date Modified: 07/12/2020
 
 import Event.EventManager;
 import Event.EventType;
@@ -36,22 +36,22 @@ public class OrgEventMenu extends EventMenu {
     /**
      * Prompts user to input the name of the Room they wish to add
      */
-    public void addRoomPrompt() {
-        System.out.println("\nTo create a new room, please fill in the following information:");
+    public String addRoomPrompt() {
+        return "\nTo create a new room, please fill in the following information:";
     }
 
     /**
      * Prompts user to input the name of the Room they wish to add
      */
-    public void roomNamePrompt() {
-        System.out.println("\nWhat is the name of the room you want to create?");
+    public String roomNamePrompt() {
+        return "\nWhat is the name of the room you want to create?";
     }
 
     /**
      * Prompts user to input the capacity of the Room they wish to add
      */
-    public void roomCapacityPrompt() {
-        System.out.println("\nWhat is the capacity of the room you want to create?");
+    public String roomCapacityPrompt() {
+        return "\nWhat is the capacity of the room you want to create?";
     }
 
     // OPTION 2
@@ -59,15 +59,15 @@ public class OrgEventMenu extends EventMenu {
     /**
      * Prompts the user to create an Event
      */
-    public void printCreateEventPrompt(){
-        System.out.println("\nTo create a new event, please fill in the following information:");
+    public String printCreateEventPrompt(){
+        return "\nTo create a new event, please fill in the following information:";
     }
 
     /**
      * Prompts the user to choose the type of Event they wish to create
      */
-    public void printEventTypePrompt(){
-        System.out.println("\nWhat kind of event do you want to create? (Enter 0 for options)");
+    public String printEventTypePrompt(){
+        return "\nWhat kind of event do you want to create? (Enter 0 for options)";
     }
 
     /**
@@ -96,57 +96,57 @@ public class OrgEventMenu extends EventMenu {
     /**
      * Prompts the user to choose a Room for an Event (by name)
      */
-    public void printRoomNamePrompt(){
-        System.out.println("\nWhich room is this event held in? (Enter 0 for options)");
+    public String printRoomNamePrompt(){
+        return "\nWhich room is this event held in? (Enter 0 for options)";
     }
 
     /**
      * Prompts the user to name the new Event
      */
-    public void printEventNamePrompt(){
-        System.out.println("\nWhat is the name of this event?");
+    public String printEventNamePrompt(){
+        return "\nWhat is the name of this event?";
     }
 
-    public void printChatNamePrompt(){
-        System.out.println("\nWhat is the ");
+    public String printChatNamePrompt(){
+        return "\nWhat is the name of this chat?";
     }
 
     /**
      * Prompts the user to enter a description for the new Event
      */
-    public void printDescriptionPrompt(){
-        System.out.println("\nPlease type a brief description for this new event:");
+    public String printDescriptionPrompt(){
+        return "\nPlease type a brief description for this new event:";
     }
 
     /**
      * Prompts the user to enter a start time for the new Event
      */
-    public void printStartTimePrompt(){
-        System.out.println("\nAt what time will the event start?");
-        System.out.println("\n(Please enter the exact date and time of this event in 24-hour clock notation. \nFor " +
-                "example, to schedule an event at 11:30 p.m. on March 4, 2020, you would type the date, followed by " +
-                "a space, \nfollowed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and careful!");
+    public String printStartTimePrompt(){
+        return "\nAt what time will the event start?. \nPlease enter the exact date and time in 24-hour clock " +
+                "notation. \nFor example, to schedule an event at 11:30 pm on March 4, 2020, you would type the date," +
+                "followed by a space, \nfollowed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and " +
+                "careful!";
     }
 
     /**
      * Notifies the user that their start time entry was invalid
      */
-    public void printDateError(){
-        System.out.println("\n(This is not a valid date. Try again. Be slow and careful!");
+    public String printDateError(){
+        return "\nThis is not a valid date. Try again. Be slow and careful!";
     }
 
     /**
      * Prompts the user to add the username of the SpeakerController at this new Event
      */
-    public void printSpeakerUsernamePrompt(){
-        System.out.println("\nWhat is the username of the speaker in charge of the event?");
+    public String printSpeakerUsernamePrompt(){
+        return "\nWhat is the username of the speaker in charge of the event?";
     }
 
     /**
      * Notifies the user that a Talk was not created because another is already scheduled
      */
-    public void printCapacityError(){
-        System.out.println("\nThis talk could not be added. Another talk is scheduled in this room at that time.");
+    public String printCapacityError(){
+        return "\nThis talk could not be added. Another talk is scheduled in this room at that time.";
     }
 
     // OPTION 3
@@ -154,36 +154,36 @@ public class OrgEventMenu extends EventMenu {
     /**
      * Prompts the user to add a SpeakerController account
      */
-    public void printAddSpeakerPrompt(){
-        System.out.println("\nTo create a new speaker account, please fill in the following information:");
+    public String printAddSpeakerPrompt(){
+        return "\nTo create a new speaker account, please fill in the following information:";
     }
 
     /**
      * Prompts the user to enter a name for the SpeakerController
      */
-    public void printAddNamePrompt(){
-        System.out.println("\nWhat is the speaker's full name?");
+    public String printAddNamePrompt(){
+        return "\nWhat is the speaker's full name?";
     }
 
     /**
      * Prompts the user to add a password for the SpeakerController
      */
-    public void printAddPasswordPrompt(){
-        System.out.println("\nPlease enter a password for the speaker:");
+    public String printAddPasswordPrompt(){
+        return "\nPlease enter a password for the speaker:";
     }
 
     /**
      * Prompts the user to add a username for the SpeakerController
      */
-    public void printAddUsernamePrompt(){
-        System.out.println("\nPlease enter a username for the speaker:");
+    public String printAddUsernamePrompt(){
+        return "\nPlease enter a username for the speaker:";
     }
 
     /**
      * Prompts the user to add an email for the SpeakerController
      */
-    public void printAddEmailPrompt(){
-        System.out.println("\nWhat is the speaker's e-mail address?");
+    public String printAddEmailPrompt(){
+        return "\nWhat is the speaker's e-mail address?";
     }
 
     // OPTION 4
@@ -191,15 +191,15 @@ public class OrgEventMenu extends EventMenu {
     /**
      * Prompts the user to make an announcement about an Event
      */
-    public void printEventMessageIntro(){
-        System.out.println("\nTo make an announcement about an event, please fill in the following information:");
+    public String printEventMessageIntro(){
+        return "\nTo make an announcement about an event, please fill in the following information:";
     }
 
     /**
      * Prompts the user to enter the content of the announcement
      */
-    public void printMessageContentPrompt(){
-        System.out.println("\nPlease enter your announcement below");
+    public String printMessageContentPrompt(){
+        return "\nPlease enter your announcement below";
     }
 
 }
