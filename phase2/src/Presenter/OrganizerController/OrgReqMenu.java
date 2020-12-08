@@ -1,6 +1,6 @@
 package Presenter.OrganizerController;
 
-import Presenter.RequestMenuParent;
+import Presenter.PersonController.RequestMenuParent;
 import Request.RequestManager;
 
 // Programmers:

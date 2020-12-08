@@ -49,7 +49,7 @@ public class OrgEventController extends SubMenu {
      * @return true iff Room was added to the convention successfully
      */
     public boolean addRoom(String name, int capacity) throws InvalidChoiceException {
-        if (name.equals("1") || name.equals("0") || roomManager.contains(name)) {
+        if (name.equals("See all events") || roomManager.contains(name)) {
             throw new OverwritingException("room");
         }
         return this.roomManager.addRoom(name, capacity) != null;

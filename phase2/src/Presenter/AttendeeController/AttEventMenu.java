@@ -9,6 +9,8 @@ package Presenter.AttendeeController;
 import Event.EventManager;
 import Event.RoomManager;
 import Person.AttendeeManager;
+import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.EventMenu;
 
 public class AttEventMenu extends EventMenu {
@@ -49,12 +51,7 @@ public class AttEventMenu extends EventMenu {
                 roomName.toUpperCase());
     }
 
-    /**
-     * Prints the list of Events this AttendeeController user has signed up for
-     */
-    public String ownEventListTitle() {
-        return getEventListTitle("you have signed up for");
-    }
+    // Option 2
 
     /**
      * Prompts the user to enter the name of the Event they want to sign up for
@@ -77,6 +74,8 @@ public class AttEventMenu extends EventMenu {
         return "Event sign-up unsuccessful. This event is full.";
     }
 
+    // Option 3
+
     /**
      * Prompts the user to enter the name of the Event they wish to remove from their Event list
      */
@@ -90,5 +89,24 @@ public class AttEventMenu extends EventMenu {
     public String printEventRemoved() {
         return "Event spot cancellation successful.";
     }
-    
+
+    // Option 4
+
+    /**
+     * Prints the list of Events this AttendeeController user has signed up for
+     */
+    public String ownEventListTitle() {
+        return getEventListTitle("you have signed up for");
+    }
+
+    public String[] getOwnEventList() throws InvalidChoiceException {
+        String [] eventIDs = {};
+        eventIDs = attendeeManager.getEventList(currentUserID).toArray(eventIDs);
+        if (eventIDs != null && eventIDs.length != 0) {
+            return printEventList(eventIDs);
+        } else {
+            throw new NoDataException("such event");
+        }
+    }
+
 }
