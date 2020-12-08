@@ -71,7 +71,7 @@ public class OrgEventController extends SubMenu {
     // Methods for Events and EventManager
 
     /**
-     * Prompts the user to choose a valid start time for the new Event
+     * Chooses a valid start time for the new Event
      * @param time The start time as a String
      * @return The start time as a LocalDateTime object
      */
@@ -81,7 +81,7 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
-     * Prompts the user to choose a valid end time for the new Event
+     * Chooses a valid end time for the new Event
      * @param time The end time as a String
      * @return The end time as a LocalDateTime object
      */
@@ -91,7 +91,7 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
-     * Prompts the user to choose a valid start time for the new Event
+     * Chooses a valid start time for the new Event
      * @return The start time as a LocalDateTime object
      */
     private EventType getEventType(String type) throws InvalidChoiceException {
@@ -127,9 +127,9 @@ public class OrgEventController extends SubMenu {
         if (eventManager.contains(name)) {
             throw new OverwritingException("event");
         }
-        if (eventPermissions.checkConflicts(startTime, endTime, type, roomID)) {
-            String eventID = addEvent(name, speakerID, startTime, endTime, description, capacity, type);
-
+        if (eventPermissions.checkConflicts(startTime, endTime, type, roomID) &&
+                eventPermissions.checkRoomCapacity(startTime, endTime, capacity, roomID)) {
+            String eventID = this.addEvent(name, speakerID, startTime, endTime, description, capacity, type);
             roomManager.addEvent(roomID, eventID);
             return true;
         }
@@ -196,6 +196,21 @@ public class OrgEventController extends SubMenu {
         }
         return false;
     }
+
+    /**
+     * Changes the capacity of an existing Event
+     * @param eventID The ID of the Event for which the capacity needs to be changed
+     * @param capacity The new capacity of the Event
+     * @return true iff the capacity was changed
+     */
+    public boolean changeCapacity(String eventID, int capacity) throws InvalidChoiceException {
+            if (eventManager.getEvent(eventID) != null) {
+                eventManager.setCapacity(eventID, capacity);
+                return true;
+            } else {
+                throw new InvalidChoiceException("event");
+            }
+        }
 
     // Methods for Messages and MessageManager
 

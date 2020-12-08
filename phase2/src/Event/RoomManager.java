@@ -79,6 +79,19 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
+     * Finds the capacity of a specific Room (by ID)
+     * @param ID The Room's ID
+     * @return The Room's capacity
+     */
+    public int getRoomCapacity(String ID) {
+        try {
+            return this.roomList.get(ID).getCapacity();
+        } catch (NullPointerException e) {
+            return -1;
+        }
+    }
+
+    /**
      * Returns a list of the names of all Rooms currently established at this convention
      * @return An array of the Room names at this convention
      */
