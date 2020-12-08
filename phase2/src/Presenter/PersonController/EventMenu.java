@@ -100,6 +100,7 @@ public abstract class EventMenu implements SubMenuPrinter {
             e.append(" to ");
             e.append(events.getEndTime(eventID));
             //e.append("\n");
+            // FIXME
             //e.append(events.getDescription(eventID));
             return e.toString();
         } catch (NullPointerException n) {

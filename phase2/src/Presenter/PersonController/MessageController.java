@@ -31,14 +31,52 @@ public class MessageController extends SubMenu {
     }
 
 
+
+    // Option 1
+
+    /**
+     * Show all the messages this user received in presenter, **sorted by datetime.
+     */
+    public String[] inBox() throws NoDataException {
+        return presenter.getInBox();
+    }
+
+    // Option 2
+
+    /**
+     * Show all the messages this user sent in presenter, **sorted by datetime.
+     */
+    public String[] sentBox() throws NoDataException {
+        return presenter.getOutBox();
+    }
+
+    // Option 3
+
+    /**
+     * Show all the chats this user sent in presenter, **sorted by datetime.
+     */
+    protected String[] seeChats() throws InvalidChoiceException {
+        return presenter.getChats(personManager.getChats(currentUserID));
+    }
+
+    // Option 4
+
+    /**
+     * Show the messages in a chat by chatName.
+     */
+    protected String[] seeMessages(String chatName) throws InvalidChoiceException {
+        return presenter.getChat(chatManager.findChatByName(chatName).getId());
+    }
+
     // Option 5
 
     /**
      * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
-     * @param chatID The chatID of the Chat the current user want's to send a Message to
+     * @param chatName The chatName of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      */
-    protected void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+    protected void sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
+        String chatID = chatManager.findChatByName(chatName).getId();
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
@@ -49,6 +87,7 @@ public class MessageController extends SubMenu {
             if (!receiverID.equals(currentUserID)){
                 String messageID = messageManager.createMessage(currentUserID, receiverID, messageContent);
                 chatManager.addMessageIds(chatID,messageID);
+                presenter.printMessageSent();
             }
         }
     }

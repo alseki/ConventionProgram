@@ -42,7 +42,7 @@ public class LoginController extends SubMenu {
      */
     public String login (String username, String password) throws InvalidChoiceException {
         if(this.accountChoice != manager.typePerson(username)) {
-            throw new InvalidChoiceException("username");
+            throw new InvalidChoiceException("account");
         }
         if (manager.getCurrentUserID(username) != null)  {
             if(manager.confirmPassword(username, password)) {

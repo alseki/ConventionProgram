@@ -32,6 +32,7 @@ public class AttMessageView extends MessageView {
             msgList = new ListDisplayView(announcementPresenter.getChatListTitle(), announcementPresenter.getChatList());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
+            showMainMenuButtons();
         }
     }
 
@@ -93,38 +94,38 @@ public class AttMessageView extends MessageView {
         }
 
         if(eventName.equals(this.menuOp[6])) {
-            hideMainDropDownMenu();
+            hideMainMenuButtons();
             showViewAnnouncementChannels();
         }
 
         if(eventName.equals(this.menuOp[7])) {
-            hideMainDropDownMenu();
+            hideMainMenuButtons();
             showOpenAnChat();
         }
 
         if(eventName.equals(this.menuOp[8])) {
-            hideMainDropDownMenu();
+            hideMainMenuButtons();
             showCreateChat();
         }
 
         if(eventName.equals(this.menuOp[9])) {
-            hideMainDropDownMenu();
+            hideMainMenuButtons();
             showCreateGroupChat();
         }
 
         if (eventName.equals("show anchat")) {
-            showOpenAnChat();
-            showMainDropDownMenu();
+            showAnnouncementChat();
+            showMainMenuButtons();
         }
 
         if (eventName.equals("create chat")) {
             createChat();
-            showMainDropDownMenu();
+            showMainMenuButtons();
         }
 
         if (eventName.equals("create groupchat")) {
             createGroupChat();
-            showMainDropDownMenu();
+            showMainMenuButtons();
         }
     }
 }

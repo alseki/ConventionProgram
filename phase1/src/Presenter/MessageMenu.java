@@ -135,7 +135,7 @@ public class MessageMenu implements printSubMenu {
      * @param messageId of the message that is to be formatted.
      * @return Formatted string representation of the message.
      */
-    private String formatMessage(String messageId) {
+    public String formatMessage(String messageId) {
         if (messageManager.getRecipientId(messageId) == null) { // TODO: if this check is correct phrase.
             String eventName = eventManager.getEventName(messageManager.getSenderID(messageId));
             String time = messageManager.getDateTime(messageId);

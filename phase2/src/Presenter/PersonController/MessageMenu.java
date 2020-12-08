@@ -44,6 +44,9 @@ public class MessageMenu implements SubMenuPrinter {
         return options;
     }
 
+
+
+
     // Option 1
 
     public String getInboxTitle() {
@@ -191,6 +194,7 @@ public class MessageMenu implements SubMenuPrinter {
         return "Message sent!";
     }
 
+    // ----------------------------- Helpers ---------------------------------
     // Message formatting
 
     /**
@@ -212,7 +216,7 @@ public class MessageMenu implements SubMenuPrinter {
                 "Message:" + message + "\n";
     }
 
-    private String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
+    protected String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {
         if (messageIDs == null || messageIDs.size() == 0) {
             throw new NoDataException("message");
         }
@@ -222,5 +226,19 @@ public class MessageMenu implements SubMenuPrinter {
         }
         String[] messages = {};
         return messageInChat.toArray(messages);
+    }
+
+    /**
+     * Prints that a message was successfully sent
+     */
+    public String printMessageSent() {
+        return "Message has been successfully sent.";
+    }
+
+    /**
+     * Prints that the user has no messages received.
+     */
+    public String printNoMessageReceived() {
+        return "Inbox is EMPTY!";
     }
 }
