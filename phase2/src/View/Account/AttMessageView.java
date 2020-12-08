@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
+//FIXME selecting "View messages" as an Attendee doesn't even launch the AttMsg menu... (???)
+
 public class AttMessageView extends AccountView{
     AttMessageController controller;
     AttMessageMenu presenter;
