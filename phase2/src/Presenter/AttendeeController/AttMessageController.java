@@ -25,11 +25,7 @@ public class AttMessageController extends MessageController {
         presenter = new AttMessageMenu(attendeeManager, messageManager, chatManager, eventManager, currentUserID);
     }
 
-    public AttMessageMenu getChatMenu() {
-        return presenter;
-    }
-
-    public AttMessageMenu getAnChatMenu() {
+    public AttMessageMenu getAnChatPresenter() {
         return new AnnouncementMessageMenu(personManager, messageManager, chatManager, eventManager, currentUserID);
     }
 

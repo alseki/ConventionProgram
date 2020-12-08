@@ -16,25 +16,18 @@ public class AttEventView extends AccountView {
     AttEventMenu presenter;
 
     JLabel dialogueMsg;
-    JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton, chooseRoomButton;
+    JButton continueButton, backButton, signupButton, cancelSpotButton, chooseRoomButton;
     JTextField inputEventName;
     ListDisplayView eventList;
 
     JComboBox<String> roomChoice;
 
     public AttEventView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller = (AttEventController) controller;
         this.presenter = ((AttEventController) controller).getPresenter();
 
-
-        frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(255, 255, 200));// Sets background colour to white
-        contentPane.setLayout(new FlowLayout());
+        contentPane.setBackground(whiteBG);// Sets background colour to white
 
         continueButton = newButton("continue");
         contentPane.add(continueButton);
@@ -42,19 +35,10 @@ public class AttEventView extends AccountView {
         backButton = newButton("back");
         contentPane.add(backButton);
 
-        okayButton = newButton("okay");
-        contentPane.add(okayButton);
-
         setupEventMenuOptions();
         setupSignUpEvent();
         setupCancelFromEvent();
         setupRooms();
-
-        showMainDropDownMenu();
-
-        frame.setContentPane(contentPane);// Add content pane to frame
-        frame.pack();// Size and then display the frame.
-        frame.setVisible(true);
     }
 
     private void setupEventMenuOptions() {

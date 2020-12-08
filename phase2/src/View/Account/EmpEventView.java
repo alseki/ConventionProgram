@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
         OrgEventController controller;
 
         public EmpEventView(SubMenu controller) {
-            super();
+            super(controller.getPresenter());
             this.controller = (OrgEventController) controller;
         }
 

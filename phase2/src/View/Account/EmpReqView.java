@@ -9,7 +9,7 @@ public class EmpReqView extends AccountView {
     EmpReqController controller;
 
     public EmpReqView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller =  (EmpReqController) controller;
     }
 

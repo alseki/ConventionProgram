@@ -10,7 +10,7 @@ public class SpeEventView extends AccountView {
     SpeEventController controller;
 
     public SpeEventView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller = (SpeEventController) controller;
     }
 

@@ -9,7 +9,7 @@ public class OrgReqView extends AccountView {
     OrgReqController controller;
 
     public OrgReqView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller =  (OrgReqController) controller;
     }
 

@@ -2,6 +2,7 @@ package View.Account;
 
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.ContactMenu;
 import Presenter.PersonController.PersonController;
@@ -16,32 +17,18 @@ import java.awt.event.ActionEvent;
 public class ContactView extends AccountView {
     ContactController controller;
     ContactMenu presenter;
-    JLabel enterUsernameMsg, allContacts, contactAdded;
-    JButton submitButton, okayButton;
+    JLabel enterUsernameMsg, contactAdded;
+    JButton submitButton;
     JTextField inputAddContact;
+    ListDisplayView allContacts;
 
     public ContactView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller = (ContactController) controller;
         this.presenter = ((ContactController) controller).getPresenter();
-
-
-        frame.setTitle(this.presenter.getMenuTitle()); // Create and set up the frame
-        //JFrame.setDefaultLookAndFeelDecorated(true);
-
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(255, 200, 0));// Sets background colour
-        contentPane.setLayout(new FlowLayout());
-
-        makeMenuButtons(presenter);
+        contentPane.setBackground(yellowBG);// Sets background colour
 
         setupAddContact();
-        setupViewContacts();
-
-        frame.setContentPane(contentPane);
-        frame.pack();
-        frame.setVisible(true);
-        showMainMenuButtons();
     }
 
     /**
@@ -64,44 +51,16 @@ public class ContactView extends AccountView {
     }
 
     /**
-     * ???
-     */
-    private void setupViewContacts() {
-
-        okayButton = newButton("okay");
-
-        allContacts = new JLabel("-YOUR CONTACTS-");
-        allContacts.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        allContacts.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(allContacts);
-        allContacts.setVisible(false);
-    }
-
-    /**
      * Displays a list of the user's contacts
      */
     private void showViewContacts() {
-        okayButton.setVisible(true);
-        String[] myContacts = getContactList();
-
-        if (myContacts != null && myContacts.length > 0) {
-            StringBuilder contacts = new StringBuilder();
-            for (String myContact : myContacts) {
-                contacts.append(myContact).append(", ");
-            }
-            allContacts.setText(contacts.toString());
-        } else {
-            allContacts.setText(presenter.printNoContacts());
+        try {
+            String[] myContacts = presenter.getContactList();
+            allContacts = new ListDisplayView(presenter.getContactListTitle(), myContacts);
+        } catch (NoDataException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            showMainMenuButtons();
         }
-        allContacts.setVisible(true);
-    }
-
-    /**
-     * Calls the Contact Controller to retrieve the current user's contact list
-     * @return a non-empty array of strings that represent the user's contacts
-     */
-    private String[] getContactList() {
-        return controller.getContactList();
     }
 
     /**
@@ -136,6 +95,8 @@ public class ContactView extends AccountView {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        super.actionPerformed(event);
+
         String eventName = event.getActionCommand();
 
         // [0] = View Contacts
@@ -148,10 +109,6 @@ public class ContactView extends AccountView {
         if (eventName.equals(menuButtons.get(1).getActionCommand())) {
             hideMainMenuButtons();
             showAddContact();
-        }
-
-        if(eventName.equals("okay")) {
-            showMainMenuButtons();
         }
 
         if(eventName.equals("submit")) {

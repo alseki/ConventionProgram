@@ -49,7 +49,7 @@ public class LoginController extends SubMenu {
                 return manager.getCurrentUserID(username);
             }
         }
-        throw new NoDataException("account");
+        throw new InvalidChoiceException("account");
     }
 
     /**

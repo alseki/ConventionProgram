@@ -5,8 +5,10 @@ package Presenter.PersonController;
 // Date Created: 11/11/2020
 // Date Modified: 11/11/2020
 
+import Person.PersonManager;
 import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.NoDataException;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,13 @@ import java.util.ArrayList;
 // Date Modified: 02/12/2020
 
 public class ContactMenu implements SubMenuPrinter {
+    PersonManager personManager;
+    String currentUserID;
+
+    public ContactMenu(PersonManager personManager, String currentUserID) {
+        this.personManager = personManager;
+        this.currentUserID = currentUserID;
+    }
 
     @Override
     public String getMenuTitle() {
@@ -29,14 +38,32 @@ public class ContactMenu implements SubMenuPrinter {
     }
 
     /**
-     * Prints a list of the user's contacts
+     * Prints a list of contacts
      */
-    public String[] printContactList(ArrayList<String> contactList) {
+    private String[] printContactList(ArrayList<String> contactList) {
         contactList.toArray();
         String[] clist = {};
         clist = contactList.toArray(clist);
         return clist;
         // TODO exception if list is empty
+    }
+
+    /**
+     * Prints a list of the user's contacts
+     */
+    public String[] getContactList() throws NoDataException{
+        ArrayList<String> contactList = personManager.getContactList(currentUserID);
+        if (contactList == null || contactList.size() == 0) {
+            throw new NoDataException("contact");
+        }
+        return printContactList(contactList);
+    }
+
+    /**
+     * Prints a title for the contact list
+     */
+    public String getContactListTitle() {
+        return "---YOUR CONTACTS---";
     }
 
     /**

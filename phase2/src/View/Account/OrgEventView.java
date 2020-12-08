@@ -18,19 +18,11 @@ public class OrgEventView extends AccountView {
     JTextField inputRoomName, inputRoomCap, inputSName, inputSUsername, inputSPassword, inputSEmail;
 
     public OrgEventView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller = (OrgEventController) controller;
         this.presenter = ((OrgEventController) controller).getPresenter();
 
-
-        frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(0, 255, 200));// Sets background colour
-        contentPane.setLayout(new FlowLayout());
-
+        contentPane.setBackground(whiteBG);// Sets background colour
         continueButton = newButton("continue");
         contentPane.add(continueButton);
 
@@ -38,17 +30,10 @@ public class OrgEventView extends AccountView {
         contentPane.add(backButton);
 
         setupEventMenuOptions();
-
         setupCreateRoom();
         setupCreateEvent();
         setupCreateSpeakerAcc();
         setupMakeEventAnnouncement();
-
-        showMainDropDownMenu();
-
-        frame.setContentPane(contentPane);// Add content pane to frame
-        frame.pack();// Size and then display the frame.
-        frame.setVisible(true);
     }
 
     private void setupEventMenuOptions() {

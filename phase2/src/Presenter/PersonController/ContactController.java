@@ -14,19 +14,12 @@ import java.util.ArrayList;
 public class ContactController extends SubMenu {
 
     private final String currentUserID;
-    private final ContactMenu presenter = new ContactMenu();
+    private final ContactMenu presenter;
 
     public ContactController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
         this.currentUserID = currentUserID;
-    }
-
-    /**
-     * Get's the current user's contactList
-     */
-    public String[] getContactList() {
-        ArrayList<String> listOfContacts = personManager.getContactList(currentUserID);
-        return presenter.printContactList(listOfContacts);
+        presenter = new ContactMenu(personManager, currentUserID);
     }
 
     /**

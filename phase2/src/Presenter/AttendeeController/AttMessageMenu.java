@@ -12,6 +12,8 @@ import Person.PersonManager;
 import Presenter.Exceptions.OverwritingException;
 import Presenter.PersonController.MessageMenu;
 
+import java.util.ArrayList;
+
 
 public class AttMessageMenu extends MessageMenu {
 
@@ -110,6 +112,10 @@ class AnnouncementMessageMenu extends AttMessageMenu {
     @Override
     public String printChatIdPrompt() {
         return "Which Announcement channel do you want to check? Enter the chatID.";
+    }
+
+    public String getChatTitle(String chatID) {
+        return chatID + " (" + eventManager.getEvent(chatManager.getPersonIds(chatID).get(0)) + ")" ;
     }
 
 

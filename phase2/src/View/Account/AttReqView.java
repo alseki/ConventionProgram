@@ -10,7 +10,7 @@ public class AttReqView extends AccountView {
     AttEventController controller;
 
     public AttReqView(SubMenu controller) {
-        super();
+        super(controller.getPresenter());
         this.controller = (AttEventController) controller;
     }
 

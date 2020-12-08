@@ -99,8 +99,8 @@ public abstract class EventMenu implements SubMenuPrinter {
             e.append(events.getStartTime(eventID));
             e.append(" to ");
             e.append(events.getEndTime(eventID));
-            e.append("\n");
-            e.append(events.getDescription(eventID));
+            //e.append("\n");
+            //e.append(events.getDescription(eventID));
             return e.toString();
         } catch (NullPointerException n) {
             throw new InvalidChoiceException("event");

@@ -53,7 +53,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Show all the messages this user received in presenter, **sorted by datetime.
      */
-    protected String[] getInBox() throws NoDataException{
+    public String[] getInBox() throws NoDataException{
         try {
             ArrayList<String> receivedMessages = new ArrayList<>();
             for (String message: messageManager.getMessageIDs()){
@@ -78,7 +78,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Show all the messages this user sent in presenter, **sorted by datetime.
      */
-    protected String[] getSentBox() throws NoDataException{
+    public String[] getOutBox() throws NoDataException{
         try {
             ArrayList<String> sentMessages = new ArrayList<>();
             for (String message: messageManager.getMessageIDs()){
@@ -119,7 +119,7 @@ public class MessageMenu implements SubMenuPrinter {
      * @param chatIDs The list of IDs the chats to print out
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
      */
-    public String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
+    protected String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
@@ -128,8 +128,28 @@ public class MessageMenu implements SubMenuPrinter {
         return chatList;
     }
 
+    /**
+     * Returns a list of formatted chat summaries for this user's chat
+     * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     */
+    public String[] getChatList() throws InvalidChoiceException {
+        return getChats(personManager.getChats(currentUserID));
+    }
+
 
     // Option 4
+
+    public String getChatTitle(String chatID) {
+        StringBuilder participants = new StringBuilder();
+        ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
+        participants.append(personManager.getCurrentUsername(personIDs.get(0)));
+        if (personIDs.size() > 1) {
+            for (int i = 1; i <= personIDs.size(); i++) {
+                participants.append(", ").append(personManager.getCurrentUsername(personIDs.get(i)));
+            }
+        }
+        return chatID + " (" + participants.toString() + ")" ;
+    }
 
     /**
      * Prompts user to enter ID of the chat.

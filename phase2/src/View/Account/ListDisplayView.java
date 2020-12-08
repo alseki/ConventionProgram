@@ -29,6 +29,8 @@ public class ListDisplayView implements ActionListener {
 
         printedList = new JLabel(list.toString());
         contentPane.add(printedList);
+        printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         printedList.setVisible(true);
 
         okButton = new JButton("return");

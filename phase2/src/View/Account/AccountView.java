@@ -4,6 +4,7 @@ import Presenter.Central.SubMenuPrinter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -13,8 +14,32 @@ import java.util.ArrayList;
 public abstract class AccountView implements ActionListener {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
+    public JButton okayButton = new JButton("okay");
     ArrayList<JButton> menuButtons = new ArrayList<>();
     JComboBox<String> dropDownMenu;
+
+    public static final Color whiteBG = new Color(255, 255, 200);
+    public static final Color yellowBG = new Color(255, 200, 0);
+    public static final Color pinkBG = new Color(255, 100, 200);
+
+    public AccountView(SubMenuPrinter presenter) {
+        frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
+        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
+        contentPane.setLayout(new FlowLayout());
+
+        contentPane.add(okayButton);
+        okayButton.setVisible(false);
+
+        makeMenuButtons(presenter);
+
+        frame.setContentPane(contentPane);
+        frame.pack();
+        frame.setVisible(true);
+        showMainMenuButtons();
+    }
 
     /**
      * Hides every component stored in contentPane
@@ -105,5 +130,19 @@ public abstract class AccountView implements ActionListener {
     public void exceptionDialogBox(String exceptionTitle, String exceptionText) {
         JOptionPane.showConfirmDialog(null, exceptionText, exceptionTitle,
                 JOptionPane.DEFAULT_OPTION);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        String eventName = event.getActionCommand();
+
+        if(eventName.equals("okay")) {
+            showMainMenuButtons();
+        }
+    }
+
+    protected void initializeObject(JComponent object) {
+        contentPane.add(object);
+        object.setVisible(false);
     }
 }
