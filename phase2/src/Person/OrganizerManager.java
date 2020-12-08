@@ -10,6 +10,10 @@ public class OrganizerManager extends PersonManager{
      * @param idToPerson a map of String linking id to ogranizer object
      */
 
+    // dictionary of all organizers; this is under the theme of having an short list for organizers to looks up each other
+    protected ArrayList usernameToOrganizer = new ArrayList<>();
+    protected ArrayList userIdToOrganizer = new ArrayList<>();
+
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
 
@@ -32,6 +36,8 @@ public class OrganizerManager extends PersonManager{
             Organizer og = new Organizer(fullName, username, password, email);
             updateUsernameToPerson(og.getUsername(), og); // see below
             idToPerson.put(og.getID(), og);
+            userIdToOrganizer.add(og.getID());
+            usernameToOrganizer.add(og.getID());
             return true;
         }
 
@@ -112,6 +118,13 @@ public class OrganizerManager extends PersonManager{
         usernameToPerson.put(username,org);
     }
 
+    public ArrayList getOrganizerOnlyMapByID(String userID){
+        return userIdToOrganizer;
+    }
+
+    public ArrayList getOrganizerOnlyMapByUsername(String userID){
+        return userIdToOrganizer;
+    }
 
 
 }

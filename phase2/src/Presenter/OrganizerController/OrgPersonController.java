@@ -38,7 +38,7 @@ public class OrgPersonController extends SubMenu {
         this.speakerManager = speakerManager;
         this.employeeManager = employeeManager;
         this.attendeeManager = attendeeManager;
-        this.organizerManager = (OrganizerManager)personManager;
+        this.organizerManager = (OrganizerManager) personManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
         presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
     }
@@ -62,14 +62,11 @@ public class OrgPersonController extends SubMenu {
 
     }
 
-    public void deleteOrganizerFromEvent(String userID) {
-
-    }
 
     public void deleteAttendeeFromEvent(String userID) {
 
         ArrayList<String> eventList = personManager.getEventList(userID);
-        for(String e: eventList) {
+        for (String e : eventList) {
             eventPermissions.removeFromEvent(userID, e);
         }
     }
@@ -77,7 +74,7 @@ public class OrgPersonController extends SubMenu {
     public boolean removeFromOtherUsersContactLists(String userID) {
 
         ArrayList<String> userContactList = personManager.getContactList(userID);
-        for(String contactID : userContactList){
+        for (String contactID : userContactList) {
             if (personManager.getContactList(contactID).contains(userID)) {
                 personManager.getContactList(contactID).remove(userID);
             } //return true;
@@ -89,16 +86,16 @@ public class OrgPersonController extends SubMenu {
     public void deleteUserFromChatGroups(String userID) {
 
         ArrayList<String> userChatList = personManager.getChats(userID);
-        for(String c: userChatList) {
+        for (String c : userChatList) {
             ArrayList<String> personList = chatManager.getPersonIds(c);
-            for(String p: personList){
+            for (String p : personList) {
                 sendMessageAboutChatDeletion(userID, p, c);
             }
             chatManager.removePersonIds(c, userID);
         }
     }
 
-    public void sendMessageAboutChatDeletion(String userID, String recipientId, String chatID){
+    public void sendMessageAboutChatDeletion(String userID, String recipientId, String chatID) {
         String userName = personManager.getCurrentUsername(userID);
         String messageContent = "The user with username: " + "userName " + "is now deleted from your chat group. You cannot send" +
                 "messages to or receive messages from this person.";
@@ -107,9 +104,10 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Calls cancelAccount from Person and deletes attendee's accounts from all maps/arrays
+     *
      * @param userId
      */
-    public void cancelAttendeeAccount(String userId){
+    public void cancelAttendeeAccount(String userId) {
         // send message to attendee that their account is about to be deleted.
         deleteAttendeeFromEvent(userId);
         deleteUserFromChatGroups(userId);
@@ -117,7 +115,7 @@ public class OrgPersonController extends SubMenu {
 
     }
 
-    public void cancelAttendeeAccountByUsername(String username){
+    public void cancelAttendeeAccountByUsername(String username) {
         // send message to attendee that their account is about to be deleted.
         String userId = personManager.getCurrentUsername(username);
         deleteAttendeeFromEvent(userId);
@@ -125,7 +123,7 @@ public class OrgPersonController extends SubMenu {
         personManager.cancelAccount(username);
     }
 
-    public void cancelSpeakerAccount(String userId){
+    public void cancelSpeakerAccount(String userId) {
 
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speakr ID
 
@@ -133,20 +131,45 @@ public class OrgPersonController extends SubMenu {
 
     }
 
-    public void cancelSpeakerAccountByUsername(String username){
+    public void cancelSpeakerAccountByUsername(String username) {
 
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speakr ID
         personManager.cancelAccount(username);
     }
 
-    public void cancelEmployeeAccount(String userId){
+    public void cancelEmployeeAccount(String userId) {
         employeeManager.cancelEmployeeAccount(userId);
 
     }
 
-    public void cancelEmployeeAccountByUsername(String username){
+    public void cancelEmployeeAccountByUsername(String username) {
         employeeManager.cancelEmployeeAccount(username);
     }
+
+    public boolean cancelOrganizerAccount(String userID) {
+        String orgUsername = personManager.getCurrentUsername(userID);
+        String messageContentToOrganizers = "Account of organizer with username: " + orgUsername + " and userID: " + userID + " has been deleted";
+
+        ArrayList<String> fellowOrganizers = organizerManager.getOrganizerOnlyMapByID(userID);
+        for (String fellowOrg : fellowOrganizers) {
+            if (!fellowOrg.equals(userID) && chatManager.existChat(userID, fellowOrg)) {
+                String existingChatID = chatManager.findChat(userID, fellowOrg);
+                messageManager.createMessage(userID, fellowOrg, existingChatID, messageContentToOrganizers);
+            } else {
+                String newChatID = chatManager.createChat(userID, fellowOrg);
+                personManager.addChat(userID, newChatID);
+                messageManager.createMessage(userID, fellowOrg, newChatID, messageContentToOrganizers);
+            }
+            deleteAttendeeFromEvent(userID);
+            deleteUserFromChatGroups(userID);
+            removeFromOtherUsersContactLists(userID);
+            organizerManager.cancelAccount(userID);
+            return true;
+        }
+        return false;
+    }
+
+
 
 
     /**
