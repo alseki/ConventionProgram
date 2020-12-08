@@ -62,12 +62,28 @@ public class OrgPersonController extends SubMenu {
 
     }
 
+    public void deleteOrganizerFromEvent(String userID) {
+
+    }
+
     public void deleteAttendeeFromEvent(String userID) {
 
         ArrayList<String> eventList = personManager.getEventList(userID);
         for(String e: eventList) {
             eventPermissions.removeFromEvent(userID, e);
         }
+    }
+
+    public boolean removeFromOtherUsersContactLists(String userID) {
+
+        ArrayList<String> userContactList = personManager.getContactList(userID);
+        for(String contactID : userContactList){
+            if (personManager.getContactList(contactID).contains(userID)) {
+                personManager.getContactList(contactID).remove(userID);
+            } //return true;
+            return true;
+        }
+        return false;
     }
 
     public void deleteUserFromChatGroups(String userID) {
