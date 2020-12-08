@@ -49,7 +49,7 @@ public class FileGateway<T> {
                 }
             }
             return pathString;
-        } catch (Exception e) {
+        } catch (Exception e) { // breakpoijny
             System.out.println(e.toString());
             return "";
         }

@@ -23,12 +23,12 @@ public class AttMessageMenu extends MessageMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = new String[10];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 10);
-        options[6] = "View your list of event announcement channels";
-        options[7] = "View the announcements from a particular event";
-        options[8] = "Create a new chat";
-        options[9] = "Create a new group chat";
+        String[] options = new String[9];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 4);
+        options[5] = "View your list of event announcement channels";
+        options[6] = "View the announcements from a particular event";
+        options[7] = "Create a new chat";
+        options[8] = "Create a new group chat";
         return options;
     }
 

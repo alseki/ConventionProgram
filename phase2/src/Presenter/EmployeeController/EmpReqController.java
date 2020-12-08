@@ -20,6 +20,7 @@ public class EmpReqController extends SubMenu {
     private String seeRequests(){
         return presenter.seeRequests();
     }
+
     private String specificRequest(String reqId){
         return presenter.seeSpecificRequestPrompt(reqId);
         //String id = "";//SubMenu.readInput(input);
