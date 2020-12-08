@@ -76,23 +76,6 @@ public class OrganizerPersonController extends SubMenu {
 
 
 
-
-
-
-
-
-
-
-//    private String cancelEvent(String eventID){
-//        LocalDateTime daytime = new LocalDateTime();
-//        int dayTime = LocalDateTime.getHour();
-//        int dayMinute = LocalDateTime.getMinute();
-//
-//        eventManager.get
-//        char eventManger
-//
-//    }
-
 //    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
 //        Chat ac = new Chat(eventId, attendeeIds, chatName);
 //        aChatsList.add(ac);

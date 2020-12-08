@@ -129,15 +129,6 @@ public abstract class Event implements Serializable {
     }
 
     /**
-     * Getter for this Events' speaker's ID - this is for OrgEventController
-     * @param ID
-     * @return
-     */
-    public String getSpeakerID(String ID) {
-        return this.speakerID;
-    }
-
-    /**
      * Getter for the capacity of this Event
      * @return the capacity of this Event (as an int)
      */
