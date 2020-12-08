@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 public class AttMessageView extends AccountView{
     AttMessageController controller;
     AttMessageMenu presenter;
+    String[] menuOp;
 
     JLabel yourInbox, yourSentBox, yourChats, msgs, inputChatIDMsgPrompt, inputMsgPrompt,
             inputUserPrompt, inputUsersPrompt;
@@ -26,7 +27,7 @@ public class AttMessageView extends AccountView{
         this.controller = (AttMessageController) controller;
         this.presenter = (AttMessageMenu) controller.getPresenter();
 
-
+        this.menuOp = this.presenter.getMenuOptions();
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -255,47 +256,47 @@ public class AttMessageView extends AccountView{
             eventName = (String)dropDownMenu.getSelectedItem();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[1])) {
+        if(eventName.equals(this.menuOp[1])) {
             hideMainDropDownMenu();
             showCheckInbox();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[2])) {
+        if(eventName.equals(this.menuOp[2])) {
             hideMainDropDownMenu();
             showCheckSentBox();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[3])) {
+        if(eventName.equals(this.menuOp[3])) {
             hideMainDropDownMenu();
             showViewChats();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[4])) {
+        if(eventName.equals(this.menuOp[4])) {
             hideMainDropDownMenu();
             showViewMsgsInChat();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[5])) {
+        if(eventName.equals(this.menuOp[5])) {
             hideMainDropDownMenu();
             showSendMsg();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[6])) {
+        if(eventName.equals(this.menuOp[6])) {
             hideMainDropDownMenu();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[7])) {
+        if(eventName.equals(this.menuOp[7])) {
             hideMainDropDownMenu();
             showViewEventAnnouncements();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[8])) {
+        if(eventName.equals(this.menuOp[8])) {
             hideMainDropDownMenu();
             showCreateChat();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[9])) {
+        if(eventName.equals(this.menuOp[9])) {
             hideMainDropDownMenu();
             showCreateGroupChat();
         }
