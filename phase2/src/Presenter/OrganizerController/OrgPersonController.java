@@ -51,8 +51,16 @@ public class OrgPersonController extends SubMenu {
     //  remove a person from an event... FOR chat, get all their chatIDS (one function) for this and delete their user ID from chat same
     // for events. get all events they'r signed up for
 
+    // TODO What about deleting account ID or name from Contact's list of others ??
+
+    // Do deletion of Organizer account - set up message to all other organizers as well.
+
     // 1st helper method:
     // get attendee's eventList Ids. For each event id get that attendee list and remove attendee (with attendeeID)
+
+    public void removeSpeakerFromEvent(String speakerID) {
+
+    }
 
     public void deleteAttendeeFromEvent(String userID) {
 
@@ -77,7 +85,7 @@ public class OrgPersonController extends SubMenu {
     public void sendMessageAboutChatDeletion(String userID, String recipientId, String chatID){
         String userName = personManager.getCurrentUsername(userID);
         String messageContent = "The user with username: " + "userName " + "is now deleted from your chat group. You cannot send" +
-                "or receive messages from this person.";
+                "messages to or receive messages from this person.";
         messageManager.createMessage(userID, recipientId, chatID, messageContent);
     }
 
@@ -102,11 +110,16 @@ public class OrgPersonController extends SubMenu {
     }
 
     public void cancelSpeakerAccount(String userId){
+
+        // before canceling event, get all events speaker schedule and them cancel event with event ID and speakr ID
+
         personManager.cancelAccount(userId);
 
     }
 
     public void cancelSpeakerAccountByUsername(String username){
+
+        // before canceling event, get all events speaker schedule and them cancel event with event ID and speakr ID
         personManager.cancelAccount(username);
     }
 
