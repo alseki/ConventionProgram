@@ -333,6 +333,23 @@ public class ChatManager implements Serializable {
         return null;
     }
 
+    /**
+     * Find chat by chatId.
+     */
+    public Chat findChatByName(String chatName) {
+        for (Chat c : chatsList) {
+            if (c.getName().equals(chatName)) {
+                return c;
+            }
+        }
+        for (Chat c : aChatsList) {
+            if (c.getName().equals(chatName)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 }
 
 // CRC Card Definition
