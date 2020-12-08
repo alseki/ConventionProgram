@@ -67,13 +67,42 @@ public class EventPermissions {
         return ((event.getCapacity() - event.getAttendeeIDs().size()) > 0);
     }
 
+    /** Checks if an Event with the inputted capacity can be added to the inputted Room. It cannot be added if its
+     * capacity exceeds the capacity of the Room it is in at any time, or if adding it in addition to other Events
+     * happening at the same time would exceed the capacity of the Room.
+     * @param startTime The start time of the Event
+     * @param endTime The end time of the Event
+     * @param capacity The capacity of the Event
+     * @param roomID The ID of the Room
+     * @return True if the Event can be added
+     */
+    public boolean checkRoomCapacity(LocalDateTime startTime, LocalDateTime endTime, int capacity, String roomID) {
+        try {
+            // int room_capacity = roomAccess.getRoomCapacity(roomID);
+            int current_occupancy = 0;
+            for (String eventID : roomAccess.getEventIDs(roomID)) {
+                Talk talk = new Talk("", "", startTime, endTime, "", 0);
+                if (this.eventAccess.getEvent(eventID).conflictsWith(talk)) {
+                    // current_occupancy = current_occupancy + this.eventAccess.getCapacity(eventID)}
+                }
+                // if ((room_capacity - current_occupancy) >= capacity) {return true;}
+                else {
+                    return false;
+                }
+            }
+        }catch (NullPointerException n) {
+            return false;
+        }
+        return false;
+    }
+
     /**
      * Checks if the inputted Event conflicts with multiple other inputted Events
      * @param startTime The time at which the Event will start
      * @param endTime The time at which the Event will end
      * @param type The type of Event, as an EventType
      * @param roomID The the ID of the room the Event will be held in
-     * @return True if the event doesn't conflict with any existing events
+     * @return True if the Event does not conflict with any existing events
      */
     public boolean checkConflicts(LocalDateTime startTime, LocalDateTime endTime, EventType type, String roomID) {
         try {

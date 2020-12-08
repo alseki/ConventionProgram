@@ -5,6 +5,7 @@ import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Event.CapacityException;
+import Presenter.Exceptions.NoDataException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,14 +15,17 @@ public class AttEventView extends AccountView {
     AttEventController controller;
     AttEventMenu presenter;
 
-    JLabel enterEventNameMsg, allEvents, yourEvents;
-    JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton;
+    JLabel dialogueMsg;
+    JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton, chooseRoomButton;
     JTextField inputEventName;
+    ListDisplayView eventList;
+
+    JComboBox<String> roomChoice;
 
     public AttEventView(SubMenu controller) {
         super();
         this.controller = (AttEventController) controller;
-        this.presenter = (AttEventMenu) controller.getPresenter();
+        this.presenter = ((AttEventController) controller).getPresenter();
 
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
@@ -38,11 +42,13 @@ public class AttEventView extends AccountView {
         backButton = newButton("back");
         contentPane.add(backButton);
 
+        okayButton = newButton("okay");
+        contentPane.add(okayButton);
+
         setupEventMenuOptions();
-        setupViewAllEvents();
         setupSignUpEvent();
         setupCancelFromEvent();
-        setupGetYourEvents();
+        setupRooms();
 
         showMainDropDownMenu();
 
@@ -55,22 +61,24 @@ public class AttEventView extends AccountView {
         makeDropDownMenu(presenter);
     }
 
-    private void setupViewAllEvents() {
-        allEvents = new JLabel("-ALL EVENTS-");
-        allEvents.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        allEvents.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(allEvents);
-        allEvents.setVisible(false);
+    private void setupRooms() {
+        try {
+            roomChoice = new JComboBox<>(presenter.getRoomList());
+        } catch (NoDataException e) {
+            String[] rooms = {"See all events"};
+            roomChoice = new JComboBox<>(rooms);
+        } finally {
+            contentPane.add(roomChoice);
 
-        okayButton = newButton("okay");
-
-        // return to AttEventMenu button
+            chooseRoomButton = newButton("see events");
+            contentPane.add(chooseRoomButton);
+        }
     }
 
     private void setupSignUpEvent() {
-        enterEventNameMsg = new JLabel(this.presenter.printAddEventPrompt());
-        contentPane.add(enterEventNameMsg);
-        enterEventNameMsg.setVisible(false);
+        dialogueMsg = new JLabel();
+        contentPane.add(dialogueMsg);
+        dialogueMsg.setVisible(false);
 
         inputEventName = new JTextField(40);
         contentPane.add(inputEventName);
@@ -82,10 +90,6 @@ public class AttEventView extends AccountView {
     }
 
     private void setupCancelFromEvent() {
-        enterEventNameMsg = new JLabel(this.presenter.printRemoveEventPrompt());
-        contentPane.add(enterEventNameMsg);
-        enterEventNameMsg.setVisible(false);
-
         inputEventName = new JTextField(40);
         contentPane.add(inputEventName);
         inputEventName.setVisible(false);
@@ -93,14 +97,6 @@ public class AttEventView extends AccountView {
         cancelSpotButton = newButton("cancelSpot");
 
         // and maybe also a "return to AttEventMenu" button
-    }
-
-    private void setupGetYourEvents() {
-        yourEvents = new JLabel(this.presenter.ownEventListTitle());
-        yourEvents.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        yourEvents.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(yourEvents);
-        yourEvents.setVisible(false);
     }
 
     @Override
@@ -115,28 +111,27 @@ public class AttEventView extends AccountView {
         continueButton.setVisible(false);
     }
 
-    private void showViewAllEvents() {
-        allEvents.setVisible(true);
-        okayButton.setVisible(true);
-    }
-
     private void showSignUp() {
-        enterEventNameMsg.setVisible(true);
+        dialogueMsg = new JLabel(this.presenter.printAddEventPrompt());
+        dialogueMsg.setVisible(true);
         inputEventName.setVisible(true);
         signupButton.setVisible(true);
         backButton.setVisible(true);
     }
 
     private void showCancelSpot() {
-        enterEventNameMsg.setVisible(true);
+        dialogueMsg = new JLabel(this.presenter.printRemoveEventPrompt());
+        dialogueMsg.setVisible(true);
         inputEventName.setVisible(true);
         cancelSpotButton.setVisible(true);
         backButton.setVisible(true);
     }
 
-    private void showYourEvents() {
-        yourEvents.setVisible(true);
-        okayButton.setVisible(true);
+    private void showRoomChoice() {
+        dialogueMsg = new JLabel(this.presenter.printRoomChoicePrompt());
+        roomChoice.setVisible(true);
+        chooseRoomButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
 
@@ -145,13 +140,10 @@ public class AttEventView extends AccountView {
      */
     private void signup() {
         String event = inputEventName.getText();
-        // FIXME turn this into a label
-        // presenter.printAddEventPrompt();
 
         try {
             if (controller.signupForEvent(event)) {
-                // FIXME turn this into a Label
-                // presenter.printEventAdded()
+                dialogueMsg = new JLabel(this.presenter.printEventAdded());
             }
             else {
                 JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), "Unexpected Error",
@@ -159,27 +151,56 @@ public class AttEventView extends AccountView {
             }
 
         } catch (InvalidChoiceException e) {
-            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
-                    JOptionPane.DEFAULT_OPTION);
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
         } catch (CapacityException c) {
-            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printEventFull(),
-                    JOptionPane.DEFAULT_OPTION);
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printEventFull());
         }
     }
 
+    /**
+     * Uses the controller to try and cancel the user's spot in an event (add event to their event list)
+     */
     private void cancelSpot() {
         String event = inputEventName.getText();
-        // FIXME turn this into a label
-        // presenter.printRemoveEventPrompt();
 
         try {
             if (controller.cancelSpotFromEvent(event)) {
-                // FIXME turn this into a Label
-                // presenter.printEventRemoved()
+                dialogueMsg = new JLabel(this.presenter.printEventRemoved());
             }
         } catch (InvalidChoiceException e) {
-            JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
-                    JOptionPane.DEFAULT_OPTION);
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+        }
+    }
+
+    /**
+     * Opens up a new window showing
+     */
+    private void viewEventList(String room) {
+        try {
+            if (room == "See all events") {
+                eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printAllEvents());
+            } else {
+                eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printEventsInRoom(room));
+            }
+            eventList.display();
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+        } finally {
+            showMainDropDownMenu();
+        }
+    }
+
+    /**
+     * Opens up a new window showing
+     */
+    private void viewOwnEvents() {
+        try {
+            eventList = new ListDisplayView(presenter.ownEventListTitle(), presenter.getOwnEventList());
+            eventList.display();
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+        } finally {
+            showMainDropDownMenu();
         }
     }
 
@@ -204,6 +225,10 @@ public class AttEventView extends AccountView {
             cancelSpot();
         }
 
+        if(eventName.equals(chooseRoomButton.getActionCommand())) {
+            viewEventList((String)roomChoice.getSelectedItem());
+        }
+
         if(eventName.equals("continue")) {
             eventName = (String)dropDownMenu.getSelectedItem();
         }
@@ -214,7 +239,7 @@ public class AttEventView extends AccountView {
 
         if(eventName.equals(presenter.getMenuOptions()[1])) { // view list of all Events
             hideMainDropDownMenu();
-            showViewAllEvents();
+            showRoomChoice();
         }
 
         if(eventName.equals(presenter.getMenuOptions()[2])) { // sign up for an Event
@@ -229,7 +254,7 @@ public class AttEventView extends AccountView {
 
         if(eventName.equals(presenter.getMenuOptions()[4])) { // get list of your signed up events
             hideMainDropDownMenu();
-            showYourEvents();
+            viewOwnEvents();
         }
     }
 }

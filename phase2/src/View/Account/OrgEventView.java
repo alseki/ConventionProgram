@@ -20,7 +20,7 @@ public class OrgEventView extends AccountView {
     public OrgEventView(SubMenu controller) {
         super();
         this.controller = (OrgEventController) controller;
-        this.presenter = (OrgEventMenu)controller.getPresenter();
+        this.presenter = ((OrgEventController) controller).getPresenter();
 
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
@@ -28,7 +28,7 @@ public class OrgEventView extends AccountView {
 
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(0, 255, 200));// Sets background colour to white
+        contentPane.setBackground(new Color(0, 255, 200));// Sets background colour
         contentPane.setLayout(new FlowLayout());
 
         continueButton = newButton("continue");
@@ -145,6 +145,7 @@ public class OrgEventView extends AccountView {
         // and maybe also a "return to AttEventMenu" button
     }
 
+    //TODO: this method
     private void setupMakeEventAnnouncement() {
     }
 
@@ -162,7 +163,11 @@ public class OrgEventView extends AccountView {
     }
 
     private void showCreateRoom() {
-
+        addRoomPrompt.setVisible(true);
+        roomNamePrompt.setVisible(true);
+        inputRoomName.setVisible(true);
+        roomCapPrompt.setVisible(true);
+        inputRoomCap.setVisible(true);
     }
 
     private void showCreateEvent() {
@@ -181,6 +186,10 @@ public class OrgEventView extends AccountView {
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        String eventName = event.getActionCommand();
 
+        if(eventName.equals(this.presenter.getMenuOptions()[1])) {
+            showCreateRoom();
+        }
     }
 }

@@ -45,7 +45,7 @@ public class EventManager extends EventAccess implements Serializable {
      * @param eventID The ID of the Event
      * @return The Event
      */
-    protected Event getEvent(String eventID) {
+    public Event getEvent(String eventID) {
         try {
             return events.get(eventID);
         } catch (NullPointerException n) {
@@ -75,7 +75,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the ID of an Event given its name
-     *
      * @param name The Event's name
      * @return The ID of that Event
      */
@@ -89,7 +88,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Helper getter for the all the Events in this EventManager
-     *
      * @return an array of all Events in this EventManager
      */
     public String[] getEventIDs() {
@@ -173,19 +171,6 @@ public class EventManager extends EventAccess implements Serializable {
     public LocalDateTime getEndTime(String eventID) {
         try {
             return this.getEvent(eventID).getEndTime();
-        } catch (NullPointerException n) {
-            return null;
-        }
-    }
-
-    /**
-     * Returns the description of an Event stored in this EventManager, given its ID
-     * @param eventID The ID of the Event
-     * @return The description of the Event, as a String
-     */
-    public String getDescription(String eventID) {
-        try {
-            return events.get(eventID).getDescription();
         } catch (NullPointerException n) {
             return null;
         }
