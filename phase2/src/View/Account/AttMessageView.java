@@ -197,23 +197,29 @@ public class AttMessageView extends AccountView{
 
 
     private void showCheckInbox() {
-
+        yourInbox.setVisible(true);
+        okayButton.setVisible(true);
     }
 
     private void showCheckSentBox() {
-
+        yourSentBox.setVisible(true);
+        okayButton.setVisible(true);
     }
 
     private void showViewChats() {
-
+        yourChats.setVisible(true);
+        okayButton.setVisible(true);
     }
 
     private void showViewMsgsInChat() {
-
+        msgs.setVisible(true);
+        inputChatField.setVisible(true);
+        //okayButton.setVisible(true);
     }
 
     private void showSendMsg() {
-
+        inputChatIDMsgPrompt.setVisible(true);
+        inputChatField.setVisible(true);
     }
 
     private void showViewAnnouncementChannels() {
