@@ -3,7 +3,6 @@ package View.Account;
 import Presenter.AttendeeController.AttMessageController;
 import Presenter.AttendeeController.AttMessageMenu;
 import Presenter.Central.SubMenu;
-import Presenter.Exceptions.InvalidChoiceException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,10 +51,8 @@ public class AttMessageView extends AccountView{
         setupCreateChat();
         setupCreateGroupChat();
 
-        showMainDropDownMenu();
-
         continueButton = newButton("continue");
-        contentPane.add(continueButton);
+        showMainDropDownMenu();
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
@@ -125,14 +122,8 @@ public class AttMessageView extends AccountView{
         //inputChatField.setVisible(false);
 
         inputMsgPrompt = new JLabel(this.presenter.printChatIdMessagePrompt());
-        inputMsgPrompt.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        inputMsgPrompt.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(inputMsgPrompt);
-        inputMsgPrompt.setVisible(false);
-
         inputMsgField = new JTextField(100);
-        contentPane.add(inputMsgField);
-        inputMsgField.setVisible(false);
+        userPromptGenerator(inputMsgPrompt);
     }
 
     private void setupViewAnnouncementChannels() {
@@ -163,29 +154,26 @@ public class AttMessageView extends AccountView{
     }
 
     private void setupCreateChat() {
-        //FIXME something's up with this JLabel constructor
-        //inputUserPrompt = new JLabel(this.presenter.printContactUsernamePrompt());
-        inputUserPrompt.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        inputUserPrompt.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(inputUserPrompt);
-        inputUserPrompt.setVisible(false);
-
+        inputUserPrompt = new JLabel(presenter.printContactUsernamePrompt());
         inputUser = new JTextField(100);
-        contentPane.add(inputUser);
-        inputUser.setVisible(false);
+        userPromptGenerator(inputUserPrompt);
+    }
+
+    private void userPromptGenerator(JLabel label) {
+        label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        label.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        contentPane.add(label);
+        label.setVisible(false);
+
+        JTextField textField = new JTextField(100);
+        contentPane.add(textField);
+        textField.setVisible(false);
     }
 
     private void setupCreateGroupChat() {
-        //FIXME same issue as above
-        //inputUsersPrompt = new JLabel(this.presenter.printContactUsernamesPrompt());
-        inputUsersPrompt.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        inputUsersPrompt.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        contentPane.add(inputUsersPrompt);
-        inputUsersPrompt.setVisible(false);
-
+        inputUsersPrompt = new JLabel(this.presenter.printContactUsernamesPrompt());
         inputUsers = new JTextField(100);
-        contentPane.add(inputUsers);
-        inputUsers.setVisible(false);
+        userPromptGenerator(inputUsersPrompt);
     }
 
 

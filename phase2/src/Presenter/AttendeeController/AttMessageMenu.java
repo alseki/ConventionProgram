@@ -23,28 +23,28 @@ public class AttMessageMenu extends MessageMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = new String[9];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 4);
-        options[5] = "View your list of event announcement channels";
-        options[6] = "View the announcements from a particular event";
-        options[7] = "Create a new chat";
-        options[8] = "Create a new group chat";
+        String[] options = new String[10];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 5);
+        options[6] = "View your list of event announcement channels";
+        options[7] = "View the announcements from a particular event";
+        options[8] = "Create a new chat";
+        options[9] = "Create a new group chat";
         return options;
     }
 
     /**
      * Prompts user to enter username of the contact want to have chat with.
      */
-    public void printContactUsernamePrompt(){
-        System.out.println("Who do you want to chat with? Enter their username.");
+    public String printContactUsernamePrompt(){
+        return "Who do you want to chat with? Enter their username.";
     }
 
     /**
      * Prompts user to enter usernames of the contacts want to have chat with.
      */
-    public void printContactUsernamesPrompt(){
-        System.out.println("Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
-                "\n(E.g. 'user1,user2,user3' without apostrophes (''). Please do not add spaces after commas)");
+    public String printContactUsernamesPrompt(){
+        return "Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
+                "\n(E.g. 'user1,user2,user3' without apostrophes (''). Please do not add spaces after commas)";
     }
     //Method below is left here in case we use it in Phase 2
     /**
