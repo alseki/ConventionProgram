@@ -70,6 +70,7 @@ public class SpeakerManager extends PersonManager {
     }
 
 
+
     /**
      *
      * @param userID
@@ -84,6 +85,23 @@ public class SpeakerManager extends PersonManager {
         Speaker sp = (Speaker) idToPerson.get(userID);
         if (!(sp.getAllTalksDictionary().containsKey(eventID))) {
             sp.getAllTalksDictionary().put(eventID, eventName);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * This is to remove event from Speaker's list and dictionary once Organizer has cancelled an event
+     * @param eventId
+     * @param userId
+     * @return boolean
+     */
+
+    public boolean removeTalk(String eventId, String userId) {
+        Speaker sp = (Speaker) idToPerson.get(userId);
+        if ((sp.getAllTalks().contains(eventId))) {
+            sp.getAllTalks().remove(eventId);
+            sp.getAllTalksDictionary().remove(eventId);
             return true;
         }
         return false;

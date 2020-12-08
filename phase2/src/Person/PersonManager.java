@@ -64,7 +64,6 @@ public abstract class PersonManager {
         return false;
     }
 
-
     /**
      *
      * @param id
@@ -88,8 +87,6 @@ public abstract class PersonManager {
         }
         return null;
     }
-
-
 
     /**
      *
@@ -240,7 +237,7 @@ public abstract class PersonManager {
     /**
      *
      * @param currentUserID
-     * @return ArrayList<String>,of chatID of messages receieved by the User
+     * @return ArrayList<String> of chatID of chats made by/inviting the User
      */
 
     public ArrayList<String> getChats(String currentUserID) {

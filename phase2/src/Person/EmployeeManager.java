@@ -28,6 +28,18 @@ public class EmployeeManager extends PersonManager {
 
     }
 
+    @Override
+    public boolean createAccount(String name, String username, String password, String email) {
+        if (!usernameToPerson.containsKey(username)) {
+            Employee newEmployee = new Employee(name, username, password, email);
+            usernameToPerson.put(username, newEmployee);
+            idToPerson.put(newEmployee.getID(), newEmployee);
+            usernameToEmployee.put(username, newEmployee);
+            return true;
+        }
+        return false;
+    }
+
     public boolean cancelEmployeeAccount(String userID){
         if(idToPerson.containsKey((userID))){
             String username = getPerson(userID).getUsername();
@@ -46,7 +58,7 @@ public class EmployeeManager extends PersonManager {
         if(usernameToPerson.containsKey(getPerson(username))){
             String userID = getPerson(username).getID();
             int typeUser = getPerson(userID).typePerson;
-            if(typeUser == 1 || typeUser == 3) {
+            if(typeUser == 4) {
                 usernameToPerson.remove(username);
                 idToPerson.remove(userID);
                 usernameToEmployee.remove(username);
@@ -84,18 +96,6 @@ public class EmployeeManager extends PersonManager {
 //    }
 
 
-
-    @Override
-    public boolean createAccount(String name, String username, String password, String email) {
-        if (!usernameToPerson.containsKey(username)) {
-            Employee newEmployee = new Employee(name, username, password, email);
-            usernameToPerson.put(username, newEmployee);
-            idToPerson.put(newEmployee.getID(), newEmployee);
-            usernameToEmployee.put(username, newEmployee);
-            return true;
-        }
-        return false;
-    }
 
     public boolean addAnnouncementChats(String personId, String acId) {
         Speaker individual = (Speaker) idToPerson.get(personId);

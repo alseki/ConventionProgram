@@ -1,16 +1,13 @@
 package Person;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager{
     /**
      * constructor for OrganizerManager
-     * @param usernameToPerson a map of String reping username to organizer object
-     * @param idToPerson a map of String reping id to ogranizer object
+     * @param usernameToPerson a map of String linking username to organizer object
+     * @param idToPerson a map of String linking id to ogranizer object
      */
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
@@ -73,6 +70,7 @@ public class OrganizerManager extends PersonManager{
     }
 
 
+
     /**
      * adds the contact with username </username> to the organizer with userId </userid> to ehir contanct
      * @param contactId a string representing the contactId of the contact to be added to the userid contactlist
@@ -103,7 +101,7 @@ public class OrganizerManager extends PersonManager{
 
     /** a getter for the signedup events
      * @param organizerId a string representing the organizer id
-     * @return an ArrauList</String> representing the id's of the lists
+     * @return an ArrayList</String> representing the id's of the lists
      */
     public ArrayList<String> getSignedUpForEvents(String organizerId){
         return idToPerson.get(organizerId).getEventList();
