@@ -85,7 +85,7 @@ public class OrganizerController extends PersonController {
             else if (choice.equals(options[4])) {
                 return new OrgPersonController(this, currentUserID, speakerManager, employeeManager, attendeeManager);
             }
-            else if (choice.equals(options[4])) {
+            else if (choice.equals(options[5])) {
                 return new OrgEventController(this, currentUserID, speakerManager, employeeManager);
             }
         }
