@@ -21,7 +21,7 @@ public class AttEventView extends AccountView {
     public AttEventView(SubMenu controller) {
         super();
         this.controller = (AttEventController) controller;
-        this.presenter = (AttEventMenu) controller.getPresenter();
+        this.presenter = ((AttEventController) controller).getPresenter();
 
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame

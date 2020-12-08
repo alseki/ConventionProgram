@@ -20,7 +20,7 @@ public class OrgEventView extends AccountView {
     public OrgEventView(SubMenu controller) {
         super();
         this.controller = (OrgEventController) controller;
-        this.presenter = (OrgEventMenu)controller.getPresenter();
+        this.presenter = ((OrgEventController) controller).getPresenter();
 
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
