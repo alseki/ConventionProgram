@@ -21,17 +21,14 @@ public class AttMessageView extends AccountView{
     public AttMessageView(SubMenu controller) {
         super();
         this.controller = (AttMessageController) controller;
-
-
-
-        // ??? this.presenter = (AttMessageMenu) controller.getChatMenu();
-
+        this.presenter = (AttMessageMenu) controller.getPresenter();
 
 
 
         frame = new JFrame(this.presenter.getMenuTitle());// Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
+        // contentPane = new JPanel();
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
         contentPane.setBackground(new Color(255, 100, 200));// Sets background colour
         contentPane.setLayout(new FlowLayout());
@@ -50,6 +47,11 @@ public class AttMessageView extends AccountView{
         setupViewEventAnnouncements();
         setupCreateChat();
         setupCreateGroupChat();
+
+        showMainDropDownMenu();
+
+        continueButton = newButton("continue");
+        contentPane.add(continueButton);
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
@@ -223,19 +225,22 @@ public class AttMessageView extends AccountView{
     }
 
     private void showViewAnnouncementChannels() {
-
+        inputChatIDMsgPrompt.setVisible(true);
     }
 
     private void showViewEventAnnouncements() {
-
+        inputChatIDMsgPrompt.setVisible(true);
+        inputChatField.setVisible(true);
     }
 
     private void showCreateChat() {
-
+        inputUserPrompt.setVisible(true);
+        inputUser.setVisible(true);
     }
 
     private void showCreateGroupChat() {
-
+        inputUsersPrompt.setVisible(true);
+        inputUsers.setVisible(true);
     }
 
 
@@ -243,5 +248,53 @@ public class AttMessageView extends AccountView{
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
+        if(eventName.equals(continueButton.getActionCommand())) {
+            eventName = (String)dropDownMenu.getSelectedItem();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[1])) {
+            hideMainDropDownMenu();
+            showCheckInbox();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[2])) {
+            hideMainDropDownMenu();
+            showCheckSentBox();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[3])) {
+            hideMainDropDownMenu();
+            showViewChats();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[4])) {
+            hideMainDropDownMenu();
+            showViewMsgsInChat();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[5])) {
+            hideMainDropDownMenu();
+            showSendMsg();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[6])) {
+            hideMainDropDownMenu();
+            showViewAnnouncementChannels();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[7])) {
+            hideMainDropDownMenu();
+            showViewEventAnnouncements();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[8])) {
+            hideMainDropDownMenu();
+            showCreateChat();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[9])) {
+            hideMainDropDownMenu();
+            showCreateGroupChat();
+        }
     }
 }
