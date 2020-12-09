@@ -154,10 +154,21 @@ public class OrgEventController extends SubMenu {
         eventManager.setEventChat(eventID, announcementChatID);
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
-        speakerManager.addTalk(eventID, speakerID);
-        speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID));
+
+        // Although this method is named "addTalk" and "addTalk...ToDictionary", it incorporates Event type. Speaker
+        // will know in his/her list and map which type of event he/she is invited to speak at.
+        String eventType = convertEventTypeToString(type);
+        speakerManager.addTalk(eventID, speakerID, eventType, name);
+        speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
+        speakerManager.addToAllTalksID(eventID, speakerID);
+
         return eventID;
     }
+
+    public String convertEventTypeToString(EventType event) {
+        String eventTypeString = EventType.convertToString(event);
+        }
+
 
     /**
      * Cancels an Event in this Convention. Attendees are notified, then the Event is removed from Speaker's list of
@@ -167,6 +178,12 @@ public class OrgEventController extends SubMenu {
      */
 
     private boolean cancelEvent(String eventID) {
+
+
+        // TODO comment all sections of this function so it is legible.
+
+        // TODO add try catch blocks
+
         String eventName = eventManager.getEventName(eventID);
         String chatName = eventManager.getEventChat(eventID);
         String speakerID = eventManager.getSpeakerID(eventID);

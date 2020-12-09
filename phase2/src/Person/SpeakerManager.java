@@ -1,16 +1,13 @@
 package Person;
 
-import Event.EventType;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SpeakerManager extends PersonManager {
 
 
-    protected Map<String, String[]> allTalksBySpeaker = new HashMap<String, String[]>();
+    protected Map<String, ArrayList> allTalksBySpeaker = new HashMap<String, ArrayList>();
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
 
@@ -58,17 +55,18 @@ public class SpeakerManager extends PersonManager {
 
     /**
      *
-     * @param eventId
+     * @param eventID
      * @param userId
      * @return boolean; takes eventId created in OrgEventController method createEvent, and adds it to Speaker's allTalksId list
      */
 
-    public boolean addTalk(String eventId, String userId, EventType eventType, String eventName) {
+    public boolean addTalk(String eventID, String userId, String eventType, String eventName) {
         Speaker sp = (Speaker) idToPerson.get(userId);
-        if (!(sp.getAllTalks().contains(eventId))) {
-            sp.signUp(eventId);
-            allTalksBySpeaker.put(eventId, [eventName, eventType]);
-            return true;
+        if (!(sp.getAllTalks().contains(eventID))) {
+            ArrayList eventInfo = new ArrayList<>();
+            eventInfo.add(0, eventName);
+            eventInfo.add(1, eventType);
+            allTalksBySpeaker.put(eventID, eventInfo);
         }
         return false;
     }
@@ -85,14 +83,12 @@ public class SpeakerManager extends PersonManager {
      */
 
 
-    public boolean addTalkIdToDictionary(String userID, String eventID, String eventName, EventType eventType) {
+    public boolean addTalkIdToDictionary(String userID, String eventID, String eventName, String eventType) {
         Speaker sp = (Speaker) idToPerson.get(userID);
         if (!(sp.getAllTalksDictionary().containsKey(eventID))) {
-            //sp.getAllTalksDictionary().put(eventID, eventName, eventType);
-            //String eventTypeString = (String) eventType;
-            //Object[] eventInfo = new Object(eventName, eventType);
-            Object[] eventInfo = new Object[] { eventID, eventType };
-            //eventInfo.add(eventName, eventType);
+            ArrayList eventInfo = new ArrayList<>();
+            eventInfo.add(0, eventName);
+            eventInfo.add(1, eventType);
             sp.allTalksDictionary.put(eventID, eventInfo);
             return true;
         }
