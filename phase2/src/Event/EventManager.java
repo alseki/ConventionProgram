@@ -271,7 +271,7 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     public ArrayList getPanelSpeakerList(String eventID) {
-        if (getEventType(eventID).toString() == "PANEL") {
+        if (getEventType(eventID).toString().equals("PANEL")) {
             Panel panel = (Panel) getEvent(eventID);
             return panel.getSpeakersList();
         }
@@ -302,8 +302,8 @@ public class EventManager extends EventAccess implements Serializable {
      */
     public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
         if(eventID != null && speakerID != null){
-            Event panel = getEvent(eventID);
-            panel.removeSpeaker(speakerID);
+            Panel panel = (Panel)getEvent(eventID);
+            panel.removeSpeaker(speakerID); // there is no remove speaker method in Event
             return true;
         } else{
             return false;
