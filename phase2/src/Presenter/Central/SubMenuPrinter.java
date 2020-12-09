@@ -1,7 +1,5 @@
 package Presenter.Central;
 
-import Presenter.Exceptions.NoDataException;
-
 public interface SubMenuPrinter {
 
     /**

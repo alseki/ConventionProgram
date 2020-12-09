@@ -26,9 +26,8 @@ public class OrgEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "Create a new room", "Create a new event",
+        return new String[]{"Create a new room", "Create a new event",
                 "Create a speaker account", "Make an announcement to the attendees of an event"};
-        return options;
     }
 
     // OPTION 1

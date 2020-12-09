@@ -7,7 +7,6 @@ package Presenter.PersonController;
 
 import Person.PersonManager;
 import Presenter.Central.SubMenuPrinter;
-import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 
 import java.util.ArrayList;
@@ -33,8 +32,7 @@ public class ContactMenu implements SubMenuPrinter {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"View contact list", "Add a contact"};
-        return options;
+        return new String[]{"View contact list", "Add a contact"};
     }
 
     /**
@@ -45,7 +43,6 @@ public class ContactMenu implements SubMenuPrinter {
         String[] clist = {};
         clist = contactList.toArray(clist);
         return clist;
-        // TODO exception if list is empty
     }
 
     /**
@@ -78,12 +75,5 @@ public class ContactMenu implements SubMenuPrinter {
      */
     public String printContactAdded() {
         return "Contact has been successfully added.";
-    }
-
-    /**
-     * Prints that the user has no contacts
-     */
-    public String printNoContacts() {
-        return "No Contacts";
     }
 }
