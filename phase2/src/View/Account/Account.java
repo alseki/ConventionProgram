@@ -1,7 +1,11 @@
 package View.Account;
 
+import Presenter.AttendeeController.AttendeeController;
 import Presenter.Central.SubMenu;
+import Presenter.EmployeeController.EmployeeController;
+import Presenter.OrganizerController.OrganizerController;
 import Presenter.PersonController.PersonController;
+import Presenter.SpeakerController.SpeakerController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +39,18 @@ public class Account implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
+
+        // menu changes colour depending on the type of user!
+        if(this.controller instanceof AttendeeController) {
+            contentPane.setBackground(new Color(255, 255, 200)); // Sets AttMenu BG colour to yellow
+        } else if(this.controller instanceof OrganizerController){
+            contentPane.setBackground(new Color(200, 240, 255)); // Sets OrgMenu BG colour to blue
+        } else if(this.controller instanceof SpeakerController) {
+            contentPane.setBackground(new Color(255, 200, 200)); // Sets SpeMenu BG colour to pink
+        } else if(this.controller instanceof EmployeeController) {
+            contentPane.setBackground(new Color(200, 255, 200)); // Sets EmpMenu BG colour to green
+        }
+
         contentPane.setLayout(new FlowLayout());
 
         logoutButton = new JButton("logout"); // Generates logout button
