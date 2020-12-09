@@ -175,6 +175,7 @@ public class MessageMenu implements SubMenuPrinter {
     //TODO: make it as a button/textField in Option 3.
 
     public String getChatTitle(String chatID) {
+
         StringBuilder participants = new StringBuilder();
         ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
         participants.append(personManager.getCurrentUsername(personIDs.get(0)));

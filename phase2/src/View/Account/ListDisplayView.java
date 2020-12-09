@@ -15,7 +15,6 @@ public class ListDisplayView implements ActionListener {
 
     public ListDisplayView(String title, String[] options) {
         frame = new JFrame(title); // Create and set up the frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
@@ -23,11 +22,12 @@ public class ListDisplayView implements ActionListener {
 
         StringBuilder list = new StringBuilder();
         for (String option: options) {
+            list.append("<li>");
             list.append(option);
-            list.append("\n\n");
+            list.append("<br><br>");
         }
 
-        printedList = new JLabel(list.toString());
+        printedList = new JLabel("<html>" + list.toString() + "<html/>");
         contentPane.add(printedList);
         printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
@@ -42,6 +42,7 @@ public class ListDisplayView implements ActionListener {
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
+        display();
     }
 
     /**

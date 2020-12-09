@@ -19,46 +19,47 @@ public class MessageView extends AccountView {
     MessageMenu presenter;
     JLabel dialogPrompt;
     ListDisplayView msgList;
-    JTextField inputField, messageField;
-    JButton okayButton, continueButton;
-    private final String[] menuOp;
+    JTextField inputField;
+    JTextArea messageField;
+    /*JScrollPane scrollPane;*/ // TODO might add this in later
 
     public MessageView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (MessageController) controller;
         presenter = (MessageMenu)controller.getPresenter();
 
-        this.menuOp = this.presenter.getMenuOptions();
-
-        okayButton = newButton("okay");
-        initializeObject(okayButton);
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
-        inputField = new JTextField(100);
+        inputField = new JTextField(20);
         initializeObject(inputField);
-        messageField = new JTextField(100);
+
+        messageField = new JTextArea(5, 20);
+        messageField.setPreferredSize(new Dimension(20, 20));
+        messageField.setLineWrap(true);
+        messageField.setWrapStyleWord(true);
         initializeObject(messageField);
-        continueButton = newButton("continue");
-        initializeObject(continueButton);
+
+        /*scrollPane = new JScrollPane(messageField);
+        contentPane.add(messageField, BorderLayout.CENTER);
+        scrollPane.setVisible(false);*/
     }
 
 
     @Override
     public void showMainDropDownMenu() {
         super.showMainDropDownMenu();
-        continueButton.setVisible(true);
     }
 
     @Override
     public void hideMainDropDownMenu() {
         super.hideMainDropDownMenu();
-        continueButton.setVisible(false);
     }
 
 
     private void showCheckInbox() {
         try {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
             showMainDropDownMenu();
@@ -68,6 +69,7 @@ public class MessageView extends AccountView {
     private void showCheckSentBox() {
         try {
             msgList = new ListDisplayView(presenter.getOutboxTitle(), presenter.getOutBox());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
             showMainDropDownMenu();
@@ -77,6 +79,7 @@ public class MessageView extends AccountView {
     private void showViewChats() {
         try {
             msgList = new ListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
             showMainDropDownMenu();
@@ -84,12 +87,12 @@ public class MessageView extends AccountView {
     }
 
     protected void showOpenChat() {
-        dialogPrompt = new JLabel(presenter.printChatIdPrompt());
+        dialogPrompt.setText(presenter.printChatIdPrompt());
         dialogPrompt.setVisible(true);
 
-        inputField = new JTextField(100);
         inputField.setVisible(true);
 
+        okayButton.setText("choose chat");
         okayButton.setActionCommand("choose chat");
         okayButton.setVisible(true);
     }
@@ -98,6 +101,7 @@ public class MessageView extends AccountView {
         String chatID = inputField.getText(); //FIXME: now we can use Chat.name
         try {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
             showMainDropDownMenu();
@@ -108,11 +112,11 @@ public class MessageView extends AccountView {
         //dialogPrompt = new JLabel(presenter.printContentPrompt()); TODO: make this method return string
         dialogPrompt.setVisible(true);
 
-        inputField = new JTextField(100);
         inputField.setVisible(true);
         messageField.setVisible(true);
 
         okayButton.setActionCommand("send msg");
+        okayButton.setText("send msg");
         okayButton.setVisible(true);
     }
 
@@ -123,7 +127,7 @@ public class MessageView extends AccountView {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
+        super.actionPerformed(event);
 
         if(eventName.equals(this.menuOp[0])) {
             hideMainDropDownMenu();

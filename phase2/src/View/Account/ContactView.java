@@ -52,6 +52,7 @@ public class ContactView extends AccountView {
         try {
             String[] myContacts = presenter.getContactList();
             allContacts = new ListDisplayView(presenter.getContactListTitle(), myContacts);
+            showMainDropDownMenu();
         } catch (NoDataException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
             showMainDropDownMenu();
@@ -92,17 +93,14 @@ public class ContactView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
 
-        String eventName = event.getActionCommand();
-
         // [0] = View Contacts
         // [1] = Add Contact
-        if (eventName.equals(dropDownMenu.getActionCommand())) {
+        if (eventName.equals(menuOp[0])) {
             hideMainDropDownMenu();
             showViewContacts();
-            showMainDropDownMenu();
         }
 
-        if (eventName.equals(dropDownMenu.getActionCommand())) {
+        if (eventName.equals(menuOp[1])) {
             hideMainDropDownMenu();
             showAddContact();
         }

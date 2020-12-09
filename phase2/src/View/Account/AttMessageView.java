@@ -15,7 +15,6 @@ public class AttMessageView extends MessageView {
     AttMessageController controller;
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
-    private String[] menuOp;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -23,16 +22,17 @@ public class AttMessageView extends MessageView {
         this.presenter = ((AttMessageController) controller).getPresenter();
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
-        this.menuOp = this.presenter.getMenuOptions();
         contentPane.setBackground(pinkBG);// Sets background colour
     }
 
     private void showViewAnnouncementChannels() {
         try {
-            msgList = new ListDisplayView(announcementPresenter.getChatListTitle(), announcementPresenter.getChatList());
+            msgList = new ListDisplayView(announcementPresenter.getChatListTitle(),
+                    announcementPresenter.getChatList());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -47,7 +47,9 @@ public class AttMessageView extends MessageView {
         String chatID = inputField.getText();
 
         try {
-            msgList = new ListDisplayView(announcementPresenter.getChatTitle(chatID), announcementPresenter.getChat(chatID));
+            msgList = new ListDisplayView(announcementPresenter.getChatTitle(chatID),
+                    announcementPresenter.getChat(chatID));
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
         }
@@ -87,45 +89,40 @@ public class AttMessageView extends MessageView {
     @Override
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
-        String eventName = event.getActionCommand();
 
-        if(eventName.equals(continueButton.getActionCommand())) {
-            eventName = (String)dropDownMenu.getSelectedItem();
-        }
-
-        if(eventName.equals(this.menuOp[6])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[5])) {
+            hideMainDropDownMenu();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(this.menuOp[7])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[6])) {
+            hideMainDropDownMenu();
             showOpenAnChat();
         }
 
-        if(eventName.equals(this.menuOp[8])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[7])) {
+            hideMainDropDownMenu();
             showCreateChat();
         }
 
-        if(eventName.equals(this.menuOp[9])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[8])) {
+            hideMainDropDownMenu();
             showCreateGroupChat();
         }
 
         if (eventName.equals("show anchat")) {
             showAnnouncementChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("create chat")) {
             createChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("create groupchat")) {
             createGroupChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 }
