@@ -12,10 +12,12 @@ public class OrgEventView extends AccountView {
     OrgEventController controller;
     OrgEventMenu presenter;
 
-    JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
-            addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
+    // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
+    //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
+    JLabel dialogPrompt;
     JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton;
-    JTextField inputRoomName, inputRoomCap, inputSName, inputSUsername, inputSPassword, inputSEmail;
+    // JTextField inputRoomName, inputRoomCap, inputSName, inputSUsername, inputSPassword, inputSEmail;
+    JTextField inputField, messageField;
 
     public OrgEventView(SubMenu controller) {
         super(controller.getPresenter());
@@ -29,18 +31,27 @@ public class OrgEventView extends AccountView {
         backButton = newButton("back");
         contentPane.add(backButton);
 
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
+        inputField = new JTextField(100);
+        initializeObject(inputField);
+        messageField = new JTextField(100);
+        initializeObject(messageField);
+        continueButton = newButton("continue");
+        initializeObject(continueButton);
+
         setupEventMenuOptions();
-        setupCreateRoom();
-        setupCreateEvent();
-        setupCreateSpeakerAcc();
-        setupMakeEventAnnouncement();
+        //setupCreateRoom();
+        //setupCreateEvent();
+        //setupCreateSpeakerAcc();
+        //setupMakeEventAnnouncement();
     }
 
     private void setupEventMenuOptions() {
         makeDropDownMenu(presenter);
     }
 
-
+    /*
     private void setupCreateRoom() {
         addRoomPrompt = new JLabel(this.presenter.addRoomPrompt());
         addRoomPrompt.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -133,6 +144,7 @@ public class OrgEventView extends AccountView {
     //TODO: this method
     private void setupMakeEventAnnouncement() {
     }
+     */
 
 
     @Override
@@ -148,11 +160,13 @@ public class OrgEventView extends AccountView {
     }
 
     private void showCreateRoom() {
-        addRoomPrompt.setVisible(true);
-        roomNamePrompt.setVisible(true);
-        inputRoomName.setVisible(true);
-        roomCapPrompt.setVisible(true);
-        inputRoomCap.setVisible(true);
+        dialogPrompt.setText(this.presenter.addRoomPrompt());
+
+        //addRoomPrompt.setVisible(true);
+        //roomNamePrompt.setVisible(true);
+        //inputRoomName.setVisible(true);
+        //roomCapPrompt.setVisible(true);
+        //inputRoomCap.setVisible(true);
     }
 
     private void showCreateEvent() {
