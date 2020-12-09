@@ -166,7 +166,9 @@ public class OrgEventController extends SubMenu {
     }
 
     public String convertEventTypeToString(EventType event) {
+
         String eventTypeString = EventType.convertToString(event);
+        return eventTypeString;
         }
 
 
