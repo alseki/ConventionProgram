@@ -39,7 +39,7 @@ public class MessageMenu implements SubMenuPrinter {
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"Check your inbox", "Check your sent box", "View the chat list," +
+        return new String[]{"Check your inbox", "Check your sent box", "View the chat list",
                 "View the messages in a chat", "Send a message"};
     }
 
