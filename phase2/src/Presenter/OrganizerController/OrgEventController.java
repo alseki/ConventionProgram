@@ -176,6 +176,11 @@ public class OrgEventController extends SubMenu {
         return eventTypeString;
         }
 
+        public boolean removeSpeakerFromPanel(String eventID, String speakerID) {
+            EventManager.removeSpeakerFromPanel(eventID, speakerID);
+            return true;
+        }
+        // Here
         public boolean addSpeakersToPanel(String eventID, ArrayList<String> panelists) {
         // FIXME
         //EventManager.getPanelSpeakerList(eventID);
