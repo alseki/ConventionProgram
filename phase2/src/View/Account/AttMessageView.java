@@ -93,22 +93,22 @@ public class AttMessageView extends MessageView {
             eventName = (String)dropDownMenu.getSelectedItem();
         }
 
-        if(eventName.equals(this.menuOp[6])) {
+        if(eventName.equals(this.menuOp[5])) {
             hideMainMenuButtons();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(this.menuOp[7])) {
+        if(eventName.equals(this.menuOp[6])) {
             hideMainMenuButtons();
             showOpenAnChat();
         }
 
-        if(eventName.equals(this.menuOp[8])) {
+        if(eventName.equals(this.menuOp[7])) {
             hideMainMenuButtons();
             showCreateChat();
         }
 
-        if(eventName.equals(this.menuOp[9])) {
+        if(eventName.equals(this.menuOp[8])) {
             hideMainMenuButtons();
             showCreateGroupChat();
         }
