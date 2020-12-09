@@ -88,10 +88,10 @@ public class EmployeeController extends PersonController {
         String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
-                return new MessageController(this, currentUserID);
+                return new ContactController(this, currentUserID);
             }
             else if (choice.equals(options[1])) {
-                return new ContactController(this, currentUserID);
+                return new MessageController(this, currentUserID);
             }
             else if (choice.equals(options[2])){
                 return new EmpReqController(this, currentUserID);
