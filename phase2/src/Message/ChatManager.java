@@ -175,8 +175,16 @@ public class ChatManager implements Serializable {
      * @param chatID ID of the Chat object
      * @return Class type, 1 for announcement, 0 for chat
      */
-    public int getChatType(String chatID){
+    public boolean getChatType(String chatID){
         return Objects.requireNonNull(getUnknownTypeChat(chatID)).getAnnouncementOrNot();
+    }
+
+    public void setChatTypeToAnn(String chatID) {
+        Objects.requireNonNull(getUnknownTypeChat(chatID)).changeToAnnouncement();
+    }
+
+    public void setChatTypeToChat(String chatID) {
+        Objects.requireNonNull(getUnknownTypeChat(chatID)).changeToChat();
     }
 
     /**
@@ -243,7 +251,7 @@ public class ChatManager implements Serializable {
      * @param chatId ID of a Chat object that may be Chat or AnnouncementChat
      * @return Chat object corresponding to the chatId. Null is returned if the ID is invalid.
      */
-    private Chat getUnknownTypeChat(String chatId){
+    public Chat getUnknownTypeChat(String chatId){
         for(Chat c: chatsList){
             if(c.getId().equals(chatId)){
                 return c;} }
@@ -350,6 +358,13 @@ public class ChatManager implements Serializable {
         return null;
     }
 
+    public void nullifyChatID(String chatId) {
+        for (Chat c : chatsList) {
+            if (c.getId().equals(chatId)) {
+                c.nullThisId();
+            }
+        }
+    }
 }
 
 // CRC Card Definition

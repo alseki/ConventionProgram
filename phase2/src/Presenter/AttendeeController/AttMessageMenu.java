@@ -9,6 +9,7 @@ package Presenter.AttendeeController;
 import Event.EventManager;
 import Message.*;
 import Person.PersonManager;
+import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.OverwritingException;
 import Presenter.PersonController.MessageMenu;
 
@@ -116,6 +117,71 @@ class AnnouncementMessageMenu extends AttMessageMenu {
 
     public String getChatTitle(String chatID) {
         return chatID + " (" + eventManager.getEvent(chatManager.getPersonIds(chatID).get(0)) + ")" ;
+    }
+
+    // Option 6 ---------------------VIEW ANNOUNCEMENT LIST------------------
+
+    public String getAnnouncementListTitle() {
+        return "-ANNOUNCEMENTS-";
+    }
+
+    /**
+     * Get Announcement formatted as:  [Title]: The name of this announcement\new line
+     *                                 [Event]: The event name of this announcement
+     *                                 [Participants]: [Username of the Participants]\newline
+     * @param chatID The ID of the Chat that is to be formatted
+     * @return Formatted string representation of the chat.
+     */
+    protected String formatAnnString(String chatID) {
+        StringBuilder participants = new StringBuilder();
+        for (String participantID : chatManager.getPersonIds(chatID)){
+            participants.append("\n").append(personManager.getCurrentUsername(participantID));
+        }
+        for (String msgId : chatManager.getUnknownTypeChat(chatID).getMessageIds()) {
+            if (messageManager.getReadStatus(msgId)) {
+                return "[Unread]" + "\n" +
+                        "Title: " + chatManager.getChatName(chatID) + "\n" +
+                        "Participants: " + participants.toString();
+            }
+        }
+        return  "Title: " + chatManager.getChatName(chatID) + "\n" +
+                "Participants: " + participants.toString();
+    }
+
+    /**
+     * Returns a list of formatted chat summaries
+     * @param chatIDs The list of IDs the chats to print out
+     * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     */
+    protected String[] getAnnouncements(ArrayList<String> chatIDs) throws InvalidChoiceException {
+        String[] chatList = new String[chatIDs.size()];
+        for (int i = 0; i < chatList.length; i++) {
+            String chat = chatIDs.get(i);
+            chatList[i] = formatAnnString(chat);
+        }
+        return chatList;
+    }
+
+    /**
+     * Returns a list of formatted chat summaries for this user's chat
+     * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     */
+    public String[] getAnnouncementList() throws InvalidChoiceException {
+        ArrayList<String> unReadAnnList = new ArrayList<>();
+        ArrayList<String> announcementList = new ArrayList<>();
+        for (String chatId : personManager.getChats(currentUserID)) {
+            if (chatManager.getUnknownTypeChat(chatId).getAnnouncementOrNot()) {
+                for (String msgId : chatManager.getUnknownTypeChat(chatId).getMessageIds()) {
+                    if (messageManager.getReadStatus(msgId)) {
+                        unReadAnnList.add(chatId);
+                    } else {
+                        announcementList.add(chatId);
+                    }
+                }
+            }
+        }
+        announcementList.addAll(unReadAnnList);
+        return getAnnouncements(announcementList);
     }
 
 

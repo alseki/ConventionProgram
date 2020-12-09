@@ -16,7 +16,8 @@ public class Chat implements Serializable {
     protected ArrayList<String> messageIds;
     protected ArrayList<String> personIds;
     protected String password;
-    protected int announcementOrNot; // 1 is announcement which cannot reply and 0 for general chat.
+    protected boolean announcementOrNot; // 1 is announcement which cannot reply and 0 for general chat.
+    protected boolean readStatus;
 
     //Chat constructor. Input is arraylist of ID(s) of guest(s) that you (owner) want to form group chat with.
     public Chat(String ownerId, String guestId){
@@ -26,6 +27,7 @@ public class Chat implements Serializable {
         personIds.add(guestId);
         this.Id = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString();
+        this.announcementOrNot = false;
     }
     public Chat(String ownerId, ArrayList <String> guestIds, String name){
         messageIds = new ArrayList<>();
@@ -35,6 +37,7 @@ public class Chat implements Serializable {
         this.name = name;
         this.Id = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString();
+        this.announcementOrNot = false;
     }
 
     public Chat(String ownerId, String[] guestIds, String name) {
@@ -45,6 +48,7 @@ public class Chat implements Serializable {
         this.name = name;
         this.Id = UUID.randomUUID().toString();
         this.password = UUID.randomUUID().toString();
+        this.announcementOrNot = false;
     }
 
 
@@ -98,6 +102,13 @@ public class Chat implements Serializable {
     }
 
     /**
+     * set ID of Chat to null.
+     */
+    public void nullThisId(){
+        this.Id = null;
+    }
+
+    /**
      * Gets all Message IDs that are stored in this Chat.
      * @return ArrayList of strings (Message IDs) stored in this Chat.
      */
@@ -132,8 +143,16 @@ public class Chat implements Serializable {
      * get the type of this chat.
      * @return 1 for announcement 0 for others.
      */
-    public int getAnnouncementOrNot() {
+    public boolean getAnnouncementOrNot() {
         return this.announcementOrNot;
+    }
+
+    public void changeToAnnouncement() {
+        this.announcementOrNot = true;
+    }
+
+    public void changeToChat() {
+        this.announcementOrNot = false;
     }
 
     /**

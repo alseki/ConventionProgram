@@ -284,6 +284,48 @@ public abstract class PersonManager {
     public ArrayList <String> getEventList(String personID){
         return this.getPerson(personID).getEventList();
     }
+
+    /**
+     * add archived chat Id into Person.archivedChatList
+     */
+    public void archiveChatByPersonId(String currentID, String chatId) {
+        getPerson(currentID).addArchivedChat(chatId);
+    }
+
+    /**
+     * remove archived chat Id from Person.archivedChatList
+     */
+    public void removeArchiveChatByPersonId(String currentID, String chatId) {
+        getPerson(currentID).removeArchivedChat(chatId);
+    }
+
+    /**
+     * @return ArrayList returns the list of string corresponding to the archived chat Ids
+     */
+    public ArrayList<String> getCurrentArchivedChatList(String currentID) {
+        return getPerson(currentID).getArchivedChatList();
+    }
+
+    /**
+     * get current person's favorites folder.
+     */
+    public ArrayList<String> getCurrentFavorites(String currentID) {
+        return getPerson(currentID).getFavorites();
+    }
+
+    /**
+     * add messageId into current person's favorites folder.
+     */
+    public void addCurrentFavorites(String currentID, String messageId) {
+        getPerson(currentID).addFavoritesMessage(messageId);
+    }
+
+    /**
+     * remove messageId from current person's favorites folder.
+     */
+    public void removeCurrentFavorites(String currentID, String messageId) {
+        getPerson(currentID).removeFavorites(messageId);
+    }
 }
 
 

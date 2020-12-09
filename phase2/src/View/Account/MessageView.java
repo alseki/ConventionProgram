@@ -1,6 +1,6 @@
 package View.Account;
 
-// Programmer: Ran Yi
+// Programmer: Sarah Kronenfeld, Ran Yi
 // Description: All the methods that take user input in the Message Menu
 // Date Created: 01/11/2020
 // Date Modified: 08/12/2020
@@ -95,7 +95,7 @@ public class MessageView extends AccountView {
     }
 
     private void showViewMsgsInChat() {
-        String chatID = inputField.getText();
+        String chatID = inputField.getText(); //FIXME: now we can use Chat.name
         try {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
         } catch (InvalidChoiceException e) {
@@ -116,6 +116,7 @@ public class MessageView extends AccountView {
         okayButton.setVisible(true);
     }
 
+    //TODO: send msg method is in MessageController.
     private void sendMsg() {
 
     }

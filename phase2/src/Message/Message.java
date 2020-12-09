@@ -15,7 +15,7 @@ public class Message implements Serializable {
     private String recipientId;
     private LocalDateTime dateTime;
     private String content;
-    private int readStatus; // read is 0, unread is 1.
+    private boolean readStatus; // read is 0, unread is 1.
     private String chatId; // the chat this message belongs to.
 
     public Message(String senderId, String recipientId, String chatId, String content){
@@ -24,7 +24,7 @@ public class Message implements Serializable {
         this.content = content;
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
-        this.readStatus = 1;
+        this.readStatus = true;
         this.chatId = chatId;
     }
     // this is for event announcements.
@@ -34,7 +34,7 @@ public class Message implements Serializable {
         this.Id = UUID.randomUUID().toString();
         this.dateTime = LocalDateTime.now();
         this.recipientId = null;
-        this.readStatus = 1;
+        this.readStatus = true;
         this.chatId = chatId;
     }
 
@@ -90,15 +90,22 @@ public class Message implements Serializable {
     /**
      * @return the status of the message. 1 is unread, 0 is read.
      */
-    public int getReadStatus() {
+    public boolean getReadStatus() {
         return this.readStatus;
     }
 
     /**
      * change the status of this message to unread.
      */
-    public void changeStatus() {
-        this.readStatus = 1;
+    public void changeStatusUnread() {
+        this.readStatus = true;
+    }
+
+    /**
+     * change the status of this message to read.
+     */
+    public void changeStatusRead() {
+        this.readStatus = false;
     }
 
     /**
