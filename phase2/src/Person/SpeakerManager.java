@@ -29,6 +29,10 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
+    private void emptySpeaker() {
+        Speaker emptySpeaker = new Speaker("TBD", "empty", "empty", "no ID");
+    }
+
     /**
      * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
      * @param speakerID ID of the Speaker

@@ -5,13 +5,8 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.ContactMenu;
-import Presenter.PersonController.PersonController;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class ContactView extends AccountView {

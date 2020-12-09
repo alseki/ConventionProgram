@@ -25,8 +25,7 @@ public abstract class AccountView implements ActionListener {
     public AccountView(SubMenuPrinter presenter) {
         frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
-
-        contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
+        
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
         contentPane.setLayout(new FlowLayout());
 
