@@ -231,9 +231,23 @@ public class MessageMenu implements SubMenuPrinter {
 
     // Option 100 -------------------- Archive chat -------------------
     // method in MessageController
+    /**
+     * Prompts user to enter chatname of the Chat that they want to archive
+     */
+    public void printArchiveChatPrompt(){System.out.println("Which chat do you want to archive? Enter the chatName.");}
+
+    protected String chatArchived(){return "Chat archived!";}
 
     // Option 101 -------------------- Remove archived chat --------------------
     // method in MessageController
+
+    /**
+     * Prompts user to enter chatName of the Chat that they want to de-archive chat
+     */
+    public void printUnarchiveChatPrompt(){
+        System.out.println("Which archived chat do you want to restore to the original location? Enter the chatName.");}
+
+    protected String chatUnarchived(){return "Archived chat restored!";}
 
     // Option 102 -------------------- Archive Message --------------------
     // method in MessageController

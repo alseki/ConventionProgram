@@ -215,6 +215,22 @@ public class ChatManager implements Serializable {
         return chats;
     }
 
+    /**
+     * Return collection of all Chats where the inputted person ID is part of the member.
+     * @param personIds the IDs of the persons
+     * @return ArrayList of Chats containing the inputted person ID
+     */
+    public ArrayList <Chat> searchChatsContaining(ArrayList <String> personIds){
+        ArrayList <Chat> chats = new ArrayList<>();
+        for (Chat c: chatsList){
+            int num = 0;
+            for (String personId: personIds){
+                if (c.getPersonIds().contains(personId)){
+                    num = num + 1; }
+            }if (num == personIds.size()){chats.add(c);}
+        }
+        return chats;
+    }
 
     /**
      * Finds the Message.Message.Chat object with input Message.Message.Chat ID
@@ -330,7 +346,7 @@ public class ChatManager implements Serializable {
     public String findChat(String currentId, ArrayList<String> guestsId) {
         ArrayList<String> personIds = new ArrayList<>(guestsId);
         personIds.add(currentId);
-        Collections.sort(guestsId);
+        Collections.sort(personIds);
         for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);

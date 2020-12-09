@@ -102,3 +102,13 @@ Below are the instruction on how to use this program base on different identity.
 
     Sign up in Events and cancel their spot.
     Speakers could view the list of Events they have signed up.
+
+4. Employee
+   ---------------------------
+   Message and Contact System:
+   ---------------------------
+
+   -------------
+   Event system:
+   -------------
+   Employees are the people who will work to host an Event.

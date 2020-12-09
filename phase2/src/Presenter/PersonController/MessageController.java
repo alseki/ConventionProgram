@@ -101,7 +101,6 @@ public class MessageController extends SubMenu {
         }
     }
 
-//TODO double check with Ran and other regarding what to do when the group is equal to 2 ppl or less
     //Currently remove the ID of this Chat from the chatList of all Person in Chat, let personIds list of this Chat be
     // new empty arraylist, and make the chatID become null.
     /**
@@ -139,7 +138,7 @@ public class MessageController extends SubMenu {
         }
     }
 
-    protected void deArchiveChat(String chatName){
+    protected void unArchiveChat(String chatName){
         String chatId = chatManager.findChatByName(chatName).getId();
         for (String cId : personManager.getCurrentArchivedChatList(currentUserID)) {
             if (chatId.equals(cId)) {
@@ -153,7 +152,7 @@ public class MessageController extends SubMenu {
         personManager.addCurrentFavorites(currentUserID, msgId);
     }
 
-    protected void deArchiveMessage(String msgId){
+    protected void unArchiveMessage(String msgId){
         personManager.removeCurrentFavorites(currentUserID, msgId);
     }
 
