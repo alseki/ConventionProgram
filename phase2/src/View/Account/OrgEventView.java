@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 public class OrgEventView extends AccountView {
     OrgEventController controller;
     OrgEventMenu presenter;
+    String[] menuOp;
 
     // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
     //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
@@ -23,6 +24,8 @@ public class OrgEventView extends AccountView {
         super(controller.getPresenter());
         this.controller = (OrgEventController) controller;
         this.presenter = ((OrgEventController) controller).getPresenter();
+
+        menuOp = this.presenter.getMenuOptions();
 
         contentPane.setBackground(whiteBG);// Sets background colour
         continueButton = newButton("continue");
@@ -40,15 +43,11 @@ public class OrgEventView extends AccountView {
         continueButton = newButton("continue");
         initializeObject(continueButton);
 
-        setupEventMenuOptions();
+        makeDropDownMenu(this.presenter);
         //setupCreateRoom();
         //setupCreateEvent();
         //setupCreateSpeakerAcc();
         //setupMakeEventAnnouncement();
-    }
-
-    private void setupEventMenuOptions() {
-        makeDropDownMenu(presenter);
     }
 
     /*
@@ -147,18 +146,6 @@ public class OrgEventView extends AccountView {
      */
 
 
-    @Override
-    public void showMainDropDownMenu() {
-        super.showMainDropDownMenu();
-        continueButton.setVisible(true);
-    }
-
-    @Override
-    public void hideMainDropDownMenu() {
-        super.hideMainDropDownMenu();
-        continueButton.setVisible(false);
-    }
-
     private void showCreateRoom() {
         dialogPrompt.setText(this.presenter.addRoomPrompt());
 
@@ -187,8 +174,24 @@ public class OrgEventView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
-        if(eventName.equals(this.presenter.getMenuOptions()[1])) {
+        if(eventName.equals(menuOp[0])) {
+            hideMainDropDownMenu();
             showCreateRoom();
+        }
+
+        if(eventName.equals(menuOp[1])) {
+            hideMainDropDownMenu();
+            showCreateEvent();
+        }
+
+        if(eventName.equals(menuOp[2])) {
+            hideMainDropDownMenu();
+            showCreateSpeakerAcc();
+        }
+
+        if(eventName.equals(menuOp[3])) {
+            hideMainDropDownMenu();
+            showMakeEventAnnouncement();
         }
     }
 }

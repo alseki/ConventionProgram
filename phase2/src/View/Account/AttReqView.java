@@ -25,6 +25,8 @@ public class AttReqView extends AccountView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
+
+        makeDropDownMenu(this.presenter);
     }
 
 
@@ -51,23 +53,23 @@ public class AttReqView extends AccountView {
         super.actionPerformed(event);
         String eventName = event.getActionCommand();
 
-        // [1] = make a request
-        // [2] = view info about a request
-        // [3] = show my requests
-        // [4] = modify a request
-        if(eventName.equals(menuOp[1])) {
+        // [0] = make a request
+        // [1] = view info about a request
+        // [2] = show my requests
+        // [3] = modify a request
+        if(eventName.equals(menuOp[0])) {
             showMakeReq();
         }
 
-        if(eventName.equals(menuOp[2])) {
+        if(eventName.equals(menuOp[1])) {
             showViewReqInfo();
         }
 
-        if(eventName.equals(menuOp[3])) {
+        if(eventName.equals(menuOp[2])) {
             showMyReq();
         }
 
-        if(eventName.equals(menuOp[4])) {
+        if(eventName.equals(menuOp[3])) {
             modifyReq();
         }
     }

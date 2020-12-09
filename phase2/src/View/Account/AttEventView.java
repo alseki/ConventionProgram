@@ -28,14 +28,10 @@ public class AttEventView extends AccountView {
 
         contentPane.setBackground(whiteBG);// Sets background colour to white
 
-        setupEventMenuOptions();
+        makeDropDownMenu(this.presenter);
         setupSignUpEvent();
         setupCancelFromEvent();
         setupRooms();
-    }
-
-    private void setupEventMenuOptions() {
-        makeDropDownMenu(presenter);
     }
 
     private void setupRooms() {

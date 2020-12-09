@@ -1,16 +1,22 @@
 package View.Account;
 
+import Presenter.AttendeeController.AttEventController;
 import Presenter.Central.SubMenu;
+import Presenter.EmployeeController.EmpEventController;
+import Presenter.EmployeeController.EmpEventMenu;
 import Presenter.OrganizerController.OrgEventController;
 
 import java.awt.event.ActionEvent;
 
     public class EmpEventView extends AccountView {
-        OrgEventController controller;
+        EmpEventController controller;
+        EmpEventMenu presenter;
+
 
         public EmpEventView(SubMenu controller) {
             super(controller.getPresenter());
-            this.controller = (OrgEventController) controller;
+            this.controller = (EmpEventController) controller;
+            //this.presenter = ((EmpEventController) controller).getPresenter();
         }
 
         @Override
