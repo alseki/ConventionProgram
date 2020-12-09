@@ -11,6 +11,8 @@ public class SpeakerManager extends PersonManager {
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
 
+    protected ArrayList speakerInPanels = new ArrayList<>();
+;
 
     public SpeakerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -34,8 +36,12 @@ public class SpeakerManager extends PersonManager {
      */
     public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
         Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();}
+        return spe.getAllTalks();
+    }
 
+    public ArrayList getSpeakerInPanels(String userID) {
+        return speakerInPanels;
+    }
 
     /**
      *

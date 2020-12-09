@@ -270,6 +270,15 @@ public class EventManager extends EventAccess implements Serializable {
         return event.getID();
     }
 
+    public ArrayList getPanelSpeakerList(String eventID) {
+        if (getEventType(eventID).toString() == "PANEL") {
+            Panel panel = (Panel) getEvent(eventID);
+            return panel.getSpeakersList();
+        }
+        return null;
+    }
+
+
     /**
      * Deletes an Event
      * @param ID The Event's ID
@@ -284,6 +293,22 @@ public class EventManager extends EventAccess implements Serializable {
             return false;
         }
     }
+
+    /**
+     *
+     * @param speakerID
+     * @param eventID
+     * @return
+     */
+//    public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
+//        if(eventID != null && speakerID != null){
+//            Event panel = getEvent(eventID);
+//            panel.removeSpeaker(speakerID);
+//            return true;
+//        } else{
+//            return false;
+//        }
+//    }
 
     // Methods to compare Events in EventManager
 

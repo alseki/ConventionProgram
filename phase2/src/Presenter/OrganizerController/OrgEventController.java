@@ -5,6 +5,7 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
+import Event.Event;
 import Event.EventManager;
 import Event.EventPermissions;
 import Event.EventType;
@@ -161,14 +162,22 @@ public class OrgEventController extends SubMenu {
         speakerManager.addTalk(eventID, speakerID, eventType, name);
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
         speakerManager.addToAllTalksID(eventID, speakerID);
+        if(eventType == "PANEL"){
+            speakerManager.getSpeakerInPanels(speakerID).add(eventID);
+        }
 
         return eventID;
     }
+
 
     public String convertEventTypeToString(EventType event) {
 
         String eventTypeString = EventType.convertToString(event);
         return eventTypeString;
+        }
+
+        public boolean addSpeakersToPanel(String eventID, ArrayList<String> panelists) {
+        EventManager.getPanelSpeakerList(eventID);
         }
 
 
@@ -271,6 +280,8 @@ public class OrgEventController extends SubMenu {
         }
 
     }
+
+
 
 
 

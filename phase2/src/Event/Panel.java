@@ -39,6 +39,14 @@ public class Panel extends Event {
     }
 
     /**
+     *
+     * @return
+     */
+    public ArrayList<String> getSpeakersList(){
+        return speakers;
+    }
+
+    /**
      * Getter for the IDs of the Speakers participating in this Panel
      * @return an array of these Speaker IDs
      */
@@ -61,5 +69,6 @@ public class Panel extends Event {
     public void removeSpeaker(String ID) {
         this.speakers.remove(ID);
     }
+
 
 }
