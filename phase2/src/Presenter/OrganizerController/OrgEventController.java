@@ -5,7 +5,6 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Event.Event;
 import Event.EventManager;
 import Event.EventPermissions;
 import Event.EventType;
@@ -169,22 +168,23 @@ public class OrgEventController extends SubMenu {
         return eventID;
     }
 
+    public boolean addSpeakerPanel(String eventID, String userID) {
+        ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
+        panelList.add(userID);
+        return true;
+
+    }
 
     public String convertEventTypeToString(EventType event) {
 
         String eventTypeString = EventType.convertToString(event);
         return eventTypeString;
+
         }
 
         public boolean removeSpeakerFromPanel(String eventID, String speakerID) {
-            EventManager.removeSpeakerFromPanel(eventID, speakerID);
+            eventManager.removeSpeakerFromPanel(eventID, speakerID);
             return true;
-        }
-        // Here
-        public boolean addSpeakersToPanel(String eventID, ArrayList<String> panelists) {
-        // FIXME
-        //EventManager.getPanelSpeakerList(eventID);
-        return false; // TODO get ride of this line when above is fixed
         }
 
 

@@ -302,7 +302,7 @@ public class EventManager extends EventAccess implements Serializable {
      */
     public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
         if(eventID != null && speakerID != null){
-            Panel panel = (Panel)getEvent(eventID);
+            Panel panel = (Panel) getEvent(eventID);
             panel.removeSpeaker(speakerID); // there is no remove speaker method in Event
             return true;
         } else{
