@@ -78,14 +78,14 @@ public class EventPermissions {
      */
     public boolean checkRoomCapacity(LocalDateTime startTime, LocalDateTime endTime, int capacity, String roomID) {
         try {
-            // int room_capacity = roomAccess.getRoomCapacity(roomID);
+            int room_capacity = roomAccess.getRoom(roomID).getCapacity();
             int current_occupancy = 0;
             for (String eventID : roomAccess.getEventIDs(roomID)) {
                 Talk talk = new Talk("", "", startTime, endTime, "", 0);
                 if (this.eventAccess.getEvent(eventID).conflictsWith(talk)) {
-                    // current_occupancy = current_occupancy + this.eventAccess.getCapacity(eventID)}
+                    current_occupancy = current_occupancy + eventAccess.getEvent(eventID).getCapacity();
                 }
-                // if ((room_capacity - current_occupancy) >= capacity) {return true;}
+                if ((room_capacity - current_occupancy) >= capacity) {return true;}
                 else {
                     return false;
                 }
