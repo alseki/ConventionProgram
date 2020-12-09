@@ -8,14 +8,11 @@ import Presenter.Exceptions.InvalidChoiceException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-
-//FIXME selecting "View messages" as an Attendee doesn't even launch the AttMsg menu... (???)
-
 public class AttMessageView extends MessageView {
     AttMessageController controller;
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
-    private String[] menuOp;
+    private final String[] menuOp;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -32,7 +29,7 @@ public class AttMessageView extends MessageView {
             msgList = new ListDisplayView(announcementPresenter.getChatListTitle(), announcementPresenter.getChatList());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -93,39 +90,40 @@ public class AttMessageView extends MessageView {
             eventName = (String)dropDownMenu.getSelectedItem();
         }
 
-        if(eventName.equals(this.menuOp[6])) {
-            hideMainMenuButtons();
+        assert eventName != null;
+        if(eventName.equals(this.menuOp[5])) {
+            hideMainDropDownMenu();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(this.menuOp[7])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[6])) {
+            hideMainDropDownMenu();
             showOpenAnChat();
         }
 
-        if(eventName.equals(this.menuOp[8])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[7])) {
+            hideMainDropDownMenu();
             showCreateChat();
         }
 
-        if(eventName.equals(this.menuOp[9])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[8])) {
+            hideMainDropDownMenu();
             showCreateGroupChat();
         }
 
         if (eventName.equals("show anchat")) {
             showAnnouncementChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("create chat")) {
             createChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("create groupchat")) {
             createGroupChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 }

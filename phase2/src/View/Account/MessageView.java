@@ -61,7 +61,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -70,7 +70,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getOutboxTitle(), presenter.getOutBox());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -79,7 +79,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -100,7 +100,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -125,38 +125,38 @@ public class MessageView extends AccountView {
         String eventName = event.getActionCommand();
 
         if(eventName.equals(this.menuOp[1])) {
-            hideMainMenuButtons();
+            hideMainDropDownMenu();
             showCheckInbox();
         }
 
         if(eventName.equals(this.menuOp[2])) {
-            hideMainMenuButtons();;
+            hideMainDropDownMenu();
             showCheckSentBox();
         }
 
         if(eventName.equals(this.menuOp[3])) {
-            hideMainMenuButtons();
+            hideMainDropDownMenu();
             showViewChats();
         }
 
         if(eventName.equals(this.menuOp[4])) {
-            hideMainMenuButtons();
+            hideMainDropDownMenu();
             showOpenChat();
         }
 
         if(eventName.equals(this.menuOp[5])) {
-            hideMainMenuButtons();
+            hideMainDropDownMenu();
             showSendMsg();
         }
 
         if (eventName.equals("choose chat")) {
             showViewMsgsInChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("send msg")) {
             sendMsg();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
     }
