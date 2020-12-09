@@ -21,7 +21,7 @@ public class MessageView extends AccountView {
     ListDisplayView msgList;
     JTextField inputField, messageField;
     JButton okayButton, continueButton;
-    private String[] menuOp;
+    private final String[] menuOp;
 
     public MessageView(SubMenu controller) {
         super(controller.getPresenter());
@@ -124,27 +124,27 @@ public class MessageView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
-        if(eventName.equals(this.menuOp[1])) {
+        if(eventName.equals(this.menuOp[0])) {
             hideMainDropDownMenu();
             showCheckInbox();
         }
 
-        if(eventName.equals(this.menuOp[2])) {
+        if(eventName.equals(this.menuOp[1])) {
             hideMainDropDownMenu();
             showCheckSentBox();
         }
 
-        if(eventName.equals(this.menuOp[3])) {
+        if(eventName.equals(this.menuOp[2])) {
             hideMainDropDownMenu();
             showViewChats();
         }
 
-        if(eventName.equals(this.menuOp[4])) {
+        if(eventName.equals(this.menuOp[3])) {
             hideMainDropDownMenu();
             showOpenChat();
         }
 
-        if(eventName.equals(this.menuOp[5])) {
+        if(eventName.equals(this.menuOp[4])) {
             hideMainDropDownMenu();
             showSendMsg();
         }
