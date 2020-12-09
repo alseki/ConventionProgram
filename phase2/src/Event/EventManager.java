@@ -137,7 +137,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the ID of speaker of Event in this EventManager, given event's ID - for OrgEventController
-     *
      * @param eventID The ID of the Event
      * @return The ID of the speaker, as a String
      */
@@ -211,19 +210,6 @@ public class EventManager extends EventAccess implements Serializable {
         try {
             this.getEvent(eventID).setChatID(chatID);
         } catch (NullPointerException n) {
-        }
-    }
-
-    /**
-     * Getter for the capacity of the Event of inputted ID
-     * @param eventID The ID of the Event
-     * @return The Event's capacity
-     */
-    public int getCapacity(String eventID) {
-        try {
-            return this.getEvent(eventID).getCapacity();
-        } catch (NullPointerException n) {
-            return -1;
         }
     }
 
