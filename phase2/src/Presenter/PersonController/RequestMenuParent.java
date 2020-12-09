@@ -47,12 +47,10 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
     /**
      * all the requests for userId
      * @param userId String
-     * @return String of formated request for userid requests
+     * @return String of formatted request for userid requests
      */
     public String myRequests(String userId){
-        StringBuilder reqs = new StringBuilder();
-        reqs.append(reqM.getRequestStringForPerson(userId));
-        return requestFormat() + reqs;
+        return requestFormat() + reqM.getRequestStringForPerson(userId);
 
     }
 

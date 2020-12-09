@@ -177,7 +177,9 @@ public class OrgEventController extends SubMenu {
         }
 
         public boolean addSpeakersToPanel(String eventID, ArrayList<String> panelists) {
-        EventManager.getPanelSpeakerList(eventID);
+        // FIXME
+        //EventManager.getPanelSpeakerList(eventID);
+        return false; // TODO get ride of this line when above is fixed
         }
 
 
