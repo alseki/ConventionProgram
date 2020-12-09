@@ -300,15 +300,15 @@ public class EventManager extends EventAccess implements Serializable {
      * @param eventID
      * @return
      */
-//    public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
-//        if(eventID != null && speakerID != null){
-//            Event panel = getEvent(eventID);
-//            panel.removeSpeaker(speakerID);
-//            return true;
-//        } else{
-//            return false;
-//        }
-//    }
+    public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
+        if(eventID != null && speakerID != null){
+            Event panel = getEvent(eventID);
+            panel.removeSpeaker(speakerID);
+            return true;
+        } else{
+            return false;
+        }
+    }
 
     // Methods to compare Events in EventManager
 
