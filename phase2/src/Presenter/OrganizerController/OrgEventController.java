@@ -170,9 +170,11 @@ public class OrgEventController extends SubMenu {
 
     public boolean addSpeakerPanel(String eventID, String userID) {
         ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
-        panelList.add(userID);
-        return true;
-
+        if(!(panelList.contains(userID))){
+            panelList.add(userID);
+            return true;
+        }
+        return false;
     }
 
     public String convertEventTypeToString(EventType event) {
@@ -183,8 +185,12 @@ public class OrgEventController extends SubMenu {
         }
 
         public boolean removeSpeakerFromPanel(String eventID, String speakerID) {
-            eventManager.removeSpeakerFromPanel(eventID, speakerID);
-            return true;
+            ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
+            if(panelList.contains(speakerID)) {
+                eventManager.removeSpeakerFromPanel(eventID, speakerID);
+                return true;
+            }
+            return false;
         }
 
 
