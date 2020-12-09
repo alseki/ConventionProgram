@@ -12,6 +12,7 @@ public class AttReqView extends AccountView {
     AttReqController controller;
     AttReqMenu presenter;
     String[] menuOp;
+    JLabel dialogPrompt;
 
     public AttReqView(SubMenu controller) {
         super(controller.getPresenter());
@@ -21,15 +22,19 @@ public class AttReqView extends AccountView {
         menuOp = this.presenter.getMenuOptions();
 
         contentPane.setBackground(new Color(100, 200, 232));
+
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
     }
 
 
     private void showMakeReq() {
-
+        dialogPrompt = new JLabel(this.controller.makeRequestPrompt());
+        dialogPrompt.setVisible(true);
     }
 
     private void showViewReqInfo() {
-
+        String reqs = this.controller.myRequests();
     }
 
     private void showMyReq() {
