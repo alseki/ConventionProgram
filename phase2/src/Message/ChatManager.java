@@ -365,6 +365,12 @@ public class ChatManager implements Serializable {
             }
         }
     }
+
+    public String readStatusChat(String chatId){return getUnknownTypeChat(chatId).getReadStatus();}
+
+    public void readChat(String chatId) {getUnknownTypeChat(chatId).markAsRead();}
+
+    public void unreadChat(String chatId) {getUnknownTypeChat(chatId).markAsUnread();}
 }
 
 // CRC Card Definition
