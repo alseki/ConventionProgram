@@ -54,7 +54,7 @@ public class ContactView extends AccountView {
             allContacts = new ListDisplayView(presenter.getContactListTitle(), myContacts);
         } catch (NoDataException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -84,7 +84,7 @@ public class ContactView extends AccountView {
         } catch (InvalidChoiceException e) {
             JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
                     JOptionPane.DEFAULT_OPTION);
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -96,13 +96,14 @@ public class ContactView extends AccountView {
 
         // [0] = View Contacts
         // [1] = Add Contact
-        if (eventName.equals(menuButtons.get(0).getActionCommand())) {
-            hideMainMenuButtons();
+        if (eventName.equals(dropDownMenu.getActionCommand())) {
+            hideMainDropDownMenu();
             showViewContacts();
+            showMainDropDownMenu();
         }
 
-        if (eventName.equals(menuButtons.get(1).getActionCommand())) {
-            hideMainMenuButtons();
+        if (eventName.equals(dropDownMenu.getActionCommand())) {
+            hideMainDropDownMenu();
             showAddContact();
         }
 

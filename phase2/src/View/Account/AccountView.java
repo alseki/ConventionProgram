@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public abstract class AccountView implements ActionListener {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-    public JButton okayButton = new JButton("okay");
-    ArrayList<JButton> menuButtons = new ArrayList<>();
+    public JButton okayButton = newButton("okay");
     JComboBox<String> dropDownMenu;
 
     public static final Color whiteBG = new Color(255, 255, 200);
@@ -25,19 +24,19 @@ public abstract class AccountView implements ActionListener {
     public AccountView(SubMenuPrinter presenter) {
         frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
-        
+
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
         contentPane.setLayout(new FlowLayout());
 
         contentPane.add(okayButton);
         okayButton.setVisible(false);
 
-        makeMenuButtons(presenter);
+        makeDropDownMenu(presenter);
 
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setVisible(true);
-        showMainMenuButtons();
+        showMainDropDownMenu();
     }
 
     /**
@@ -46,35 +45,6 @@ public abstract class AccountView implements ActionListener {
     public void hideAll() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(false);
-        }
-    }
-
-    /**
-     * Builds all the menu buttons for this view
-     * @param presenter the view's presenter menu class
-     */
-    public void makeMenuButtons(SubMenuPrinter presenter) {
-        for (String option: presenter.getMenuOptions()) {
-            menuButtons.add(newButton(option));
-        }
-    }
-
-    /**
-     * Shows the button options for the main menu of account view object
-     */
-    public void showMainMenuButtons() {
-        hideAll();
-        for (JButton button: menuButtons) {
-            button.setVisible(true);
-        }
-    }
-
-    /**
-     * Hides the button options for the main menu of account view object
-     */
-    public void hideMainMenuButtons() {
-        for (JButton button: menuButtons) {
-            button.setVisible(false);
         }
     }
 
@@ -136,7 +106,7 @@ public abstract class AccountView implements ActionListener {
         String eventName = event.getActionCommand();
 
         if(eventName.equals("okay")) {
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 

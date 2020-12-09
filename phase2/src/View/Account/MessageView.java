@@ -21,7 +21,7 @@ public class MessageView extends AccountView {
     ListDisplayView msgList;
     JTextField inputField, messageField;
     JButton okayButton, continueButton;
-    private String[] menuOp;
+    private final String[] menuOp;
 
     public MessageView(SubMenu controller) {
         super(controller.getPresenter());
@@ -61,7 +61,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -70,7 +70,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getOutboxTitle(), presenter.getOutBox());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -79,7 +79,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -100,7 +100,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -125,39 +125,39 @@ public class MessageView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         String eventName = event.getActionCommand();
 
-        if(eventName.equals(this.menuOp[1])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[0])) {
+            hideMainDropDownMenu();
             showCheckInbox();
         }
 
-        if(eventName.equals(this.menuOp[2])) {
-            hideMainMenuButtons();;
+        if(eventName.equals(this.menuOp[1])) {
+            hideMainDropDownMenu();
             showCheckSentBox();
         }
 
-        if(eventName.equals(this.menuOp[3])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[2])) {
+            hideMainDropDownMenu();
             showViewChats();
         }
 
-        if(eventName.equals(this.menuOp[4])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[3])) {
+            hideMainDropDownMenu();
             showOpenChat();
         }
 
-        if(eventName.equals(this.menuOp[5])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[4])) {
+            hideMainDropDownMenu();
             showSendMsg();
         }
 
         if (eventName.equals("choose chat")) {
             showViewMsgsInChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("send msg")) {
             sendMsg();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
     }
