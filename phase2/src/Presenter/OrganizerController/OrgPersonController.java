@@ -110,15 +110,6 @@ public class OrgPersonController extends SubMenu {
         return false;
     }
 
-    public boolean deleteSpeakerFromPanel(String eventID, String speakerID) {
-        ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
-        if(panelList.contains(speakerID)) {
-            eventManager.removeSpeakerFromPanel(eventID, speakerID);
-            return true;
-        }
-        return false;
-    }
-
     public void deleteUserFromChatGroups(String userID) {
 
         ArrayList<String> userChatList = personManager.getChats(userID);
@@ -176,7 +167,7 @@ public class OrgPersonController extends SubMenu {
 
         // have organizer send message to other panelists - or organizer can do this by herself/himself
         for(String eventID: panelList){
-            deleteSpeakerFromPanel(eventID, userID);
+        //    deleteSpeakerFromPanel(eventID, userID);
         }
         // TODO Fix the commented line!
 
@@ -209,7 +200,7 @@ public class OrgPersonController extends SubMenu {
 
         // have organizer send message to other panelists - or organizer can do this by herself/himself
         for(String eventID: panelList){
-            deleteSpeakerFromPanel(eventID, userID);
+        //    deleteSpeakerFromPanel(eventID, userID);
         }
         // TODO Fix the commented line!
 

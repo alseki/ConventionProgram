@@ -3,11 +3,9 @@ package Presenter.OrganizerController;
 // Programmers: Cara McNeil, Sarah Kronenfeld, Eytan Weinstein
 // Description: All the methods that take user input in the OrganizerController Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 19/11/2020
+// Date Modified: 09/12/2020
 
-import Event.EventManager;
-import Event.EventPermissions;
-import Event.EventType;
+import Event.*;
 import Person.EmployeeManager;
 import Person.OrganizerManager;
 import Person.SpeakerManager;
@@ -60,7 +58,7 @@ public class OrgEventController extends SubMenu {
      * @param name The name of the Room
      * @return the ID of the Room
      */
-    private String getRoom(String name) throws InvalidChoiceException {
+    private String getRoomID(String name) throws InvalidChoiceException {
         if (roomManager.getRoomID(name) != null) {
             return roomManager.getRoomID(name);
         } else {
@@ -91,8 +89,8 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
-     * Chooses a valid start time for the new Event
-     * @return The start time as a LocalDateTime object
+     * Chooses a valid EventType for the new Event
+     * @return The type of the new Event (as an EventType object)
      */
     private EventType getEventType(String type) throws InvalidChoiceException {
         try {
@@ -172,29 +170,48 @@ public class OrgEventController extends SubMenu {
         return eventID;
     }
 
-    public boolean addSpeakerPanel(String eventID, String userID) {
-        ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
-        if(!(panelList.contains(userID))){
-            panelList.add(userID);
-            return true;
+
+    /**
+     * Adds the Speaker with speakerID to the Panel with ID eventID
+     * @param speakerID   The ID of the Speaker
+     * @param eventID     The ID of the Panel
+     * @return true iff the Speaker was signed up
+     */
+    public boolean addSpeakerToPanel(String speakerID, String eventID) throws InvalidChoiceException, NotPanelException,
+            CapacityException {
+        Event event = eventManager.getEvent(eventID);
+        if (event == null) {
+            throw new InvalidChoiceException("event");
+        } else if (!(event.getClass().equals(Panel.class))) {
+            throw new NotPanelException();
+        } else {
+            return eventPermissions.signSpeakerUpForPanel(speakerID, eventID);
         }
-        return false;
     }
 
-    public String convertEventTypeToString(EventType event) {
+    /**
+     * Adds the Speaker with speakerID to the Panel with ID eventID
+     * @param speakerID   The ID of the Speaker
+     * @param eventID     The ID of the Panel
+     * @return true iff the Speaker was signed up
+     */
+    public boolean removeSpeakerFromPanel(String speakerID, String eventID) throws InvalidChoiceException,
+            NotPanelException, CapacityException {
+        Event event = eventManager.getEvent(eventID);
+        if (event == null) {
+            throw new InvalidChoiceException("event");
+        } else if (!(event.getClass().equals(Panel.class))) {
+            throw new NotPanelException();
+        } else {
+            return eventPermissions.removeSpeakerFromPanel(speakerID, eventID);
+        }
+    }
 
+
+
+    public String convertEventTypeToString(EventType event) {
         String eventTypeString = EventType.convertToString(event);
         return eventTypeString;
-
-        }
-
-        public boolean removeSpeakerFromPanel(String eventID, String speakerID) {
-            ArrayList<String> panelList = eventManager.getPanelSpeakerList(eventID);
-            if(panelList.contains(speakerID)) {
-                eventManager.removeSpeakerFromPanel(eventID, speakerID);
-                return true;
-            }
-            return false;
         }
 
 
