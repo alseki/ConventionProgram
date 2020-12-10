@@ -1,6 +1,7 @@
 package Request;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -16,7 +17,9 @@ public class RequestEntity implements Serializable {
     private String requestContent;
     private boolean fulfilled;
     private final String requestingUserId;
+    private ArrayList<String> employeeHandlingRequest;
     private String eventsConcerned;
+
     /*  Helper class for making this class as an observable  */
 
     /**
@@ -28,6 +31,7 @@ public class RequestEntity implements Serializable {
     public RequestEntity(String requestContent, String requestingUserId) {
         this.requestContent = requestContent;
         this.requestingUserId = requestingUserId;
+        this.employeeHandlingRequest = new ArrayList<>();
         this.fulfilled = false;
         this.requestId = UUID.randomUUID().toString();
 
@@ -43,6 +47,15 @@ public class RequestEntity implements Serializable {
         }
 
     /**
+     *
+     * @return
+     */
+
+    public ArrayList getEmployeeHandlingRequest() {
+            return this.employeeHandlingRequest;
+        }
+
+    /**
      * getter for the requesting user id
      * @return String representing the requesting user Id
      */
@@ -52,7 +65,7 @@ public class RequestEntity implements Serializable {
 
     /**
      * getter for request content
-     * @return string reqpresenting the request content
+     * @return string representing the request content
      */
     public String getRequestContent () {
             return requestContent;
@@ -83,7 +96,7 @@ public class RequestEntity implements Serializable {
 
     /**
      * To string method for request entity
-     * comes in the format of requestId     requestcontent      pending/fulfilled       requestingusedID
+     * comes in the format of requestId     requestContent      pending/fulfilled       requestingUserID
      * @return string
      */
     @Override
@@ -92,6 +105,10 @@ public class RequestEntity implements Serializable {
         sb.append(requestId);
         sb.append("\t");
         sb.append(requestContent);
+        sb.append("\t");
+        if(!this.employeeHandlingRequest.isEmpty()){
+            sb.append(employeeHandlingRequest + " handling request");
+        }
         sb.append("\t");
         if(!this.fulfilled){
             sb.append("Pending");

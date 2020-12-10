@@ -1,7 +1,6 @@
 package Presenter.EmployeeController;
 
 import Presenter.Central.SubMenu;
-import Presenter.Central.SubMenuPrinter;
 import Request.RequestManager;
 
 public class EmpReqController extends SubMenu {
@@ -15,6 +14,22 @@ public class EmpReqController extends SubMenu {
         this.presenter = new EmpReqMenu(reqM);
         this.currentUserID = currentUserID;
     }
+
+//    /**
+//     * allows user to change/modify the request that is still pending
+//     * @param reqUserId the user who is changing the request
+//     * @param reqId of the request content to be brought into a string
+//     * @return true
+//     */
+//    public boolean modifyRequest(String reqUserId, String reqId) {
+//        RequestEntity req = getRequestEntity(reqId);
+//        if(!req.getFulfilled()) {
+//            String oldRequest = getStringOfRequest(reqId);
+//            createRequest(oldRequest, reqUserId);
+//        }
+//        return true;
+//
+//    }
 
 
     private String seeRequests(){
@@ -33,6 +48,10 @@ public class EmpReqController extends SubMenu {
     }
     private String myRequests(){
         return presenter.myRequests(currentUserID);
+    }
+
+    private String handleRequest(){
+        return presenter.seeHandleRequestPrompt(currentUserID);
     }
 
 

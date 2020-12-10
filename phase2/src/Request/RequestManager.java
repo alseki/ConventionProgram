@@ -21,6 +21,10 @@ public class RequestManager implements Serializable {
         requestsList.add(req);
     }
 
+    private void removeRequest(RequestEntity req){
+        requestsList.remove(req);
+    }
+
     /**
      * creates a reauest
      * @param reqUserId the user who is making the request
@@ -50,6 +54,15 @@ public class RequestManager implements Serializable {
 
     }
 
+    private void handleRequest(String reqID, String employeeID, String employeeUsername){
+        RequestEntity request = getRequestEntity(reqID);
+        Boolean handlingRequest = true;
+        request.getEmployeeHandlingRequest().add(0, reqID);
+        request.getEmployeeHandlingRequest().add(1, handlingRequest);
+        request.getEmployeeHandlingRequest().add(2, employeeID);
+        request.getEmployeeHandlingRequest().add(3, employeeUsername);
+
+    }
 
     private void updateMap(String str, RequestEntity req){
         idToRequest.put(str, req);
@@ -62,7 +75,6 @@ public class RequestManager implements Serializable {
     private ArrayList<RequestEntity> getAllRequests() {
         return requestsList;
     }
-
 
 
     /**
@@ -102,8 +114,8 @@ public class RequestManager implements Serializable {
     }
 
     /**
-     * way to get all the requsting user id's
-     * @return ArrrayLis of requesting user id's
+     * way to get all the requesting user id's
+     * @return ArrrayList of requesting user id's
      */
     public ArrayList<String> getAllRequestUserIds(){
         ArrayList<String> lst = new ArrayList<>();
