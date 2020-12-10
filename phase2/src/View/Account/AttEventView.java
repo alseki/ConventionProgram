@@ -15,11 +15,11 @@ public class AttEventView extends AccountView {
     AttEventController controller;
     AttEventMenu presenter;
 
-    JLabel dialogueMsg;
     JButton signupButton, cancelSpotButton, chooseRoomButton;
-    JTextField inputEventName;
+    JTextField inputField;
     ListDisplayView eventList;
     JComboBox<String> roomChoice;
+    JLabel dialoguePrompt;
 
     public AttEventView(SubMenu controller) {
         super(controller.getPresenter());
@@ -28,7 +28,15 @@ public class AttEventView extends AccountView {
 
         contentPane.setBackground(whiteBG);// Sets background colour to white
 
+        dialoguePrompt = new JLabel("");
+        initializeObject(dialoguePrompt);
 
+        signupButton = newButton("Sign up");
+        cancelSpotButton = newButton("Cancel spot");
+        chooseRoomButton = newButton("Choose room");
+
+        inputField = new JTextField(50);
+        initializeObject(inputField);
     }
 
 
@@ -45,23 +53,23 @@ public class AttEventView extends AccountView {
     }
 
     private void showSignUp() {
-        dialogueMsg = new JLabel(this.presenter.printAddEventPrompt());
-        dialogueMsg.setVisible(true);
-        inputEventName.setVisible(true);
+        dialoguePrompt.setText(this.presenter.printAddEventPrompt());
+        dialoguePrompt.setVisible(true);
+        inputField.setVisible(true);
         signupButton.setVisible(true);
         backButton.setVisible(true);
     }
 
     private void showCancelSpot() {
-        dialogueMsg = new JLabel(this.presenter.printRemoveEventPrompt());
-        dialogueMsg.setVisible(true);
-        inputEventName.setVisible(true);
+        dialoguePrompt.setText(this.presenter.printRemoveEventPrompt());
+        dialoguePrompt.setVisible(true);
+        inputField.setVisible(true);
         cancelSpotButton.setVisible(true);
         backButton.setVisible(true);
     }
 
     private void showRoomChoice() {
-        dialogueMsg = new JLabel(this.presenter.printRoomChoicePrompt());
+        dialoguePrompt.setText(this.presenter.printRoomChoicePrompt());
         roomChoice.setVisible(true);
         chooseRoomButton.setVisible(true);
         backButton.setVisible(true);
@@ -72,11 +80,11 @@ public class AttEventView extends AccountView {
      * Uses the controller to try and sign up the user for an event (add event to their event list)
      */
     private void signup() {
-        String event = inputEventName.getText();
+        String event = inputField.getText();
 
         try {
             if (controller.signupForEvent(event)) {
-                dialogueMsg = new JLabel(this.presenter.printEventAdded());
+                dialoguePrompt.setText(this.presenter.printEventAdded());
             }
             else {
                 JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), "Unexpected Error",
@@ -94,11 +102,11 @@ public class AttEventView extends AccountView {
      * Uses the controller to try and cancel the user's spot in an event (add event to their event list)
      */
     private void cancelSpot() {
-        String event = inputEventName.getText();
+        String event = inputField.getText();
 
         try {
             if (controller.cancelSpotFromEvent(event)) {
-                dialogueMsg = new JLabel(this.presenter.printEventRemoved());
+                dialoguePrompt.setText(this.presenter.printEventRemoved());
             }
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));

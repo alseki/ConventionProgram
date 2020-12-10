@@ -16,7 +16,7 @@ public class AttMessageView extends MessageView {
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
     JButton createChatButton;
-    JLabel label;
+    JLabel dialogPrompt;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -25,6 +25,9 @@ public class AttMessageView extends MessageView {
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
         contentPane.setBackground(pinkBG);// Sets background colour
+
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
 
         createChatButton = newButton("Create Chat!");
     }
@@ -42,7 +45,7 @@ public class AttMessageView extends MessageView {
 
     private void showOpenAnChat() {
         showOpenChat();
-        dialogPrompt = new JLabel(announcementPresenter.printChatIdPrompt());
+        dialogPrompt.setText(announcementPresenter.printChatIdPrompt());
 
         okayButton.setActionCommand("choose anchat");
     }
@@ -60,7 +63,7 @@ public class AttMessageView extends MessageView {
     }
 
     private void showCreateChat() {
-        dialogPrompt = new JLabel(presenter.printContactUsernamePrompt());
+        dialogPrompt.setText(presenter.printContactUsernamePrompt());
         dialogPrompt.setVisible(true);
 
         new JTextField(100);
@@ -72,7 +75,7 @@ public class AttMessageView extends MessageView {
     }
 
     private void showCreateGroupChat() {
-        dialogPrompt = new JLabel(presenter.printContactUsernamesPrompt());
+        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
         dialogPrompt.setVisible(true);
 
         new JTextField(100);

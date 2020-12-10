@@ -73,7 +73,6 @@ public class OrgEventView extends AccountView {
         String eventTime = JOptionPane.showInputDialog(null, presenter.printStartTimePrompt(),
                 "Start time", JOptionPane.PLAIN_MESSAGE);
 
-        // try-catch block and more code here
     }
 
     private void showCreateSpeakerAcc() {
