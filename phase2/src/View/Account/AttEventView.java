@@ -39,19 +39,6 @@ public class AttEventView extends AccountView {
         initializeObject(inputField);
     }
 
-
-    @Override
-    public void showMainDropDownMenu() {
-        super.showMainDropDownMenu();
-        continueButton.setVisible(true);
-    }
-
-    @Override
-    public void hideMainDropDownMenu() {
-        super.hideMainDropDownMenu();
-        continueButton.setVisible(false);
-    }
-
     private void showSignUp() {
         dialoguePrompt.setText(this.presenter.printAddEventPrompt());
         dialoguePrompt.setVisible(true);

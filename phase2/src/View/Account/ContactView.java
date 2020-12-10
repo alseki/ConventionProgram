@@ -65,6 +65,7 @@ public class ContactView extends AccountView {
     private void showAddContact() {
         enterUsernameMsg.setVisible(true);
         submitButton.setVisible(true);
+        backButton.setVisible(true);
         inputAddContact.setVisible(true);
     }
 
@@ -82,6 +83,7 @@ public class ContactView extends AccountView {
             controller.addContact(contactUsername);
             contactAdded.setVisible(true);
             okayButton.setVisible(true);
+            backButton.setVisible(false);
         } catch (InvalidChoiceException e) {
             JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
                     JOptionPane.DEFAULT_OPTION);

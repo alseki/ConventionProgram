@@ -95,6 +95,7 @@ public class MessageView extends AccountView {
         okayButton.setText("choose chat");
         okayButton.setActionCommand("choose chat");
         okayButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void showViewMsgsInChat() {
@@ -109,7 +110,7 @@ public class MessageView extends AccountView {
     }
 
     private void showSendMsg() {
-        //dialogPrompt = new JLabel(presenter.printContentPrompt()); TODO: make this method return string
+        dialogPrompt.setText(presenter.printContentPrompt());
         dialogPrompt.setVisible(true);
 
         inputField.setVisible(true);
@@ -118,6 +119,7 @@ public class MessageView extends AccountView {
         okayButton.setActionCommand("send msg");
         okayButton.setText("send msg");
         okayButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     //TODO: send msg method is in MessageController.

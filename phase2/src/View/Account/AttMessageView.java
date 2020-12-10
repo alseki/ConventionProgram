@@ -72,6 +72,7 @@ public class AttMessageView extends MessageView {
         createChatButton.setText("Create Chat");
         createChatButton.setActionCommand("Create Chat");
         createChatButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void showCreateGroupChat() {
@@ -84,6 +85,7 @@ public class AttMessageView extends MessageView {
         createChatButton.setText("Create Group Chat");
         createChatButton.setActionCommand("Create Group Chat");
         createChatButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void createChat() {

@@ -218,8 +218,8 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter content of the message.
      */
-    public void printContentPrompt(){
-        System.out.println("Please enter the content of your message.");
+    public String printContentPrompt(){
+        return "Please enter the content of your message.";
     }
 
     protected String messageSent() {

@@ -45,8 +45,9 @@ public class AttMessageMenu extends MessageMenu {
      * Prompts user to enter usernames of the contacts want to have chat with.
      */
     public String printContactUsernamesPrompt(){
-        return "Who do you want to have a group chat with? Enter their usernames in a comma-separated list." +
-                "\n(E.g. 'user1,user2,user3' without apostrophes (''). Please do not add spaces after commas)";
+        return "<html>Who do you want to have a group chat with?<br>Enter their usernames in a comma-separated list." +
+                "(E.g. 'user1,user2,user3' without apostrophes (''). Please do <b>not<b/> add spaces after commas)" +
+                "<html/>";
     }
     //Method below is left here in case we use it in Phase 2
     /**

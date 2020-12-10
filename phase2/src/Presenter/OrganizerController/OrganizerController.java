@@ -21,10 +21,10 @@ import Presenter.PersonController.PersonController;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
-    private OrganizerManager manager;
-    private SpeakerManager speakerManager;
-    private AttendeeManager attendeeManager;
-    private EmployeeManager employeeManager;
+    private final OrganizerManager manager;
+    private final SpeakerManager speakerManager;
+    private final AttendeeManager attendeeManager;
+    private final EmployeeManager employeeManager;
 
     /**
      * constructor for organizer controller
