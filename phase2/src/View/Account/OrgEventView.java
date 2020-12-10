@@ -16,9 +16,8 @@ public class OrgEventView extends AccountView {
     // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
     //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
     JLabel dialogPrompt;
-    JButton continueButton, okayButton, backButton, signupButton, cancelSpotButton;
-    // JTextField inputRoomName, inputRoomCap, inputSName, inputSUsername, inputSPassword, inputSEmail;
-    JTextField inputField, messageField;
+    JButton createRoomButton;
+    JTextField inputField1, inputField2, messageField;
 
     public OrgEventView(SubMenu controller) {
         super(controller.getPresenter());
@@ -28,25 +27,10 @@ public class OrgEventView extends AccountView {
         menuOp = this.presenter.getMenuOptions();
 
         contentPane.setBackground(whiteBG);// Sets background colour
-        continueButton = newButton("continue");
-        contentPane.add(continueButton);
-
-        backButton = newButton("back");
-        contentPane.add(backButton);
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
-        inputField = new JTextField(100);
-        initializeObject(inputField);
-        messageField = new JTextField(100);
-        initializeObject(messageField);
-        continueButton = newButton("continue");
-        initializeObject(continueButton);
 
-        //setupCreateRoom();
-        //setupCreateEvent();
-        //setupCreateSpeakerAcc();
-        //setupMakeEventAnnouncement();
     }
 
     /*
@@ -146,32 +130,80 @@ public class OrgEventView extends AccountView {
 
 
     private void showCreateRoom() {
-        dialogPrompt.setText(this.presenter.addRoomPrompt());
+        backButton.setVisible(true);
 
-        //addRoomPrompt.setVisible(true);
-        //roomNamePrompt.setVisible(true);
-        //inputRoomName.setVisible(true);
-        //roomCapPrompt.setVisible(true);
-        //inputRoomCap.setVisible(true);
+        dialogPrompt.setText(presenter.addRoomPrompt());
+        dialogPrompt.setVisible(true);
+
+        String roomName = JOptionPane.showInputDialog(null, presenter.roomNamePrompt(),
+                "Helloooo", JOptionPane.PLAIN_MESSAGE);
+
+        String roomCap = JOptionPane.showInputDialog(null, presenter.roomCapacityPrompt(),
+                "Helloooo", JOptionPane.PLAIN_MESSAGE);
+
+        // try-catch block and more code here
     }
 
     private void showCreateEvent() {
+        backButton.setVisible(true);
 
+        dialogPrompt.setText(presenter.printCreateEventPrompt());
+        dialogPrompt.setVisible(true);
+
+        String eventType = JOptionPane.showInputDialog(null, presenter.printEventTypePrompt(),
+                "Type", JOptionPane.PLAIN_MESSAGE);
+
+        String eventRoom = JOptionPane.showInputDialog(null, presenter.printRoomNamePrompt(),
+                "Room", JOptionPane.PLAIN_MESSAGE);
+
+        String eventName = JOptionPane.showInputDialog(null, presenter.printEventNamePrompt(),
+                "Name", JOptionPane.PLAIN_MESSAGE);
+
+        String eventChat = JOptionPane.showInputDialog(null, presenter.printChatNamePrompt(),
+                "Chat", JOptionPane.PLAIN_MESSAGE);
+
+        String eventDesc = JOptionPane.showInputDialog(null, presenter.printDescriptionPrompt(),
+                "Description", JOptionPane.PLAIN_MESSAGE);
+
+        String eventTime = JOptionPane.showInputDialog(null, presenter.printStartTimePrompt(),
+                "Start time", JOptionPane.PLAIN_MESSAGE);
+
+        // try-catch block and more code here
     }
 
     private void showCreateSpeakerAcc() {
+        backButton.setVisible(true);
 
+        dialogPrompt.setText(presenter.printAddSpeakerPrompt());
+        dialogPrompt.setVisible(true);
+
+        String speName = JOptionPane.showInputDialog(null, presenter.printAddNamePrompt(),
+                "Full name", JOptionPane.PLAIN_MESSAGE);
+
+        String speUser = JOptionPane.showInputDialog(null, presenter.printAddUsernamePrompt(),
+                "Username", JOptionPane.PLAIN_MESSAGE);
+
+        String spePassword = JOptionPane.showInputDialog(null, presenter.printAddPasswordPrompt(),
+                "Password", JOptionPane.PLAIN_MESSAGE);
+
+        String speEmail = JOptionPane.showInputDialog(null, presenter.printAddEmailPrompt(),
+                "Email", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void showMakeEventAnnouncement() {
+        backButton.setVisible(true);
 
+        dialogPrompt.setText(presenter.printEventMessageIntro());
+        dialogPrompt.setVisible(true);
+
+        // some text field here that takes in the announcement
     }
 
 
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
+        super.actionPerformed(event);
 
         if(eventName.equals(menuOp[0])) {
             hideMainDropDownMenu();
