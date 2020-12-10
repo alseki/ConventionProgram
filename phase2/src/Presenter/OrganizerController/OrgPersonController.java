@@ -196,6 +196,7 @@ public class OrgPersonController extends SubMenu {
         deleteAttendeeFromEvent(userId);
         deleteUserFromChatGroups(userId);
         removeFromOtherUsersContactLists(userId);
+        deletingRequestsEmpAttOrg(userId);
         attendeeManager.cancelAccount(userId);
 
     }
@@ -206,6 +207,7 @@ public class OrgPersonController extends SubMenu {
         deleteAttendeeFromEvent(userId);
         deleteAttendeeFromEvent(userId);
         removeFromOtherUsersContactLists(userId);
+        deletingRequestsEmpAttOrg(userId);
         personManager.cancelAccount(username);
     }
 
@@ -284,8 +286,8 @@ public class OrgPersonController extends SubMenu {
         // then delete the rest
         deleteUserFromChatGroups(userID);
         removeFromOtherUsersContactLists(userID);
+        deletingRequestsEmpAttOrg(userID);
         employeeManager.cancelEmployeeAccount(userID);
-
 
     }
 
@@ -307,7 +309,9 @@ public class OrgPersonController extends SubMenu {
             deleteAttendeeFromEvent(userID);
             deleteUserFromChatGroups(userID);
             removeFromOtherUsersContactLists(userID);
+            deletingRequestsEmpAttOrg(userID);
             organizerManager.cancelAccount(userID);
+
             return true;
         }
         return false;
@@ -442,8 +446,8 @@ public class OrgPersonController extends SubMenu {
 //        aChatsList.add(ac);
 //        return ac.getId();
 
-
-    public boolean deletingRequestsEmployee(String userID) {
+    // This will apply to all user accounts, as speakers cannot makes requests to the request board
+    public boolean deletingRequestsEmpAttOrg(String userID) {
         ArrayList<RequestEntity> allRequests = requestManager.getRequestLists();
         ArrayList<RequestEntity> listUser = new ArrayList<>();
         for (RequestEntity request : allRequests) {
@@ -456,9 +460,6 @@ public class OrgPersonController extends SubMenu {
         }
         return true;
     }
-
-
-
 
 
         @Override
