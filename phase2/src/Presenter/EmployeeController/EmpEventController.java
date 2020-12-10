@@ -1,15 +1,13 @@
 // get schedule of all talks
-
 // get request board
 
 // contact organizers .. set up that check in the EmployeeManager
 // contact employees  ... set up that check in the EmployeeManager -- check with message people
 
 //  do a test exceptions .. try sending to speaker and/or attendee -- and get back message
-
 // set up a request board of tally for each room - whether it is an event or not.
-
 // which organizers and employees and administrator can see.
+
 package Presenter.EmployeeController;
 
 import Event.EventManager;
