@@ -123,7 +123,7 @@ public abstract class Person implements Serializable {
         }
     }
 
-    //TODO: delete this comment.
+
     /**
      * @return ArrayList returns the list of string corresponding to the archived chat Ids
      */
@@ -131,7 +131,7 @@ public abstract class Person implements Serializable {
         return archivedChatList;
     }
 
-    //TODO: delete this comment.
+
     /**
      * Adds a Chat to the list of the user's archived chats
      * @param chatID the ID of the chat
@@ -140,7 +140,7 @@ public abstract class Person implements Serializable {
         archivedChatList.add(chatID);
     }
 
-    //TODO: delete this comment.
+
     /**
      * Removes a Chat from the list of the user's archived chats
      * @param chatID the ID of the chat
@@ -149,7 +149,7 @@ public abstract class Person implements Serializable {
         archivedChatList.remove(chatID);
     }
 
-    //TODO: delete this comment.
+
     /**
      * @return ArrayList returns the list of string corresponding to the archived message Ids
      */
@@ -157,7 +157,7 @@ public abstract class Person implements Serializable {
         return favorites;
     }
 
-    //TODO: delete this comment.
+
     /**
      * Adds a message to the list of the user's favorites folder.
      * @param messageId the ID of the message
@@ -166,7 +166,7 @@ public abstract class Person implements Serializable {
         favorites.add(messageId);
     }
 
-    //TODO: delete this comment.
+
     /**
      * Removes a message from the list of the user's archived messages
      * @param messageId the ID of the chat

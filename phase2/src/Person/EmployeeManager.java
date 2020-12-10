@@ -14,7 +14,6 @@ public class EmployeeManager extends PersonManager {
     // dictionary of all employees; this is under the theme of creating a restricted chat for employees with employees only
     protected Map<String, Employee> usernameToEmployee = new HashMap<String, Employee>();
 
-
     String name = getName();
 
     private String getName() {
@@ -72,29 +71,44 @@ public class EmployeeManager extends PersonManager {
         return usernameToEmployee;
     }
 
-    // TODO WIll fix this up
-//    public String getEmployeeName(String userID) {
-//        return usernameToEmployee.getEmployee(userID).getName();
-//    }
-//
-//    public String getEmployeeID(String userName) {
-//        return usernameToEmployee.getEmployee(userName).getID();
-//    }
-//
-//    public String getUsername(String userID) {
-//        return usernameToEmployee.getEmployee(userID).username;
-//    }
-//
-//    public ArrayList<String> getAllEmployees() {
-//        ArrayList<String> nameUsernamePassword = new ArrayList<>();
-//        Map<String, Employee> map = getUsernameToEmployee();
-//        for (String key : map.keySet()){
-//            nameUsernamePassword.add("(" + key.name + "; " + key.username + "; " + key.currentUserID)+")";
-//        }
-//        return nameUsernamePassword;
-//
-//    }
 
+    public String getFullName(String username) {
+        Person person = (Employee) getPerson(username);
+        return person.getFullName();
+
+    }
+
+    public String getFullNameWithID(String userID){
+        Person employee = (Employee) getPerson(userID);
+        return employee.getFullName();
+    }
+
+    public String getUserName(String userID) {
+        Person person = (Employee) getPerson(userID);
+        return person.getUsername();
+
+    }
+
+    public String getEmployeeID(String userName) {
+        Person employee = (Employee) getPerson(userName);
+        return employee.getID();
+    }
+
+    public ArrayList<String> getAllEmployees() {
+        ArrayList<String> nameUsernamePassword = new ArrayList<>();
+        Map<String, Employee> map = getUsernameToEmployee();
+
+        for (Employee employee : map.values()) {
+
+                nameUsernamePassword.add("(" + employee.getFullName() + "; " + employee.username + "; " + employee.getID() + ")");
+        }
+        return nameUsernamePassword;
+
+    }
+
+    public ArrayList getRequestsIDs(String userID){
+        return requestIds;
+    }
 
 
     public boolean addAnnouncementChats(String personId, String acId) {
@@ -106,6 +120,11 @@ public class EmployeeManager extends PersonManager {
         return false;
     }
 
+    public ArrayList getAnnouncementChats(String userID){
+        Employee employee = (Employee) getPerson(userID);
+        return employee.getAnnouncementChats();
+    }
+
     /**
      * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
      * @param speakerID ID of the Speaker
@@ -114,8 +133,6 @@ public class EmployeeManager extends PersonManager {
     public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
         Speaker spe = (Speaker) getPerson(speakerID);
         return spe.getAllTalks();}
-
-
 
     public String IDtoUsername(String Id){
         return getPerson(Id).getUsername();
@@ -127,5 +144,4 @@ public class EmployeeManager extends PersonManager {
     // check request board
 
     // change the status of requests, and implement notifications
-
 }

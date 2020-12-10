@@ -9,10 +9,9 @@ import Request.RequestManager;
 // Date Modified: 02/12/2020
 
 public class OrgReqMenu extends RequestMenuParent {
-    private RequestManager reqM;
 
     /**
-     * contructor
+     * constructor
      * @param reqM a request manager
      */
     public OrgReqMenu(RequestManager reqM){
@@ -25,9 +24,8 @@ public class OrgReqMenu extends RequestMenuParent {
      */
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "View a specific request", "View requests", "Fulfill a request",
+        return new String[]{"View a specific request", "View requests", "Fulfill a request",
             "Make a request", "See my requests", "Modify a request"};
-        return options;
     }
 
     /**

@@ -5,13 +5,8 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.ContactMenu;
-import Presenter.PersonController.PersonController;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class ContactView extends AccountView {
@@ -57,9 +52,10 @@ public class ContactView extends AccountView {
         try {
             String[] myContacts = presenter.getContactList();
             allContacts = new ListDisplayView(presenter.getContactListTitle(), myContacts);
+            showMainDropDownMenu();
         } catch (NoDataException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -89,7 +85,7 @@ public class ContactView extends AccountView {
         } catch (InvalidChoiceException e) {
             JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), presenter.printException(e),
                     JOptionPane.DEFAULT_OPTION);
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -97,17 +93,15 @@ public class ContactView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
 
-        String eventName = event.getActionCommand();
-
         // [0] = View Contacts
         // [1] = Add Contact
-        if (eventName.equals(menuButtons.get(0).getActionCommand())) {
-            hideMainMenuButtons();
+        if (eventName.equals(menuOp[0])) {
+            hideMainDropDownMenu();
             showViewContacts();
         }
 
-        if (eventName.equals(menuButtons.get(1).getActionCommand())) {
-            hideMainMenuButtons();
+        if (eventName.equals(menuOp[1])) {
+            hideMainDropDownMenu();
             showAddContact();
         }
 

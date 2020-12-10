@@ -3,7 +3,7 @@ package Presenter.AttendeeController;
 // Programmers: Cara McNeil, Allen Kim, Eytan Weinstein
 // Description: All the methods that take user input in the AttendeeController Event Menu
 // Date Created: 01/11/2020
-// Date Modified: 17/11/2020
+// Date Modified: 09/12/2020
 
 import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
@@ -87,12 +87,10 @@ public class AttEventController extends SubMenu {
      */
     public boolean signupForEvent(String eventName) throws InvalidChoiceException, CapacityException  {
         String event = eventManager.getEventID(eventName);
-        String room = roomManager.getEventRoom(event);
-        if (room == null || event == null) {
+        if (event == null) {
             throw new InvalidChoiceException("event");
         }
-
-        eventPermissions.signUpForEvent(currentUserID, event, room);
+        eventPermissions.signAttendeeUpForEvent(currentUserID, event);
         boolean eventAddedToPerson = attendeeManager.signUpForEvent(currentUserID, event);
         attendeeManager.addAnChat(currentUserID, eventManager.getEventChat(event));
         return eventAddedToPerson;
@@ -108,7 +106,7 @@ public class AttEventController extends SubMenu {
             throw new InvalidChoiceException("event");
         }
 
-        boolean personRemovedFromEvent = eventPermissions.removeFromEvent(currentUserID, event);
+        boolean personRemovedFromEvent = eventPermissions.removeAttendeeFromEvent(currentUserID, event);
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
         attendeeManager.removeAnChat(currentUserID, eventManager.getEventChat(event));
         return personRemovedFromEvent && eventRemovedFromPerson;

@@ -15,7 +15,8 @@ public class AttMessageView extends MessageView {
     AttMessageController controller;
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
-    private String[] menuOp;
+    JButton createChatButton;
+    JLabel label;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -23,16 +24,19 @@ public class AttMessageView extends MessageView {
         this.presenter = ((AttMessageController) controller).getPresenter();
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
-        this.menuOp = this.presenter.getMenuOptions();
         contentPane.setBackground(pinkBG);// Sets background colour
+
+        createChatButton = newButton("Create Chat!");
     }
 
     private void showViewAnnouncementChannels() {
         try {
-            msgList = new ListDisplayView(announcementPresenter.getChatListTitle(), announcementPresenter.getChatList());
+            msgList = new ListDisplayView(announcementPresenter.getChatListTitle(),
+                    announcementPresenter.getChatList());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -47,36 +51,55 @@ public class AttMessageView extends MessageView {
         String chatID = inputField.getText();
 
         try {
-            msgList = new ListDisplayView(announcementPresenter.getChatTitle(chatID), announcementPresenter.getChat(chatID));
+            msgList = new ListDisplayView(announcementPresenter.getChatTitle(chatID),
+                    announcementPresenter.getChat(chatID));
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
         }
     }
 
     private void showCreateChat() {
-        //dialogPrompt = new JLabel(presenter.printContactUsernamePrompt()); TODO: make this method return string
+        dialogPrompt = new JLabel(presenter.printContactUsernamePrompt());
         dialogPrompt.setVisible(true);
 
         new JTextField(100);
         inputField.setVisible(true);
 
-        okayButton.setActionCommand("create chat");
-        okayButton.setVisible(true);
+        createChatButton.setText("Create Chat");
+        createChatButton.setActionCommand("Create Chat");
+        createChatButton.setVisible(true);
     }
 
     private void showCreateGroupChat() {
-        //dialogPrompt = new JLabel(presenter.printContactUsernamesPrompt()); TODO: make this method return string
+        dialogPrompt = new JLabel(presenter.printContactUsernamesPrompt());
         dialogPrompt.setVisible(true);
 
         new JTextField(100);
         inputField.setVisible(true);
 
-        okayButton.setActionCommand("create groupchat");
-        okayButton.setVisible(true);
+        createChatButton.setText("Create Group Chat");
+        createChatButton.setActionCommand("Create Group Chat");
+        createChatButton.setVisible(true);
     }
 
     private void createChat() {
         String participantID = inputField.getText();
+
+        /*
+        try {
+            label = new JLabel(this.controller.createChat(participantID));
+
+        } catch(InvalidChoiceException e) {
+
+
+        }
+
+         */
+
+        JOptionPane.showConfirmDialog(null, "Chat Creation Successful",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     private void createGroupChat(){
@@ -87,45 +110,40 @@ public class AttMessageView extends MessageView {
     @Override
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
-        String eventName = event.getActionCommand();
 
-        if(eventName.equals(continueButton.getActionCommand())) {
-            eventName = (String)dropDownMenu.getSelectedItem();
-        }
-
-        if(eventName.equals(this.menuOp[6])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[5])) {
+            hideMainDropDownMenu();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(this.menuOp[7])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[6])) {
+            hideMainDropDownMenu();
             showOpenAnChat();
         }
 
-        if(eventName.equals(this.menuOp[8])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[7])) {
+            hideMainDropDownMenu();
             showCreateChat();
         }
 
-        if(eventName.equals(this.menuOp[9])) {
-            hideMainMenuButtons();
+        if(eventName.equals(menuOp[8])) {
+            hideMainDropDownMenu();
             showCreateGroupChat();
         }
 
         if (eventName.equals("show anchat")) {
             showAnnouncementChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
-        if (eventName.equals("create chat")) {
+        if (eventName.equals("Create Chat")) {
             createChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
-        if (eventName.equals("create groupchat")) {
+        if(eventName.equals("Create Group Chat")) {
             createGroupChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 }

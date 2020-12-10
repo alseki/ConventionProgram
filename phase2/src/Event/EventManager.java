@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 7 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Use Class
 
@@ -137,7 +137,6 @@ public class EventManager extends EventAccess implements Serializable {
 
     /**
      * Returns the ID of speaker of Event in this EventManager, given event's ID - for OrgEventController
-     *
      * @param eventID The ID of the Event
      * @return The ID of the speaker, as a String
      */
@@ -215,19 +214,6 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Getter for the capacity of the Event of inputted ID
-     * @param eventID The ID of the Event
-     * @return The Event's capacity
-     */
-    public int getCapacity(String eventID) {
-        try {
-            return this.getEvent(eventID).getCapacity();
-        } catch (NullPointerException n) {
-            return -1;
-        }
-    }
-
-    /**
      * Setter for the capacity of the Event of inputted ID
      * @param eventID  The ID of the Event
      * @param capacity The new capacity of the Event
@@ -262,7 +248,7 @@ public class EventManager extends EventAccess implements Serializable {
      * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
      * @param capacity    The capacity of the Event to be created
-     * @param type        The Type of the Event to be created, as an EventType
+     * @param type        The type of the Event to be created, as an EventType
      * @return The new Event's ID
      */
     public String addEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String
@@ -285,16 +271,16 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
-     * Deletes an Event
+     * Deletes an Event in this EventManager
      * @param ID The Event's ID
      * @return whether the Event has been successfully deleted
      */
     public boolean removeEvent(String ID) {
-        if (events.get(ID) != null) {
+        try {
             eventsByName.remove(events.get(ID).getName());
             events.remove(ID);
             return true;
-        } else {
+        } catch (NullPointerException e) {
             return false;
         }
     }
@@ -302,9 +288,9 @@ public class EventManager extends EventAccess implements Serializable {
     // Methods to compare Events in EventManager
 
     /**
-     * Checks to see if this EventManager contains an event of a certain name
-     * @param name The name
-     * @return True if an event with this name exists; false if not
+     * Checks to see if this EventManager contains an Event of a certain name
+     * @param name The name of the Event
+     * @return True if an Event with this name exists; false if not
      */
     public boolean contains(String name) {
         if (getEventID(name) != null) {

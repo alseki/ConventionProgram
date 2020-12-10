@@ -110,15 +110,22 @@ public class MessageManager implements Serializable {
     /**
      * @return the status of this message, read or unread. By messageId.
      */
-    public int getReadStatus(String messageID) {
+    public boolean getReadStatus(String messageID) {
         return getMessage(messageID).getReadStatus();
     }
 
     /**
      * change the status of this message to unread.
      */
-    public void changeStatus(String messageID) {
-        getMessage(messageID).changeStatus();
+    public void changeStatusUnread(String messageID) {
+        getMessage(messageID).changeStatusUnread();
+    }
+
+    /**
+     * change the status of this message to read.
+     */
+    public void changeStatusRead(String messageID) {
+        getMessage(messageID).changeStatusRead();
     }
 
     /**

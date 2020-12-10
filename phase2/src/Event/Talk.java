@@ -3,7 +3,7 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 6 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Entity
 
@@ -37,6 +37,14 @@ public class Talk extends Event {
      */
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
+    }
+
+    /**
+     * Returns the current occupancy of this Talk (total Attendees and Speakers signed up).
+     * @return The current occupancy.
+     */
+    public int getOccupancy() {
+        return (this.getAttendeeIDs().size() + 1);
     }
 
     /**

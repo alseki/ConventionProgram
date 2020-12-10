@@ -39,15 +39,14 @@ public class MessageMenu implements SubMenuPrinter {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "Check your inbox", "Check your sent box", "View the chat list," +
+        return new String[]{"Check your inbox", "Check your sent box", "View the chat list",
                 "View the messages in a chat", "Send a message"};
-        return options;
     }
 
 
 
 
-    // Option 1
+    // Option 1 -----------------INBOX-----------------
 
     public String getInboxTitle() {
         return "-INBOX-";
@@ -58,21 +57,29 @@ public class MessageMenu implements SubMenuPrinter {
      */
     public String[] getInBox() throws NoDataException{
         try {
+            ArrayList<String> receivedUnreadMessages = new ArrayList<>();
+            for (String message : messageManager.getMessageIDs()) {
+                if (messageManager.getRecipientId(message).equals(currentUserID) &&
+                        messageManager.getReadStatus(message)) {
+                    receivedUnreadMessages.add(message);
+                }
+            }
             ArrayList<String> receivedMessages = new ArrayList<>();
-            for (String message: messageManager.getMessageIDs()){
-                if (messageManager.getRecipientId(message).equals(currentUserID)){
+            for (String message : messageManager.getMessageIDs()) {
+                if (messageManager.getRecipientId(message).equals(currentUserID) &&
+                        !messageManager.getReadStatus(message)) {
                     receivedMessages.add(message);
                 }
             }
-
+            receivedMessages.addAll(receivedUnreadMessages);
             return formatMessages(receivedMessages);
         } catch (NullPointerException e) {
-            throw new NoDataException("message");
-        }
+                throw new NoDataException("message");
+            }
     }
 
 
-    // Option 2
+    // Option 2 ----------------SENTBOX--------------------
 
     public String getOutboxTitle() {
         return "-OUTBOX-";
@@ -97,14 +104,14 @@ public class MessageMenu implements SubMenuPrinter {
     }
 
 
-    // Option 3
+    // Option 3 ---------------------VIEW CHAT LIST------------------
 
     public String getChatListTitle() {
         return "-CHATS-";
     }
 
     /**
-     * Get chat formatted as: "[ID]: [ID of the chat]\new line
+     * Get chat formatted as:     [Name]: [Name of the chat]\new line
      *                            [Participants]: [Username of the Participants]\newline
      * @param chatID The ID of the Chat that is to be formatted
      * @return Formatted string representation of the chat.
@@ -114,7 +121,15 @@ public class MessageMenu implements SubMenuPrinter {
         for (String participantID : chatManager.getPersonIds(chatID)){
             participants.append("\n").append(personManager.getCurrentUsername(participantID));
         }
-        return "ChatID: " + chatID + "\n" + "Participants: " + participants.toString() ;
+        for (String msgId : chatManager.getUnknownTypeChat(chatID).getMessageIds()) {
+            if (messageManager.getReadStatus(msgId)) {
+                return "[Unread]" + "\n" +
+                        "ChatName: " + chatManager.getChatName(chatID) + "\n" +
+                        "Participants: " + participants.toString();
+            }
+        }
+        return  "ChatName: " + chatManager.getChatName(chatID) + "\n" +
+                "Participants: " + participants.toString() ;
     }
 
     /**
@@ -136,13 +151,31 @@ public class MessageMenu implements SubMenuPrinter {
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
      */
     public String[] getChatList() throws InvalidChoiceException {
-        return getChats(personManager.getChats(currentUserID));
+        ArrayList<String> unReadChatList = new ArrayList<>();
+        ArrayList<String> chatList = new ArrayList<>();
+        for (String chatId : personManager.getChats(currentUserID)) {
+            if (!chatManager.getUnknownTypeChat(chatId).getAnnouncementOrNot()) {
+                for (String msgId : chatManager.getUnknownTypeChat(chatId).getMessageIds()) {
+                    if (messageManager.getReadStatus(msgId)) {
+                        unReadChatList.add(chatId);
+                    } else {
+                        chatList.add(chatId);
+                    }
+                }
+            }
+        }
+        chatList.addAll(unReadChatList);
+        return getChats(chatList);
     }
 
 
-    // Option 4
+
+    // Option 4 ----------------- VIEW MESSAGES IN A CHAT (NOT ANNOUNCEMENT) ---------------------
+    //TODO: Ran: want to move this feature as an option after the User viewing the chatList.
+    //TODO: make it as a button/textField in Option 3.
 
     public String getChatTitle(String chatID) {
+
         StringBuilder participants = new StringBuilder();
         ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
         participants.append(personManager.getCurrentUsername(personIDs.get(0)));
@@ -158,7 +191,7 @@ public class MessageMenu implements SubMenuPrinter {
      * Prompts user to enter ID of the chat.
      */
     public String printChatIdPrompt() {
-        return "Which Chat do you want to check? Enter the chatID.";
+        return "Which Chat do you want to check? Enter the chatName.";
     }
 
     /**
@@ -173,15 +206,14 @@ public class MessageMenu implements SubMenuPrinter {
     }
 
 
-    // Option 5
+    // Option 5 -------------------- SENT MESSAGE -------------------------
 
     /**
-     * Prompts user to enter chatID of the chat want to send message in.
+     * Prompts user to enter chatName of the chat want to send message in.
      */
     public String printChatIdMessagePrompt(){
-        return "Which chat do you want to send message to? Enter the chatID.";
+        return "Which chat do you want to send message to? Enter the chatName.";
     }
-
 
     /**
      * Prompts user to enter content of the message.
@@ -194,8 +226,40 @@ public class MessageMenu implements SubMenuPrinter {
         return "Message sent!";
     }
 
+
+    // ---------------- FEATURES with location not decided. (in MessageMenu or Att/Org/Spe) ----------------
+
+    // Option 100 -------------------- Archive chat -------------------
+    // method in MessageController
+    /**
+     * Prompts user to enter chatname of the Chat that they want to archive
+     */
+    public void printArchiveChatPrompt(){System.out.println("Which chat do you want to archive? Enter the chatName.");}
+
+    protected String chatArchived(){return "Chat archived!";}
+
+    // Option 101 -------------------- Remove archived chat --------------------
+    // method in MessageController
+
+    /**
+     * Prompts user to enter chatName of the Chat that they want to de-archive chat
+     */
+    public void printUnarchiveChatPrompt(){
+        System.out.println("Which archived chat do you want to restore to the original location? Enter the chatName.");}
+
+    protected String chatUnarchived(){return "Archived chat restored!";}
+
+    // Option 102 -------------------- Archive Message --------------------
+    // method in MessageController
+
+    // Option 103 -------------------- Remove archived message ---------------------
+    // method in MessageController
+
     // ----------------------------- Helpers ---------------------------------
-    // Message formatting
+    // method in MessageController
+
+
+    // ============================== Message formatting ================================
 
     /**
      * Get message formatted as: "[From]: [Username of the sender\Name of the Event]\new line
@@ -210,10 +274,18 @@ public class MessageMenu implements SubMenuPrinter {
         String receiver = personManager.getCurrentUsername(messageManager.getRecipientId(messageId));
         String time = messageManager.getDateTime(messageId);
         String message = messageManager.getContent(messageId);
-        return "From: " + sender + "[Username]" + "\n" +
-                "To: " + receiver + "\n" +
-                "Time sent:" + time + "\n" +
-                "Message:" + message + "\n";
+        if (messageManager.getReadStatus(messageId)) {
+            return  "[Unread]" + "\n" +
+                    "From: " + sender + "[Username]" + "\n" +
+                    "To: " + receiver + "\n" +
+                    "Time sent:" + time + "\n" +
+                    "Message:" + message + "\n";
+        } else {
+            return "From: " + sender + "[Username]" + "\n" +
+                    "To: " + receiver + "\n" +
+                    "Time sent:" + time + "\n" +
+                    "Message:" + message + "\n";
+        }
     }
 
     protected String[] formatMessages(ArrayList<String> messageIDs) throws NoDataException {

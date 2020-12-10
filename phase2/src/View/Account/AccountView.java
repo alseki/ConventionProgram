@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * A view that is instantiated with a Controller and builds frame based on said Controller
@@ -14,9 +13,12 @@ import java.util.ArrayList;
 public abstract class AccountView implements ActionListener {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-    public JButton okayButton = new JButton("okay");
-    ArrayList<JButton> menuButtons = new ArrayList<>();
+    public JButton okayButton = newButton("okay");
+    public JButton continueButton = newButton("continue");
+    public JButton backButton = newButton("back");
     JComboBox<String> dropDownMenu;
+    public String eventName;
+    public final String[] menuOp;
 
     public static final Color whiteBG = new Color(255, 255, 200);
     public static final Color yellowBG = new Color(255, 200, 0);
@@ -26,19 +28,26 @@ public abstract class AccountView implements ActionListener {
         frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
+        menuOp = presenter.getMenuOptions();
+
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
-        contentPane.setLayout(new FlowLayout());
+
+        continueButton = newButton("continue");
+        contentPane.add(continueButton);
+
+        backButton = newButton("back");
+        contentPane.add(backButton);
+        backButton.setVisible(false);
 
         contentPane.add(okayButton);
         okayButton.setVisible(false);
 
-        makeMenuButtons(presenter);
+        makeDropDownMenu(presenter);
 
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setVisible(true);
-        showMainMenuButtons();
+        showMainDropDownMenu();
     }
 
     /**
@@ -51,40 +60,14 @@ public abstract class AccountView implements ActionListener {
     }
 
     /**
-     * Builds all the menu buttons for this view
-     * @param presenter the view's presenter menu class
-     */
-    public void makeMenuButtons(SubMenuPrinter presenter) {
-        for (String option: presenter.getMenuOptions()) {
-            menuButtons.add(newButton(option));
-        }
-    }
-
-    /**
-     * Shows the button options for the main menu of account view object
-     */
-    public void showMainMenuButtons() {
-        hideAll();
-        for (JButton button: menuButtons) {
-            button.setVisible(true);
-        }
-    }
-
-    /**
-     * Hides the button options for the main menu of account view object
-     */
-    public void hideMainMenuButtons() {
-        for (JButton button: menuButtons) {
-            button.setVisible(false);
-        }
-    }
-
-    /**
      * Shows dropDownMenu
      */
     public void showMainDropDownMenu() {
         hideAll();
         dropDownMenu.setVisible(true);
+        continueButton.setVisible(true);
+        okayButton.setText("okay");
+        okayButton.setActionCommand("okay");
     }
 
     /**
@@ -92,6 +75,7 @@ public abstract class AccountView implements ActionListener {
      */
     public void hideMainDropDownMenu() {
         dropDownMenu.setVisible(false);
+        continueButton.setVisible(false);
     }
 
     /**
@@ -134,10 +118,20 @@ public abstract class AccountView implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
+        eventName = event.getActionCommand();
+        assert eventName != null;
 
-        if(eventName.equals("okay")) {
-            showMainMenuButtons();
+        if(eventName.equals(backButton.getActionCommand()) ||
+                eventName.equals(okayButton.getActionCommand())) {
+            showMainDropDownMenu();
+        }
+
+        if (eventName.equals("okay")) {
+            showMainDropDownMenu();
+        }
+
+        if (eventName.equals(continueButton.getActionCommand())) {
+            eventName = (String)dropDownMenu.getSelectedItem();
         }
     }
 

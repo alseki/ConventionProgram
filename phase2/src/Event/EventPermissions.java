@@ -3,7 +3,7 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Nov 19 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Use Class
 
@@ -24,10 +24,9 @@ public class EventPermissions {
      * Signs an individual Attendee up for an Event
      * @param personID The ID of the Attendee
      * @param eventID The ID of the Event
-     * @param roomID  The ID of the Room the Event is in
      * @return Whether the Attendee was signed up
      */
-    public boolean signUpForEvent(String personID, String eventID, String roomID) throws CapacityException {
+    public boolean signAttendeeUpForEvent(String personID, String eventID) throws CapacityException {
         try {
             if (checkEventCapacity(eventID)) {
                 Event event = eventAccess.getEvent(eventID);
@@ -43,11 +42,11 @@ public class EventPermissions {
     /**
      * Takes an individual Attendee off an Event's list of attendees
      * @param personID The ID of the Attendee to be removed
-     * @param ID The Event to remove the Attendee from
+     * @param eventID The ID of the Event to remove the Attendee from
      * @return whether the Attendee was removed from the Event (true or false)
      */
-    public boolean removeFromEvent(String personID, String ID) {
-        Event event = eventAccess.getEvent(ID);
+    public boolean removeAttendeeFromEvent(String personID, String eventID) {
+        Event event = eventAccess.getEvent(eventID);
         if (event != null) {
             event.removeAttendee(personID);
             return true;
@@ -58,13 +57,57 @@ public class EventPermissions {
     }
 
     /**
-     * Checks if an Event is full
+     * Signs an individual Speaker up for a Panel
+     * @param speakerID The ID of the Speaker
+     * @param eventID The ID of the Panel
+     * @return Whether the Speaker was signed up
+     */
+    public boolean signSpeakerUpForPanel(String speakerID, String eventID) throws CapacityException, NotPanelException {
+        try {
+            if (!checkEventCapacity(eventID)) {
+                throw new CapacityException();
+            }
+            else if (!(eventAccess.getEvent(eventID).getClass().equals(Panel.class))) {
+                throw new NotPanelException();
+            }
+            else {
+                Panel panel = (Panel) eventAccess.getEvent(eventID);
+                panel.addSpeaker(speakerID);
+                return true;
+            }
+        } catch (NullPointerException n) {
+            return false;
+        }
+    }
+
+    /**
+     * Takes an individual Speaker off a Panel's list of attendees
+     * @param speakerID The ID of the Speaker to be removed
+     * @param eventID The ID of the Panel to remove the Speaker from
+     * @return whether the Speaker was removed from the Panel (true or false)
+     */
+    public boolean removeSpeakerFromPanel(String speakerID, String eventID) throws NotPanelException {
+        try {
+            if (!(eventAccess.getEvent(eventID).getClass().equals(Panel.class))) {
+                throw new NotPanelException();
+            }
+            else {
+                Panel panel = (Panel) eventAccess.getEvent(eventID);
+                panel.removeSpeaker(speakerID);
+                return true;
+            }
+        } catch (NullPointerException n) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if there is still space for more Attendees or Speakers to be added to this Event
      * @param eventID The ID of the Event
-     * @return True if there is still space for more Attendees to register in this Event
+     * @return True if there is still space for more Attendees or Speakers to be added to this Event
      */
     private boolean checkEventCapacity(String eventID) {
-        Event event = eventAccess.getEvent(eventID);
-        return ((event.getCapacity() - event.getAttendeeIDs().size()) > 0);
+        return ((eventAccess.getEvent(eventID).getCapacity() - eventAccess.getEvent(eventID).getOccupancy()) > 0);
     }
 
     /** Checks if an Event with the inputted capacity can be added to the inputted Room. It cannot be added if its
@@ -78,14 +121,14 @@ public class EventPermissions {
      */
     public boolean checkRoomCapacity(LocalDateTime startTime, LocalDateTime endTime, int capacity, String roomID) {
         try {
-            // int room_capacity = roomAccess.getRoomCapacity(roomID);
+            int room_capacity = roomAccess.getRoom(roomID).getCapacity();
             int current_occupancy = 0;
             for (String eventID : roomAccess.getEventIDs(roomID)) {
                 Talk talk = new Talk("", "", startTime, endTime, "", 0);
                 if (this.eventAccess.getEvent(eventID).conflictsWith(talk)) {
-                    // current_occupancy = current_occupancy + this.eventAccess.getCapacity(eventID)}
+                    current_occupancy = current_occupancy + eventAccess.getEvent(eventID).getCapacity();
                 }
-                // if ((room_capacity - current_occupancy) >= capacity) {return true;}
+                if ((room_capacity - current_occupancy) >= capacity) {return true;}
                 else {
                     return false;
                 }

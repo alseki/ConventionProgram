@@ -135,6 +135,8 @@ public class AttMessageController extends MessageController {
     private void createGroupchatChoice() {
         presenter.printContactUsernamesPrompt();
         String contacts = SubMenu.readInput(input);
+        //TODO: prompt user to enter chatName.
+        String chatName = SubMenu.readInput(input);
         String[] a = contacts.split(",");
         ArrayList<String> contactlist = new ArrayList<>(Arrays.asList(a));
         if (contactlist.isEmpty()) {
@@ -146,7 +148,7 @@ public class AttMessageController extends MessageController {
             for (String contact: contactlist) {
                 cs.add(attendeeManager.getCurrentUserID(contact));
             }
-            String groupChatID = createGroupChat(cs);
+            String groupChatID = createGroupChat(cs, chatName);
             if  (groupChatID != null){
                 for (String contact: cs) {
                     attendeeManager.addChat(contact, groupChatID);
@@ -171,7 +173,7 @@ public class AttMessageController extends MessageController {
      * @param contactIDs the ArrayList of contacts' IDs.
      * @return the chatID.
      */
-    private String createGroupChat(ArrayList<String> contactIDs) throws InvalidChoiceException {
+    private String createGroupChat(ArrayList<String> contactIDs, String chatName) throws InvalidChoiceException {
         if (this.chatManager.existChat(currentUserID, contactIDs)) { //if there already exist a desired Chat
             String chatID = chatManager.findChat(currentUserID, contactIDs);
             presenter.printID(chatID);
@@ -181,7 +183,7 @@ public class AttMessageController extends MessageController {
             throw new NoDataException("user");
         }
         else {
-            String chatID = chatManager.createChat(currentUserID, contactIDs);
+            String chatID = chatManager.createChat(currentUserID, contactIDs, chatName);
             return chatID;
         }
     }

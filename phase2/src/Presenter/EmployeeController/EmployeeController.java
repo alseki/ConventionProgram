@@ -88,18 +88,18 @@ public class EmployeeController extends PersonController {
         String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
-                return new MessageController(this, currentUserID);
-            }
-            else if (choice.equals(options[1])) {
                 return new ContactController(this, currentUserID);
             }
+            else if (choice.equals(options[1])) {
+                return new MessageController(this, currentUserID);
+            }
             else if (choice.equals(options[2])){
-                return new EmpReqController(this, currentUserID);
+                return new EmpEventController(this, currentUserID, manager);
             }
             else if (choice.equals(options[3])){
-                // FIXME
-                //return new EmpEventController(this, currentUserID, manager);
-                return null; // TODO delete this line after above is fixed
+                return new EmpReqController(this, currentUserID);
+
+
             }
         }
         return null;

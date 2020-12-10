@@ -1,6 +1,6 @@
 package View.Account;
 
-// Programmer: Ran Yi
+// Programmer: Sarah Kronenfeld, Ran Yi
 // Description: All the methods that take user input in the Message Menu
 // Date Created: 01/11/2020
 // Date Modified: 08/12/2020
@@ -19,88 +19,92 @@ public class MessageView extends AccountView {
     MessageMenu presenter;
     JLabel dialogPrompt;
     ListDisplayView msgList;
-    JTextField inputField, messageField;
-    JButton okayButton, continueButton;
-    private String[] menuOp;
+    JTextField inputField;
+    JTextArea messageField;
+    /*JScrollPane scrollPane;*/ // TODO might add this in later
 
     public MessageView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (MessageController) controller;
         presenter = (MessageMenu)controller.getPresenter();
 
-        this.menuOp = this.presenter.getMenuOptions();
-
-        okayButton = newButton("okay");
-        initializeObject(okayButton);
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
-        inputField = new JTextField(100);
+        inputField = new JTextField(20);
         initializeObject(inputField);
-        messageField = new JTextField(100);
+
+        messageField = new JTextArea(5, 20);
+        messageField.setPreferredSize(new Dimension(20, 20));
+        messageField.setLineWrap(true);
+        messageField.setWrapStyleWord(true);
         initializeObject(messageField);
-        continueButton = newButton("continue");
-        initializeObject(continueButton);
+
+        /*scrollPane = new JScrollPane(messageField);
+        contentPane.add(messageField, BorderLayout.CENTER);
+        scrollPane.setVisible(false);*/
     }
 
 
     @Override
     public void showMainDropDownMenu() {
         super.showMainDropDownMenu();
-        continueButton.setVisible(true);
     }
 
     @Override
     public void hideMainDropDownMenu() {
         super.hideMainDropDownMenu();
-        continueButton.setVisible(false);
     }
 
 
     private void showCheckInbox() {
         try {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
     private void showCheckSentBox() {
         try {
             msgList = new ListDisplayView(presenter.getOutboxTitle(), presenter.getOutBox());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
     private void showViewChats() {
         try {
             msgList = new ListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
     protected void showOpenChat() {
-        dialogPrompt = new JLabel(presenter.printChatIdPrompt());
+        dialogPrompt.setText(presenter.printChatIdPrompt());
         dialogPrompt.setVisible(true);
 
-        inputField = new JTextField(100);
         inputField.setVisible(true);
 
+        okayButton.setText("choose chat");
         okayButton.setActionCommand("choose chat");
         okayButton.setVisible(true);
     }
 
     private void showViewMsgsInChat() {
-        String chatID = inputField.getText();
+        String chatID = inputField.getText(); //FIXME: now we can use Chat.name
         try {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
     }
 
@@ -108,55 +112,56 @@ public class MessageView extends AccountView {
         //dialogPrompt = new JLabel(presenter.printContentPrompt()); TODO: make this method return string
         dialogPrompt.setVisible(true);
 
-        inputField = new JTextField(100);
         inputField.setVisible(true);
         messageField.setVisible(true);
 
         okayButton.setActionCommand("send msg");
+        okayButton.setText("send msg");
         okayButton.setVisible(true);
     }
 
+    //TODO: send msg method is in MessageController.
     private void sendMsg() {
 
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
+        super.actionPerformed(event);
 
-        if(eventName.equals(this.menuOp[1])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[0])) {
+            hideMainDropDownMenu();
             showCheckInbox();
         }
 
-        if(eventName.equals(this.menuOp[2])) {
-            hideMainMenuButtons();;
+        if(eventName.equals(this.menuOp[1])) {
+            hideMainDropDownMenu();
             showCheckSentBox();
         }
 
-        if(eventName.equals(this.menuOp[3])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[2])) {
+            hideMainDropDownMenu();
             showViewChats();
         }
 
-        if(eventName.equals(this.menuOp[4])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[3])) {
+            hideMainDropDownMenu();
             showOpenChat();
         }
 
-        if(eventName.equals(this.menuOp[5])) {
-            hideMainMenuButtons();
+        if(eventName.equals(this.menuOp[4])) {
+            hideMainDropDownMenu();
             showSendMsg();
         }
 
         if (eventName.equals("choose chat")) {
             showViewMsgsInChat();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
         if (eventName.equals("send msg")) {
             sendMsg();
-            showMainMenuButtons();
+            showMainDropDownMenu();
         }
 
     }

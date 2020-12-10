@@ -12,6 +12,7 @@ import Person.PersonManager;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.EventMenu;
+//import com.sun.org.apache.xpath.internal.operations.String;
 
 public class OrgEventMenu extends EventMenu {
 
@@ -26,9 +27,8 @@ public class OrgEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "Create a new room", "Create a new event",
+        return new String[]{"Create a new room", "Create a new event",
                 "Create a speaker account", "Make an announcement to the attendees of an event"};
-        return options;
     }
 
     // OPTION 1
@@ -197,9 +197,34 @@ public class OrgEventMenu extends EventMenu {
 
     /**
      * Prompts the user to enter the content of the announcement
+     * @return
      */
-    public String printMessageContentPrompt(){
+    public java.lang.String printMessageContentPrompt(){
         return "\nPlease enter your announcement below";
     }
+
+
+
+    // add or remove speakerfrompanel takes in eventId and speaker ID (so take in eventname and speaker username)
+
+    //covertEventTypeToString takes in eventtype as a parameter, so take in eventName
+
+    //Ask for eventname in changeCapacity under OrgEventController
+
+    /**
+     * Prompts user to update the capacity of an Event
+     * @return
+     */
+    public String printUpdateCapacity(){return "\nTo update the capacity of an Event, please fill in the " +
+            "following information:";}
+
+    /**
+     * Prompts user to enter the new capacity of the event represented by its ID
+      * @param eventId ID of event that will have updated capacity
+     * @return
+     */
+    public String printChangeCapacity(String eventId){return "\nPlease enter the new capacity of event: " +
+            events.getEventName(eventId);}
+
 
 }

@@ -8,18 +8,17 @@ import Event.CapacityException;
 import Presenter.Exceptions.NoDataException;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class AttEventView extends AccountView {
     AttEventController controller;
     AttEventMenu presenter;
 
     JLabel dialogueMsg;
-    JButton continueButton, backButton, signupButton, cancelSpotButton, chooseRoomButton;
+    JButton signupButton, cancelSpotButton, chooseRoomButton;
     JTextField inputEventName;
     ListDisplayView eventList;
-
     JComboBox<String> roomChoice;
 
     public AttEventView(SubMenu controller) {
@@ -29,11 +28,7 @@ public class AttEventView extends AccountView {
 
         contentPane.setBackground(whiteBG);// Sets background colour to white
 
-        continueButton = newButton("continue");
-        contentPane.add(continueButton);
 
-        backButton = newButton("back");
-        contentPane.add(backButton);
     }
 
 
@@ -115,7 +110,7 @@ public class AttEventView extends AccountView {
      */
     private void viewEventList(String room) {
         try {
-            if (room == "See all events") {
+            if (room.equals("See all events")) {
                 eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printAllEvents());
             } else {
                 eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printEventsInRoom(room));
@@ -144,16 +139,7 @@ public class AttEventView extends AccountView {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String eventName = event.getActionCommand();
-
-
-        // if statement for when continue button is pressed
-
-
-        if(eventName.equals(backButton.getActionCommand()) ||
-                eventName.equals(okayButton.getActionCommand())) {
-            showMainDropDownMenu();
-        }
+        super.actionPerformed(event);
 
         if(eventName.equals(signupButton.getActionCommand())) {
             signup();
@@ -164,36 +150,27 @@ public class AttEventView extends AccountView {
         }
 
         if(eventName.equals(chooseRoomButton.getActionCommand())) {
-            viewEventList((String)roomChoice.getSelectedItem());
+            viewEventList((String) Objects.requireNonNull(roomChoice.getSelectedItem()));
         }
 
-        if(eventName.equals("continue")) {
-            eventName = (String)dropDownMenu.getSelectedItem();
-        }
-
-        if(eventName.equals(presenter.getMenuOptions()[0])) { // return to Att main menu
-            showMainDropDownMenu();
-        }
-
-        if(eventName.equals(presenter.getMenuOptions()[1])) { // view list of all Events
+        if(eventName.equals(menuOp[0])) { // view list of all Events
             hideMainDropDownMenu();
             showRoomChoice();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[2])) { // sign up for an Event
+        if(eventName.equals(menuOp[1])) { // sign up for an Event
             hideMainDropDownMenu();
             showSignUp();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[3])) { // cancel your spot from an Event
+        if(eventName.equals(menuOp[2])) { // cancel your spot from an Event
             hideMainDropDownMenu();
             showCancelSpot();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[4])) { // get list of your signed up events
+        if(eventName.equals(menuOp[3])) { // get list of your signed up events
             hideMainDropDownMenu();
             viewOwnEvents();
         }
     }
 }
-//ignore this comment... testing

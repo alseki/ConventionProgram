@@ -91,36 +91,69 @@ public class MessageController extends SubMenu {
             }
         }
     }
-//TODO double check with Ran and other regarding what to do when the group is equal to 2 ppl or less
+
+    /**
+     * mark messages in a chat as read after OPTION 4 -- VIEW MESSAGES IN CHAT --
+     */
+    protected void chatViewed (String chatName) {
+        for (String msgId : chatManager.findChatByName(chatName).getMessageIds()) {
+            messageManager.changeStatusRead(msgId);
+        }
+    }
+
     //Currently remove the ID of this Chat from the chatList of all Person in Chat, let personIds list of this Chat be
     // new empty arraylist, and make the chatID become null.
     /**
-     * Allows the user to exit from a Chat. If the Chat only contains two members,
-     * @param chatID ID of the Chat the user wants to exit from
+     * Allows the user to exit from a Chat.
+     * @param chatName name of the Chat the user wants to exit from
      */
-    protected void deleteChat(String chatID){
-        // FIXME
-        /*if (chatManager.getChatSize(chatID) <= 2){
-            for(String personId: chatManager.getPersonIds(chatID)){
-                personManager.removeChat(personId, chatID);}
-            chatManager.removeAllPersonIds(chatID);
-            chatManager.nullifyChatID(chatID);
+    protected void deleteChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName).getId();
+        if (chatManager.getUnknownTypeChat(chatId).getPersonIds().size() <= 2){
+            for(String personId: chatManager.getPersonIds(chatId)) {
+                personManager.removeChat(personId, chatId);
+            }
+            chatManager.removeAllPersonIds(chatId);
+            chatManager.nullifyChatID(chatId);
+        } else if (chatManager.getUnknownTypeChat(chatId).getPersonIds().size() == 3) {
+            personManager.removeChat(currentUserID, chatId);
+            chatManager.removePersonIds(chatId, currentUserID);
+            chatManager.setChatTypeToChat(chatId);
+        } else {
+            personManager.removeChat(currentUserID, chatId);
+            chatManager.removePersonIds(chatId, currentUserID);
         }
-        else {personManager.removeChat(currentUserID, chatID);
-        chatManager.removePersonIds(chatID, currentUserID);}*/
+    }
+        // presenter :balabalabala
+
+
+
+    protected void archiveChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName).getId();
+        for (String cId : personManager.getChats(currentUserID)) {
+            if (chatId.equals(cId)) {
+                personManager.archiveChatByPersonId(currentUserID, chatId);
+                personManager.removeChat(currentUserID, chatId);
+            }
+        }
     }
 
-
-    protected boolean archiveChat(String chatID){
-        // FIXME
-        // return chatManager.archiveChat(chatID);
-        return false; // TODO delete this line after above is fixed
+    protected void unArchiveChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName).getId();
+        for (String cId : personManager.getCurrentArchivedChatList(currentUserID)) {
+            if (chatId.equals(cId)) {
+                personManager.removeArchiveChatByPersonId(currentUserID, chatId);
+                personManager.addChat(currentUserID, chatId);
+            }
+        }
     }
 
-    protected boolean dearchiveChat(String chatID){
-        // FIXME
-        // return chatManager.dearchiveChat(chatID);
-        return false; // TODO delete this line after above is fixed
+    protected void archiveMessage(String msgId){
+        personManager.addCurrentFavorites(currentUserID, msgId);
+    }
+
+    protected void unArchiveMessage(String msgId){
+        personManager.removeCurrentFavorites(currentUserID, msgId);
     }
 
     @Override

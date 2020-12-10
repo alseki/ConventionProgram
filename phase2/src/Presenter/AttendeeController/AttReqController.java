@@ -21,9 +21,11 @@ public class AttReqController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
+    public String makeRequestPrompt() {
+        return presenter.makeRequestPrompt();
+    }
 
-    private void request(){
-        presenter.makeRequestPrompt();
+    private void createRequest(){
         String content = "";//SubMenu.readInput(input);
         reqM.createRequest(this.currentUserID, content);
     }
@@ -33,7 +35,7 @@ public class AttReqController extends SubMenu {
         //presenter.seeRequest(id);
 
     }
-    private String myRequests(){
+    public String myRequests(){
         return presenter.myRequests(currentUserID);
     }
 

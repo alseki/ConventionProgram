@@ -175,8 +175,16 @@ public class ChatManager implements Serializable {
      * @param chatID ID of the Chat object
      * @return Class type, 1 for announcement, 0 for chat
      */
-    public int getChatType(String chatID){
+    public boolean getChatType(String chatID){
         return Objects.requireNonNull(getUnknownTypeChat(chatID)).getAnnouncementOrNot();
+    }
+
+    public void setChatTypeToAnn(String chatID) {
+        Objects.requireNonNull(getUnknownTypeChat(chatID)).changeToAnnouncement();
+    }
+
+    public void setChatTypeToChat(String chatID) {
+        Objects.requireNonNull(getUnknownTypeChat(chatID)).changeToChat();
     }
 
     /**
@@ -207,6 +215,22 @@ public class ChatManager implements Serializable {
         return chats;
     }
 
+    /**
+     * Return collection of all Chats where the inputted person ID is part of the member.
+     * @param personIds the IDs of the persons
+     * @return ArrayList of Chats containing the inputted person ID
+     */
+    public ArrayList <Chat> searchChatsContaining(ArrayList <String> personIds){
+        ArrayList <Chat> chats = new ArrayList<>();
+        for (Chat c: chatsList){
+            int num = 0;
+            for (String personId: personIds){
+                if (c.getPersonIds().contains(personId)){
+                    num = num + 1; }
+            }if (num == personIds.size()){chats.add(c);}
+        }
+        return chats;
+    }
 
     /**
      * Finds the Message.Message.Chat object with input Message.Message.Chat ID
@@ -243,7 +267,7 @@ public class ChatManager implements Serializable {
      * @param chatId ID of a Chat object that may be Chat or AnnouncementChat
      * @return Chat object corresponding to the chatId. Null is returned if the ID is invalid.
      */
-    private Chat getUnknownTypeChat(String chatId){
+    public Chat getUnknownTypeChat(String chatId){
         for(Chat c: chatsList){
             if(c.getId().equals(chatId)){
                 return c;} }
@@ -322,7 +346,7 @@ public class ChatManager implements Serializable {
     public String findChat(String currentId, ArrayList<String> guestsId) {
         ArrayList<String> personIds = new ArrayList<>(guestsId);
         personIds.add(currentId);
-        Collections.sort(guestsId);
+        Collections.sort(personIds);
         for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);
@@ -350,6 +374,19 @@ public class ChatManager implements Serializable {
         return null;
     }
 
+    public void nullifyChatID(String chatId) {
+        for (Chat c : chatsList) {
+            if (c.getId().equals(chatId)) {
+                c.nullThisId();
+            }
+        }
+    }
+
+    public String readStatusChat(String chatId){return getUnknownTypeChat(chatId).getReadStatus();}
+
+    public void readChat(String chatId) {getUnknownTypeChat(chatId).markAsRead();}
+
+    public void unreadChat(String chatId) {getUnknownTypeChat(chatId).markAsUnread();}
 }
 
 // CRC Card Definition

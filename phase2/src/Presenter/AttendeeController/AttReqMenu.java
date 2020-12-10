@@ -23,9 +23,8 @@ public class AttReqMenu extends RequestMenuParent {
      */
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "Make a request", "View information about a request", "See my " +
+        return new String[]{"Make a request", "View information about a request", "See my " +
                 "personal requests", "Modify a request"};
-        return options;
     }
 
 

@@ -3,7 +3,7 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Eytan Weinstein
-// Last edit: Dec 6 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Entity
 
@@ -31,6 +31,14 @@ public class Party extends Event {
      */
     public boolean conflictsWith(Event event) {
         return this.getStartTime().isBefore(event.getEndTime()) && event.getStartTime().isBefore(this.getEndTime());
+    }
+
+    /**
+     * Returns the current occupancy of this Party (total Attendees signed up).
+     * @return The current occupancy.
+     */
+    public int getOccupancy() {
+        return this.getAttendeeIDs().size();
     }
 
 }

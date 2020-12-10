@@ -9,6 +9,7 @@ import Presenter.PersonController.EventMenu;
 // Description:
 // Date Created:
 // Date Modified: 02/12/2020
+//
 
 public class EmpEventMenu extends EventMenu {
     String currentUserID;
@@ -26,7 +27,7 @@ public class EmpEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"Return to Main Menu", "View conference events list", "View list or rooms",};
+        String[] options = {"View conference events list", "View list of rooms",};
         return options;
     }
 

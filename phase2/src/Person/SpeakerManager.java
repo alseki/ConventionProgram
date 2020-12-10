@@ -11,6 +11,9 @@ public class SpeakerManager extends PersonManager {
 
     // This is a map of speaker to speaker's talk event: a map of string personID to eventID
 
+    protected ArrayList speakerInPanels = new ArrayList<>();
+    protected ArrayList speakerInNonPanels = new ArrayList<>();
+;
 
     public SpeakerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -27,6 +30,10 @@ public class SpeakerManager extends PersonManager {
         return false;
     }
 
+    private void emptySpeaker() {
+        Speaker emptySpeaker = new Speaker("TBD", "empty", "empty", "no ID");
+    }
+
     /**
      * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
      * @param speakerID ID of the Speaker
@@ -34,8 +41,30 @@ public class SpeakerManager extends PersonManager {
      */
     public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
         Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();}
+        return spe.getAllTalks();
+    }
 
+    public ArrayList getSpeakerInPanels(String userID) {
+        return speakerInPanels;
+    }
+
+    public ArrayList getSpeakerInNonPanels(String userID){
+        return speakerInNonPanels;
+    }
+
+    public void addPanelSpeakerList(String speakerID, String eventID){
+        getSpeakerInPanels(speakerID).add(eventID);
+    }
+
+    public void addNonPanelSpeakerList(String speakerID,String eventID) {
+        getSpeakerInNonPanels(speakerID).add(eventID);
+    }
+
+
+    public Map getAllTalksDictionary(String speakerID) {
+        Speaker speaker = (Speaker) getPerson(speakerID);
+        return speaker.getAllTalksDictionary();
+    }
 
     /**
      *
@@ -69,6 +98,10 @@ public class SpeakerManager extends PersonManager {
             allTalksBySpeaker.put(eventID, eventInfo);
         }
         return false;
+    }
+
+    public Map getAllTalksBySpeaker(String speakerID){
+        return allTalksBySpeaker;
     }
 
 
