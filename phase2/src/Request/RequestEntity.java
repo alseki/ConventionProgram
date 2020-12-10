@@ -63,6 +63,10 @@ public class RequestEntity implements Serializable {
             return requestingUserId;
         }
 
+        public String getRequestID(){
+        return requestId;
+        }
+
     /**
      * getter for request content
      * @return string representing the request content

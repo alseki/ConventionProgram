@@ -1,6 +1,5 @@
 package Person;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,28 @@ public class Employee extends Person {
         this.requestIdToStatus = new HashMap<>();
     }
 
-//    public ArrayList<String> getAnChatList() {
+
+    @Override
+    public String getFullName() {
+        return super.getFullName();
+    }
+
+    @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
+    public String getID() {
+        return super.getID();
+    }
+
+    //    public ArrayList<String> getAnChatList() {
 //        return anChatList;
 //    }
 //
@@ -59,12 +79,6 @@ public class Employee extends Person {
     }
     public void newRequest(String requestId){
         requestIdToStatus.put(requestId, false);
-    }
-
-    //@Override
-    public void propertyChange(PropertyChangeEvent evt) { // should this be in use case as it's modifying the variables?
-        this.requestIdToStatus.replace(evt.getPropertyName(),(boolean)evt.getNewValue());
-
     }
 
     /**

@@ -12,26 +12,32 @@ public class RequestManager implements Serializable {
     /**
      * constructor for the request manager
      */
-    public RequestManager(){
+    public RequestManager() {
         this.requestsList = new ArrayList<>();
         idToRequest = new HashMap<>();
 
     }
-    private void addRequest(RequestEntity req){
+
+    private void addRequest(RequestEntity req) {
         requestsList.add(req);
     }
 
-    private void removeRequest(RequestEntity req){
+    public void removeRequest(RequestEntity req) {
         requestsList.remove(req);
+    }
+
+    public ArrayList getRequestLists(){
+        return requestsList;
     }
 
     /**
      * creates a reauest
-     * @param reqUserId the user who is making the request
+     *
+     * @param reqUserId  the user who is making the request
      * @param reqContent string fro the content of the request
      * @return true
      */
-    public boolean createRequest(String reqUserId, String reqContent){
+    public boolean createRequest(String reqUserId, String reqContent) {
         RequestEntity req = new RequestEntity(reqContent, reqUserId);
         updateMap(reqUserId, req);
         addRequest(req);
@@ -40,13 +46,14 @@ public class RequestManager implements Serializable {
 
     /**
      * allows user to change/modify the request that is still pending
+     *
      * @param reqUserId the user who is changing the request
-     * @param reqId of the request content to be brought into a string
+     * @param reqId     of the request content to be brought into a string
      * @return true
      */
     public boolean modifyRequest(String reqUserId, String reqId) {
         RequestEntity req = getRequestEntity(reqId);
-        if(!req.getFulfilled()) {
+        if (!req.getFulfilled()) {
             String oldRequest = getStringOfRequest(reqId);
             createRequest(oldRequest, reqUserId);
         }
@@ -54,7 +61,7 @@ public class RequestManager implements Serializable {
 
     }
 
-    private void handleRequest(String reqID, String employeeID, String employeeUsername){
+    private void handleRequest(String reqID, String employeeID, String employeeUsername) {
         RequestEntity request = getRequestEntity(reqID);
         Boolean handlingRequest = true;
         request.getEmployeeHandlingRequest().add(0, reqID);
@@ -64,17 +71,30 @@ public class RequestManager implements Serializable {
 
     }
 
-    private void updateMap(String str, RequestEntity req){
+    private void updateMap(String str, RequestEntity req) {
         idToRequest.put(str, req);
     }
 
-    private RequestEntity getRequestEntity(String reqId){
+    private RequestEntity getRequestEntity(String reqId) {
         return idToRequest.get(reqId);
     }
 
-    private ArrayList<RequestEntity> getAllRequests() {
+    protected ArrayList<RequestEntity> getAllRequests() {
         return requestsList;
     }
+
+    public ArrayList getRequestsByUser(String userID) {
+        ArrayList<String> userRequestIDs = new ArrayList<>();
+        for (RequestEntity request : requestsList) {
+            if (request.getRequestingUserId().equals(userID)) {
+                userRequestIDs.add(request.getRequestId());
+            }
+
+        }
+        return null;
+    }
+
+
 
 
     /**
