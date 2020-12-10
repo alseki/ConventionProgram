@@ -51,7 +51,7 @@ public class RequestEntity implements Serializable {
      * @return
      */
 
-    public ArrayList getEmployeeRequest() {
+    public ArrayList getEmployeeHandlingRequest() {
             return this.employeeHandlingRequest;
         }
 

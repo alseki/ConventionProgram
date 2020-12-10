@@ -57,9 +57,9 @@ public class RequestManager implements Serializable {
     private void handleRequest(String reqID, String employeeID, String employeeUsername){
         RequestEntity request = getRequestEntity(reqID);
         Boolean handlingRequest = true;
-        request.getEmployeeRequest().add(0, handlingRequest);
-        request.getEmployeeRequest().add(1, employeeID);
-        request.getEmployeeRequest().add(2, employeeUsername);
+        request.getEmployeeHandlingRequest().add(0, handlingRequest);
+        request.getEmployeeHandlingRequest().add(1, employeeID);
+        request.getEmployeeHandlingRequest().add(2, employeeUsername);
 
     }
 
