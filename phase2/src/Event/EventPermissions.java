@@ -58,13 +58,12 @@ public class EventPermissions {
     }
 
     /**
-     * Checks if an Event is full
+     * Checks if there is still space for more Attendees or Speakers to be added to this Event
      * @param eventID The ID of the Event
-     * @return True if there is still space for more Attendees to register in this Event
+     * @return True if there is still space for more Attendees or Speakers to be added to this Event
      */
     private boolean checkEventCapacity(String eventID) {
-        Event event = eventAccess.getEvent(eventID);
-        return ((event.getCapacity() - event.getAttendeeIDs().size()) > 0);
+        return ((eventAccess.getEvent(eventID).getCapacity() - eventAccess.getEvent(eventID).getOccupancy()) > 0);
     }
 
     /** Checks if an Event with the inputted capacity can be added to the inputted Room. It cannot be added if its
