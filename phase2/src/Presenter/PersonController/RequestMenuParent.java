@@ -1,7 +1,6 @@
 package Presenter.PersonController;
 
 import Presenter.Central.SubMenuPrinter;
-import Request.RequestEntity;
 import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
@@ -77,6 +76,10 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
      */
     public String seeSpecificRequestPrompt(String reqId){
         return "This is the request with id" + reqId;
+    }
+
+    public String seeHandleRequestPrompt(String reqId){
+       return reqM.getStringOfRequest(reqId);
     }
 
 
