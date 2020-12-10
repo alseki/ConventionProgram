@@ -38,10 +38,10 @@ public class OrgEventController extends SubMenu {
         presenter = new OrgEventMenu(roomManager, eventManager, personManager);
     }
 
-    // Methods for Rooms and RoomManager
+    // Methods for creating/deleting Rooms in RoomManager
 
     /**
-     * Adds a Room to the list of rooms in this convention
+     * Adds a Room to the list of Rooms in this convention
      * @param name     The name of the new Room in the convention (likely its number)
      * @param capacity The capacity of the new Room in the convention
      * @return true iff Room was added to the convention successfully
@@ -53,20 +53,8 @@ public class OrgEventController extends SubMenu {
         return this.roomManager.addRoom(name, capacity) != null;
     }
 
-    /**
-     * Converts a Room name into ID
-     * @param name The name of the Room
-     * @return the ID of the Room
-     */
-    private String getRoomID(String name) throws InvalidChoiceException {
-        if (roomManager.getRoomID(name) != null) {
-            return roomManager.getRoomID(name);
-        } else {
-            throw new InvalidChoiceException("room");
-        }
-    }
 
-    // Methods for Events and EventManager
+    // Methods for adding/cancelling Events in EventManager
 
     /**
      * Chooses a valid start time for the new Event
@@ -90,6 +78,7 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Chooses a valid EventType for the new Event
+     * @param type type of the new Event (as a String)
      * @return The type of the new Event (as an EventType object)
      */
     private EventType getEventType(String type) throws InvalidChoiceException {
@@ -101,8 +90,7 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
-     * Creates a new Event in this convention; also creates a new chat for this Event and sets the Event's chatID to the
-     * ID of this new chat.
+     * Creates a new Event in this convention
      * @param name        The name of the Event to be created
      * @param speakerID   The ID of the Speaker at this Event,
      * @param startTime   The start time of the Event to be created, as a LocalDateTime object
@@ -135,7 +123,8 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
-     * Helper method - adds a newly created Event into EventManager
+     * Helper method - adds a newly created Event into EventManager; also creates a new chat for this Event and sets
+     * the Event's chatID to the ID of this new chat.
      * @param name        The name of the Event to be created
      * @param speakerID   The ID of the Speaker of the Event to be created, or "" if there is no Speaker
      * @param startTime   The start time of the Event to be created, as a LocalDateTime object
@@ -143,6 +132,7 @@ public class OrgEventController extends SubMenu {
      * @param description The description for the Event to be created
      * @param capacity    The capacity of the Event to be created
      * @param type        The Type of the Event to be created, as an EventType
+     * @returns the ID of the new Event
      */
     private String addEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime,
                             String description, int capacity, EventType type) {
@@ -152,9 +142,6 @@ public class OrgEventController extends SubMenu {
         eventManager.setEventChat(eventID, announcementChatID);
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
-
-        // Although this method is named "addTalk" and "addTalk...ToDictionary", it incorporates Event type. Speaker
-        // will know in his/her list and map which type of event he/she is invited to speak at.
         String eventType = convertEventTypeToString(type);
         speakerManager.addTalk(eventID, speakerID, eventType, name);
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
@@ -164,10 +151,17 @@ public class OrgEventController extends SubMenu {
         } else {
             speakerManager.addNonPanelSpeakerList(speakerID, eventID);
         }
-
         return eventID;
     }
 
+    /** Helper method for addEvent method above; converts EventType to String
+     * @param event The type of Event (as an EventType object)
+     * @return The Event's type as a String
+     */
+    public String convertEventTypeToString(EventType event) {
+        String eventTypeString = EventType.convertToString(event);
+        return eventTypeString;
+    }
 
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
@@ -207,10 +201,7 @@ public class OrgEventController extends SubMenu {
 
 
 
-    public String convertEventTypeToString(EventType event) {
-        String eventTypeString = EventType.convertToString(event);
-        return eventTypeString;
-        }
+
 
 
     /**

@@ -5,15 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-// There are not events that Speaker than can sign for in the capacity of an attendee. Nor can Speaker register
-// himself or herself for a Speaking event. This is by the organizers of the conference.
+// There are no events for which a Speaker can sign for in the manner of an Attendee; nor can a Speaker register
+// himself or herself for an Event. This can be done exclusively by an Organizer.
 
-public class Speaker extends Person { //implements Person.Signupable
+public class Speaker extends Person {
 
+    /** A list of the IDs for all Events where this Speaker is speaking. */
     protected ArrayList<String> allTalksID = new ArrayList<>();
 
-    protected Map<String, ArrayList<String>> allTalksDictionary = new HashMap<String, ArrayList<String>>(); // this is a a dictionary of eventIDs to eventNames
+    /** A mapping of the IDs for all Events where this Speaker is speaking to the names of those Events. */
+    protected Map<String, ArrayList<String>> allTalksDictionary = new HashMap<String, ArrayList<String>>();
 
+    /** A list of all announcement chatIDs for this Speaker. */
     protected ArrayList<String> announcementChatIds = new ArrayList<>();
 
     Speaker(String fullName, String username, String password, String email){
@@ -25,42 +28,38 @@ public class Speaker extends Person { //implements Person.Signupable
         this.typePerson = 3;
     }
 
-
     /**
-     * adds an event ID to the Person.Person.Speaker's list of signed up Talks
-     * @param eventID takes in the ID of the event
+     * Adds the ID of an Event to the Speaker's list of Events
+     * @param eventID the ID of the Event
      */
     public void signUp(String eventID) {
         this.allTalksID.add(eventID);
     }
 
     /**
-     * returns the events/talks that the Person.Speaker has been signed up for by Organizer
-     * @return ArrayList<String> getAllTalks the events' ids that the person has signed up for
+     * Returns the Events that the Speaker has been signed up for by the Organizer
+     * @return the IDs of the Events that the Speaker has signed up for
      */
     public ArrayList<String> getAllTalks(){
         return allTalksID;
     }
 
     /**
-     * return the events/talks that the Person.Speaker has been signed up for by Organizer
-     * @return Map of eventIds to getAllTalksDictionary that the person has signed up for; key is eventID, value is eventName
+     * Getter for the Events that the Speaker has been signed up for by the Organizer
+     * @return a mapping of the IDs for all Events where this Speaker is speaking to the names of those Events
      */
     public Map getAllTalksDictionary() {
         return allTalksDictionary;
     }
 
-
     /**
-     *
-     * This is a list of strings representing chatIds pertaining to announcements about events
-     * @return ArrayList<String> of chatID of messages received by the User
+     * Getter for the IDs of announcement chats that this Speaker has made
+     * @return a list of all announcement chatIDs for this Speaker
      */
-
     public ArrayList<String> getAnnouncementChats() {
         return this.announcementChatIds;
-
     }
+
 }
 
 

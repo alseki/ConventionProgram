@@ -276,11 +276,11 @@ public class EventManager extends EventAccess implements Serializable {
      * @return whether the Event has been successfully deleted
      */
     public boolean removeEvent(String ID) {
-        if (events.get(ID) != null) {
+        try {
             eventsByName.remove(events.get(ID).getName());
             events.remove(ID);
             return true;
-        } else {
+        } catch (NullPointerException e) {
             return false;
         }
     }
