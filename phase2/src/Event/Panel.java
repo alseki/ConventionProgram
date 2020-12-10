@@ -78,4 +78,8 @@ public class Panel extends Event {
         return this.speakers.contains(ID);
     }
 
+    public int numberPanelists(String ID){
+        return this.speakers.size();
+    }
+
 }
