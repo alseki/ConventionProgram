@@ -164,7 +164,9 @@ public class OrgEventController extends SubMenu {
         if(eventType == "PANEL"){
             speakerManager.getSpeakerInPanels(speakerID).add(eventID);
         } else {
-            speakerManager.getSpeakerInNonPanels(speakerID).add(eventID);
+            // TODO Fix the commented line!
+
+            // speakerManager.getSpeakerInNonPanels(speakerID).add(eventID);
         }
 
         return eventID;

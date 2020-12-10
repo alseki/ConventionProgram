@@ -178,23 +178,27 @@ public class OrgPersonController extends SubMenu {
         for(String eventID: panelList){
             deleteSpeakerFromPanel(eventID, userID);
         }
+        // TODO Fix the commented line!
 
-        ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
-        for(String eventID: nonPanelList){
-            removeSpeakerFromNonPanelEvent(eventID, userID);
+        // ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
+        //for(String eventID: nonPanelList){
+        //    removeSpeakerFromNonPanelEvent(eventID, userID);
         }
+        // TODO Fix the commented lines!
 
-        speakerManager.getAllTalksDictionary(userID).clear();
-        speakerManager.getAllTalksBySpeaker(userID).clear();
+        //speakerManager.getAllTalksDictionary(userID).clear();
+        // speakerManager.getAllTalksBySpeaker(userID).clear();
 
 
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speaker ID
 
         // write method to remove from panel above. with talk, it will just be cancelling event
 
-        personManager.cancelAccount(userID);
+    // TODO Fix the commented line!
 
-    }
+        // personManager.cancelAccount(userID);
+
+    // }
 
     public void cancelSpeakerAccountByUsername(String username) {
         String userID = personManager.getCurrentUsername(username);
@@ -207,20 +211,22 @@ public class OrgPersonController extends SubMenu {
         for(String eventID: panelList){
             deleteSpeakerFromPanel(eventID, userID);
         }
+        // TODO Fix the commented line!
 
-        ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
-        for(String eventID: nonPanelList){
-            removeSpeakerFromNonPanelEvent(eventID, userID);
+        // ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
+        // for(String eventID: nonPanelList){
+       //     removeSpeakerFromNonPanelEvent(eventID, userID);
         }
+    // TODO Fix the commented line!
 
-        speakerManager.getAllTalksDictionary(userID).clear();
-        speakerManager.getAllTalksBySpeaker(userID).clear();
+        //speakerManager.getAllTalksDictionary(userID).clear();
+       // speakerManager.getAllTalksBySpeaker(userID).clear();
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speaker ID
 
         // write method to remove from panel above. with talk, it will just be cancelling event
-        personManager.cancelAccount(userID);
-        personManager.cancelAccount(username);
-    }
+        //personManager.cancelAccount(userID);
+        //personManager.cancelAccount(username);
+    //}
 
 
     public void cancelEmployeeAccount(String userID) {
@@ -228,8 +234,10 @@ public class OrgPersonController extends SubMenu {
         // delete chats of employees, and if employee is still working on request, the other employees will have to look into this.
         deleteUserFromChatGroups(userID);
         removeFromOtherUsersContactLists(userID);
-        employeeManager.getAnnouncementChats(userID).clear();
-        employeeManager.getRequestsIDs(userID).clear();
+        // TODO Fix the commented line!
+
+        //employeeManager.getAnnouncementChats(userID).clear();
+        // employeeManager.getRequestsIDs(userID).clear();
         Map<String, Employee> map = employeeManager.getUsernameToEmployee();
         //map.remove();
         employeeManager.cancelEmployeeAccount(userID);
@@ -240,8 +248,11 @@ public class OrgPersonController extends SubMenu {
         String userID = personManager.getCurrentUsername(username);
         deleteUserFromChatGroups(userID);
         removeFromOtherUsersContactLists(userID);
-        employeeManager.getAnnouncementChats(userID).clear();
-        employeeManager.getRequestsIDs(userID).clear();
+
+        // TODO Fix the commented line!
+
+        //employeeManager.getAnnouncementChats(userID).clear();
+        // employeeManager.getRequestsIDs(userID).clear();
         Map<String, Employee> map = employeeManager.getUsernameToEmployee();
         //map.remove();
         employeeManager.cancelEmployeeAccount(userID);
