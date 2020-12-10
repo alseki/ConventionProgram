@@ -215,7 +215,6 @@ public class MessageMenu implements SubMenuPrinter {
         return "Which chat do you want to send message to? Enter the chatName.";
     }
 
-
     /**
      * Prompts user to enter content of the message.
      */
