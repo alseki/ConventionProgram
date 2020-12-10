@@ -70,4 +70,12 @@ public class Panel extends Event {
         this.speakers.remove(ID);
     }
 
+    public boolean isPanelEmpty(String ID) {
+        return this.speakers.isEmpty();
+    }
+
+    public boolean isSpeakerInPanel(String ID){
+        return this.speakers.contains(ID);
+    }
+
 }
