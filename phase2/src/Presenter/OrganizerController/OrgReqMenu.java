@@ -48,5 +48,14 @@ public class OrgReqMenu extends RequestMenuParent {
         return "The request with id" + reqId + "has been fulfilled";
     }
 
+    /**
+     * notified who is handling request for reqId
+     * @param reqId String
+     * @return "The request with id" + reqId + "has been fulfilled"
+     */
+    public String handlingRequestPrompt(String reqId){
+        return "The request with id" + reqId + "is being taken care of";
+    }
+
 
 }
