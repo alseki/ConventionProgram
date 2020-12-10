@@ -23,6 +23,7 @@ public class LoginMenu implements SubMenuPrinter {
             case 1: return "Attendee";
             case 2: return "Organizer";
             case 3: return "Speaker";
+            case 4: return "Employee";
             default: return "";
         }
     }
