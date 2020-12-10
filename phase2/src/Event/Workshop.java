@@ -3,7 +3,7 @@ package Event;
 import java.time.LocalDateTime;
 
 // Contributors: Eytan Weinstein
-// Last edit: Dec 6 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Entity
 
@@ -46,6 +46,14 @@ public class Workshop extends Event {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the current occupancy of this Workshop (total Attendees and Speakers signed up).
+     * @return The current occupancy.
+     */
+    public int getOccupancy() {
+        return (this.getAttendeeIDs().size() + 1);
     }
 
     /**

@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.time.LocalDateTime;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 6 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Entity
 
@@ -174,6 +174,12 @@ public abstract class Event implements Serializable {
      * @return True or false.
      */
     protected abstract boolean conflictsWith(Event event);
+
+    /**
+     * Returns the current occupancy of this Event (total Attendees and Speakers signed up).
+     * @return The current occupancy.
+     */
+    protected abstract int getOccupancy();
 
     /**
      * A textual representation of this event

@@ -248,7 +248,7 @@ public class EventManager extends EventAccess implements Serializable {
      * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
      * @param capacity    The capacity of the Event to be created
-     * @param type        The Type of the Event to be created, as an EventType
+     * @param type        The type of the Event to be created, as an EventType
      * @return The new Event's ID
      */
     public String addEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String
@@ -273,7 +273,7 @@ public class EventManager extends EventAccess implements Serializable {
     public ArrayList getPanelSpeakerList(String eventID) {
         if (getEventType(eventID).toString().equals("PANEL")) {
             Panel panel = (Panel) getEvent(eventID);
-            return panel.getSpeakersList();
+            return panel.getSpeakerIDs();
         }
         return null;
     }
@@ -315,7 +315,7 @@ public class EventManager extends EventAccess implements Serializable {
     /**
      * Checks to see if this EventManager contains an event of a certain name
      * @param name The name
-     * @return True if an event with this name exists; false if not
+     * @return True if an Event with this name exists; false if not
      */
     public boolean contains(String name) {
         if (getEventID(name) != null) {
