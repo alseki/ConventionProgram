@@ -75,16 +75,6 @@ public class AttendeeManager extends PersonManager{
     }
 
     /**
-     * checks a user's contact list to see if a certain contact is in their list
-     * @param userID the user ID of the person whose contact list we want to check for
-     * @param contactID the ID of the contact we want to check for inside the current user's list of contacts
-     * @return returns true if the contact is indeed found inside the current user's list of contacts, otherwise false
-     */
-    public boolean checkForContact(String userID, String contactID) {
-        return idToPerson.get(userID).getContactList().contains(contactID);
-    }
-
-    /**
      * adds a contact to a user's list of contacts, by their ID
      * @param userID the user ID of the person whose contact list we want to add to
      * @param contactID the ID of the contact we want to add to the user's list of contacts
@@ -140,19 +130,6 @@ public class AttendeeManager extends PersonManager{
         return attendee.getAnChatList();
 
     }
-    /**
-     *
-     * @param username
-     * @return
-     */
-    public int confirmAttendee(String username){
-        if (usernameToPerson.containsKey(username)) {
-            return getPersonByUsername(username).getTypePerson();
-        }
-        return -1;
-    }
-
-
 
 }
 

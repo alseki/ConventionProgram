@@ -24,8 +24,8 @@ public class OrgReqController extends SubMenu {
         requestManager.updateEntity(reqId);
         return presenter.fulfillRequestPrompt(reqId);
         //String id = "";//SubMenu.readInput(input);
-
     }
+
     private String seeRequests(){
         return presenter.seeRequests();
     }
@@ -39,6 +39,7 @@ public class OrgReqController extends SubMenu {
             throw new InvalidChoiceException("request");
         }
     }
+
     private void request(){
         presenter.makeRequestPrompt();
         String content = "";//SubMenu.readInput(input);

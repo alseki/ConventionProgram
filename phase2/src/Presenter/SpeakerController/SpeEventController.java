@@ -13,6 +13,7 @@ import Person.SpeakerManager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class SpeEventController extends SubMenu {
 
@@ -29,7 +30,7 @@ public class SpeEventController extends SubMenu {
     }
 
     /**
-     * Sends a Message to every user signed up for an event
+     * Sends a Message to every user signed up for an Event
      * @param eventName The name of the Event
      * @param messageContent Content of the Message to be sent
      */
@@ -76,9 +77,12 @@ public class SpeEventController extends SubMenu {
      * @param messageContent
      */
     public String allSpeakerEventsMessage (String messageContent){
-        String[] allTalks = {};
-        allTalks = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(allTalks);
-        return multipleEventsAnnouncement(allTalks, messageContent);
+        ArrayList allEvents_list = speakerManager.getSpeakerInEvents(currentUserID);
+        String[] allEvents = new String[allEvents_list.size()];
+        for(int j =0;j<allEvents_list.size();j++){
+            allEvents[j] = (String) allEvents_list.get(j);
+        }
+        return multipleEventsAnnouncement(allEvents, messageContent);
     }
 
     @Override

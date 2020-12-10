@@ -142,13 +142,13 @@ public class OrgEventController extends SubMenu {
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
         String eventType = convertEventTypeToString(type);
-        speakerManager.addTalk(eventID, speakerID, eventType, name);
-        speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
-        speakerManager.addToAllTalksID(eventID, speakerID);
+        // speakerManager.addTalk(eventID, speakerID, eventType, name);
+        // speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
+        // speakerManager.addToAllTalksID(eventID, speakerID);
         if(eventType == "PANEL"){
-            speakerManager.addPanelSpeakerList(speakerID, eventID);
+            // speakerManager.addPanelSpeakerList(speakerID, eventID);
         } else {
-            speakerManager.addNonPanelSpeakerList(speakerID, eventID);
+            // speakerManager.addNonPanelSpeakerList(speakerID, eventID);
         }
         return eventID;
     }
@@ -267,7 +267,7 @@ public class OrgEventController extends SubMenu {
 
             // This is where event will be removed from speaker's Event list (I might add remove from already existing specific
             // panel or non-panel lists, but uuggghhh, then that requires event type checks right here and .... ??
-            speakerManager.removeTalk(speakerID, eventID);
+            speakerManager.deleteEvent(eventID);
 
             // I believe this should be a boolean function.
             return true;

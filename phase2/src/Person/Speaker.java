@@ -11,13 +11,10 @@ import java.util.UUID;
 public class Speaker extends Person {
 
     /** A list of the IDs for all Events where this Speaker is speaking. */
-    protected ArrayList<String> allTalksID = new ArrayList<>();
-
-    /** A mapping of the IDs for all Events where this Speaker is speaking to the names of those Events. */
-    protected Map<String, ArrayList<String>> allTalksDictionary = new HashMap<String, ArrayList<String>>();
+    protected ArrayList<String> EventIDs = new ArrayList<>();
 
     /** A list of all announcement chatIDs for this Speaker. */
-    protected ArrayList<String> announcementChatIds = new ArrayList<>();
+    protected ArrayList<String> announcementChatIDs = new ArrayList<>();
 
     Speaker(String fullName, String username, String password, String email){
         this.username = username;
@@ -33,31 +30,31 @@ public class Speaker extends Person {
      * @param eventID the ID of the Event
      */
     public void signUp(String eventID) {
-        this.allTalksID.add(eventID);
+        this.EventIDs.add(eventID);
+    }
+
+    /**
+     * Removes the ID of an Event from the Speaker's list of Events
+     * @param eventID the ID of the Event
+     */
+    public void cancelSpot(String eventID) {
+        this.EventIDs.remove(eventID);
     }
 
     /**
      * Returns the Events that the Speaker has been signed up for by the Organizer
      * @return the IDs of the Events that the Speaker has signed up for
      */
-    public ArrayList<String> getAllTalks(){
-        return allTalksID;
-    }
-
-    /**
-     * Getter for the Events that the Speaker has been signed up for by the Organizer
-     * @return a mapping of the IDs for all Events where this Speaker is speaking to the names of those Events
-     */
-    public Map getAllTalksDictionary() {
-        return allTalksDictionary;
+    public ArrayList<String> getEventIDs(){
+        return EventIDs;
     }
 
     /**
      * Getter for the IDs of announcement chats that this Speaker has made
      * @return a list of all announcement chatIDs for this Speaker
      */
-    public ArrayList<String> getAnnouncementChats() {
-        return this.announcementChatIds;
+    public ArrayList<String> getAnnouncementChatIDs() {
+        return this.announcementChatIDs;
     }
 
 }

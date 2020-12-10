@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class SpeakerManager extends PersonManager {
 
+    /** A mapping of Speaker IDs to a list of IDs for those Events at which that Speaker is speaking. */
+    protected Map<String, ArrayList> allEventsBySpeaker = new HashMap<String, ArrayList>();
 
-    protected Map<String, ArrayList> allTalksBySpeaker = new HashMap<String, ArrayList>();
+    /** A mapping of Speaker IDs to a list of IDs for those Panels at which that Speaker is speaking. */
+    protected Map<String, ArrayList> allPanelsBySpeaker = new HashMap<String, ArrayList>();
 
-    // This is a map of speaker to speaker's talk event: a map of string personID to eventID
-
-    protected ArrayList speakerInPanels = new ArrayList<>();
-    protected ArrayList speakerInNonPanels = new ArrayList<>();
-;
+    /** A mapping of Speaker IDs to a list of IDs for those Talks/Workshops at which that Speaker is speaking. */
+    protected Map<String, ArrayList> allNonPanelsBySpeaker = new HashMap<String, ArrayList>();
 
     public SpeakerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -25,196 +25,171 @@ public class SpeakerManager extends PersonManager {
             Speaker newSpeaker = new Speaker(name, username, password, email);
             usernameToPerson.put(username, newSpeaker);
             idToPerson.put(newSpeaker.getID(), newSpeaker);
+            ArrayList event_list = new ArrayList();
+            ArrayList panel_list = new ArrayList();
+            ArrayList non_panel_list = new ArrayList();
+            allEventsBySpeaker.put(newSpeaker.getID(), event_list);
+            allPanelsBySpeaker.put(newSpeaker.getID(), panel_list);
+            allNonPanelsBySpeaker.put(newSpeaker.getID(), non_panel_list);
             return true;
         }
         return false;
     }
 
-    private void emptySpeaker() {
-        Speaker emptySpeaker = new Speaker("TBD", "empty", "empty", "no ID");
+    /** Returns a list of all Speakers at this convention
+     * @returns an ArrayList of the IDs for all Speakers at this convention
+     */
+    public ArrayList getSpeakers() {
+        ArrayList speakers = new ArrayList<>(allEventsBySpeaker.keySet());
+        return speakers;
     }
 
-    /**
-     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
+    /** Returns a list of all Events at which the Speaker with the inputted speakerID is speaking
      * @param speakerID ID of the Speaker
-     * @return Arraylist of Strings corresponding to Talk Event IDs
+     * @returns an ArrayList of all Events at which the Speaker with the inputted speakerID is speaking
      */
-    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
-        Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();
+    public ArrayList getSpeakerInEvents(String speakerID) {
+        return this.allEventsBySpeaker.get(speakerID);
     }
 
-    public ArrayList getSpeakerInPanels(String userID) {
-        return speakerInPanels;
-    }
-
-    public ArrayList getSpeakerInNonPanels(String userID){
-        return speakerInNonPanels;
-    }
-
-    public void addPanelSpeakerList(String speakerID, String eventID){
-        getSpeakerInPanels(speakerID).add(eventID);
-    }
-
-    public void addNonPanelSpeakerList(String speakerID,String eventID) {
-        getSpeakerInNonPanels(speakerID).add(eventID);
-    }
-
-
-    public Map getAllTalksDictionary(String speakerID) {
-        Speaker speaker = (Speaker) getPerson(speakerID);
-        return speaker.getAllTalksDictionary();
-    }
-
-    /**
-     *
-     * @param userID
-     * @param eventID
-     * @return boolean; takes eventId created in OrgEventController method createEvent and adds it to Speaker's allTalksId list
+    /** Returns a list of all Panels at which the Speaker with the inputted speakerID is speaking
+     * @param speakerID ID of the Speaker
+     * @returns an ArrayList of all Panels at which the Speaker with the inputted speakerID is speaking
      */
+    public ArrayList getSpeakerInPanels(String speakerID) {
+        return this.allPanelsBySpeaker.get(speakerID);
+    }
 
-//    public boolean addTalkId(String userID, String eventID) {
-//        if ((idToPerson).containsKey(userID)) {
-//            Speaker individual = (Speaker) idToPerson.get(userID);
-//            individual.getAllTalks().add(eventID);
-//            return true;
-//        }
-//        return false;
-//    }
-
-    /**
-     *
-     * @param eventID
-     * @param userId
-     * @return boolean; takes eventId created in OrgEventController method createEvent, and adds it to Speaker's allTalksId list
+    /** Returns a list of all Talks or Workshops at which the Speaker with the inputted speakerID is speaking
+     * @param speakerID ID of the Speaker
+     * @returns an ArrayList of all Talks or Workshops at which the Speaker with the inputted speakerID is speaking
      */
+    public ArrayList getSpeakerInNonPanels(String speakerID) {
+        return this.allNonPanelsBySpeaker.get(speakerID);
+    }
 
-    public boolean addTalk(String eventID, String userId, String eventType, String eventName) {
-        Speaker sp = (Speaker) idToPerson.get(userId);
-        if (!(sp.getAllTalks().contains(eventID))) {
-            ArrayList eventInfo = new ArrayList<>();
-            eventInfo.add(0, eventName);
-            eventInfo.add(1, eventType);
-            allTalksBySpeaker.put(eventID, eventInfo);
+    /** Adds a Panel to a Speaker's list of Panels
+     * @param speakerID ID of the Speaker
+     * @param eventID ID of the Panel
+     */
+    public void addPanel(String speakerID, String eventID) {
+        if (!(this.getSpeakerInEvents(speakerID).contains(eventID))) {
+            this.allEventsBySpeaker.get(speakerID).add(eventID);
+            this.allPanelsBySpeaker.get(speakerID).add(eventID);
+            Speaker curr = (Speaker)idToPerson.get(speakerID);
+            if(!curr.getEventIDs().contains(eventID)) {
+                curr.signUp(eventID);
+            }
         }
-        return false;
     }
 
-    public Map getAllTalksBySpeaker(String speakerID){
-        return allTalksBySpeaker;
+    /** Adds a Talk or Workshop to a Speaker's list of Panels
+     * @param speakerID ID of the Speaker
+     * @param eventID ID of the Talk or Workshop
+     */
+    public void addNonPanel(String speakerID, String eventID) {
+        if (!(this.getSpeakerInEvents(speakerID).contains(eventID))) {
+            this.allEventsBySpeaker.get(speakerID).add(eventID);
+            this.allNonPanelsBySpeaker.get(speakerID).add(eventID);
+            Speaker curr = (Speaker)idToPerson.get(speakerID);
+            if(!curr.getEventIDs().contains(eventID)) {
+                curr.signUp(eventID);
+            }
+        }
     }
-
-
 
     /**
-     *
-     * @param userID
-     * @param eventID
-     * @param eventName
-     * @return boolean; takes eventId (created in method aboe), eventName (parameter in same method) and adds to Speaker's
-     *                  dictionary allTalksDictionary
+     * Deletes an Event from a particular Speaker's list of Events
+     * @param speakerID The ID of the Speaker
+     * @param eventID The ID of the Event
+     * @return whether the Event has been successfully deleted
      */
+    public boolean deleteEventFromSpeaker(String speakerID, String eventID) {
+        try {
+            if (!(this.getSpeakerInPanels(speakerID).contains(eventID))) {
+                this.allPanelsBySpeaker.get(speakerID).remove(eventID);
+            }
+            if (!(this.getSpeakerInNonPanels(speakerID).contains(eventID))) {
+                this.allNonPanelsBySpeaker.get(speakerID).remove(eventID);
+            }
+            this.allEventsBySpeaker.get(speakerID).remove(eventID);
+            Speaker curr = (Speaker)idToPerson.get(speakerID);
+            if(curr.getEventIDs().contains(eventID)) {
+                curr.cancelSpot(eventID);
+            }
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 
+    /**
+     * Deletes an Event from all Speakers' lists of Events
+     * @param eventID The ID of the Event
+     * @return whether the Event has been successfully deleted
+     */
+    public boolean deleteEvent(String eventID) {
+        try {
+            for (Object speaker : this.getSpeakers()) {
+                String speakerID = (String) speaker;
+                if (!(this.getSpeakerInPanels(speakerID).contains(eventID))) {
+                    this.allPanelsBySpeaker.get(speakerID).remove(eventID);
+                }
+                if (!(this.getSpeakerInNonPanels(speakerID).contains(eventID))) {
+                    this.allNonPanelsBySpeaker.get(speakerID).remove(eventID);
+                }
+                this.allEventsBySpeaker.get(speakerID).remove(eventID);
+                Speaker curr = (Speaker)idToPerson.get(speakerID);
+                if(curr.getEventIDs().contains(eventID)) {
+                    curr.cancelSpot(eventID);
+                }
+            }
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 
-    public boolean addTalkIdToDictionary(String userID, String eventID, String eventName, String eventType) {
-        Speaker sp = (Speaker) idToPerson.get(userID);
-        if (!(sp.getAllTalksDictionary().containsKey(eventID))) {
-            ArrayList eventInfo = new ArrayList<>();
-            eventInfo.add(0, eventName);
-            eventInfo.add(1, eventType);
-            sp.allTalksDictionary.put(eventID, eventInfo);
+    /**
+     * Adds announcement chats for Events created by Organizer; puts chatID in Speaker's list of announcementChatIDs
+     * @param speakerID The ID of the Speaker
+     * @param announcementChatID The ID of the announcementChat
+     * @return True iff chatID was added
+     */
+    public boolean addAnnouncementChats(String speakerID, String announcementChatID) {
+        Speaker individual = (Speaker) idToPerson.get(speakerID);
+        if(!individual.getAnnouncementChatIDs().contains(announcementChatID)) {
+            individual.announcementChatIDs.add(announcementChatID);
             return true;
         }
         return false;
     }
 
-    public boolean addToAllTalksID(String userID, String eventID) {
-        Speaker sp = (Speaker) idToPerson.get(userID);
-        if(!(sp.getAllTalks().contains(eventID))) {
-            sp.getAllTalks().add(eventID);
-            return true;
-        }
-        return false;
-    }
-
     /**
-     * This is to remove event from Speaker's list and dictionary once Organizer has cancelled an event
-     * @param eventId
-     * @param userId
-     * @return boolean
-     */
-
-    public boolean removeTalk(String eventId, String userId) {
-        Speaker sp = (Speaker) idToPerson.get(userId);
-        if ((sp.getAllTalks().contains(eventId))) {
-            sp.getAllTalks().remove(eventId);
-            sp.getAllTalksDictionary().remove(eventId);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     * @param personId
-     * @param acId
-     * @return boolean; this function is for adding announcement messages for events created by Organizer, and then putting the chatId in
-     *                  Speaker's announcementChatIds list
-     */
-
-    public boolean addAnnouncementChats(String personId, String acId) {
-        Speaker individual = (Speaker) idToPerson.get(personId);
-        if(!individual.getAnnouncementChats().contains(acId)) {
-            individual.announcementChatIds.add(acId);
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * gets the Speaker's list of contacts.
-     * @param personId the Person Id of the speaker whose contact list we are retrieving
+     * Gets the Speaker's list of contacts.
+     * @param speakerID The ID of the the Speaker whose contact list we are retrieving
      * @return returns a list of other people's personIds (Strings) if the desired user is found
      */
-    public ArrayList<String> getContactList(String personId) {
-        return idToPerson.get(personId).getContactList();
+    public ArrayList<String> getContactList(String speakerID) {
+        return idToPerson.get(speakerID).getContactList();
     }
 
     /**
-     * checks a person's contact list to see if the new contact is already in the contactList
-     * @param userID the user Id of the person for getting this person's contact list
-     * @param contactID the Id of the new contact to double-check if already in the contact list
-     * @return returns true if the contact is found inside the person's contact list
+     * Adds a contact to a Person's list of contacts by ID
+     * @param personID The ID of the Person to whose contact list the new contact will be added
+     * @param contactID the ID of the new contact to be added to the Person's contact list
+     * @return returns True iff the contact has been added to the contact list
      */
-    public boolean checkForContact(String userID, String contactID) {
-        return idToPerson.get(userID).getContactList().contains(contactID);
-    }
-
-    /**
-     * adds a contact to a person's list of contacts by Id
-     * @param personId the person Id of the person whose contact list the new contact will be added
-     * @param contactId the Id of the new contact to be added to the person's contact list
-     * @return returns true if the contact has been added to contact list
-     * the user's list of contacts
-     */
-    public boolean addContact(String personId, String contactId) {
-        Speaker individual = (Speaker) idToPerson.get(personId);
-        if(!(individual.getContactList().contains(contactId))) {
-            individual.addContact(contactId);
+    public boolean addContact(String personID, String contactID) {
+        Speaker individual = (Speaker) idToPerson.get(personID);
+        if(!(individual.getContactList().contains(contactID))) {
+            individual.addContact(contactID);
             return true;
         }
         return false;
     }
 
-    public int confirmSpeaker(String username){
-        if (usernameToPerson.containsKey(username)) {
-            return getPersonByUsername(username).getTypePerson();
-        }
-        return -1;
-    }
-
-    }
+}
 
 
 

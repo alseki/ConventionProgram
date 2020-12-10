@@ -84,7 +84,7 @@ public class OrgPersonController extends SubMenu {
             String organizerID = this.currentUserID;
         }
         // remove Talk means all events speaker is signed up to speak at: this includes allTalks and allTalksDictionary in SpeakerManager.
-        speakerManager.removeTalk(speakerID, eventID);
+        // speakerManager.removeTalk(speakerID, eventID);
         return true;
     }
 
@@ -236,9 +236,9 @@ public class OrgPersonController extends SubMenu {
 
         // rendering "clear" all the maps and arrayLists in SpeakerManager and speaker than contains speaker's ID and person object in the
         // case of maps
-        speakerManager.getAllTalksBySpeaker(speakerID).clear();
-        speakerManager.getAllTalksBySpeaker(speakerID).clear();
-        speakerManager.getSpeakerIdAllTalks(speakerID).clear();
+        //speakerManager.getAllTalksBySpeaker(speakerID).clear();
+        // speakerManager.getAllTalksBySpeaker(speakerID).clear();
+        //speakerManager.getSpeakerIdAllTalks(speakerID).clear();
         speakerManager.getSpeakerInNonPanels(speakerID).clear();
         speakerManager.getSpeakerInPanels(speakerID).clear();
         speakerManager.getContactList(speakerID).clear();
@@ -263,7 +263,7 @@ public class OrgPersonController extends SubMenu {
         // employeeManager.getRequestsIDs(userID).clear();
         // letting other employees know - calling method from above for below see line 272 - based on whether there is
         // an existing chat or not
-        ArrayList <String> list = employeeManager.getEmployeeList(userID)
+        ArrayList <String> list = employeeManager.getEmployeeList(userID);
         ArrayList<String> contacts = personManager.getContactList(userID);
         if(!list.isEmpty()){
             for(String emp: contacts){
