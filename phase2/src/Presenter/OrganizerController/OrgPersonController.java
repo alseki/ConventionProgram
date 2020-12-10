@@ -9,18 +9,16 @@ package Presenter.OrganizerController;
 
 import Event.EventManager;
 import Event.EventPermissions;
-import Person.AttendeeManager;
-import Person.EmployeeManager;
-import Person.OrganizerManager;
-import Person.SpeakerManager;
+import Person.*;
 import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.OverwritingException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class OrgPersonController extends SubMenu {
@@ -92,11 +90,6 @@ public class OrgPersonController extends SubMenu {
     }
 
 
-
-
-
-
-
     public void deleteAttendeeFromEvent(String userID) {
 
         ArrayList<String> eventList = personManager.getEventList(userID);
@@ -137,12 +130,20 @@ public class OrgPersonController extends SubMenu {
             chatManager.removePersonIds(c, userID);
         }
     }
-
-    public void sendMessageAboutChatDeletion(String userID, String recipientId, String chatID) {
+    // TODO implement this in all cancel methods - and make one for Employee as well - to notify all employees
+    public void sendMessageAboutChatDeletion(String userID, String recipientID, String chatID) {
         String userName = personManager.getCurrentUsername(userID);
         String messageContent = "The user with username: " + "userName " + "is now deleted from your chat group. You cannot send" +
                 "messages to or receive messages from this person.";
-        messageManager.createMessage(userID, recipientId, chatID, messageContent);
+        messageManager.createMessage(userID, recipientID, chatID, messageContent);
+    }
+
+    public void sendMessageAboutCancelEmployee(String userID, String recipientID, String chatID) {
+        String userName = personManager.getCurrentUsername(userID);
+        String messageContent = "The employee with username: " + "userName " + "is no longer an employee. You cannot send" +
+                "messages to or receive messages from this person.";
+        messageManager.createMessage(userID, recipientID, chatID, messageContent);
+
     }
 
     /**
@@ -168,36 +169,83 @@ public class OrgPersonController extends SubMenu {
         personManager.cancelAccount(username);
     }
 
-    public void cancelSpeakerAccount(String userId) {
+    public void cancelSpeakerAccount(String userID) {
+        removeFromOtherUsersContactLists(userID);
+        //Map<String, ArrayList<String>> panelList = speakerManager.getAllTalksDictionary(userID);
+        ArrayList<String> panelList = speakerManager.getSpeakerInPanels(userID);
+
+        // have organizer send message to other panelists - or organizer can do this by herself/himself
+        for(String eventID: panelList){
+            deleteSpeakerFromPanel(eventID, userID);
+        }
+
+        ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
+        for(String eventID: nonPanelList){
+            removeSpeakerFromNonPanelEvent(eventID, userID);
+        }
+
+        speakerManager.getAllTalksDictionary(userID).clear();
+        speakerManager.getAllTalksBySpeaker(userID).clear();
+
 
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speaker ID
 
         // write method to remove from panel above. with talk, it will just be cancelling event
 
-        personManager.cancelAccount(userId);
+        personManager.cancelAccount(userID);
 
     }
 
     public void cancelSpeakerAccountByUsername(String username) {
-
+        String userID = personManager.getCurrentUsername(username);
         // before canceling event, get all events speaker schedule and them cancel event with event ID and speakr ID
+        removeFromOtherUsersContactLists(userID);
+        //Map<String, ArrayList<String>> panelList = speakerManager.getAllTalksDictionary(userID);
+        ArrayList<String> panelList = speakerManager.getSpeakerInPanels(userID);
+
+        // have organizer send message to other panelists - or organizer can do this by herself/himself
+        for(String eventID: panelList){
+            deleteSpeakerFromPanel(eventID, userID);
+        }
+
+        ArrayList<String> nonPanelList = speakerManager.getSpeakerInNonPanels(userID);
+        for(String eventID: nonPanelList){
+            removeSpeakerFromNonPanelEvent(eventID, userID);
+        }
+
+        speakerManager.getAllTalksDictionary(userID).clear();
+        speakerManager.getAllTalksBySpeaker(userID).clear();
+        // before canceling event, get all events speaker schedule and them cancel event with event ID and speaker ID
+
+        // write method to remove from panel above. with talk, it will just be cancelling event
+        personManager.cancelAccount(userID);
         personManager.cancelAccount(username);
     }
 
 
-    public void cancelEmployeeAccount(String userId) {
+    public void cancelEmployeeAccount(String userID) {
         //set up message notifying other employees and organizers
         // delete chats of employees, and if employee is still working on request, the other employees will have to look into this.
-        employeeManager.cancelEmployeeAccount(userId);
+        deleteUserFromChatGroups(userID);
+        removeFromOtherUsersContactLists(userID);
+        employeeManager.getAnnouncementChats(userID).clear();
+        employeeManager.getRequestsIDs(userID).clear();
+        Map<String, Employee> map = employeeManager.getUsernameToEmployee();
+        //map.remove();
+        employeeManager.cancelEmployeeAccount(userID);
+
     }
 
     public void cancelEmployeeAccountByUsername(String username) {
-
-        //set up message notifying other employees and organizers
-        // delete chats of employees, and if employee is still working on request, the other employees will have to look into this.
-
+        String userID = personManager.getCurrentUsername(username);
+        deleteUserFromChatGroups(userID);
+        removeFromOtherUsersContactLists(userID);
+        employeeManager.getAnnouncementChats(userID).clear();
+        employeeManager.getRequestsIDs(userID).clear();
+        Map<String, Employee> map = employeeManager.getUsernameToEmployee();
+        //map.remove();
+        employeeManager.cancelEmployeeAccount(userID);
         employeeManager.cancelEmployeeAccount(username);
-
 
     }
 
