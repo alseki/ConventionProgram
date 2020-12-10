@@ -276,36 +276,11 @@ public class EventManager extends EventAccess implements Serializable {
      * @return whether the Event has been successfully deleted
      */
     public boolean removeEvent(String ID) {
-        if (events.get(ID) != null) {
+        try {
             eventsByName.remove(events.get(ID).getName());
             events.remove(ID);
             return true;
-        } else {
-            return false;
-        }
-    }
-
-    public ArrayList getPanelSpeakerList(String eventID) {
-        if (getEventType(eventID).toString().equals("PANEL")) {
-            Panel panel = (Panel) getEvent(eventID);
-            return panel.getSpeakerIDs();
-        }
-        return null;
-    }
-
-
-    /**
-     *
-     * @param speakerID
-     * @param eventID
-     * @return
-     */
-    public boolean removeSpeakerFromPanel(String speakerID, String eventID) {
-        if(eventID != null && speakerID != null){
-            Panel panel = (Panel) getEvent(eventID);
-            panel.removeSpeaker(speakerID); // there is no remove speaker method in Event
-            return true;
-        } else{
+        } catch (NullPointerException e) {
             return false;
         }
     }
@@ -313,8 +288,8 @@ public class EventManager extends EventAccess implements Serializable {
     // Methods to compare Events in EventManager
 
     /**
-     * Checks to see if this EventManager contains an event of a certain name
-     * @param name The name
+     * Checks to see if this EventManager contains an Event of a certain name
+     * @param name The name of the Event
      * @return True if an Event with this name exists; false if not
      */
     public boolean contains(String name) {

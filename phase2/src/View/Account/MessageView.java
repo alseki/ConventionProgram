@@ -44,6 +44,18 @@ public class MessageView extends AccountView {
         scrollPane.setVisible(false);*/
     }
 
+
+    @Override
+    public void showMainDropDownMenu() {
+        super.showMainDropDownMenu();
+    }
+
+    @Override
+    public void hideMainDropDownMenu() {
+        super.hideMainDropDownMenu();
+    }
+
+
     private void showCheckInbox() {
         try {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
@@ -83,7 +95,6 @@ public class MessageView extends AccountView {
         okayButton.setText("choose chat");
         okayButton.setActionCommand("choose chat");
         okayButton.setVisible(true);
-        backButton.setVisible(true);
     }
 
     private void showViewMsgsInChat() {
@@ -98,7 +109,7 @@ public class MessageView extends AccountView {
     }
 
     private void showSendMsg() {
-        dialogPrompt.setText(presenter.printContentPrompt());
+        //dialogPrompt = new JLabel(presenter.printContentPrompt()); TODO: make this method return string
         dialogPrompt.setVisible(true);
 
         inputField.setVisible(true);
@@ -107,7 +118,6 @@ public class MessageView extends AccountView {
         okayButton.setActionCommand("send msg");
         okayButton.setText("send msg");
         okayButton.setVisible(true);
-        backButton.setVisible(true);
     }
 
     //TODO: send msg method is in MessageController.

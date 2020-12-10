@@ -143,10 +143,10 @@ public class OrgEventMenu extends EventMenu {
     }
 
     /**
-     * Notifies the user that a Talk was not created because another is already scheduled
+     * Prints a notice to the user that the Event they intended to sign up is full
      */
-    public String printCapacityError(){
-        return "\nThis talk could not be added. Another talk is scheduled in this room at that time.";
+    public String printRoomTooSmall() {
+        return "That room cannot hold an event of that capacity!";
     }
 
     // OPTION 3

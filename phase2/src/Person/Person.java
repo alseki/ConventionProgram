@@ -81,7 +81,7 @@ public abstract class Person implements Serializable {
     }
 
     /**
-     * this returns the usernames of the people in the contact list
+     * this returns the names of the people in the contact list
      *
      * @return this returns the names in the contact list will return and array list of strings
      */

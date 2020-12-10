@@ -21,7 +21,6 @@ import Presenter.PersonController.PersonController;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
-    private String currentUserID;
     private OrganizerManager manager;
     private SpeakerManager speakerManager;
     private AttendeeManager attendeeManager;

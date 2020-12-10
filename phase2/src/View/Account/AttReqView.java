@@ -29,19 +29,25 @@ public class AttReqView extends AccountView {
 
 
     private void showMakeReq() {
-        dialogPrompt.setText(presenter.makeRequestPrompt());
+        backButton.setVisible(true);
+
+        dialogPrompt = new JLabel(this.controller.makeRequestPrompt());
         dialogPrompt.setVisible(true);
     }
 
     private void showViewReqInfo() {
+        backButton.setVisible(true);
+
         String reqs = this.controller.myRequests();
     }
 
     private void showMyReq() {
+        backButton.setVisible(true);
 
     }
 
     private void modifyReq() {
+        backButton.setVisible(true);
 
     }
 
@@ -55,18 +61,22 @@ public class AttReqView extends AccountView {
         // [2] = show my requests
         // [3] = modify a request
         if(eventName.equals(menuOp[0])) {
+            hideMainDropDownMenu();
             showMakeReq();
         }
 
         if(eventName.equals(menuOp[1])) {
+            hideMainDropDownMenu();
             showViewReqInfo();
         }
 
         if(eventName.equals(menuOp[2])) {
+            hideMainDropDownMenu();
             showMyReq();
         }
 
         if(eventName.equals(menuOp[3])) {
+            hideMainDropDownMenu();
             modifyReq();
         }
     }
