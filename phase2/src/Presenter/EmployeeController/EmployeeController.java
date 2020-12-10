@@ -91,13 +91,13 @@ public class EmployeeController extends PersonController {
                 return new ContactController(this, currentUserID);
             }
             else if (choice.equals(options[1])) {
-                return new EmpEventController(this, currentUserID, manager);
+                return new MessageController(this, currentUserID);
             }
             else if (choice.equals(options[2])){
-                return new EmpReqController(this, currentUserID);
+                return new EmpEventController(this, currentUserID, manager);
             }
             else if (choice.equals(options[3])){
-                return new MessageController(this, currentUserID);
+                return new EmpReqController(this, currentUserID);
 
 
             }

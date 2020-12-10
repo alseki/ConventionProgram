@@ -11,12 +11,13 @@ import java.awt.event.ActionEvent;
 
     public class EmpEventView extends AccountView {
         EmpEventController controller;
-        AttEventMenu presenter;
+        EmpEventMenu presenter;
 
         public EmpEventView(SubMenu controller) {
             super(controller.getPresenter());
             this.controller = (EmpEventController) controller;
-            //this.presenter = ((EmpEventController) controller).getPresenter();
+            this.presenter = ((EmpEventController) controller).getPresenter();
+
         }
 
 
