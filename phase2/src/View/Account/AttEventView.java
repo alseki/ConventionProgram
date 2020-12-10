@@ -34,54 +34,8 @@ public class AttEventView extends AccountView {
 
         backButton = newButton("back");
         contentPane.add(backButton);
-
-        setupEventMenuOptions();
-        setupSignUpEvent();
-        setupCancelFromEvent();
-        setupRooms();
     }
 
-    private void setupEventMenuOptions() {
-        makeDropDownMenu(presenter);
-    }
-
-    private void setupRooms() {
-        try {
-            roomChoice = new JComboBox<>(presenter.getRoomList());
-        } catch (NoDataException e) {
-            String[] rooms = {"See all events"};
-            roomChoice = new JComboBox<>(rooms);
-        } finally {
-            contentPane.add(roomChoice);
-
-            chooseRoomButton = newButton("see events");
-            contentPane.add(chooseRoomButton);
-        }
-    }
-
-    private void setupSignUpEvent() {
-        dialogueMsg = new JLabel();
-        contentPane.add(dialogueMsg);
-        dialogueMsg.setVisible(false);
-
-        inputEventName = new JTextField(40);
-        contentPane.add(inputEventName);
-        inputEventName.setVisible(false);
-
-        signupButton = newButton("signup");
-
-        // also a "return to AttEventMenu" button
-    }
-
-    private void setupCancelFromEvent() {
-        inputEventName = new JTextField(40);
-        contentPane.add(inputEventName);
-        inputEventName.setVisible(false);
-
-        cancelSpotButton = newButton("cancelSpot");
-
-        // and maybe also a "return to AttEventMenu" button
-    }
 
     @Override
     public void showMainDropDownMenu() {
