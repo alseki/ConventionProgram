@@ -18,6 +18,7 @@ public class MessageView extends AccountView {
     MessageController controller;
     MessageMenu presenter;
     JLabel dialogPrompt;
+    JButton sendMsg, chooseChat;
     ListDisplayView msgList;
     JTextField inputField;
     JTextArea messageField;
@@ -39,22 +40,15 @@ public class MessageView extends AccountView {
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
 
+        sendMsg = newButton("send message");
+        sendMsg.setToolTipText("send the entered message to entered user(s)");
+        chooseChat = newButton("choose chat");
+        chooseChat.setToolTipText("choose a chat to view");
+
         /*scrollPane = new JScrollPane(messageField);
         contentPane.add(messageField, BorderLayout.CENTER);
         scrollPane.setVisible(false);*/
     }
-
-
-    @Override
-    public void showMainDropDownMenu() {
-        super.showMainDropDownMenu();
-    }
-
-    @Override
-    public void hideMainDropDownMenu() {
-        super.hideMainDropDownMenu();
-    }
-
 
     private void showCheckInbox() {
         try {
@@ -92,9 +86,9 @@ public class MessageView extends AccountView {
 
         inputField.setVisible(true);
 
-        okayButton.setText("choose chat");
-        okayButton.setActionCommand("choose chat");
-        okayButton.setVisible(true);
+        chooseChat.setText("choose chat");
+        chooseChat.setActionCommand("choose chat");
+        chooseChat.setVisible(true);
         backButton.setVisible(true);
     }
 
@@ -116,9 +110,7 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
         messageField.setVisible(true);
 
-        okayButton.setActionCommand("send msg");
-        okayButton.setText("send msg");
-        okayButton.setVisible(true);
+        sendMsg.setVisible(true);
         backButton.setVisible(true);
     }
 

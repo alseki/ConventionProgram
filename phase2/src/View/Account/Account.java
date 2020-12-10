@@ -56,18 +56,21 @@ public class Account implements ActionListener {
         logoutButton = new JButton("logout"); // Generates logout button
         logoutButton.setLocation(0, 0);
         logoutButton.setActionCommand("logout");
+        logoutButton.setToolTipText("logout of your account without saving");
         contentPane.add(logoutButton);
 
         submitButton = new JButton("submit"); // Generates submit button
         submitButton.setLocation(0, 0);
         submitButton.setActionCommand("submit");
         submitButton.addActionListener(this);
+        submitButton.setToolTipText("click this button to navigate to the chosen menu");
         contentPane.add(submitButton);
 
         dropDownMenu = new JComboBox<>(menuOptions);// Generates dropdown menu
         dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
         dropDownMenu.setSelectedIndex(0);
         dropDownMenu.addActionListener(this);
+        dropDownMenu.setToolTipText("select a menu to navigate to");
         contentPane.add(dropDownMenu);
     }
 

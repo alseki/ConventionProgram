@@ -29,7 +29,8 @@ public class AttMessageView extends MessageView {
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
 
-        createChatButton = newButton("Create Chat!");
+        createChatButton = newButton("create chat");
+        createChatButton.setToolTipText("create chat between you and entered user(s)");
     }
 
     private void showViewAnnouncementChannels() {
@@ -46,8 +47,8 @@ public class AttMessageView extends MessageView {
     private void showOpenAnChat() {
         showOpenChat();
         dialogPrompt.setText(announcementPresenter.printChatIdPrompt());
-
-        okayButton.setActionCommand("choose anchat");
+        chooseChat.setText("choose announcement chat");
+        chooseChat.setActionCommand("choose announcement chat");
     }
 
     private void showAnnouncementChat() {
@@ -69,8 +70,6 @@ public class AttMessageView extends MessageView {
         new JTextField(100);
         inputField.setVisible(true);
 
-        createChatButton.setText("Create Chat");
-        createChatButton.setActionCommand("Create Chat");
         createChatButton.setVisible(true);
         backButton.setVisible(true);
     }
@@ -82,8 +81,8 @@ public class AttMessageView extends MessageView {
         new JTextField(100);
         inputField.setVisible(true);
 
-        createChatButton.setText("Create Group Chat");
-        createChatButton.setActionCommand("Create Group Chat");
+        createChatButton.setText("create group chat");
+        createChatButton.setActionCommand("create group chat");
         createChatButton.setVisible(true);
         backButton.setVisible(true);
     }
@@ -136,17 +135,17 @@ public class AttMessageView extends MessageView {
             showCreateGroupChat();
         }
 
-        if (eventName.equals("show anchat")) {
+        if (eventName.equals("choose announcement chat")) {
             showAnnouncementChat();
             showMainDropDownMenu();
         }
 
-        if (eventName.equals("Create Chat")) {
+        if (eventName.equals("create chat")) {
             createChat();
             showMainDropDownMenu();
         }
 
-        if(eventName.equals("Create Group Chat")) {
+        if(eventName.equals("create group chat")) {
             createGroupChat();
             showMainDropDownMenu();
         }

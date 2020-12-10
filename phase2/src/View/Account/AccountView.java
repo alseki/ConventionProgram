@@ -32,15 +32,8 @@ public abstract class AccountView implements ActionListener {
 
         contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
 
-        continueButton = newButton("continue");
-        contentPane.add(continueButton);
-
-        backButton = newButton("back");
-        contentPane.add(backButton);
-        backButton.setVisible(false);
-
-        contentPane.add(okayButton);
-        okayButton.setVisible(false);
+        continueButton.setToolTipText("click this button to navigate to the chosen menu");
+        backButton.setToolTipText("click this button to go back to the previous menu");
 
         makeDropDownMenu(presenter);
 
@@ -66,6 +59,7 @@ public abstract class AccountView implements ActionListener {
         hideAll();
         dropDownMenu.setVisible(true);
         continueButton.setVisible(true);
+        // TODO remove lines below once okay button stops being altered
         okayButton.setText("okay");
         okayButton.setActionCommand("okay");
     }
@@ -87,8 +81,8 @@ public abstract class AccountView implements ActionListener {
         dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
         dropDownMenu.setSelectedIndex(0);
         dropDownMenu.addActionListener(this);
-        contentPane.add(dropDownMenu);
-        dropDownMenu.setVisible(false);
+        dropDownMenu.setToolTipText("select a menu to navigate to");
+        initializeObject(dropDownMenu);
     }
 
     /**
@@ -101,8 +95,7 @@ public abstract class AccountView implements ActionListener {
         newButton.setLocation(0, 0);
         newButton.setActionCommand(title);
         newButton.addActionListener(this);
-        contentPane.add(newButton);
-        newButton.setVisible(false);
+        initializeObject(newButton);
         return newButton;
     }
 

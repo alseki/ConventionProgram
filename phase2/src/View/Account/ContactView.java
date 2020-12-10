@@ -31,18 +31,16 @@ public class ContactView extends AccountView {
      */
     private void setupAddContact() {
         enterUsernameMsg = new JLabel(this.presenter.printAddContactPrompt());
-        contentPane.add(enterUsernameMsg);
-        enterUsernameMsg.setVisible(false);
+        initializeObject(enterUsernameMsg);
 
         inputAddContact = new JTextField(20);
-        contentPane.add(inputAddContact);
-        inputAddContact.setVisible(false);
+        initializeObject(inputAddContact);
 
         submitButton = newButton("submit");
+        submitButton.setToolTipText("submit entered text");
 
         contactAdded = new JLabel(this.presenter.printContactAdded());
-        contentPane.add(contactAdded);
-        contactAdded.setVisible(false);
+        initializeObject(contactAdded);
     }
 
     /**
@@ -76,6 +74,7 @@ public class ContactView extends AccountView {
         enterUsernameMsg.setVisible(false);
         submitButton.setVisible(false);
         inputAddContact.setVisible(false);
+        backButton.setVisible(false);
 
         String contactUsername = inputAddContact.getText();
 

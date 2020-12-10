@@ -32,8 +32,11 @@ public class AttEventView extends AccountView {
         initializeObject(dialoguePrompt);
 
         signupButton = newButton("Sign up");
+        signupButton.setToolTipText("click this button to signup for selected event");
         cancelSpotButton = newButton("Cancel spot");
+        cancelSpotButton.setToolTipText("click this button to cancel spot in selected event");
         chooseRoomButton = newButton("Choose room");
+        chooseRoomButton.setToolTipText("choose selected room");
 
         inputField = new JTextField(50);
         initializeObject(inputField);

@@ -60,6 +60,7 @@ public class MainMenuView implements ActionListener {
         dropDownMenu.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
         dropDownMenu.setSelectedIndex(0);
         dropDownMenu.addActionListener(this);
+        dropDownMenu.setToolTipText("select a type of account to login to");
         contentPane.add(dropDownMenu);
         dropDownMenu.setVisible(false);
 
@@ -68,10 +69,12 @@ public class MainMenuView implements ActionListener {
         accountChoiceMessage.setVisible(false);
 
         submitAccountChoiceButton = newButton("submit account choice");
+        submitAccountChoiceButton.setToolTipText("confirm your selection");
         contentPane.add(submitAccountChoiceButton);
         submitAccountChoiceButton.setVisible(false);
 
         saveButton = newButton("save + exit");
+        saveButton.setToolTipText("save your progress and exit the program safely");
         contentPane.add(saveButton);
         saveButton.setVisible(false);
     }

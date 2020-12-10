@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListDisplayView implements ActionListener {
-    JButton okButton;
+    JButton returnButton;
     JLabel printedList;
     JFrame frame;
     JPanel contentPane;
@@ -33,12 +33,13 @@ public class ListDisplayView implements ActionListener {
         printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         printedList.setVisible(true);
 
-        okButton = new JButton("return");
-        okButton.setLocation(0, 0);
-        okButton.setActionCommand("close");
-        okButton.addActionListener(this);
-        contentPane.add(okButton);
-        okButton.setVisible(true);
+        returnButton = new JButton("return");
+        returnButton.setLocation(0, 0);
+        returnButton.setActionCommand("close");
+        returnButton.addActionListener(this);
+        returnButton.setToolTipText("click this button to return to previous screen");
+        contentPane.add(returnButton);
+        returnButton.setVisible(true);
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.
