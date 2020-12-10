@@ -65,6 +65,7 @@ public class ContactView extends AccountView {
     private void showAddContact() {
         enterUsernameMsg.setVisible(true);
         submitButton.setVisible(true);
+        backButton.setVisible(true);
         inputAddContact.setVisible(true);
     }
 

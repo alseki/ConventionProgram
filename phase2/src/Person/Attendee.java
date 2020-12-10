@@ -3,9 +3,11 @@ package Person;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class Attendee extends Person {
+public class Attendee extends Person implements Signupable {
 
     protected ArrayList<String> eventsSignedUp = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();

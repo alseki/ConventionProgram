@@ -94,7 +94,7 @@ public class RoomManager extends RoomAccess implements Serializable {
     /**
      * Gets the Room an Event is held in
      * @param ID the ID of the Event
-     * @return the name of the Room this Event is in
+     * @return the ID of the Room
      */
     public String getEventRoom(String ID) {
         try {
@@ -133,7 +133,7 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Creates a new Room in this RoomManager with the inputted capacity
+     * Creates a new Room with the inputted capacity
      * @param name The name of the new Room
      * @param capacity The capacity of the new Room
      * @return The ID of the new Room
@@ -147,23 +147,7 @@ public class RoomManager extends RoomAccess implements Serializable {
     }
 
     /**
-     * Deletes a Room in this RoomManager
-     * @param name The name of the Room to be removed
-     * @return Whether or not the Room has been removed (true or false)
-     */
-    public boolean removeRoom(String name) {
-        try {
-            roomEventList.remove(this.getRoomID(name));
-            roomList.remove(this.getRoomID(name));
-            roomsByName.remove(name);
-            return true;
-        } catch (NullPointerException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Adds an Event to a certain Room's list of Event IDs
+     * Adds an Event to a certain Room's list of Event IDs *
      * @param roomID The Room's ID
      * @param eventID The Event's ID
      * @return True if successful, false if unsuccessful
@@ -172,21 +156,6 @@ public class RoomManager extends RoomAccess implements Serializable {
         try {
             ArrayList<String> events = roomEventList.get(roomID);
             events.add(eventID);
-            return true;
-        } catch (NullPointerException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Deletes an Event in this RoomManager
-     * @param eventID The ID of the Event to be removed
-     * @return Whether or not the Event has been removed (true or false)
-     */
-    public boolean removeEvent(String eventID) {
-        try {
-            String room = this.getEventRoom(eventID);
-            roomEventList.get(this.getRoomID(room)).remove(eventID);
             return true;
         } catch (NullPointerException e) {
             return false;

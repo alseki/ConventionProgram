@@ -15,8 +15,6 @@ public class AttMessageView extends MessageView {
     AttMessageController controller;
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
-    JButton createChatButton;
-    JLabel dialogPrompt;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -25,11 +23,6 @@ public class AttMessageView extends MessageView {
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
         contentPane.setBackground(pinkBG);// Sets background colour
-
-        dialogPrompt = new JLabel("");
-        initializeObject(dialogPrompt);
-
-        createChatButton = newButton("Create Chat!");
     }
 
     private void showViewAnnouncementChannels() {
@@ -47,6 +40,7 @@ public class AttMessageView extends MessageView {
         showOpenChat();
         dialogPrompt.setText(announcementPresenter.printChatIdPrompt());
 
+        okayButton.setText("choose anchat");
         okayButton.setActionCommand("choose anchat");
     }
 
@@ -69,9 +63,9 @@ public class AttMessageView extends MessageView {
         new JTextField(100);
         inputField.setVisible(true);
 
-        createChatButton.setText("Create Chat");
-        createChatButton.setActionCommand("Create Chat");
-        createChatButton.setVisible(true);
+        okayButton.setActionCommand("create chat");
+        okayButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void showCreateGroupChat() {
@@ -81,28 +75,13 @@ public class AttMessageView extends MessageView {
         new JTextField(100);
         inputField.setVisible(true);
 
-        createChatButton.setText("Create Group Chat");
-        createChatButton.setActionCommand("Create Group Chat");
-        createChatButton.setVisible(true);
+        okayButton.setActionCommand("create groupchat");
+        okayButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void createChat() {
         String participantID = inputField.getText();
-
-        /*
-        try {
-            label = new JLabel(this.controller.createChat(participantID));
-
-        } catch(InvalidChoiceException e) {
-
-
-        }
-
-         */
-
-        JOptionPane.showConfirmDialog(null, "Chat Creation Successful",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
     }
 
     private void createGroupChat(){
@@ -139,12 +118,12 @@ public class AttMessageView extends MessageView {
             showMainDropDownMenu();
         }
 
-        if (eventName.equals("Create Chat")) {
+        if (eventName.equals("create chat")) {
             createChat();
             showMainDropDownMenu();
         }
 
-        if(eventName.equals("Create Group Chat")) {
+        if (eventName.equals("create groupchat")) {
             createGroupChat();
             showMainDropDownMenu();
         }

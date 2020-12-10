@@ -21,10 +21,6 @@ public class AttReqController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
-    public String makeRequestPrompt() {
-        return presenter.makeRequestPrompt();
-    }
-
     private void createRequest(){
         String content = "";//SubMenu.readInput(input);
         reqM.createRequest(this.currentUserID, content);
