@@ -5,6 +5,7 @@ import Presenter.AttendeeController.AttMessageController;
 import Presenter.AttendeeController.AttReqController;
 import Presenter.Central.SubMenu;
 import Presenter.EmployeeController.EmpEventController;
+import Presenter.EmployeeController.EmpReqController;
 import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.PersonController.ContactController;
@@ -31,6 +32,11 @@ public class AccountViewFactory {
         else if (controller instanceof OrgEventController) {
             new OrgEventView(controller);
         }
+
+        // TODO OrgPersonView
+//        else if (controller instanceof OrgPersonController) {
+//            new OrgPersonView(controller);
+//        }
         else if (controller instanceof OrgReqController) {
             new OrgReqView(controller);
         }
@@ -42,6 +48,11 @@ public class AccountViewFactory {
         }
         else if (controller instanceof EmpEventController) {
             new EmpEventView(controller);
+        }
+
+        // TODO Make sure this is correct
+        else if (controller instanceof EmpReqController) {
+            new EmpReqView(controller);
         }
     }
 }
