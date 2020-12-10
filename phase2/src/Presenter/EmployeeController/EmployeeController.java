@@ -9,6 +9,7 @@ import Message.MessageManager;
 import Person.EmployeeManager;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
+import Presenter.PersonController.MessageController;
 import Presenter.PersonController.PersonController;
 import Request.RequestManager;
 
@@ -96,9 +97,9 @@ public class EmployeeController extends PersonController {
                 return new EmpReqController(this, currentUserID);
             }
             else if (choice.equals(options[3])){
-                // FIXME
-                //return new EmpEventController(this, currentUserID, manager);
-                return null; // TODO delete this line after above is fixed
+                return new MessageController(this, currentUserID);
+
+
             }
         }
         return null;
