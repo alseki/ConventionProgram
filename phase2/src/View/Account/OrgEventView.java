@@ -43,7 +43,6 @@ public class OrgEventView extends AccountView {
         continueButton = newButton("continue");
         initializeObject(continueButton);
 
-        makeDropDownMenu(this.presenter);
         //setupCreateRoom();
         //setupCreateEvent();
         //setupCreateSpeakerAcc();

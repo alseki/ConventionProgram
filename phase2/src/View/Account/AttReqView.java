@@ -25,8 +25,6 @@ public class AttReqView extends AccountView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
-
-        makeDropDownMenu(this.presenter);
     }
 
 

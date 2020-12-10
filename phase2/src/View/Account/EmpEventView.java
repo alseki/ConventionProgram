@@ -17,8 +17,6 @@ import java.awt.event.ActionEvent;
             super(controller.getPresenter());
             this.controller = (EmpEventController) controller;
             //this.presenter = ((EmpEventController) controller).getPresenter();
-
-            makeDropDownMenu(this.presenter);
         }
 
 

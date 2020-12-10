@@ -23,8 +23,6 @@ public class AttMessageView extends MessageView {
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
         contentPane.setBackground(pinkBG);// Sets background colour
-
-        makeDropDownMenu(this.presenter);
     }
 
     private void showViewAnnouncementChannels() {

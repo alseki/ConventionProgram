@@ -28,7 +28,6 @@ public class AttEventView extends AccountView {
 
         contentPane.setBackground(whiteBG);// Sets background colour to white
 
-        makeDropDownMenu(this.presenter);
         setupSignUpEvent();
         setupCancelFromEvent();
         setupRooms();
@@ -57,7 +56,7 @@ public class AttEventView extends AccountView {
         contentPane.add(inputEventName);
         inputEventName.setVisible(false);
 
-        signupButton = newButton("signup");
+        signupButton = newButton("Signup");
 
         // also a "return to AttEventMenu" button
     }
@@ -67,7 +66,7 @@ public class AttEventView extends AccountView {
         contentPane.add(inputEventName);
         inputEventName.setVisible(false);
 
-        cancelSpotButton = newButton("cancelSpot");
+        cancelSpotButton = newButton("Cancel Spot");
 
         // and maybe also a "return to AttEventMenu" button
     }
