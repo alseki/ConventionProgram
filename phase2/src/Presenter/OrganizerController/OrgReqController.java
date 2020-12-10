@@ -1,13 +1,18 @@
 package Presenter.OrganizerController;
 
 import Presenter.Central.SubMenu;
-import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
+import Request.RequestEntity;
+import Request.RequestManager;
+
+import java.util.ArrayList;
 
 public class OrgReqController extends SubMenu {
     protected int currentRequest;
     protected OrgReqMenu presenter;
     private String currentUserID;
+    private ArrayList<RequestEntity> requestEntities;
+    protected RequestManager requestManager;
 
     /**
      * constructor for OrgReqController
@@ -18,6 +23,7 @@ public class OrgReqController extends SubMenu {
         super(subMenu);
         this.presenter = new OrgReqMenu(requestManager);
         this.currentUserID = currentUserID;
+        this.requestManager = requestManager;
     }
 
     private String fulfillRequest(String reqId){
@@ -26,6 +32,16 @@ public class OrgReqController extends SubMenu {
         //String id = "";//SubMenu.readInput(input);
 
     }
+
+    /**
+     *
+     * @param req
+     * @param requests
+     */
+    public void removeRequest(RequestEntity req, ArrayList<RequestEntity> requests) {
+        requests.remove(req);
+    }
+
     private String seeRequests(){
         return presenter.seeRequests();
     }

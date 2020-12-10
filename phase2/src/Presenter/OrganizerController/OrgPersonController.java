@@ -6,21 +6,20 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Event.Event;
 import Event.EventManager;
 import Event.EventPermissions;
 import Event.Panel;
 import Person.*;
-import Person.PersonManager;
 import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.OverwritingException;
+import Request.RequestEntity;
+import Request.RequestManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class OrgPersonController extends SubMenu {
@@ -33,8 +32,10 @@ public class OrgPersonController extends SubMenu {
     private OrganizerManager organizerManager;
     private EventPermissions eventPermissions;
     private EventManager eventManager;
+    private RequestManager requestManager;
     private OrgPersonMenu presenter;
     private OrgEventController orgEventController;
+    private OrgReqController orgReqController;
 
 
     public OrgPersonController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
@@ -45,6 +46,7 @@ public class OrgPersonController extends SubMenu {
         this.employeeManager = employeeManager;
         this.attendeeManager = attendeeManager;
         this.organizerManager = (OrganizerManager) personManager;
+        this.requestManager = requestManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
         presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
     }
@@ -221,15 +223,15 @@ public class OrgPersonController extends SubMenu {
 
         // to make sure that panel is not empty. Remember this is speaker's list of panel events, not the Panel entity's list of speakers
         // then using this eventID to delete speaker from the Panel itself
-        if(!panels.isEmpty()){
-            for(String eventId: panels){
+        if (!panels.isEmpty()) {
+            for (String eventId : panels) {
                 removeSpeakerFromPanelEvent(speakerID, eventId);
             }
         }
 
         // to make sure that non-panel list is not empty. Same as above.
-        if(!nonPanels.isEmpty()){
-            for(String eventId: nonPanels){
+        if (!nonPanels.isEmpty()) {
+            for (String eventId : nonPanels) {
                 removeSpeakerFromNonPanelEvent(speakerID, eventId);
             }
         }
@@ -250,8 +252,6 @@ public class OrgPersonController extends SubMenu {
     }
 
 
-
-
     public void cancelEmployeeAccount(String userID) {
         //set up message notifying other employees and organizers
         // delete chats of employees, and if employee is still working on request, the other employees will have to look into this.
@@ -263,11 +263,11 @@ public class OrgPersonController extends SubMenu {
         // employeeManager.getRequestsIDs(userID).clear();
         // letting other employees know - calling method from above for below see line 272 - based on whether there is
         // an existing chat or not
-        ArrayList <String> list = employeeManager.getEmployeeList(userID)
+        ArrayList<String> list = employeeManager.getEmployeeList(userID)
         ArrayList<String> contacts = personManager.getContactList(userID);
-        if(!list.isEmpty()){
-            for(String emp: contacts){
-                if(!emp.equals(userID)){
+        if (!list.isEmpty()) {
+            for (String emp : contacts) {
+                if (!emp.equals(userID)) {
                     if (chatManager.existChat(userID, emp)) {
                         String existingChatID = chatManager.findChat(userID, emp);
                         sendMessageAboutCancelEmployee(userID, emp, existingChatID);
@@ -328,111 +328,138 @@ public class OrgPersonController extends SubMenu {
                     personManager.addChat(currentUserID, newChatID);
                     messageManager.createMessage(currentUserID, fellowOrg, newChatID, messageContentToOrganizers);
                 }
-            } return true;
-        } return false;
+            }
+            return true;
+        }
+        return false;
 
     }
 
 
-        /**
-         * Creates a new Person.SpeakerController account and adds it to the system
-         * @param name The name of the SpeakerController
-         * @param username The username of the SpeakerController
-         * @param password The password of the SpeakerController
-         * @param email The email of the SpeakerController
-         * @return true iff a new Person.SpeakerController object was created
-         */
-        public void createSpeaker (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws Invalid Exception
-            if (!speakerManager.findPerson(username)) {
-                speakerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
+    /**
+     * Creates a new Person.SpeakerController account and adds it to the system
+     *
+     * @param name     The name of the SpeakerController
+     * @param username The username of the SpeakerController
+     * @param password The password of the SpeakerController
+     * @param email    The email of the SpeakerController
+     * @return true iff a new Person.SpeakerController object was created
+     */
+    public void createSpeaker(String name, String username, String password, String email) throws
+            OverwritingException {
+        // OR throws Invalid Exception
+        if (!speakerManager.findPerson(username)) {
+            speakerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Person.Employee account and adds it to the system (including into a specific dictionary of employees solely)
+     *
+     * @param name     The name of the employee
+     * @param username The username of the employee
+     * @param password The password of the employee
+     * @param email    The email of the employee
+     * @return true iff a new employee object was created
+     */
+    public void createEmployee(String name, String username, String password, String email) throws
+            OverwritingException {
+        // OR throws InvalidException
+        if (!employeeManager.findPerson(username)) {
+            employeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Person.Attendee account and adds it to the system
+     *
+     * @param name     The name of the employee
+     * @param username The username of the employee
+     * @param password The password of the employee
+     * @param email    The email of the employee
+     * @return true iff a new employee object was created
+     */
+    public void createAttendee(String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!attendeeManager.findPerson(username)) {
+            attendeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
         }
 
-        /**
-         * Creates a new Person.Employee account and adds it to the system (including into a specific dictionary of employees solely)
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createEmployee (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws InvalidException
-            if (!employeeManager.findPerson(username)) {
-                employeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
+    }
+
+    /**
+     * Creates a new Person.Attendee account and adds it to the system
+     *
+     * @param name     The name of the employee
+     * @param username The username of the employee
+     * @param password The password of the employee
+     * @param email    The email of the employee
+     * @return true iff a new employee object was created
+     */
+    public void createOrganizer(String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!organizerManager.findPerson(username)) {
+            organizerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
         }
 
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createAttendee (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!attendeeManager.findPerson(username)) {
-                attendeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
+    }
 
-        }
+    /**
+     * Adds a Message with content the AnnouncementChat contained within the Event with eventName*
+     *
+     * @param eventName The name of the Event
+     * @param chatName  The name of the Chat
+     */
+    private void eventMessage(String eventName, String chatName, String messageContent) {
+        String eventID = eventManager.getEventID(eventName);
+        String chatID = eventManager.getEventChat(chatName);
+        String ev = eventManager.getEventChat(eventID);
+        String m = messageManager.createMessage(eventID, chatID, messageContent);
+        chatManager.addMessageIds(ev, m);
+    }
 
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createOrganizer (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!organizerManager.findPerson(username)) {
-                organizerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-
-        }
-
-        /**
-         * Adds a Message with content the AnnouncementChat contained within the Event with eventName*
-         * @param eventName The name of the Event
-         * @param chatName The name of the Chat
-         */
-        private void eventMessage (String eventName, String chatName, String messageContent){
-            String eventID = eventManager.getEventID(eventName);
-            String chatID = eventManager.getEventChat(chatName);
-            String ev = eventManager.getEventChat(eventID);
-            String m = messageManager.createMessage(eventID, chatID, messageContent);
-            chatManager.addMessageIds(ev, m);
-        }
-
-        /**
-         * Chooses a valid start time for the new Event
-         * @param time The start time as a String
-         * @return The start time as a LocalDateTime object
-         */
-        private LocalDateTime getStartTime (String time) throws DateTimeParseException {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            return LocalDateTime.parse(time, formatter);
-        }
+    /**
+     * Chooses a valid start time for the new Event
+     *
+     * @param time The start time as a String
+     * @return The start time as a LocalDateTime object
+     */
+    private LocalDateTime getStartTime(String time) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(time, formatter);
+    }
 
 //    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
 //        Chat ac = new Chat(eventId, attendeeIds, chatName);
 //        aChatsList.add(ac);
 //        return ac.getId();
+
+
+    public boolean deletingRequestsEmployee(String userID) {
+        ArrayList<RequestEntity> allRequests = requestManager.getRequestLists();
+        ArrayList<RequestEntity> listUser = new ArrayList<>();
+        for (RequestEntity request : allRequests) {
+            if (request.getRequestingUserId().equals(userID)) {
+                listUser.add(request);
+            }
+        }
+        for (RequestEntity request : listUser) {
+            orgReqController.removeRequest(request, allRequests);
+        }
+        return true;
+    }
+
+
+
+
 
         @Override
         public SubMenuPrinter getPresenter () {
