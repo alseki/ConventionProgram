@@ -94,7 +94,7 @@ public class OrgPersonController extends SubMenu {
 
         ArrayList<String> eventList = personManager.getEventList(userID);
         for (String e : eventList) {
-            eventPermissions.removeFromEvent(userID, e);
+            eventPermissions.removeAttendeeFromEvent(userID, e);
         }
     }
 

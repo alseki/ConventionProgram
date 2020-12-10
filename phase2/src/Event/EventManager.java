@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Contributors: Sarah Kronenfeld, Eytan Weinstein
-// Last edit: Dec 7 2020
+// Last edit: Dec 9 2020
 
 // Architecture Level - Use Class
 
@@ -270,17 +270,8 @@ public class EventManager extends EventAccess implements Serializable {
         return event.getID();
     }
 
-    public ArrayList getPanelSpeakerList(String eventID) {
-        if (getEventType(eventID).toString().equals("PANEL")) {
-            Panel panel = (Panel) getEvent(eventID);
-            return panel.getSpeakerIDs();
-        }
-        return null;
-    }
-
-
     /**
-     * Deletes an Event
+     * Deletes an Event in this EventManager
      * @param ID The Event's ID
      * @return whether the Event has been successfully deleted
      */
@@ -293,6 +284,15 @@ public class EventManager extends EventAccess implements Serializable {
             return false;
         }
     }
+
+    public ArrayList getPanelSpeakerList(String eventID) {
+        if (getEventType(eventID).toString().equals("PANEL")) {
+            Panel panel = (Panel) getEvent(eventID);
+            return panel.getSpeakerIDs();
+        }
+        return null;
+    }
+
 
     /**
      *
