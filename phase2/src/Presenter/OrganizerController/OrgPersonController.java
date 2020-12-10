@@ -247,16 +247,7 @@ public class OrgPersonController extends SubMenu {
         // have organizer send message to other panelists - see method below
         informOrganizersSpeakerDeletion(this.currentUserID, speakerID);
 
-
     }
-    // TODO Fix the commented lines!
-
-
-
-
-
-
-
 
 
 
@@ -267,14 +258,34 @@ public class OrgPersonController extends SubMenu {
         deleteUserFromChatGroups(userID);
 
         removeFromOtherUsersContactLists(userID);
-        // TODO Fix the commented line!
 
         //employeeManager.getAnnouncementChats(userID).clear();
         // employeeManager.getRequestsIDs(userID).clear();
-        Map<String, Employee> map = employeeManager.getUsernameToEmployee();
-        //map.remove();
+        // letting other employees know - calling method from above for below see line 272 - based on whether there is
+        // an existing chat or not
+        ArrayList <String> list = employeeManager.getEmployeeList(userID)
+        ArrayList<String> contacts = personManager.getContactList(userID);
+        if(!list.isEmpty()){
+            for(String emp: contacts){
+                if(!emp.equals(userID)){
+                    if (chatManager.existChat(userID, emp)) {
+                        String existingChatID = chatManager.findChat(userID, emp);
+                        sendMessageAboutCancelEmployee(userID, emp, existingChatID);
+
+                        // if such is not the case, Organizer has to "create" chat with the said speaker and send message
+                    } else {
+                        String newChatID = chatManager.createChat(userID, emp);
+                        personManager.addChat(userID, newChatID);
+                        messageManager.createMessage(userID, emp, newChatID);
+                    }
+                }
+            }
+        }
+        // then delete the rest
+        deleteUserFromChatGroups(userID);
+        removeFromOtherUsersContactLists(userID);
         employeeManager.cancelEmployeeAccount(userID);
-        employeeManager.cancelEmployeeAccount(userID);
+
 
     }
 
