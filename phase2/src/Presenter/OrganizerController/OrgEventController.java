@@ -162,11 +162,9 @@ public class OrgEventController extends SubMenu {
         speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
         speakerManager.addToAllTalksID(eventID, speakerID);
         if(eventType == "PANEL"){
-            speakerManager.getSpeakerInPanels(speakerID).add(eventID);
+            speakerManager.addPanelSpeakerList(speakerID, eventID);
         } else {
-            // TODO Fix the commented line!
-
-            // speakerManager.getSpeakerInNonPanels(speakerID).add(eventID);
+            speakerManager.addNonPanelSpeakerList(speakerID, eventID);
         }
 
         return eventID;
