@@ -10,7 +10,7 @@ import Presenter.PersonController.EventMenu;
 
 public class OrgPersonMenu extends EventMenu{
     public OrgPersonMenu(RoomManager rooms, EventManager events, PersonManager persons) {
-        super(rooms, events, persons)
+        super(rooms, events, persons);
     }
 
 
@@ -21,7 +21,7 @@ public class OrgPersonMenu extends EventMenu{
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"Create a speaker account", "Create an attendee acount", "Create an employee account",
+        return new String[]{"Create a speaker account", "Create an attendee account", "Create an employee account",
                 "Create an organizer account", "Cancel a speaker account", "Cancel an attendee account", "Cancel an employee account",
                 "Create a speaker account"};
     }
