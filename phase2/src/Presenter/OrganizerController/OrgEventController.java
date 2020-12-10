@@ -11,6 +11,7 @@ import Person.OrganizerManager;
 import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.InvalidFormatException;
 import Presenter.Exceptions.OverwritingException;
 
 import java.time.LocalDateTime;
@@ -57,23 +58,17 @@ public class OrgEventController extends SubMenu {
     // Methods for adding/cancelling Events in EventManager
 
     /**
-     * Chooses a valid start time for the new Event
-     * @param time The start time as a String
-     * @return The start time as a LocalDateTime object
+     * Chooses a valid time for creating a new Event
+     * @param time The time as a String
+     * @return The time as a LocalDateTime object
      */
-    private LocalDateTime getStartTime(String time) throws DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(time, formatter);
-    }
-
-    /**
-     * Chooses a valid end time for the new Event
-     * @param time The end time as a String
-     * @return The end time as a LocalDateTime object
-     */
-    private LocalDateTime getEndTime(String time) throws DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(time, formatter);
+    private LocalDateTime getFormattedTime(String time) throws InvalidChoiceException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return LocalDateTime.parse(time, formatter);
+        } catch (DateTimeParseException e) {
+            throw new InvalidFormatException("date", "a date in the following format: yyyy-MM-dd HH:mm");
+        }
     }
 
     /**
@@ -101,21 +96,25 @@ public class OrgEventController extends SubMenu {
      * @param room        The name of the Room the Event is in
      * @return true iff the Talk was created successfully
      */
-    public boolean createEvent(String name, String speakerID, LocalDateTime startTime, LocalDateTime endTime, String
+    public boolean createEvent(String name, String speakerID, String startTime, String endTime, String
             description, int capacity, EventType type, String room) throws InvalidChoiceException {
         String roomID = roomManager.getRoomID(room);
-        if (roomID == null) {
+        if (roomID == null) { // If the user inputs an incorrect room
             throw new InvalidChoiceException("room");
         }
-        if (speakerID == "" || speakerID == null) {
+        if (speakerID == "" || speakerID == null) { // If the user inputs an incorrect speaker
             throw new InvalidChoiceException("speaker");
         }
-        if (eventManager.contains(name)) {
+        if (eventManager.contains(name)) { // If the user inputs an event name that already exists in the system
             throw new OverwritingException("event");
         }
-        if (eventPermissions.checkConflicts(startTime, endTime, type, roomID) &&
-                eventPermissions.checkRoomCapacity(startTime, endTime, capacity, roomID)) {
-            String eventID = this.addEvent(name, speakerID, startTime, endTime, description, capacity, type);
+        LocalDateTime start = getFormattedTime(startTime);
+        LocalDateTime end = getFormattedTime(endTime);
+        if (eventPermissions.checkConflicts(start, end, type, roomID)) {
+            throw new OverwritingException("event at this time");
+        }
+        if (eventPermissions.checkRoomCapacity(start, end, capacity, roomID)) {
+            String eventID = this.addEvent(name, speakerID, start, end, description, capacity, type);
             roomManager.addEvent(roomID, eventID);
             return true;
         }
@@ -227,8 +226,7 @@ public class OrgEventController extends SubMenu {
         int dayMinute = now.getMinute();
 
         // this is to get the start time of event
-        // the startTime method here is from above in OrgEventController
-        LocalDateTime startTime = getStartTime(eventID);
+        LocalDateTime startTime = eventManager.getStartTime(eventID);
         int eventHour = startTime.getHour();
         int eventMinute = startTime.getMinute();
 
