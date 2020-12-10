@@ -222,36 +222,65 @@ public class OrgEventController extends SubMenu {
 
     private boolean cancelEvent(String eventID) {
 
-
         // TODO comment all sections of this function so it is legible.
-
         // TODO add try catch blocks
 
+        // eventname, chatName, and speaker will be need below
         String eventName = eventManager.getEventName(eventID);
         String chatName = eventManager.getEventChat(eventID);
         String speakerID = eventManager.getSpeakerID(eventID);
+
+        // getting the current time of day
         LocalDateTime now = LocalDateTime.now();
         int dayHour = now.getHour();
         int dayMinute = now.getMinute();
+
+        // this is to get the start time of event
+        // the startTime method here is from above in OrgEventController
         LocalDateTime startTime = getStartTime(eventID);
         int eventHour = startTime.getHour();
         int eventMinute = startTime.getMinute();
+
+        // comparing start time of event to time of day (effectively permitting cancellation 1 minute before event starts: oh well!!)
         if (eventHour < dayHour && eventMinute < dayMinute) {
+
+            // event will be removed if the time of day before time of event
             eventManager.removeEvent(eventID);
+
+            // This message is pretty crucial for the purpose of the app. Attendees must be notified. And the message has to be sent in this method.
             String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be made shortly.";
             eventMessage(eventName, chatName, messageContent);
+
+            // This message is to Speaker (who is not in the chatID group linked with Event's creation. I asked Karyn and Ran about this.
+            // Speaker won't get the message through event's particular chatID like attendees would.
             String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been notified. I will call you very soon.";
+
+            // So what is going on here is that Organizer has to message Speaker directly.
+
+            // This line, I think is unnecessary.
             String organizerID = this.currentUserID;
+
+            // Oh, and what is below would not apply to PARTY, so there will have to be a check Event type, contradicting
+            // what I said below line 263 uugghh. (I wrote that first)
+
+            // So Organizer might already have a 1-1 chat with the speaker, if that is the case .. send message away
             ArrayList<String> contacts = personManager.getContactList(organizerID);
             if (chatManager.existChat(organizerID, speakerID)) {
                 String existingChatID = chatManager.findChat(organizerID, speakerID);
                 messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
+
+                // if such is not the case, Organizer has to "create" chat with the said speaker and send message
             } else {
                 String newChatID = chatManager.createChat(organizerID, speakerID);
                 personManager.addChat(organizerID, newChatID);
                 messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
             }
+
+            // This is where event will be removed from speaker's Event list (I might add remove from already existing specific
+            // panel or non-panel lists, but uuggghhh, then that requires event type checks right here and .... ??
             speakerManager.removeTalk(speakerID, eventID);
+
+            // I believe this should be a boolean function.
             return true;
         }
         return false;
