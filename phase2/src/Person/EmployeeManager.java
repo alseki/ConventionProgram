@@ -13,6 +13,7 @@ public class EmployeeManager extends PersonManager {
 
     // dictionary of all employees; this is under the theme of creating a restricted chat for employees with employees only
     protected Map<String, Employee> usernameToEmployee = new HashMap<String, Employee>();
+    protected ArrayList<String> employeeList = new ArrayList<>();
 
     String name = getName();
 
@@ -27,6 +28,11 @@ public class EmployeeManager extends PersonManager {
 
     }
 
+    public ArrayList getEmployeeList(String userID){
+        return employeeList;
+
+    }
+
     @Override
     public boolean createAccount(String name, String username, String password, String email) {
         if (!usernameToPerson.containsKey(username)) {
@@ -34,6 +40,7 @@ public class EmployeeManager extends PersonManager {
             usernameToPerson.put(username, newEmployee);
             idToPerson.put(newEmployee.getID(), newEmployee);
             usernameToEmployee.put(username, newEmployee);
+            employeeList.add(newEmployee.getID());
             return true;
         }
         return false;
