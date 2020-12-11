@@ -177,12 +177,13 @@ public class MessageController extends SubMenu {
         ArrayList<String> personIds = new ArrayList<>();
         for (String user: usernames){personIds.add(personManager.getCurrentUserID(user));}
         return chatManager.searchChatsContaining(personIds);}
-
+    /*
     protected void addPersonToChats(String chatname, ArrayList<String> usernames){
 
         String chatId = chatManager.findChatByName(chatname);
         for (String username: usernames){chatManager.addPersonIds(chatId, personManager.getCurrentUserID(username));}
         for (String personId: chatManager.getPersonIds(chatId)){personManager.addChat(personId, chatId);}}
+    */
     @Override
     public MessageMenu getPresenter() {
         return this.presenter;
