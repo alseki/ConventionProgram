@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class OrganizerManager extends PersonManager{
+
     /**
      * constructor for OrganizerManager
      * @param usernameToPerson a map of String linking username to organizer object
@@ -16,6 +17,14 @@ public class OrganizerManager extends PersonManager{
 
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
+
+    }
+
+    public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson, boolean firstLogIn) {
+        super(usernameToPerson, idToPerson);
+        if (firstLogIn) {
+            firstLogin();
+        }
 
     }
 
@@ -108,6 +117,9 @@ public class OrganizerManager extends PersonManager{
 
     public ArrayList getOrganizerOnlyMapByUsername(String userID){
         return userIdToOrganizer;
+    }
+    private void firstLogin() {
+        createAccount("admin", "admin", "admin", null);
     }
 
 

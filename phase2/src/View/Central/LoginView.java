@@ -54,7 +54,13 @@ public class LoginView {
      * existing account, 2 = sign up for new account)
      */
     private Integer mainMenu() {
-        Integer[] args = {0, 1, 2};
+        int opts = presenter.getMenuOptions().length;
+
+        Integer[] args = new Integer[opts];
+        for (int i = 0; i < opts; i++) {
+            args[i] = i;
+        }
+
         StringBuilder menuOptions = new StringBuilder();
         for (String option: presenter.getMenuOptions()) {
             menuOptions.append(option);

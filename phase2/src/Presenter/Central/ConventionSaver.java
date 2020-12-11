@@ -6,6 +6,7 @@ import Message.ChatManager;
 import Message.MessageManager;
 import Person.PersonManager;
 import Person.Person;
+import Person.OrganizerManager;
 import Request.RequestManager;
 
 import java.util.HashMap;
@@ -64,14 +65,19 @@ public class ConventionSaver {
         if (chatLoader.readFile() != null) {
             cm = chatLoader.readFile();
         }
+        if (requestLoader.readFile() != null) {
+            rqm = requestLoader.readFile();
+        }
         if (id2Person.readFile() != null) {
             personByID = id2Person.readFile();
         }
         if (n2Person.readFile() != null) {
             personByName = n2Person.readFile();
-        }
-        if (requestLoader.readFile() != null) {
-            rqm = requestLoader.readFile();
+        } else { // If you're creating an entirely new conference attendee list, add an additional "admin" user
+            OrganizerManager firstLogin = new OrganizerManager(personByName, personByID, true);
+            Map[] maps = firstLogin.unpack();
+            personByName = maps[0];
+            personByID = maps[1];
         }
     }
 
