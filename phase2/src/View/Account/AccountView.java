@@ -1,6 +1,7 @@
 package View.Account;
 
 import Presenter.Central.SubMenuPrinter;
+import javafx.beans.Observable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,13 @@ import java.awt.event.ActionListener;
 /**
  * A view that is instantiated with a Controller and builds frame based on said Controller
  */
-public abstract class AccountView implements ActionListener {
+public abstract class AccountView implements ActionListener, Observable {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
     public JButton okayButton = newButton("okay");
     public JButton continueButton = newButton("continue");
     public JButton backButton = newButton("back");
+    public JButton closeButton = newButton("save and close");
     JComboBox<String> dropDownMenu;
     public String eventName;
     public final String[] menuOp;
@@ -41,6 +43,7 @@ public abstract class AccountView implements ActionListener {
 
         continueButton.setToolTipText("click this button to navigate to the chosen menu");
         backButton.setToolTipText("click this button to go back to the previous menu");
+        initializeObject(closeButton);
 
         makeDropDownMenu(presenter);
 
@@ -66,6 +69,7 @@ public abstract class AccountView implements ActionListener {
         hideAll();
         dropDownMenu.setVisible(true);
         continueButton.setVisible(true);
+        closeButton.setVisible(true);
         // TODO remove lines below once okay button stops being altered
         okayButton.setText("okay");
         okayButton.setActionCommand("okay");
@@ -77,6 +81,7 @@ public abstract class AccountView implements ActionListener {
     public void hideMainDropDownMenu() {
         dropDownMenu.setVisible(false);
         continueButton.setVisible(false);
+        closeButton.setVisible(true);
     }
 
     /**
@@ -132,6 +137,10 @@ public abstract class AccountView implements ActionListener {
 
         if (eventName.equals(continueButton.getActionCommand())) {
             eventName = (String)dropDownMenu.getSelectedItem();
+        }
+
+        if (eventName.equals(closeButton.getActionCommand())) {
+            notifyAll();
         }
     }
 

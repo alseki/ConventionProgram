@@ -11,13 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observer;
 
 // Programmers: Cara McNeil,
 // Description: Prints the Main Menu options
 // Date Created: 11/11/2020
 // Date Modified: 13/11/2020
 
-public class Account implements ActionListener {
+public class Account implements ActionListener, Observer {
     PersonController controller;
     AccountViewFactory accountViewFactory = new AccountViewFactory();
     String[] menuOptions;
