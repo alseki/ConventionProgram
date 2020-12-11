@@ -7,13 +7,14 @@ import java.util.UUID;
 
 public class Employee extends Person {
 
-    //protected ArrayList<String> eventsSignedUp = new ArrayList<>();
 
     protected ArrayList<String> anChatList = new ArrayList<>();
 
     private Map<String, Boolean> requestIdToStatus;
 
     protected ArrayList<String> announcementChatIds = new ArrayList<>();
+
+    protected ArrayList<String> announcementChatIDs = new ArrayList<>();
 
     public Employee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -46,28 +47,23 @@ public class Employee extends Person {
         return super.getID();
     }
 
-    //    public ArrayList<String> getAnChatList() {
-//        return anChatList;
-//    }
-//
-//    public void setAnChatList(ArrayList<String> anChatList) {
-//        this.anChatList = anChatList;
-//    }
+    public ArrayList<String> getAnChatList() {
+        return anChatList;
+    }
+
+    public void addAnChat(String anChatID) {
+        this.anChatList.add(anChatID);
+    }
 
     public Map<String, Boolean> getRequestIdToStatus() {
         return requestIdToStatus;
     }
 
-
-//    public void addAnChat(String chatID) {
-//        anChatList.add(chatID);
-//    }
-//
-//    public void removeAnChat(String chatID) {
-//        if (anChatList.contains(chatID)) {
-//            anChatList.remove(chatID);
-//        }
-//    }
+    public void removeAnChat(String chatID) {
+        if (anChatList.contains(chatID)) {
+            anChatList.remove(chatID);
+        }
+    }
 
     public String getRequestStatus(String requestId){
         if (!requestIdToStatus.get(requestId)){
@@ -77,20 +73,7 @@ public class Employee extends Person {
             return "Fulfilled";
         }
     }
-    public void newRequest(String requestId){
-        requestIdToStatus.put(requestId, false);
-    }
 
-    /**
-     *
-     * This is a list of strings representing chatIds pertaining to announcements about events
-     * @return ArrayList<String> of chatID of messages received by the User
-     */
-
-    public ArrayList<String> getAnnouncementChats() {
-        return this.announcementChatIds;
-
-    }
 
 }
 
