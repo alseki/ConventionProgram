@@ -6,6 +6,7 @@ import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgEventMenu;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class OrgEventView extends AccountView {
@@ -31,7 +32,7 @@ public class OrgEventView extends AccountView {
 
         menuOp = this.presenter.getMenuOptions();
 
-        contentPane.setBackground(whiteBG);// Sets background colour
+        contentPane.setBackground(new Color(200, 10, 150));
 
         dpMain = new JLabel("");
         initializeObject(dpMain);

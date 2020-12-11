@@ -20,7 +20,8 @@ public class EmpEventView extends AccountView {
         this.controller = (EmpEventController) controller;
         this.presenter = (EmpEventMenu) controller.getPresenter();
 
-        contentPane.setBackground(new Color(130, 255, 140));
+        contentPane.setBackground(new Color(255, 140, 190));
+        //contentPane.setBackground(new Color(130, 255, 140));
 
         menuOp = this.presenter.getMenuOptions();
     }

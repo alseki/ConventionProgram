@@ -25,7 +25,8 @@ public class ContactView extends AccountView {
         super(controller.getPresenter());
         this.controller = (ContactController) controller;
         this.presenter = (ContactMenu) controller.getPresenter();
-        contentPane.setBackground(yellowBG);// Sets background colour
+
+        contentPane.setBackground(yellowBG);
 
         setupAddContact();
     }

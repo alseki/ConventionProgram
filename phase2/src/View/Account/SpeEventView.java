@@ -5,6 +5,7 @@ import Presenter.SpeakerController.SpeEventController;
 import Presenter.SpeakerController.SpeEventMenu;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class SpeEventView extends AccountView {
@@ -19,6 +20,8 @@ public class SpeEventView extends AccountView {
         super(controller.getPresenter());
         this.controller = (SpeEventController) controller;
         this.presenter = (SpeEventMenu) controller.getPresenter();
+
+        contentPane.setBackground(new Color(255, 10, 190));
     }
 
     @Override

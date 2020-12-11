@@ -6,6 +6,7 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.InvalidFormatException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
@@ -27,7 +28,7 @@ public class AttMessageView extends MessageView {
         this.presenter = (AttMessageMenu) controller.getPresenter();
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
-        contentPane.setBackground(pinkBG);// Sets background colour
+        contentPane.setBackground(new Color(255, 240, 150));// Sets background colour
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);

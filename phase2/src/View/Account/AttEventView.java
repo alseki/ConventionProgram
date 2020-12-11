@@ -6,6 +6,7 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Event.CapacityException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class AttEventView extends AccountView {
         this.controller = (AttEventController) controller;
         this.presenter = (AttEventMenu) controller.getPresenter();
 
-        contentPane.setBackground(whiteBG);// Sets background colour to white
+        contentPane.setBackground(new Color(255, 170, 130));// Sets background colour to white
 
         dialoguePrompt = new JLabel("");
         initializeObject(dialoguePrompt);
