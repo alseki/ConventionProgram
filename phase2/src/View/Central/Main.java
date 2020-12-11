@@ -3,7 +3,7 @@ package View.Central;// Programmer: Cara McNeil
 // Date Created: 01/11/2020
 // Date Modified: 29/11/2020
 
-public class Main {
+public class 2Main {
     public static void main(String[] args) {
         MainMenuView view = new MainMenuView();
 

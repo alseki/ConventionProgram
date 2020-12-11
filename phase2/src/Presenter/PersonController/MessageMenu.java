@@ -252,16 +252,50 @@ public class MessageMenu implements SubMenuPrinter {
     // Option 102 -------------------- Archive Message --------------------
     // method in MessageController
 
+    public String printArchiveMessagePrompt(){return "Select the message that you would like to archive: ";}
+
+    public String printArchivedMessagePrompt(){return "Message archived!";}
+
     // Option 103 -------------------- Remove archived message ---------------------
     // method in MessageController
+
+    public String printUnarchiveMessagePrompt(){return "Select the archived message that you would like to restore: ";}
+
+    public String printUnarchivedMessagePrompt(){return "Archived message restored!";}
 
     // Option 104 =--------------------delete Chat----------------------------------
     // method in MessageController
 
-    public void printDeleteChatPrompt(){
-        System.out.println("Which chat do you want to delete from your account? Enter the chatName.");}
+    public String printDeleteChatPrompt(){
+        return ("Which chat do you want to delete from your account? Enter the chatName.");}
 
-    public void printSearchChatByChatnamePrompt(){}
+    public String printDeletedChat(){return "Chat is successfully deleted from your account.";}
+
+    // ----------------------------- searchChatByUsernames ---------------------------------
+
+    public String printSearchChatByUsernamesPrompt(){return "Enter the usernames of users in the Chat you are looking for." +
+            " Separate by commas, no space. (example: userA,userB,userC,userD";}
+
+    public String printSearchedChats(){return "Here are the results of Chats lookup by usernames: ";}
+
+    // ----------------------------- Mark Chat as READ ---------------------------------
+
+    public String printMarkChatRead(){return "Which chat do you want to mark as \"read\"? Enter the chatName.";}
+
+    public String printMarkedChatAsRead(String chatName){return "The chat: " + chatName + " is marked as \"read\".";}
+
+    // ----------------------------- Mark Chat as UNREAD ---------------------------------
+
+    public String printMarkChatUnread(){return "Which chat do you want to mark as \"unread\"? Enter the chatName.";}
+
+    public String printMarkedChatAsUnread(String chatName){return "The chat: " + chatName + " is marked as \"unread\".";}
+
+    // -----------------------------  ---------------------------------
+
+
+
+    // -----------------------------  ---------------------------------
+
 
     // ----------------------------- Helpers ---------------------------------
     // method in MessageController
