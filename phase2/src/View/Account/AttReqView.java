@@ -39,6 +39,7 @@ public class AttReqView extends AccountView {
     }
 
 
+    // Option 1
 
     private void showMakeReq() {
         submit.setActionCommand("make");
@@ -64,6 +65,8 @@ public class AttReqView extends AccountView {
 
         backButton.setVisible(true);
     }
+
+    // Option 2
 
     private void showChooseReqPrompt() {
         dialogPrompt.setText(presenter.seeRequestPrompt());
@@ -92,7 +95,7 @@ public class AttReqView extends AccountView {
             backButton.setVisible(true);
 
             dialogPrompt.setText(presenter.seeRequest(reqID));
-            dialogPrompt.setBounds(10, 10, 300, 300);
+            dialogPrompt.setBounds(10, 10, 200, 300);
 
             frame.setTitle(presenter.specificRequestTitle(reqID));
         } catch (InvalidChoiceException e) {
@@ -103,10 +106,11 @@ public class AttReqView extends AccountView {
         }
     }
 
+    // Option 3
+
     private void showMyReqs() {
         try {
             reqsList = new ListDisplayView(presenter.viewRequestTitle(), presenter.myRequests());
-            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
             showMainDropDownMenu();
@@ -126,7 +130,7 @@ public class AttReqView extends AccountView {
         // [0] = make a request
         // [1] = view info about a request
         // [2] = show my requests
-        // [3] = modify a request
+
         if(eventName.equals(menuOp[0])) {
             hideMainDropDownMenu();
             showMakeReq();
@@ -138,7 +142,6 @@ public class AttReqView extends AccountView {
         }
 
         if(eventName.equals(menuOp[2])) {
-            hideMainDropDownMenu();
             showMyReqs();
         }
 

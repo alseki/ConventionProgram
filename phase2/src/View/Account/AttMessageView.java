@@ -4,7 +4,6 @@ import Presenter.AttendeeController.AttMessageController;
 import Presenter.AttendeeController.AttMessageMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
-import Presenter.Exceptions.InvalidFormatException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

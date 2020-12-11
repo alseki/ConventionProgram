@@ -130,6 +130,20 @@ public class RequestManager implements Serializable {
         }
         return userRequestIDs;
     }
+
+    /**
+     * returns all requests
+     * @return an arraylist of the IDs of the convention's requests
+     */
+    public ArrayList<String> getRequestIDs() throws NullPointerException {
+        ArrayList<String> userRequestIDs = new ArrayList<>();
+        for (RequestEntity request : requestsList) {
+            userRequestIDs.add(request.getRequestID());
+        }
+        return userRequestIDs;
+    }
+
+
     /**
      * to update a request when it is filled
      * @param reqId string for request id

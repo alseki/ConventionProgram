@@ -1,6 +1,7 @@
 package Presenter.EmployeeController;
 
 import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.OrganizerController.OrgReqMenu;
 import Request.RequestManager;
@@ -32,8 +33,12 @@ public class EmpReqController extends OrgReqController {
 //    }
 
     @Override
-    public String fulfillRequest(String reqId){
-        requestManager.updateEntity(reqId, currentUserID);
-        return presenter.fulfillResponse(reqId);
+    public String fulfillRequest(String reqId) throws InvalidChoiceException {
+        if (requestManager.requestExists(reqId)) {
+            requestManager.updateEntity(reqId, currentUserID);
+            return presenter.fulfillRequestConfirmed(reqId);
+        } else {
+            throw new InvalidChoiceException("request");
+        }
     }
 }
