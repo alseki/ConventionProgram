@@ -1,6 +1,7 @@
 package View.Account;
 
 import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgEventMenu;
 
@@ -14,9 +15,9 @@ public class OrgEventView extends AccountView {
 
     // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
     //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
-    JLabel dialogPrompt;
+    JLabel dpMain, dp1, dp2, dp3; // dp = "dialogue prompt"
     JButton createRoomButton;
-    JTextField inputField1, inputField2, messageField;
+    JTextField input1, input2;
 
     /**
      * The view for organizer users to see their convention event options.
@@ -31,32 +32,63 @@ public class OrgEventView extends AccountView {
 
         contentPane.setBackground(whiteBG);// Sets background colour
 
-        dialogPrompt = new JLabel("");
-        initializeObject(dialogPrompt);
+        dpMain = new JLabel("");
+        initializeObject(dpMain);
 
+        dp1 = new JLabel("");
+        initializeObject(dp1);
+        input1 = new JTextField(50);
+        initializeObject(input1);
+
+        dp2 = new JLabel("");
+        initializeObject(dp2);
+        input2 = new JTextField(50);
+        initializeObject(input2);
+
+        createRoomButton = newButton("Create room");
     }
 
 
     private void showCreateRoom() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.addRoomPrompt());
-        dialogPrompt.setVisible(true);
+        dpMain.setText(presenter.addRoomPrompt());
+        dpMain.setVisible(true);
 
-        String roomName = JOptionPane.showInputDialog(null, presenter.roomNamePrompt(),
-                "Helloooo", JOptionPane.PLAIN_MESSAGE);
+        dp1.setText(presenter.roomNamePrompt());
+        dp1.setVisible(true);
+        input1.setVisible(true);
 
-        String roomCap = JOptionPane.showInputDialog(null, presenter.roomCapacityPrompt(),
-                "Helloooo", JOptionPane.PLAIN_MESSAGE);
+        dp2.setText(presenter.roomCapacityPrompt());
+        dp2.setVisible(true);
+        input2.setVisible(true);
 
-        // try-catch block and more code here
+        createRoomButton.setVisible(true);
+    }
+
+    private void createRoom() {
+        String roomName = input1.getText();
+        int roomCap = Integer.parseInt(input2.getText());
+
+        try { //FIXME this method should be fine but the Controller method it calls is the issue aaaaaaa
+
+            if(controller.addRoom(roomName, roomCap)) {
+                JOptionPane.showConfirmDialog(null, "Room creation successful!",
+                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Please enter valid information.",
+                        "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (InvalidChoiceException c) {
+            exceptionDialogBox(presenter.exceptionTitle(), c.getMessage());
+        }
     }
 
     private void showCreateEvent() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.printCreateEventPrompt());
-        dialogPrompt.setVisible(true);
+        dp1.setText(presenter.printCreateEventPrompt());
+        dp1.setVisible(true);
 
         String eventType = JOptionPane.showInputDialog(null, presenter.printEventTypePrompt(),
                 "Type", JOptionPane.PLAIN_MESSAGE);
@@ -81,8 +113,8 @@ public class OrgEventView extends AccountView {
     private void showCreateSpeakerAcc() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.printAddSpeakerPrompt());
-        dialogPrompt.setVisible(true);
+        dp1.setText(presenter.printAddSpeakerPrompt());
+        dp1.setVisible(true);
 
         String speName = JOptionPane.showInputDialog(null, presenter.printAddNamePrompt(),
                 "Full name", JOptionPane.PLAIN_MESSAGE);
@@ -100,8 +132,8 @@ public class OrgEventView extends AccountView {
     private void showMakeEventAnnouncement() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.printEventMessageIntro());
-        dialogPrompt.setVisible(true);
+        dp1.setText(presenter.printEventMessageIntro());
+        dp1.setVisible(true);
 
         // some text field here that takes in the announcement
     }
@@ -111,6 +143,10 @@ public class OrgEventView extends AccountView {
     @Override
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
+
+        if(eventName.equals(createRoomButton.getActionCommand())) {
+            createRoom();
+        }
 
         if(eventName.equals(menuOp[0])) {
             hideMainDropDownMenu();
