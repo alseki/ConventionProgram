@@ -123,13 +123,13 @@ public class MessageMenu implements SubMenuPrinter {
         }
         for (String msgId : chatManager.getUnknownTypeChat(chatID).getMessageIds()) {
             if (messageManager.getReadStatus(msgId)) {
-                return "[Unread]" + "\n" +
-                        "ChatName: " + chatManager.getChatName(chatID) + "\n" +
-                        "Participants: " + participants.toString();
+                return "[Unread]" + "<br>" +
+                        "ChatName: " + chatManager.getChatName(chatID) + "<br>" +
+                        "Participants: " + participants.toString() + "<br>";
             }
         }
-        return  "ChatName: " + chatManager.getChatName(chatID) + "\n" +
-                "Participants: " + participants.toString() ;
+        return  "ChatName: " + chatManager.getChatName(chatID)  + "<br>" +
+                "Participants: " + participants.toString()  + "<br>";
     }
 
     /**
@@ -158,10 +158,9 @@ public class MessageMenu implements SubMenuPrinter {
                 for (String msgId : chatManager.getUnknownTypeChat(chatId).getMessageIds()) {
                     if (messageManager.getReadStatus(msgId)) {
                         unReadChatList.add(chatId);
-                    } else {
-                        chatList.add(chatId);
                     }
                 }
+                chatList.add(chatId);
             }
         }
         chatList.addAll(unReadChatList);

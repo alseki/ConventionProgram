@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+//Hi Paul, earlier, I didn't know that the error was called "missing symbol"
+// but for your bug in employee manager, it's saying you're calling methods that don't exist.
+// For example, individual.getAnnouncementChats() don't work bc such method doesn't exist in
+// Speaker class(individual is a variable with type Speaker)
 public class EmployeeManager extends PersonManager {
 
-    // This account is created by organizer or administrator
-
+    // This account is created by organizer
 
     private ArrayList<String> requestIds;
 
@@ -15,15 +18,12 @@ public class EmployeeManager extends PersonManager {
     protected Map<String, Employee> usernameToEmployee = new HashMap<String, Employee>();
     protected ArrayList<String> employeeList = new ArrayList<>();
 
-    String name = getName();
-
-    private String getName() {
-        return this.name;
-    }
 
     public EmployeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
+
         super(usernameToPerson, idToPerson);
         this.requestIds = new ArrayList<String>();
+        this.employeeList = employeeList;
 
 
     }
@@ -60,6 +60,9 @@ public class EmployeeManager extends PersonManager {
         return false;
     }
 
+    // This was decided not to be used. But will kept for future. Organizer would have been able to cancel employee
+    // account with employee username.
+
     public boolean cancelEmployeeAccountByUsername(String username){
         if(usernameToPerson.containsKey(getPerson(username))){
             String userID = getPerson(username).getID();
@@ -74,30 +77,50 @@ public class EmployeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     * Adds a chat
+     * @param currentID
+     * @param chatID
+     */
+    public void addAnChat(String currentID, String chatID) {
+        Employee employee = (Employee)getPerson(currentID);
+        employee.addAnChat(chatID);
+    }
+
+    /**
+     * Removes a chat
+     * @param currentID
+     * @param chatID
+     */
+    public void removeAnChat(String currentID, String chatID) {
+        Employee employee = (Employee)getPerson(currentID);
+        employee.addAnChat(chatID);
+    }
+
     public Map<String, Employee> getUsernameToEmployee(){
         return usernameToEmployee;
     }
 
 
     public String getFullName(String username) {
-        Person person = (Employee) getPerson(username);
-        return person.getFullName();
+        Employee employee = (Employee) getPerson(username);
+        return employee.getFullName();
 
     }
 
     public String getFullNameWithID(String userID){
-        Person employee = (Employee) getPerson(userID);
+        Employee employee = (Employee) getPerson(userID);
         return employee.getFullName();
     }
 
     public String getUserName(String userID) {
-        Person person = (Employee) getPerson(userID);
-        return person.getUsername();
+        Employee employee = (Employee) getPerson(userID);
+        return employee.getUsername();
 
     }
 
     public String getEmployeeID(String userName) {
-        Person employee = (Employee) getPerson(userName);
+        Employee employee = (Employee) getPerson(userName);
         return employee.getID();
     }
 
@@ -110,7 +133,6 @@ public class EmployeeManager extends PersonManager {
                 nameUsernamePassword.add("(" + employee.getFullName() + "; " + employee.username + "; " + employee.getID() + ")");
         }
         return nameUsernamePassword;
-
     }
 
     public ArrayList getRequestsIDs(String userID){
@@ -118,37 +140,13 @@ public class EmployeeManager extends PersonManager {
     }
 
 
-    public boolean addAnnouncementChats(String personId, String acId) {
-        Speaker individual = (Speaker) idToPerson.get(personId);
-        if(!individual.getAnnouncementChats().contains(acId)) {
-            individual.announcementChatIds.add(acId);
-            return true;
-        }
-        return false;
-    }
-
-    public ArrayList getAnnouncementChats(String userID){
+    public ArrayList getAnChats(String userID){
         Employee employee = (Employee) getPerson(userID);
-        return employee.getAnnouncementChats();
+        return employee.getAnChatList();
     }
 
-    /**
-     * Get list of all talks in a Speaker object, referred to by the Speaker's ID.
-     * @param speakerID ID of the Speaker
-     * @return Arraylist of Strings corresponding to Talk Event IDs
-     */
-    public ArrayList<String> getSpeakerIdAllTalks(String speakerID){
-        Speaker spe = (Speaker) getPerson(speakerID);
-        return spe.getAllTalks();}
+    // Getting a list of all talks at the conference is available from the Employee event controller
 
-    public String IDtoUsername(String Id){
-        return getPerson(Id).getUsername();
-    }
-    // apply notify observers
+     }
 
-    // get messages from Organizer and from other Employees /**
 
-    // check request board
-
-    // change the status of requests, and implement notifications
-}

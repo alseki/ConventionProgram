@@ -25,7 +25,7 @@ public class MessageController extends SubMenu {
     /**
      * Sends a new Message
      */
-    protected String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
+    public String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
         sendMessage(ID, content);
         return presenter.messageSent();
     }
@@ -105,26 +105,40 @@ public class MessageController extends SubMenu {
     // new empty arraylist, and make the chatID become null.
     /**
      * Allows the user to exit from a Chat.
+     * If the Chat contains <=2 people, the Chat disappears from both user's chatList, and Chat is permanently deleted.
+     * If Chat contains 3 people, permanently delete Chat if there already exists private chat among rest of members, or
+     * set the Chat type to Chat (not announcement Chat) otherwise.
+     * If Chat contains more than 3 people, simply let the user exit Chat.
      * @param chatName name of the Chat the user wants to exit from
      */
     protected void deleteChat(String chatName){
         String chatId = chatManager.findChatByName(chatName).getId();
-        if (chatManager.getUnknownTypeChat(chatId).getPersonIds().size() <= 2){
-            for(String personId: chatManager.getPersonIds(chatId)) {
+        ArrayList<String> personIds = chatManager.getUnknownTypeChat(chatId).getPersonIds();
+        if (personIds.size() <= 2){
+            for(String personId: personIds) {
                 personManager.removeChat(personId, chatId);
             }
             chatManager.removeAllPersonIds(chatId);
             chatManager.nullifyChatID(chatId);
-        } else if (chatManager.getUnknownTypeChat(chatId).getPersonIds().size() == 3) {
+        } else if (personIds.size() == 3) {
+            boolean existsPrivate = false;
+            ArrayList <String> original = new ArrayList<>(personIds);
+            original.remove(currentUserID);
+            if (chatManager.findChat(original)!=null){existsPrivate = true;}
             personManager.removeChat(currentUserID, chatId);
             chatManager.removePersonIds(chatId, currentUserID);
-            chatManager.setChatTypeToChat(chatId);
+            if (existsPrivate) {this.deleteChat(chatName);}
+            else {chatManager.setChatTypeToChat(chatId);}
         } else {
             personManager.removeChat(currentUserID, chatId);
             chatManager.removePersonIds(chatId, currentUserID);
         }
     }
-        // presenter :balabalabala
+
+    /**
+     * Add
+     * @param chatName
+     */
 
 
 
@@ -155,6 +169,17 @@ public class MessageController extends SubMenu {
     protected void unArchiveMessage(String msgId){
         personManager.removeCurrentFavorites(currentUserID, msgId);
     }
+
+    /**
+     * Gives chatNames of all Chats containing all usernames inputted
+     * @param usernames Usernames contained in the target Chat that is being searched for
+     * @return Arraylist of chatNames of all Chats containing usernames inputted
+     */
+    protected ArrayList<String> searchChatByUsernames(ArrayList<String> usernames){
+        ArrayList<String> personIds = new ArrayList<>();
+        for (String user: usernames){personIds.add(personManager.getCurrentUserID(user));}
+        return chatManager.searchChatsContaining(personIds);}
+
 
     @Override
     public MessageMenu getPresenter() {

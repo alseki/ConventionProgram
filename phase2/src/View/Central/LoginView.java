@@ -13,9 +13,13 @@ import javax.swing.*;
 
 public class LoginView {
 
-    private LoginController controller;
-    private LoginMenu presenter;
+    private final LoginController controller;
+    private final LoginMenu presenter;
 
+    /**
+     * The view that allows the user to enter login information
+     * @param controller a LoginController to register inputted information/retrieve display strings
+     */
     public LoginView(LoginController controller) {
         this.controller = controller;
         presenter =  controller.getPresenter();
@@ -51,8 +55,6 @@ public class LoginView {
      */
     private Integer mainMenu() {
         Integer[] args = {0, 1, 2};
-        // TODO add 3 for employee
-        // TODO add 4 for admin
         StringBuilder menuOptions = new StringBuilder();
         for (String option: presenter.getMenuOptions()) {
             menuOptions.append(option);

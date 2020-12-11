@@ -20,32 +20,187 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+// Contributors: Eytan Weinstein, Paul-John Thomas
+// Last edit: Dec 11 2020
+
+// Architecture Level - Controller
 
 public class OrgPersonController extends SubMenu {
 
+    // OrgPersonController implements methods that add/remove user accounts, ...
+
     private String currentUserID;
-    private PersonManager personManager;
-    private SpeakerManager speakerManager;
-    private EmployeeManager employeeManager;
     private AttendeeManager attendeeManager;
+    private EmployeeManager employeeManager;
     private OrganizerManager organizerManager;
+    private SpeakerManager speakerManager;
     private EventPermissions eventPermissions;
-    private EventManager eventManager;
     private OrgPersonMenu presenter;
-    private OrgEventController orgEventController;
 
-
-    public OrgPersonController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
-                               EmployeeManager employeeManager, AttendeeManager attendeeManager) {
+    /**
+     * Constructor for OrgPersonController objects
+     * @param subMenu The submenu which implements options
+     * @param currentUserID The ID for the current user of this controller
+     * @param attendeeManager The AttendeeManager which manages the Attendees at this convention
+     * @param employeeManager The EmployeeManager which manages the Employees at this convention
+     * @param speakerManager The SpeakerManager which manages the Speakers at this convention
+     */
+    public OrgPersonController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager, EmployeeManager
+            employeeManager, SpeakerManager speakerManager) {
         super(subMenu);
         this.currentUserID = currentUserID;
-        this.speakerManager = speakerManager;
-        this.employeeManager = employeeManager;
         this.attendeeManager = attendeeManager;
+        this.employeeManager = employeeManager;
         this.organizerManager = (OrganizerManager) personManager;
-        eventPermissions = new EventPermissions(roomManager, eventManager);
-        presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
+        this.speakerManager = speakerManager;
+        this.eventPermissions = new EventPermissions(roomManager, eventManager);
+        this.presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
     }
+
+    // Methods for creating user accounts
+
+    /**
+     * Creates a new Attendee account and adds it to the system
+     * @param name The name of the Attendee
+     * @param username The username of the Attendee
+     * @param password The password of the Attendee
+     * @param email The email of the Attendee
+     */
+    public void createAttendee (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!attendeeManager.findPerson(username)) {
+            attendeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Employee account and adds it to the system
+     * @param name The name of the Employee
+     * @param username The username of the Employee
+     * @param password The password of the Employee
+     * @param email The email of the Employee
+     */
+    public void createEmployee (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!employeeManager.findPerson(username)) {
+            employeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Organizer account and adds it to the system
+     * @param name The name of the Organizer
+     * @param username The username of the Organizer
+     * @param password The password of the Organizer
+     * @param email The email of the Organizer
+     */
+    public void createOrganizer (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!organizerManager.findPerson(username)) {
+            organizerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Speaker account and adds it to the system
+     * @param name The name of the Speaker
+     * @param username The username of the Speaker
+     * @param password The password of the Speaker
+     * @param email The email of the Speaker
+     */
+    public void createSpeaker (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!speakerManager.findPerson(username)) {
+            speakerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    // Methods for deleting user accounts (and their associated helper methods)
+
+    /**
+     * Deletes an Attendee account from the system; also deletes this Attendee from all Event Attendee lists, all chats,
+     * and all other users' contact lists. In addition, a Message to all their contacts that let them know that they
+     * can no longer contact this user.
+     * @param userID The ID of the Attendee whose account is to be deleted
+     */
+    public void cancelAttendeeAccount(String userID) {
+        this.deleteUserFromEvent(userID);
+        this.deleteUserFromChatGroups(userID);
+        removeFromOtherUsersContactLists(userID);
+        attendeeManager.cancelAccount(userID);
+    }
+
+    /**
+     * This is a helper method for the account deletion methods above; removes the user from all Events for which
+     * he/she is signed up.
+     * @param userID The ID of the user whose account is to be deleted
+     */
+    public void deleteUserFromEvent(String userID) {
+        ArrayList<String> eventList = personManager.getEventList(userID);
+        for (String e : eventList) {
+            eventPermissions.removeAttendeeFromEvent(userID, e);
+        }
+    }
+
+    /**
+     * This is a helper method for the account deletion methods above; deletes the user from all his/her chat groups.
+     * @param userID The ID of the user whose account is to be deleted
+     */
+    public void deleteUserFromChatGroups(String userID) {
+        ArrayList<String> userChatList = personManager.getChats(userID);
+        if (!userChatList.isEmpty()) {
+            for (String c : userChatList) {
+                ArrayList<String> personList = chatManager.getPersonIds(c);
+                for (String p : personList) {
+                    this.sendMessageAboutChatDeletion(userID, p, c);
+                }
+                chatManager.removePersonIds(c, userID);
+            }
+        }
+    }
+
+    /** This is a helper method that sends a message to all contacts in a user's chat group that they can no longer
+     * send/receive messages to/from that user.
+     * @param userID The ID of the user
+     * @param recipientID The ID of the recipient
+     * @param chatID The ID of the chat
+     */
+    public void sendMessageAboutChatDeletion(String userID, String recipientID, String chatID) {
+        String userName = personManager.getCurrentUsername(userID);
+        String messageContent = "The user with username: " + userName + "is now deleted from your chat group. You " +
+                "cannot send messages to or receive messages from this person.";
+        messageManager.createMessage(userID, recipientID, chatID, messageContent);
+    }
+
+    /** This is a helper method that removes this user from all other users' contact lists after their account has been
+     * deleted.
+     * @param userID The ID of the user
+     */
+    public void removeFromOtherUsersContactLists(String userID) {
+        ArrayList<String> userContactList = personManager.getContactList(userID);
+        for (String contactID : userContactList) {
+            if (personManager.getContactList(contactID).contains(userID)) {
+                personManager.getContactList(contactID).remove(userID);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     // TODO when deleting accounts: remove their ID from all chats, and remove their ID from all events & MESSAGE other users in chat that
     // TODO right before a events commences yeah [4:37 PM] there's a method in eventmanager or eventpermissions or something to
@@ -116,97 +271,27 @@ public class OrgPersonController extends SubMenu {
         return false;
     }
 
-    public void deleteAttendeeFromEvent(String userID) {
-
-        ArrayList<String> eventList = personManager.getEventList(userID);
-        for (String e : eventList) {
-            eventPermissions.removeAttendeeFromEvent(userID, e);
-        }
-    }
-
-    public boolean removeFromOtherUsersContactLists(String userID) {
-
-        // this method is such that the User is being deleted, his/her userID will be deleted from the contact list of others
-        // so that they might not set up a chat with the user from their list. One can still have contacts in list to whom
-        // messages have not been sent. So we wish to avoid other attendees starting a chat with deleter user based off infor
-        // in these other attendees' contact list
-
-        ArrayList<String> userContactList = personManager.getContactList(userID);
-        for (String contactID : userContactList) {
-            if (personManager.getContactList(contactID).contains(userID)) {
-                personManager.getContactList(contactID).remove(userID);
-            } //return true;
-            return true;
-        }
-        return false;
-    }
-
-    public void deleteUserFromChatGroups(String userID) {
-
-        // this method is such that once user is deleted their chatIDs associated with their chat groups is deleted from these very chat groups.
-        // THIS will not apply to Speakers. Because we will get Organizer retain their chat groups with single speaker look-up content
-
-        // getting to be deleted user's chatList
-        ArrayList<String> userChatList = personManager.getChats(userID);
-        if (!userChatList.isEmpty()) {
-            for (String c : userChatList) {
-                // getting list of person from user's ChatList, in order to get personIDs for the sending of message
-                ArrayList<String> personList = chatManager.getPersonIds(c);
-                for (String p : personList) {
-                    // sending message
-                    sendMessageAboutChatDeletion(userID, p, c);
-                }
-                // once message is sent, the user's id is removed for other users' chat
-                chatManager.removePersonIds(c, userID);
-            }
-        }
-    }
 
 
-    // To send a message to other members of chat groups that user has been deleted
 
-    public void sendMessageAboutChatDeletion(String userID, String recipientID, String chatID) {
-        String userName = personManager.getCurrentUsername(userID);
-        String messageContent = "The user with username: " + "userName " + "is now deleted from your chat group. You cannot send" +
-                "messages to or receive messages from this person.";
-        messageManager.createMessage(userID, recipientID, chatID, messageContent);
-    }
+
+
+
+
+
 
     // This is to be put inside cancelEmployee, so that other employees are made aware of a worker's deletion
 
     public void sendMessageAboutCancelEmployee(String userID, String recipientID, String chatID) {
         String userName = personManager.getCurrentUsername(userID);
-        String messageContent = "The employee with username: " + "userName " + "is no longer an employee. You cannot send" +
-                "messages to or receive messages from this person.";
+        String messageContent = "The employee with username: " + "userName " + "is no longer an employee. You cannot " +
+                "send" + "messages to or receive messages from this person.";
         messageManager.createMessage(userID, recipientID, chatID, messageContent);
 
     }
 
-    /**
-     * Calls cancelAccount from Person and deletes attendee's accounts from all maps/arrays
-     *
-     * @param userId
-     */
-    public void cancelAttendeeAccount(String userId) {
-        // send message to attendee that their account is about to be deleted.
-        deleteAttendeeFromEvent(userId);
-        deleteUserFromChatGroups(userId);
-        removeFromOtherUsersContactLists(userId);
-        attendeeManager.cancelAccount(userId);
-
-    }
-
-    public void cancelAttendeeAccountByUsername(String username) {
-        // send message to attendee that their account is about to be deleted.
-        String userId = personManager.getCurrentUsername(username);
-        deleteAttendeeFromEvent(userId);
-        deleteAttendeeFromEvent(userId);
-        removeFromOtherUsersContactLists(userId);
-        personManager.cancelAccount(username);
-    }
 
 
-    // TODO should all methods in OrgPersonController be boolean vs void?
 
     public void cancelSpeakerAccount(String speakerID) {
 
@@ -250,42 +335,6 @@ public class OrgPersonController extends SubMenu {
 
 
 
-    public void cancelEmployeeAccount(String userID) {
-        //set up message notifying other employees and organizers
-        // delete chats of employees, and if employee is still working on request, the other employees will have to look into this.
-        deleteUserFromChatGroups(userID);
-
-        removeFromOtherUsersContactLists(userID);
-
-        //employeeManager.getAnnouncementChats(userID).clear();
-        // employeeManager.getRequestsIDs(userID).clear();
-        // letting other employees know - calling method from above for below see line 272 - based on whether there is
-        // an existing chat or not
-        ArrayList <String> list = employeeManager.getEmployeeList(userID);
-        ArrayList<String> contacts = personManager.getContactList(userID);
-        if(!list.isEmpty()){
-            for(String emp: contacts){
-                if(!emp.equals(userID)){
-                    if (chatManager.existChat(userID, emp)) {
-                        String existingChatID = chatManager.findChat(userID, emp);
-                        sendMessageAboutCancelEmployee(userID, emp, existingChatID);
-
-                        // if such is not the case, Organizer has to "create" chat with the said speaker and send message
-                    } else {
-                        String newChatID = chatManager.createChat(userID, emp);
-                        personManager.addChat(userID, newChatID);
-                        messageManager.createMessage(userID, emp, newChatID);
-                    }
-                }
-            }
-        }
-        // then delete the rest
-        deleteUserFromChatGroups(userID);
-        removeFromOtherUsersContactLists(userID);
-        employeeManager.cancelEmployeeAccount(userID);
-
-
-    }
 
 
     public boolean cancelOrganizerAccount(String userID) {
@@ -302,7 +351,7 @@ public class OrgPersonController extends SubMenu {
                 personManager.addChat(userID, newChatID);
                 messageManager.createMessage(userID, fellowOrg, newChatID, messageContentToOrganizers);
             }
-            deleteAttendeeFromEvent(userID);
+            deleteUserFromEvent(userID);
             deleteUserFromChatGroups(userID);
             removeFromOtherUsersContactLists(userID);
             organizerManager.cancelAccount(userID);
@@ -332,77 +381,7 @@ public class OrgPersonController extends SubMenu {
     }
 
 
-        /**
-         * Creates a new Person.SpeakerController account and adds it to the system
-         * @param name The name of the SpeakerController
-         * @param username The username of the SpeakerController
-         * @param password The password of the SpeakerController
-         * @param email The email of the SpeakerController
-         * @return true iff a new Person.SpeakerController object was created
-         */
-        public void createSpeaker (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws Invalid Exception
-            if (!speakerManager.findPerson(username)) {
-                speakerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-        }
 
-        /**
-         * Creates a new Person.Employee account and adds it to the system (including into a specific dictionary of employees solely)
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createEmployee (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws InvalidException
-            if (!employeeManager.findPerson(username)) {
-                employeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-        }
-
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createAttendee (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!attendeeManager.findPerson(username)) {
-                attendeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-
-        }
-
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createOrganizer (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!organizerManager.findPerson(username)) {
-                organizerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-
-        }
 
         /**
          * Adds a Message with content the AnnouncementChat contained within the Event with eventName*

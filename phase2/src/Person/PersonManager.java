@@ -51,19 +51,6 @@ public abstract class PersonManager {
         return false;
     }
 
-    public boolean cancelAccountByUsername(String username){
-        if(usernameToPerson.containsKey(getPerson(username))){
-        String userID = getPerson(username).getID();
-        int typeUser = getPerson(userID).typePerson;
-        if(typeUser == 1 || typeUser == 3) {
-            usernameToPerson.remove(username);
-            idToPerson.remove(userID);
-            return true;
-        }
-        }
-        return false;
-    }
-
     /**
      *
      * @param id

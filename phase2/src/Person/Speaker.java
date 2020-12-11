@@ -1,8 +1,6 @@
 package Person;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 // There are no events for which a Speaker can sign for in the manner of an Attendee; nor can a Speaker register

@@ -51,10 +51,11 @@ public class AttMessageController extends MessageController {
      * an error message, otherwise
      */
 
-    private String createChat(String contactUsername) throws InvalidChoiceException {
+    public String createChat(String contactUsername) {
         String contactID = attendeeManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             return presenter.printChatNotCreated(new InvalidChoiceException("user"));
+            //throw new InvalidChoiceException("user");
         }
         if (chatManager.existChat(currentUserID, contactID)){
             String chatID = chatManager.findChat(currentUserID, contactID);
@@ -63,6 +64,7 @@ public class AttMessageController extends MessageController {
         else if (currentUserID.equals(contactID)){
             return presenter.printChatNotCreated(new
                     InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
+            //throw new InvalidFormatException("recipients", "You cannot create a chat with yourself!");
         }else {
             String chatID = chatManager.createChat(currentUserID, contactID);
             attendeeManager.addChat(contactID, chatID);
@@ -116,7 +118,7 @@ public class AttMessageController extends MessageController {
      * @return A message that contains the chat ID if the chat was created or already exists;
      * an error message, otherwise
      */
-    private String createGroupChat(ArrayList<String> contactIDs, String chatName) {
+    public String createGroupChat(ArrayList<String> contactIDs, String chatName) {
         if (contactIDs == null || contactIDs.size() == 0) {
             return presenter.printChatNotCreated(new InvalidChoiceException("user"));
         }

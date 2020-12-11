@@ -36,21 +36,19 @@ public class EmpEventController extends SubMenu {
         this.currentUserID = currentUserID;
         this.employeeManager = employeeManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
-
         presenter = new EmpEventMenu(roomManager, eventManager, personManager);
         //currentUserID, roomManager, eventManager, attendeeManager
 
     }
 
-
     // TODO change, delete and/or add to the methods below
-
 
 
     @Override
     public EmpEventMenu getPresenter() {
         return this.presenter;
     }
+
 }
 
 

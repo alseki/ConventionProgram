@@ -75,22 +75,6 @@ public class OrganizerManager extends PersonManager{
         return false;
     }
 
-
-
-    /**
-     * adds the contact with username </username> to the organizer with userId </userid> to ehir contanct
-     * @param contactId a string representing the contactId of the contact to be added to the userid contactlist
-     * @return true iff username is not currently in the contact list
-     */
-    public boolean  updateContactList(String contactId, String userId){
-        Organizer og = (Organizer)idToPerson.get(userId);
-        if(!og.getContactList().contains(contactId)) { // checking if they are not currently a contact
-            og.addContact(contactId);
-            return true;
-        }
-        return false;
-    }
-
     /**
      *
      * @param username String representing the username

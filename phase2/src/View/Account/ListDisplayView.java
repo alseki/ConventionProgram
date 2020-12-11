@@ -13,12 +13,18 @@ public class ListDisplayView implements ActionListener {
     JFrame frame;
     JPanel contentPane;
 
+    /**
+     * A view that displays a bullet point list of Strings
+     * @param title the title of the frame
+     * @param options the array of Strings to be on the list
+     */
     public ListDisplayView(String title, String[] options) {
         frame = new JFrame(title); // Create and set up the frame
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
+        contentPane.setPreferredSize(new Dimension(400,660));
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
-        contentPane.setLayout(new FlowLayout());
+        contentPane.setLayout(null);
+        //contentPane.setLayout(new FlowLayout());
 
         StringBuilder list = new StringBuilder();
         for (String option: options) {
@@ -28,13 +34,14 @@ public class ListDisplayView implements ActionListener {
         }
 
         printedList = new JLabel("<html>" + list.toString() + "<html/>");
+        printedList.setBounds(10, 10, 200, 300);
         contentPane.add(printedList);
         printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         printedList.setVisible(true);
 
         returnButton = new JButton("return");
-        returnButton.setLocation(0, 0);
+        returnButton.setBounds(10, 600, 80, 30);
         returnButton.setActionCommand("close");
         returnButton.addActionListener(this);
         returnButton.setToolTipText("click this button to return to previous screen");
@@ -49,7 +56,7 @@ public class ListDisplayView implements ActionListener {
     /**
      * Shows every component stored in contentPane
      */
-    public void display() {
+    private void display() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(true);
         }
@@ -59,7 +66,7 @@ public class ListDisplayView implements ActionListener {
     /**
      * Hides every component stored in contentPane
      */
-    public void hide() {
+    void hide() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(false);
         }

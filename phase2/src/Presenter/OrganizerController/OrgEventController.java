@@ -142,13 +142,10 @@ public class OrgEventController extends SubMenu {
         this.updateSpeakerChatWithAnnouncement(speakerID, announcementChatID);
         this.updateSpeakerChat(speakerID, announcementChatID);
         String eventType = convertEventTypeToString(type);
-        // speakerManager.addTalk(eventID, speakerID, eventType, name);
-        // speakerManager.addTalkIdToDictionary(speakerID, eventID, eventManager.getEventName(eventID), eventType);
-        // speakerManager.addToAllTalksID(eventID, speakerID);
         if(eventType == "PANEL"){
-            // speakerManager.addPanelSpeakerList(speakerID, eventID);
+            speakerManager.addPanel(speakerID, eventID);
         } else {
-            // speakerManager.addNonPanelSpeakerList(speakerID, eventID);
+            speakerManager.addNonPanel(speakerID, eventID);
         }
         return eventID;
     }

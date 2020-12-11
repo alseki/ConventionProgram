@@ -15,8 +15,11 @@ import Presenter.SpeakerController.SpeEventController;
 
 public class AccountViewFactory {
 
+    /**
+     * Constructs a View based on the type of controller
+     * @param controller a SubMenu controller
+     */
     public void construct(SubMenu controller) {
-        AccountView view = null;
         if (controller instanceof ContactController) {
             new ContactView(controller);
         }
@@ -49,8 +52,6 @@ public class AccountViewFactory {
         else if (controller instanceof EmpEventController) {
             new EmpEventView(controller);
         }
-
-        // TODO Make sure this is correct
         else if (controller instanceof EmpReqController) {
             new EmpReqView(controller);
         }

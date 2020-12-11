@@ -48,10 +48,10 @@ public class SpeakerController extends PersonController {
 
     @Override
     public String[] getMenuOptions() {
-        String[] attendeeOptions  = {"View your event information"};
+        String[] speOptions  = {"View your event information"};
         String[] options = new String[3];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(attendeeOptions, 0, options, 2, 1);
+        System.arraycopy(speOptions, 0, options, 2, 1);
         return options;
     }
 
