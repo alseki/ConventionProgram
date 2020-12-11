@@ -98,14 +98,4 @@ public class AttEventMenu extends EventMenu {
         return getEventListTitle("you have signed up for");
     }
 
-    public String[] getOwnEventList() throws InvalidChoiceException {
-        String [] eventIDs = {};
-        eventIDs = attendeeManager.getEventList(currentUserID).toArray(eventIDs);
-        if (eventIDs != null && eventIDs.length != 0) {
-            return printEventList(eventIDs);
-        } else {
-            throw new NoDataException("such event");
-        }
-    }
-
 }

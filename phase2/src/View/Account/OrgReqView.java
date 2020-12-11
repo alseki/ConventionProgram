@@ -92,8 +92,6 @@ public class OrgReqView extends AttReqView {
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
 
-        eventName = event.getActionCommand();
-
         // [3] = fulfill a request
         // [4] = see all requests
 

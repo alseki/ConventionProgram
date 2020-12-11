@@ -7,13 +7,13 @@ import java.util.Map;
 public class SpeakerManager extends PersonManager {
 
     /** A mapping of Speaker IDs to a list of IDs for those Events at which that Speaker is speaking. */
-    protected Map<String, ArrayList> allEventsBySpeaker = new HashMap<String, ArrayList>();
+    protected Map<String, ArrayList<String>> allEventsBySpeaker = new HashMap<>();
 
     /** A mapping of Speaker IDs to a list of IDs for those Panels at which that Speaker is speaking. */
-    protected Map<String, ArrayList> allPanelsBySpeaker = new HashMap<String, ArrayList>();
+    protected Map<String, ArrayList<String>> allPanelsBySpeaker = new HashMap<>();
 
     /** A mapping of Speaker IDs to a list of IDs for those Talks/Workshops at which that Speaker is speaking. */
-    protected Map<String, ArrayList> allNonPanelsBySpeaker = new HashMap<String, ArrayList>();
+    protected Map<String, ArrayList<String>> allNonPanelsBySpeaker = new HashMap<>();
 
     public SpeakerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
@@ -25,9 +25,9 @@ public class SpeakerManager extends PersonManager {
             Speaker newSpeaker = new Speaker(name, username, password, email);
             usernameToPerson.put(username, newSpeaker);
             idToPerson.put(newSpeaker.getID(), newSpeaker);
-            ArrayList event_list = new ArrayList();
-            ArrayList panel_list = new ArrayList();
-            ArrayList non_panel_list = new ArrayList();
+            ArrayList<String> event_list = new ArrayList<>();
+            ArrayList<String> panel_list = new ArrayList<>();
+            ArrayList<String> non_panel_list = new ArrayList<>();
             allEventsBySpeaker.put(newSpeaker.getID(), event_list);
             allPanelsBySpeaker.put(newSpeaker.getID(), panel_list);
             allNonPanelsBySpeaker.put(newSpeaker.getID(), non_panel_list);
@@ -37,34 +37,33 @@ public class SpeakerManager extends PersonManager {
     }
 
     /** Returns a list of all Speakers at this convention
-     * @returns an ArrayList of the IDs for all Speakers at this convention
+     * @return an ArrayList of the IDs for all Speakers at this convention
      */
-    public ArrayList getSpeakers() {
-        ArrayList speakers = new ArrayList<>(allEventsBySpeaker.keySet());
-        return speakers;
+    public ArrayList<String> getSpeakers() {
+        return new ArrayList<>(allEventsBySpeaker.keySet());
     }
 
     /** Returns a list of all Events at which the Speaker with the inputted speakerID is speaking
      * @param speakerID ID of the Speaker
-     * @returns an ArrayList of all Events at which the Speaker with the inputted speakerID is speaking
+     * @return an ArrayList of all Events at which the Speaker with the inputted speakerID is speaking
      */
-    public ArrayList getSpeakerInEvents(String speakerID) {
+    public ArrayList<String> getSpeakerInEvents(String speakerID) {
         return this.allEventsBySpeaker.get(speakerID);
     }
 
     /** Returns a list of all Panels at which the Speaker with the inputted speakerID is speaking
      * @param speakerID ID of the Speaker
-     * @returns an ArrayList of all Panels at which the Speaker with the inputted speakerID is speaking
+     * @return an ArrayList of all Panels at which the Speaker with the inputted speakerID is speaking
      */
-    public ArrayList getSpeakerInPanels(String speakerID) {
+    public ArrayList<String> getSpeakerInPanels(String speakerID) {
         return this.allPanelsBySpeaker.get(speakerID);
     }
 
     /** Returns a list of all Talks or Workshops at which the Speaker with the inputted speakerID is speaking
      * @param speakerID ID of the Speaker
-     * @returns an ArrayList of all Talks or Workshops at which the Speaker with the inputted speakerID is speaking
+     * @return an ArrayList<String> of all Talks or Workshops at which the Speaker with the inputted speakerID is speaking
      */
-    public ArrayList getSpeakerInNonPanels(String speakerID) {
+    public ArrayList<String> getSpeakerInNonPanels(String speakerID) {
         return this.allNonPanelsBySpeaker.get(speakerID);
     }
 
@@ -158,8 +157,8 @@ public class SpeakerManager extends PersonManager {
      */
     public boolean addAnnouncementChats(String speakerID, String announcementChatID) {
         Speaker individual = (Speaker) idToPerson.get(speakerID);
-        if(!individual.getAnnouncementChatIDs().contains(announcementChatID)) {
-            individual.announcementChatIDs.add(announcementChatID);
+        if(!individual.getAnChatList().contains(announcementChatID)) {
+            individual.addAnChat(announcementChatID);
             return true;
         }
         return false;
@@ -168,7 +167,7 @@ public class SpeakerManager extends PersonManager {
     /**
      * Gets the Speaker's list of contacts.
      * @param speakerID The ID of the the Speaker whose contact list we are retrieving
-     * @return returns a list of other people's personIds (Strings) if the desired user is found
+     * @return return a list of other people's personIds (Strings) if the desired user is found
      */
     public ArrayList<String> getContactList(String speakerID) {
         return idToPerson.get(speakerID).getContactList();
@@ -178,7 +177,7 @@ public class SpeakerManager extends PersonManager {
      * Adds a contact to a Person's list of contacts by ID
      * @param personID The ID of the Person to whose contact list the new contact will be added
      * @param contactID the ID of the new contact to be added to the Person's contact list
-     * @return returns True iff the contact has been added to the contact list
+     * @return return True iff the contact has been added to the contact list
      */
     public boolean addContact(String personID, String contactID) {
         Speaker individual = (Speaker) idToPerson.get(personID);

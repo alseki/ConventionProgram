@@ -11,11 +11,7 @@ public class Attendee extends Person {
     protected ArrayList<String> anChatList = new ArrayList<>();
 
     public Attendee (String fullName, String username, String password, String email){
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.id = UUID.randomUUID().toString();
+        super(fullName, username, password, email);
         this.typePerson = 1;
     }
 
@@ -42,29 +38,4 @@ public class Attendee extends Person {
     public ArrayList<String> getEventsSignedUp(){
         return this.eventsSignedUp;
     }
-
-    /**
-     * returns the contacts that the attendee has in list
-     * @return ArrayList<String> of person's id
-     */
-    public ArrayList<String> getContactList() { // why does this need to be overriden shouldn't the one in person suffice?
-        return this.contactList;
-    }
-
-    public ArrayList<String> getAnChatList() {
-        return anChatList;
-    }
-
-    public void addAnChat(String chatID) {
-        anChatList.add(chatID);
-    }
-
-    public void removeAnChat(String chatID) {
-        if (anChatList.contains(chatID)) {
-            anChatList.remove(chatID);
-        }
-    }
-
-
-
 }

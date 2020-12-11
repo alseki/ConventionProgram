@@ -11,15 +11,8 @@ public class Speaker extends Person {
     /** A list of the IDs for all Events where this Speaker is speaking. */
     protected ArrayList<String> EventIDs = new ArrayList<>();
 
-    /** A list of all announcement chatIDs for this Speaker. */
-    protected ArrayList<String> announcementChatIDs = new ArrayList<>();
-
-    Speaker(String fullName, String username, String password, String email){
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.id = UUID.randomUUID().toString();
+    Speaker (String fullName, String username, String password, String email){
+        super(fullName, username, password, email);
         this.typePerson = 3;
     }
 
@@ -45,14 +38,6 @@ public class Speaker extends Person {
      */
     public ArrayList<String> getEventIDs(){
         return EventIDs;
-    }
-
-    /**
-     * Getter for the IDs of announcement chats that this Speaker has made
-     * @return a list of all announcement chatIDs for this Speaker
-     */
-    public ArrayList<String> getAnnouncementChatIDs() {
-        return this.announcementChatIDs;
     }
 
 }

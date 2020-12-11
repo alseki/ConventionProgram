@@ -23,8 +23,7 @@ public abstract class PersonManager {
 
     //TODO: make this better?
     public Map[] unpack() {
-        Map[] rn = {usernameToPerson, idToPerson};
-        return rn;
+        return new Map[]{usernameToPerson, idToPerson};
     }
 
     /**

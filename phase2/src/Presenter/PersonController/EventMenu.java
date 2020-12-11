@@ -108,4 +108,20 @@ public abstract class EventMenu implements SubMenuPrinter {
         }
     }
 
+    /**
+     * Gets a list of formatted events to be displayed
+     * @param currentUserID the ID of the current user
+     * @return a String array of event information
+     * @throws InvalidChoiceException thrown if event list is empty
+     */
+    public String[] getEventList(String currentUserID) throws InvalidChoiceException {
+        String [] eventIDs = {};
+        eventIDs = persons.getEventList(currentUserID).toArray(eventIDs);
+        if (eventIDs.length != 0) {
+            return printEventList(eventIDs);
+        } else {
+            throw new NoDataException("such event");
+        }
+    }
+
 }

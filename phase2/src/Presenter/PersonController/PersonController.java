@@ -17,7 +17,7 @@ import Request.RequestManager;
 
 abstract public class PersonController extends SubMenu implements SubMenuPrinter {
     protected String currentUserID;
-    private int accountChoice;
+    private final int accountChoice;
     public boolean loggedIn =  false;
     public String[] options;
 
@@ -43,6 +43,14 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
             this.currentUserID = currentUserID;
             loggedIn = true;
         }
+    }
+
+    /**
+     * Getter for currentUserID
+     * @return currentUserID
+     */
+    public String getCurrentUserID() {
+        return currentUserID;
     }
 
     public abstract SubMenu createController(String choice);
