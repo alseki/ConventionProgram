@@ -5,8 +5,6 @@ import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Event.CapacityException;
-import Presenter.Exceptions.NoDataException;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
@@ -21,10 +19,14 @@ public class AttEventView extends AccountView {
     JComboBox<String> roomChoice;
     JLabel dialoguePrompt;
 
+    /**
+     * The view for attendee users to see their convention event options.
+     * @param controller AttendeeController for handling user input
+     */
     public AttEventView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (AttEventController) controller;
-        this.presenter = ((AttEventController) controller).getPresenter();
+        this.presenter = (AttEventMenu) controller.getPresenter();
 
         contentPane.setBackground(whiteBG);// Sets background colour to white
 
@@ -113,7 +115,6 @@ public class AttEventView extends AccountView {
             } else {
                 eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printEventsInRoom(room));
             }
-            eventList.display();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
         } finally {
@@ -127,7 +128,6 @@ public class AttEventView extends AccountView {
     private void viewOwnEvents() {
         try {
             eventList = new ListDisplayView(presenter.ownEventListTitle(), presenter.getOwnEventList());
-            eventList.display();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
         } finally {

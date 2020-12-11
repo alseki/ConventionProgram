@@ -227,7 +227,7 @@ public class OrgPersonMenu extends EventMenu{
     }
 
     public String printSpeakerIDPrompt(){
-        return "\nPlease enter a password for the speaker:";
+        return "\nPlease enter the userID for the speaker:";
     }
 
     public String printDeleteEmployeeAccountPrompt(){
@@ -235,7 +235,7 @@ public class OrgPersonMenu extends EventMenu{
     }
 
     public String printEmployeeIDPrompt(){
-        return "\nPlease enter a password for the employee:";
+        return "\nPlease enter the userID for the employee:";
     }
 
     public String printDeleteAttendeeAccount(){
@@ -243,14 +243,19 @@ public class OrgPersonMenu extends EventMenu{
     }
 
     public String printAttendeeIDPrompt(){
-        return "\nPlease enter a password for the attendee:";
+        return "\nPlease enter the userID for the attendee:";
     }
+
+    public String printAttendeeUserNamePrompt(){
+        return "\nPlease enter the username for the attendee:";
+    }
+
     public String printDeleteOrganizerAccount(){
         return "\nTo delete a new organizer account, please fill in the following information:";
     }
 
     public String printOrganizerIDPrompt(){
-        return "\nPlease enter a password for the organizer:";
+        return "\nPlease enter the userID for the organizer:";
     }
 
 

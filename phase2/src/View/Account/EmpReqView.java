@@ -10,10 +10,14 @@ public class EmpReqView extends AccountView {
     EmpReqController controller;
     EmpReqMenu presenter;
 
+    /**
+     * The view for employee users to see their request options.
+     * @param controller EmpReqController for handling user input
+     */
     public EmpReqView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller =  (EmpReqController) controller;
-        this.presenter = ((EmpReqController) controller).getPresenter();
+        this.presenter = (EmpReqMenu) controller.getPresenter();
     }
 
     @Override

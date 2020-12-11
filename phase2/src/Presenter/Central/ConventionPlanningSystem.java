@@ -45,8 +45,7 @@ public class ConventionPlanningSystem {
     }
 
     public String[] getAccountOptions() {
-        String [] options = {"Attendee", "Organizer", "Speaker", "Employee"};
-        return options;
+        return new String[]{"Attendee", "Organizer", "Speaker", "Employee"};
     }
 
     public String getSaveMessage() {
@@ -60,19 +59,19 @@ public class ConventionPlanningSystem {
     public PersonController getController(String choice) {
         PersonController PC;
         String[] options = getAccountOptions();
-        if (choice == options[0]) {
+        if (choice.equals(options[0])) {
             AttendeeManager am = new AttendeeManager(c.personByName, c.personByID);
             PC = new AttendeeController(am, c.rm, c.em, c.mm, c.cm, c.rqm);
-        } else if (choice == options[1]) {
+        } else if (choice.equals(options[1])) {
             OrganizerManager om = new OrganizerManager(c.personByName, c.personByID);
             SpeakerManager sm = new SpeakerManager(c.personByName, c.personByID);
             AttendeeManager am = new AttendeeManager(c.personByName, c.personByID);
             EmployeeManager em = new EmployeeManager(c.personByName, c.personByID);
             PC = new OrganizerController(om, sm, c.rm, c.em, c.mm, c.cm, am, em, c.rqm);
-        } else if (choice == options[2]) {
+        } else if (choice.equals(options[2])) {
             SpeakerManager sman = new SpeakerManager(c.personByName, c.personByID);
             PC = new SpeakerController(sman, c.rm, c.em, c.mm, c.cm, c.rqm);
-        } else if (choice == options[3]){
+        } else if (choice.equals(options[3])){
             EmployeeManager eman = new EmployeeManager(c.personByName, c.personByID);
             PC = new EmployeeController(eman, c.rm, c.em, c.mm, c.cm, c.rqm);
          } else {
@@ -82,7 +81,7 @@ public class ConventionPlanningSystem {
     }
 
     public void save() {
-        c.save();;
+        c.save();
     }
 
 
