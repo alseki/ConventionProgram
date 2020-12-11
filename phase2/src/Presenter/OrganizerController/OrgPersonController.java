@@ -1,11 +1,5 @@
 package Presenter.OrganizerController;
 
-
-// Programmers:
-// Description: All the methods that deal with userAccounts in OrganizerController Event Menu
-// Date Created: 01/11/2020
-// Date Modified: 19/11/2020
-
 import Event.Event;
 import Event.EventManager;
 import Event.EventPermissions;
@@ -22,21 +16,33 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Map;
 
+// Contributors: Eytan Weinstein, Paul-John Thomas
+// Last edit: Dec 11 2020
+
+// Architecture Level - Controller
 
 public class OrgPersonController extends SubMenu {
 
+    // OrgPersonController implements methods that add/remove user accounts, ...
+
     private String currentUserID;
-    private PersonManager personManager;
-    private SpeakerManager speakerManager;
-    private EmployeeManager employeeManager;
     private AttendeeManager attendeeManager;
+    private EmployeeManager employeeManager;
     private OrganizerManager organizerManager;
+    private SpeakerManager speakerManager;
     private EventPermissions eventPermissions;
     private EventManager eventManager;
     private OrgPersonMenu presenter;
     private OrgEventController orgEventController;
 
-
+    /**
+     * Constructor for OrgPersonController objects
+     * @param subMenu The submenu which implements options
+     * @param currentUserID The ID for the current user of this controller
+     * @param speakerManager The SpeakerManager which manages the Speakers at this convention
+     * @param employeeManager The EmployeeManager which manages the Employees at this convention
+     * @param attendeeManager The AttendeeManager which manages the Attendees at this convention
+     */
     public OrgPersonController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
                                EmployeeManager employeeManager, AttendeeManager attendeeManager) {
         super(subMenu);
@@ -48,6 +54,90 @@ public class OrgPersonController extends SubMenu {
         eventPermissions = new EventPermissions(roomManager, eventManager);
         presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
     }
+
+    // Methods for creating user accounts
+
+    /**
+     * Creates a new Attendee account and adds it to the system
+     * @param name The name of the Attendee
+     * @param username The username of the Attendee
+     * @param password The password of the Attendee
+     * @param email The email of the Attendee
+     */
+    public void createAttendee (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!attendeeManager.findPerson(username)) {
+            attendeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Employee account and adds it to the system
+     * @param name The name of the Employee
+     * @param username The username of the Employee
+     * @param password The password of the Employee
+     * @param email The email of the Employee
+     */
+    public void createEmployee (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!employeeManager.findPerson(username)) {
+            employeeManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Organizer account and adds it to the system
+     * @param name The name of the Organizer
+     * @param username The username of the Organizer
+     * @param password The password of the Organizer
+     * @param email The email of the Organizer
+     */
+    public void createOrganizer (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!organizerManager.findPerson(username)) {
+            organizerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    /**
+     * Creates a new Speaker account and adds it to the system
+     * @param name The name of the Speaker
+     * @param username The username of the Speaker
+     * @param password The password of the Speaker
+     * @param email The email of the Speaker
+     */
+    public void createSpeaker (String name, String username, String password, String email) throws
+            OverwritingException {
+        if (!speakerManager.findPerson(username)) {
+            speakerManager.createAccount(name, username, password, email);
+        } else {
+            throw new OverwritingException("account");
+        }
+    }
+
+    // Methods for deleting user accounts (and their associated helper methods)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // TODO when deleting accounts: remove their ID from all chats, and remove their ID from all events & MESSAGE other users in chat that
     // TODO right before a events commences yeah [4:37 PM] there's a method in eventmanager or eventpermissions or something to
@@ -197,18 +287,8 @@ public class OrgPersonController extends SubMenu {
         attendeeManager.cancelAccount(userId);
 
     }
+    
 
-    public void cancelAttendeeAccountByUsername(String username) {
-        // send message to attendee that their account is about to be deleted.
-        String userId = personManager.getCurrentUsername(username);
-        deleteAttendeeFromEvent(userId);
-        deleteAttendeeFromEvent(userId);
-        removeFromOtherUsersContactLists(userId);
-        personManager.cancelAccount(username);
-    }
-
-
-    // TODO should all methods in OrgPersonController be boolean vs void?
 
     public void cancelSpeakerAccount(String speakerID) {
 
@@ -334,77 +414,7 @@ public class OrgPersonController extends SubMenu {
     }
 
 
-        /**
-         * Creates a new Person.SpeakerController account and adds it to the system
-         * @param name The name of the SpeakerController
-         * @param username The username of the SpeakerController
-         * @param password The password of the SpeakerController
-         * @param email The email of the SpeakerController
-         * @return true iff a new Person.SpeakerController object was created
-         */
-        public void createSpeaker (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws Invalid Exception
-            if (!speakerManager.findPerson(username)) {
-                speakerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-        }
 
-        /**
-         * Creates a new Person.Employee account and adds it to the system (including into a specific dictionary of employees solely)
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createEmployee (String name, String username, String password, String email) throws
-        OverwritingException {
-            // OR throws InvalidException
-            if (!employeeManager.findPerson(username)) {
-                employeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-        }
-
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createAttendee (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!attendeeManager.findPerson(username)) {
-                attendeeManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-
-        }
-
-        /**
-         * Creates a new Person.Attendee account and adds it to the system
-         * @param name The name of the employee
-         * @param username The username of the employee
-         * @param password The password of the employee
-         * @param email The email of the employee
-         * @return true iff a new employee object was created
-         */
-        public void createOrganizer (String name, String username, String password, String email) throws
-        OverwritingException {
-            if (!organizerManager.findPerson(username)) {
-                organizerManager.createAccount(name, username, password, email);
-            } else {
-                throw new OverwritingException("account");
-            }
-
-        }
 
         /**
          * Adds a Message with content the AnnouncementChat contained within the Event with eventName*
