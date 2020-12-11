@@ -5,14 +5,12 @@ package Presenter.SpeakerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.Central.SubMenu;
 import Person.SpeakerManager;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class SpeEventController extends SubMenu {
@@ -29,46 +27,33 @@ public class SpeEventController extends SubMenu {
     }
 
     /**
-     * Get the list of talk the user is scheduled to speak at
-     * @return String chunk of formatted Talks
-     */
-//    private void getOwnTalks() {
-//        try {
-//            String[] events = {};
-//            events = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(events);
-//            presenter.printEventList(" you speak at", events);
-//        } catch (NullPointerException e) {
-//            presenter.printException(new NoDataException("event"));
-//        }
-//    }
-
-    /**
      * Gets all the Events a speaker is speaking at
      * @return An array of Event IDs
      */
-    public String[] getEvents() throws InvalidChoiceException, NoDataException{
-        String[] events;
-        events = (String[]) speakerManager.getSpeakerInEvents(currentUserID).toArray();
-        if (events.length == 0) {
-
-        }
-        return null;
+    public String[] getEvents() throws InvalidChoiceException{
+        String[] events = {};
+        events = speakerManager.getSpeakerInEvents(currentUserID).toArray(events);
+        return presenter.getEventList(events);
     }
 
     /**
      * Gets all the Panels a speaker is speaking at
      * @return An array of Event IDs
      */
-    public String[] getPanels() {
-        return null;
+    public String[] getPanels() throws InvalidChoiceException{
+        String[] events = {};
+        events = speakerManager.getSpeakerInPanels(currentUserID).toArray(events);
+        return presenter.getEventList(events);
     }
 
     /**
      * Gets all the Non-Panel Events a speaker is speaking at
      * @return An array of Event IDs
      */
-    public String[] getNonPanels() {
-        return null;
+    public String[] getNonPanels() throws InvalidChoiceException{
+        String[] events = {};
+        events = speakerManager.getSpeakerInNonPanels(currentUserID).toArray(events);
+        return presenter.getEventList(events);
     }
 
     /**
@@ -119,7 +104,7 @@ public class SpeEventController extends SubMenu {
      * @param messageContent
      */
     public String allSpeakerEventsMessage (String messageContent){
-        ArrayList allEvents_list = speakerManager.getSpeakerInEvents(currentUserID);
+        ArrayList<String> allEvents_list = speakerManager.getSpeakerInEvents(currentUserID);
         String[] allEvents = new String[allEvents_list.size()];
         for(int j =0;j<allEvents_list.size();j++){
             allEvents[j] = (String) allEvents_list.get(j);

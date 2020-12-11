@@ -92,16 +92,15 @@ public abstract class EventMenu implements SubMenuPrinter {
             e.append(": ");
             e.append(events.getEventName(eventID));
             e.append("\nby ");
-            // e.append(persons.getName(events.getSpeakerID(eventID)));
+            e.append(persons.getName(events.getSpeakerID(eventID)));
             e.append(" in room ");
             e.append(rooms.getEventRoom(eventID));
             e.append("\nfrom ");
             e.append(events.getStartTime(eventID));
             e.append(" to ");
             e.append(events.getEndTime(eventID));
-            //e.append("\n");
-            // FIXME
-            //e.append(events.getDescription(eventID));
+            e.append("\n");
+            e.append(events.getDescription(eventID));
             return e.toString();
         } catch (NullPointerException n) {
             throw new InvalidChoiceException("event");
@@ -110,13 +109,11 @@ public abstract class EventMenu implements SubMenuPrinter {
 
     /**
      * Gets a list of formatted events to be displayed
-     * @param currentUserID the ID of the current user
+     * @param eventIDs the IDs of the list of events
      * @return a String array of event information
      * @throws InvalidChoiceException thrown if event list is empty
      */
-    public String[] getEventList(String currentUserID) throws InvalidChoiceException {
-        String [] eventIDs = {};
-        eventIDs = persons.getEventList(currentUserID).toArray(eventIDs);
+    public String[] getEventList(String[] eventIDs) throws InvalidChoiceException {
         if (eventIDs.length != 0) {
             return printEventList(eventIDs);
         } else {
