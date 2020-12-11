@@ -73,7 +73,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to choose a type for the Event they wish to add
      * @return the type of event they have chosen (as an EventType object)
      */
-    private String[] eventTypes(String type) throws InvalidChoiceException {
+    public String[] eventTypes(String type) {
         EventType[] values = EventType.values();
         String[] types = new String[values.length];
         for (int i = 0; i < types.length; i++) {
@@ -138,7 +138,14 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to add the username of the SpeakerController at this new Event
      */
     public String printSpeakerUsernamePrompt(){
-        return "\nWhat is the username of the speaker in charge of the event?";
+        return "\nWhat is the username of the speaker speaking at this event?";
+    }
+
+    /**
+     * Prompts the user to type in the number of people that this new Event can fit
+     */
+    public String printEventCapPrompt(){
+        return "\nWhat is the capacity of the event you want to create?";
     }
 
     /**
@@ -198,7 +205,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to enter the content of the announcement
      * @return
      */
-    public java.lang.String printMessageContentPrompt(){
+    public String printMessageContentPrompt(){
         return "Please enter your announcement below";
     }
 

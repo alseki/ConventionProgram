@@ -2,6 +2,7 @@ package Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Person implements Serializable {
     protected String username;
@@ -17,6 +18,15 @@ public abstract class Person implements Serializable {
     protected ArrayList<String> chatList = new ArrayList<>();
     protected ArrayList<String> archivedChatList = new ArrayList<>(); //TODO: delete this comment.
     protected ArrayList<String> favorites = new ArrayList<>(); //TODO: delete this comment. this list contains the archived messages' IDs.
+    protected ArrayList<String> anChatList = new ArrayList<>();
+
+    public Person(String fullName, String username, String password, String email){
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.id = UUID.randomUUID().toString();
+    }
 
     /**
      * this allows for access to the person's username
@@ -123,6 +133,23 @@ public abstract class Person implements Serializable {
         }
     }
 
+    /**
+     * Getter for the IDs of announcement chats that this user has access to
+     * @return a list of all announcement chatIDs for this user
+     */
+    public ArrayList<String> getAnChatList() {
+        return anChatList;
+    }
+
+    public void addAnChat(String anChatID) {
+        this.anChatList.add(anChatID);
+    }
+
+    public void removeAnChat(String chatID) {
+        if (anChatList.contains(chatID)) {
+            anChatList.remove(chatID);
+        }
+    }
 
     /**
      * @return ArrayList returns the list of string corresponding to the archived chat Ids

@@ -111,7 +111,7 @@ public class AttEventView extends AccountView {
     }
 
     /**
-     * Opens up a new window showing
+     * Opens up a new window showing the convention's event list
      */
     private void viewEventList(String room) {
         try {
@@ -128,11 +128,12 @@ public class AttEventView extends AccountView {
     }
 
     /**
-     * Opens up a new window showing
+     * Opens up a new window showing the user's event list
      */
     private void viewOwnEvents() {
         try {
-            eventList = new ListDisplayView(presenter.ownEventListTitle(), presenter.getOwnEventList());
+            eventList = new ListDisplayView(presenter.ownEventListTitle(),
+                    presenter.getEventList(controller.getCurrentUserID()));
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
         } finally {

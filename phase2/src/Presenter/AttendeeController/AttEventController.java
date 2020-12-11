@@ -16,11 +16,10 @@ import java.util.Scanner;
 
 public class AttEventController extends SubMenu {
 
-    private String currentUserID;
-    private AttendeeManager attendeeManager;
-    private EventPermissions eventPermissions;
-
-    private AttEventMenu presenter;
+    private final String currentUserID;
+    private final AttendeeManager attendeeManager;
+    private final EventPermissions eventPermissions;
+    private final AttEventMenu presenter;
 
     public AttEventController(SubMenu subMenu, String currentUserID, AttendeeManager attendeeManager) {
         super(subMenu);
@@ -28,6 +27,14 @@ public class AttEventController extends SubMenu {
         this.attendeeManager = attendeeManager;
         eventPermissions = new EventPermissions(roomManager, eventManager);
         presenter = new AttEventMenu(currentUserID, roomManager, eventManager, attendeeManager);
+    }
+
+    /**
+     * Getter for currentUserID
+     * @return currentUserID
+     */
+    public String getCurrentUserID() {
+        return currentUserID;
     }
 
     /**

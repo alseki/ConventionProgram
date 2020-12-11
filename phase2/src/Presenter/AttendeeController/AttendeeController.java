@@ -5,7 +5,6 @@ package Presenter.AttendeeController;
 // Date Created: 01/11/2020
 // Date Modified: 16/11/2020
 
-import Presenter.Central.SubMenuPrinter;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
 import Presenter.Central.SubMenu;
@@ -17,7 +16,7 @@ import Person.AttendeeManager;
 import Request.RequestManager;
 
 public class AttendeeController extends PersonController {
-    private AttendeeManager manager;
+    private final AttendeeManager manager;
 
     public AttendeeController(AttendeeManager manager, RoomManager rooms, EventManager events, MessageManager messages,
                               ChatManager chats, RequestManager requests) {

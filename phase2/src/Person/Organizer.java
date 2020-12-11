@@ -2,7 +2,7 @@ package Person;
 
 public class Organizer extends Attendee {
     /**
-     * constructor for an attendee
+     * constructor for an organizer
      * @param fullName String
      * @param username String
      * @param password String

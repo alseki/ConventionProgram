@@ -17,16 +17,58 @@ import java.util.ArrayList;
 
 public class SpeEventController extends SubMenu {
 
-    private String currentUserID;
-    private SpeEventMenu presenter;
-    private SpeakerManager speakerManager;
-    Scanner input = new Scanner(System.in);
+    private final String currentUserID;
+    private final SpeEventMenu presenter;
+    private final SpeakerManager speakerManager;
 
     public SpeEventController(SubMenu subMenu, SpeakerManager speakerManager, String currentUserID) {
         super(subMenu);
         this.currentUserID = currentUserID;
         this.speakerManager = speakerManager;
         presenter = new SpeEventMenu(roomManager, eventManager, speakerManager, currentUserID);
+    }
+
+    /**
+     * Get the list of talk the user is scheduled to speak at
+     * @return String chunk of formatted Talks
+     */
+//    private void getOwnTalks() {
+//        try {
+//            String[] events = {};
+//            events = speakerManager.getSpeakerIdAllTalks(currentUserID).toArray(events);
+//            presenter.printEventList(" you speak at", events);
+//        } catch (NullPointerException e) {
+//            presenter.printException(new NoDataException("event"));
+//        }
+//    }
+
+    /**
+     * Gets all the Events a speaker is speaking at
+     * @return An array of Event IDs
+     */
+    public String[] getEvents() throws InvalidChoiceException, NoDataException{
+        String[] events;
+        events = (String[]) speakerManager.getSpeakerInEvents(currentUserID).toArray();
+        if (events.length == 0) {
+
+        }
+        return null;
+    }
+
+    /**
+     * Gets all the Panels a speaker is speaking at
+     * @return An array of Event IDs
+     */
+    public String[] getPanels() {
+        return null;
+    }
+
+    /**
+     * Gets all the Non-Panel Events a speaker is speaking at
+     * @return An array of Event IDs
+     */
+    public String[] getNonPanels() {
+        return null;
     }
 
     /**
