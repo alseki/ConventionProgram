@@ -130,7 +130,7 @@ public class MessageView extends AccountView {
             JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatID, msg),
                     "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidChoiceException e){
-            exceptionDialogBox(presenter.exceptionTitle(), "Wrongg");
+            exceptionDialogBox(presenter.exceptionTitle(), "Wrong");
         }
     }
 
