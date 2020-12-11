@@ -10,6 +10,7 @@ public class EmpEventView extends AccountView {
     EmpEventController controller;
     EmpEventMenu presenter;
     String[] menuOp;
+    ListDisplayView eventList;
 
     /**
      * The view for employee users to see their convention event options.
@@ -28,6 +29,7 @@ public class EmpEventView extends AccountView {
 
     private void showViewEvents() {
 
+        okayButton.setVisible(true);
     }
 
     private void showViewRooms() {
