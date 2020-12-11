@@ -147,9 +147,9 @@ public class MessageMenu implements SubMenuPrinter {
     }
 
     /**
-     * Returns a list of formatted chat summaries for this user's chat
+     * Returns a list of chatIds of the current User.
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
-     * @return
+     * @return a list of chatIds of the current User.
      */
     public ArrayList<String> getChatList() throws InvalidChoiceException {
         ArrayList<String> unReadChatList = new ArrayList<>();
@@ -234,7 +234,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter chatname of the Chat that they want to archive
      */
-    public void printArchiveChatPrompt(){System.out.println("Which chat do you want to archive? Enter the chatName.");}
+    public void printArchiveChatPrompt(){ System.out.println("Which chat do you want to archive? Enter the chatName.");}
 
     protected String chatArchived(){return "Chat archived!";}
 
