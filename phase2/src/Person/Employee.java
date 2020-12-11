@@ -7,14 +7,12 @@ import java.util.UUID;
 
 public class Employee extends Person {
 
-
     protected ArrayList<String> anChatList = new ArrayList<>();
 
     private Map<String, Boolean> requestIdToStatus;
 
-    protected ArrayList<String> announcementChatIds = new ArrayList<>();
+    //protected ArrayList<String> anChatIds = new ArrayList<>();
 
-    protected ArrayList<String> announcementChatIDs = new ArrayList<>();
 
     public Employee (String fullName, String username, String password, String email){
         this.fullName = fullName;
@@ -24,6 +22,7 @@ public class Employee extends Person {
         this.id = UUID.randomUUID().toString();
         this.typePerson = 4;
         this.requestIdToStatus = new HashMap<>();
+        this.anChatList = anChatList;
     }
 
 
@@ -73,7 +72,6 @@ public class Employee extends Person {
             return "Fulfilled";
         }
     }
-
 
 }
 
