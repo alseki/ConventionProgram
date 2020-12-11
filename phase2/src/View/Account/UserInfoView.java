@@ -20,7 +20,7 @@ public class UserInfoView extends AccountView {
     JButton submit;
 
     public UserInfoView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (UserInfoController) controller;
         this.presenter = (UserInfoMenu) controller.getPresenter();
 
@@ -111,8 +111,7 @@ public class UserInfoView extends AccountView {
             hideInput();
             dialogPrompt.setText(controller.changePassword(inputField.getText(), passwordField.getText()));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -121,8 +120,7 @@ public class UserInfoView extends AccountView {
             hideInput();
             dialogPrompt.setText(controller.changeUsername(inputField.getText(), passwordField.getText()));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -131,8 +129,7 @@ public class UserInfoView extends AccountView {
             hideInput();
             dialogPrompt.setText(controller.changeEmail(inputField.getText(), passwordField.getText()));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

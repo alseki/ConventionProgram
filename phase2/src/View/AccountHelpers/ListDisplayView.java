@@ -1,4 +1,4 @@
-package View.Account;
+package View.AccountHelpers;
 
 import Presenter.Central.SubMenu;
 

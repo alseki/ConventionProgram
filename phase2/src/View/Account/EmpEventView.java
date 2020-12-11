@@ -3,6 +3,8 @@ package View.Account;
 import Presenter.Central.SubMenu;
 import Presenter.EmployeeController.EmpEventController;
 import Presenter.EmployeeController.EmpEventMenu;
+import View.AccountHelpers.ListDisplayView;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -17,7 +19,7 @@ public class EmpEventView extends AccountView {
      * @param controller EmpEventController for handling user input
      */
     public EmpEventView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (EmpEventController) controller;
         this.presenter = (EmpEventMenu) controller.getPresenter();
 

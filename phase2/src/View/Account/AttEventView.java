@@ -5,6 +5,8 @@ import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Event.CapacityException;
+import View.AccountHelpers.ListDisplayView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +27,7 @@ public class AttEventView extends AccountView {
      * @param controller AttendeeController for handling user input
      */
     public AttEventView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (AttEventController) controller;
         this.presenter = (AttEventMenu) controller.getPresenter();
 
@@ -89,9 +91,9 @@ public class AttEventView extends AccountView {
             }
 
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         } catch (CapacityException c) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printEventFull());
+            exceptionDialogBox(presenter.printEventFull());
         }
     }
 
@@ -106,7 +108,7 @@ public class AttEventView extends AccountView {
                 dialoguePrompt.setText(this.presenter.printEventRemoved());
             }
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -121,7 +123,7 @@ public class AttEventView extends AccountView {
                 eventList = new ListDisplayView(presenter.getEventListTitle(), presenter.printEventsInRoom(room));
             }
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         } finally {
             showMainDropDownMenu();
         }
@@ -135,7 +137,7 @@ public class AttEventView extends AccountView {
             eventList = new ListDisplayView(presenter.ownEventListTitle(),
                     presenter.getEventList(controller.getCurrentUserID()));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         } finally {
             showMainDropDownMenu();
         }

@@ -5,6 +5,7 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.ContactMenu;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,7 @@ public class ContactView extends AccountView {
      * @param controller ContactController for handling user input
      */
     public ContactView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (ContactController) controller;
         this.presenter = (ContactMenu) controller.getPresenter();
 
@@ -57,8 +58,7 @@ public class ContactView extends AccountView {
             allContacts = new ListDisplayView(presenter.getContactListTitle(), myContacts);
             showMainDropDownMenu();
         } catch (NoDataException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

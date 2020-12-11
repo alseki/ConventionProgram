@@ -17,7 +17,7 @@ public class SpeEventView extends AccountView {
      * @param controller SpeEventController for handling user input
      */
     public SpeEventView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (SpeEventController) controller;
         this.presenter = (SpeEventMenu) controller.getPresenter();
 

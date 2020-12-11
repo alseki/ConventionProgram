@@ -236,6 +236,7 @@ public class MainMenuView implements ActionListener {
 
         if (eventName.equals("logout")) {
             update(currAccount.returnController());
+            saveInfo();
             intro();
         }
 

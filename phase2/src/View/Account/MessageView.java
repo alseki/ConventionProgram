@@ -9,6 +9,8 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.PersonController.MessageController;
 import Presenter.PersonController.MessageMenu;
+import View.AccountHelpers.ChatListDisplayView;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +30,7 @@ public class MessageView extends AccountView {
      * @param controller MessageController for handling user input
      */
     public MessageView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (MessageController) controller;
         presenter = (MessageMenu) controller.getPresenter();
 
@@ -58,8 +60,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getInboxTitle(), presenter.getInBox());
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -68,8 +69,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getOutboxTitle(), presenter.getOutBox());
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -78,8 +78,7 @@ public class MessageView extends AccountView {
             msgList = new ChatListDisplayView(presenter.getChatListTitle(), presenter.getChats(presenter.getChatList()));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -101,8 +100,7 @@ public class MessageView extends AccountView {
             msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -130,7 +128,7 @@ public class MessageView extends AccountView {
             JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatID, msg),
                     "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidChoiceException e){
-            exceptionDialogBox(presenter.exceptionTitle(), "Wrongg");
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

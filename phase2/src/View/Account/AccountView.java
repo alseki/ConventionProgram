@@ -1,17 +1,18 @@
 package View.Account;
 
+import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
-import javafx.beans.Observable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 
 /**
  * A view that is instantiated with a Controller and builds frame based on said Controller
  */
-public abstract class AccountView implements ActionListener, Observable {
+public abstract class AccountView extends Observable implements ActionListener {
     public JFrame frame = new JFrame();
     public JPanel contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
     public JButton okayButton = newButton("okay");
@@ -20,6 +21,8 @@ public abstract class AccountView implements ActionListener, Observable {
     public JButton closeButton = newButton("save and close");
     JComboBox<String> dropDownMenu;
     public String eventName;
+    protected SubMenu controller;
+    protected SubMenuPrinter presenter;
     public final String[] menuOp;
 
     public static final Color whiteBG = new Color(255, 255, 200);
@@ -31,9 +34,11 @@ public abstract class AccountView implements ActionListener, Observable {
     /**
      * Abstract class; A view that is instantiated and run by the Account Class.
      * Initializes basic frame with dropDownMenu and navigation buttons.
-     * @param presenter the string container for this class
+     * @param controller the string container for this class
      */
-    public AccountView(SubMenuPrinter presenter) {
+    public AccountView(SubMenu controller) {
+        this.controller = controller;
+        this.presenter = controller.getPresenter();
         frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -43,9 +48,9 @@ public abstract class AccountView implements ActionListener, Observable {
 
         continueButton.setToolTipText("click this button to navigate to the chosen menu");
         backButton.setToolTipText("click this button to go back to the previous menu");
-        initializeObject(closeButton);
 
         makeDropDownMenu(presenter);
+        initializeObject(closeButton);
 
         frame.setContentPane(contentPane);
         frame.pack();
@@ -81,7 +86,7 @@ public abstract class AccountView implements ActionListener, Observable {
     public void hideMainDropDownMenu() {
         dropDownMenu.setVisible(false);
         continueButton.setVisible(false);
-        closeButton.setVisible(true);
+        closeButton.setVisible(false);
     }
 
     /**
@@ -113,12 +118,12 @@ public abstract class AccountView implements ActionListener, Observable {
 
     /**
      * Opens a JOptionPane box that displays the exception message
-     * @param exceptionTitle A title for the box
      * @param exceptionText The text the box should display
      */
-    public void exceptionDialogBox(String exceptionTitle, String exceptionText) {
-        JOptionPane.showConfirmDialog(null, exceptionText, exceptionTitle,
+    public void exceptionDialogBox(String exceptionText) {
+        JOptionPane.showConfirmDialog(null, exceptionText, presenter.exceptionTitle(),
                 JOptionPane.DEFAULT_OPTION);
+        showMainDropDownMenu();
     }
 
     @Override
@@ -140,12 +145,21 @@ public abstract class AccountView implements ActionListener, Observable {
         }
 
         if (eventName.equals(closeButton.getActionCommand())) {
-            notifyAll();
+            notifyObservers();
+            frame.setVisible(false);
         }
     }
 
     protected void initializeObject(JComponent object) {
         contentPane.add(object);
         object.setVisible(false);
+    }
+
+    /**
+     * Returns the controller used by this AccountView
+     * @return The controller
+     */
+    public SubMenu unpack() {
+        return controller;
     }
 }

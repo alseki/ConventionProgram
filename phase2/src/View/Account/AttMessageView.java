@@ -4,6 +4,8 @@ import Presenter.AttendeeController.AttMessageController;
 import Presenter.AttendeeController.AttMessageMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import View.AccountHelpers.ListDisplayView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -46,8 +48,7 @@ public class AttMessageView extends MessageView {
                     announcementPresenter.getChats(announcementPresenter.getChatList()));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -66,7 +67,7 @@ public class AttMessageView extends MessageView {
                     announcementPresenter.getChat(chatID));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

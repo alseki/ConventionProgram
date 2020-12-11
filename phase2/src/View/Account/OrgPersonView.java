@@ -18,7 +18,7 @@ public class OrgPersonView extends AccountView {
     String[] menuOp;
 
     public OrgPersonView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (OrgPersonController) controller;
         this.presenter = (OrgPersonMenu) controller.getPresenter();
 
@@ -132,7 +132,7 @@ public class OrgPersonView extends AccountView {
         try {
             controller.createSpeaker(input1.getText(), input3.getText(), input2.getText(), input4.getText());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         } finally {
             showMainDropDownMenu();
         }
@@ -142,7 +142,7 @@ public class OrgPersonView extends AccountView {
         try {
             controller.createEmployee(input1.getText(), input3.getText(), input2.getText(), input4.getText());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         }finally {
             showMainDropDownMenu();
         }
@@ -152,7 +152,7 @@ public class OrgPersonView extends AccountView {
         try {
             controller.createOrganizer(input1.getText(), input3.getText(), input2.getText(), input4.getText());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         }finally {
             showMainDropDownMenu();
         }
@@ -162,7 +162,7 @@ public class OrgPersonView extends AccountView {
         try {
             controller.createAttendee(input1.getText(), input3.getText(), input2.getText(), input4.getText());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         }finally {
             showMainDropDownMenu();
         }

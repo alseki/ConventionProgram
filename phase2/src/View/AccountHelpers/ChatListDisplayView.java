@@ -1,4 +1,4 @@
-package View.Account;
+package View.AccountHelpers;
 
 import javax.swing.*;
 import java.awt.*;
