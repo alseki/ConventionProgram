@@ -27,6 +27,11 @@ public class Account implements ActionListener {
     JButton logoutButton, submitButton;
     String menuSelection;
 
+    /**
+     * The view for the user's account main menu. Presents the user with a drop down menu of submenus they can visit,
+     * and creates the corresponding AccountViews.
+     * @param controller the PersonController that corresponds with this user's account choice
+     */
     public Account(PersonController controller) {
         this.controller = controller;
         this.menuOptions = controller.getMenuOptions();
@@ -34,11 +39,15 @@ public class Account implements ActionListener {
         setup();
     }
 
+    /**
+     * Sets up the frame, initializes panel components
+     */
     public void setup() {
         frame = new JFrame(controller.getMenuTitle()); // Create and set up the frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
+        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of
+        // frame
 
         // menu changes colour depending on the type of user!
         if(this.controller instanceof AttendeeController) {
@@ -74,6 +83,10 @@ public class Account implements ActionListener {
         contentPane.add(dropDownMenu);
     }
 
+    /**
+     * Sets up the frame, adds listener to logout button
+     * @param listener the MainMenuView
+     */
     public void runFrom(ActionListener listener) {
         logoutButton.addActionListener(listener);
 
@@ -83,6 +96,10 @@ public class Account implements ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Getter for the current person controller
+     * @return the current person controller
+     */
     public PersonController returnController() {
         frame.setVisible(false);
         return controller;

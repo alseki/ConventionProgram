@@ -128,6 +128,13 @@ public class OrgEventMenu extends EventMenu {
                 "careful!";
     }
 
+    public String printEndTimePrompt(){
+        return "\nAt what time will the event end?. \nPlease enter the exact date and time in 24-hour clock " +
+                "notation. \nFor example, to schedule an event at 11:30 pm on March 4, 2020, you would type the date," +
+                "followed by a space, \nfollowed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and " +
+                "careful!";
+    }
+
     /**
      * Notifies the user that their start time entry was invalid
      */

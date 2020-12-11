@@ -13,6 +13,11 @@ public class ListDisplayView implements ActionListener {
     JFrame frame;
     JPanel contentPane;
 
+    /**
+     * A view that displays a bullet point list of Strings
+     * @param title the title of the frame
+     * @param options the array of Strings to be on the list
+     */
     public ListDisplayView(String title, String[] options) {
         frame = new JFrame(title); // Create and set up the frame
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
@@ -50,7 +55,7 @@ public class ListDisplayView implements ActionListener {
     /**
      * Shows every component stored in contentPane
      */
-    public void display() {
+    private void display() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(true);
         }
@@ -60,7 +65,7 @@ public class ListDisplayView implements ActionListener {
     /**
      * Hides every component stored in contentPane
      */
-    public void hide() {
+    private void hide() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(false);
         }

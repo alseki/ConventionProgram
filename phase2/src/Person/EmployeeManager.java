@@ -145,8 +145,7 @@ public class EmployeeManager extends PersonManager {
         return employee.getAnChatList();
     }
 
-    // Get list of all talks in a for the conference is available from the Employee event controller , referred to by the Speaker's ID.
-
+    // Getting a list of all talks at the conference is available from the Employee event controller
 
      }
 

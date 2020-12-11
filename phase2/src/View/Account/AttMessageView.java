@@ -5,12 +5,10 @@ import Presenter.AttendeeController.AttMessageMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.InvalidFormatException;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
-
-//FIXME selecting "View messages" as an Attendee doesn't even launch the AttMsg menu... (???)
 
 public class AttMessageView extends MessageView {
     AttMessageController controller;
@@ -20,13 +18,17 @@ public class AttMessageView extends MessageView {
     JLabel dialogPrompt, dialogPrompt2;
     JTextField inputField2;
 
+    /**
+     * The view for attendee users to see their message options.
+     * @param controller AttMessageController for handling user input
+     */
     public AttMessageView(SubMenu controller) {
         super(controller);
         this.controller = (AttMessageController) controller;
-        this.presenter = ((AttMessageController) controller).getPresenter();
+        this.presenter = (AttMessageMenu) controller.getPresenter();
         this.announcementPresenter = ((AttMessageController) controller).getAnChatPresenter();
 
-        contentPane.setBackground(pinkBG);// Sets background colour
+        contentPane.setBackground(new Color(255, 240, 150));// Sets background colour
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);

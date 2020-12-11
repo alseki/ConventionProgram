@@ -24,6 +24,11 @@ public abstract class AccountView implements ActionListener {
     public static final Color yellowBG = new Color(255, 200, 0);
     public static final Color pinkBG = new Color(255, 100, 200);
 
+    /**
+     * Abstract class; A view that is instantiated and run by the Account Class.
+     * Initializes basic frame with dropDownMenu and navigation buttons.
+     * @param presenter the string container for this class
+     */
     public AccountView(SubMenuPrinter presenter) {
         frame.setTitle(presenter.getMenuTitle()); // Create and set up the frame
         JFrame.setDefaultLookAndFeelDecorated(true);

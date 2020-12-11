@@ -14,10 +14,14 @@ public class AttReqView extends AccountView {
     String[] menuOp;
     JLabel dialogPrompt;
 
+    /**
+     * The view for attendee users to see their request options.
+     * @param controller AttReqController for handling user input
+     */
     public AttReqView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (AttReqController) controller;
-        this.presenter = ((AttReqController) controller).getPresenter();
+        this.presenter = (AttReqMenu) controller.getPresenter();
 
         menuOp = this.presenter.getMenuOptions();
 

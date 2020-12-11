@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConventionSaver {
-    protected RoomManager rm;
-    private static final FileGateway<RoomManager> roomLoader = new FileGateway<RoomManager>("rooms.ser");
-    protected EventManager em;
+    protected RoomManager rm = new RoomManager();
+    private static final FileGateway<RoomManager> roomLoader = new FileGateway<>("rooms.ser");
+    protected EventManager em = new EventManager();
     private static final FileGateway<EventManager> eventLoader = new FileGateway<>("events.ser");
 
     protected MessageManager mm = new MessageManager();
     protected ChatManager cm = new ChatManager();
-    private static final FileGateway<MessageManager> messageLoader = new FileGateway<MessageManager>("messages.ser");
-    private static final FileGateway<ChatManager> chatLoader = new FileGateway<ChatManager>("chats.ser");
+    private static final FileGateway<MessageManager> messageLoader = new FileGateway<>("messages.ser");
+    private static final FileGateway<ChatManager> chatLoader = new FileGateway<>("chats.ser");
 
     protected RequestManager rqm = new RequestManager();
     private static final FileGateway<RequestManager> requestLoader = new FileGateway<>("requests.ser");
@@ -28,9 +28,9 @@ public class ConventionSaver {
     protected Map<String, Person> personByName = new HashMap<>();
     protected Map<String, Person> personByID = new HashMap<>();
     private static final FileGateway<Map<String, Person>> id2Person =
-            new FileGateway<Map<String, Person>>("pByID.ser");
+            new FileGateway<>("pByID.ser");
     private static final FileGateway<Map<String, Person>> n2Person =
-            new FileGateway<Map<String, Person>>("pByName.ser");
+            new FileGateway<>("pByName.ser");
 
     ConventionSaver() {
         load();
