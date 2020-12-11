@@ -15,9 +15,10 @@ public class OrgEventView extends AccountView {
 
     // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
     //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
-    JLabel dpMain, dp1, dp2, dp3; // dp = "dialogue prompt"
-    JButton createRoomButton;
-    JTextField input1, input2;
+    JLabel dpMain, dp1, dp2, dp3, dp4, dp5, dp6, dp7; // dp = "dialogue prompt"
+    JButton createRoomButton, createEventButton;
+    JTextField input1, input2, input3, input4, input5, input6, input7;
+    JComboBox<String> allEvents;
 
     /**
      * The view for organizer users to see their convention event options.
@@ -46,6 +47,7 @@ public class OrgEventView extends AccountView {
         initializeObject(input2);
 
         createRoomButton = newButton("Create room");
+        createEventButton = newButton("Create Event");
     }
 
 
@@ -87,9 +89,48 @@ public class OrgEventView extends AccountView {
     private void showCreateEvent() {
         backButton.setVisible(true);
 
-        dp1.setText(presenter.printCreateEventPrompt());
-        dp1.setVisible(true);
+        dpMain.setText(presenter.printCreateEventPrompt());
+        dpMain.setVisible(true);
 
+        dp1.setText(presenter.printEventTypePrompt());
+        dp1.setVisible(true);
+        input1.setVisible(true);
+
+            //TODO: display a list event types when user types in 0?
+
+        dp2.setText(presenter.printRoomNamePrompt());
+        dp2.setVisible(true);
+        input2.setVisible(true);
+
+            //TODO: display a list of room names when user types in 0?
+
+        dp3.setText(presenter.printEventNamePrompt());
+        dp3.setVisible(true);
+        input3.setVisible(true);
+
+        dp4.setText(presenter.printDescriptionPrompt());
+        dp4.setVisible(true);
+        input4.setVisible(true);
+
+        dp5.setText(presenter.printStartTimePrompt());
+        dp5.setVisible(true);
+        input5.setVisible(true);
+
+        dp6.setText(presenter.printEndTimePrompt());
+        dp6.setVisible(true);
+        input6.setVisible(true);
+
+        dp7.setText(presenter.printSpeakerUsernamePrompt());
+        dp7.setVisible(true);
+        input7.setVisible(true);
+
+        //dp8.setText(presenter.printChatNamePrompt());
+        //dp8.setVisible(true);
+        //input8.setVisible(true);
+
+        createEventButton.setVisible(true);
+
+        /*
         String eventType = JOptionPane.showInputDialog(null, presenter.printEventTypePrompt(),
                 "Type", JOptionPane.PLAIN_MESSAGE);
 
@@ -107,6 +148,8 @@ public class OrgEventView extends AccountView {
 
         String eventTime = JOptionPane.showInputDialog(null, presenter.printStartTimePrompt(),
                 "Start time", JOptionPane.PLAIN_MESSAGE);
+
+         */
 
     }
 

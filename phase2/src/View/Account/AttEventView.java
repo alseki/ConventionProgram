@@ -40,6 +40,10 @@ public class AttEventView extends AccountView {
         chooseRoomButton = newButton("Choose room");
         chooseRoomButton.setToolTipText("choose selected room");
 
+        //FIXME: this has to be initialized first with all of the different room options!!!
+        roomChoice = new JComboBox<>();
+        initializeObject(roomChoice);
+
         inputField = new JTextField(50);
         initializeObject(inputField);
     }
