@@ -329,10 +329,10 @@ public class OrgEventController extends SubMenu {
 
     @Override
     public OrgEventMenu getPresenter() {
-            return this.presenter;
-        }
-
+        return this.presenter;
     }
+
+}
 
 
 
