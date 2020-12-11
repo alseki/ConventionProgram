@@ -22,12 +22,15 @@ public class MessageView extends AccountView {
     ListDisplayView msgList;
     JTextField inputField;
     JTextArea messageField;
-    /*JScrollPane scrollPane;*/ // TODO might add this in later
 
+    /**
+     * The view for users to see their convention message options.
+     * @param controller MessageController for handling user input
+     */
     public MessageView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (MessageController) controller;
-        presenter = (MessageMenu)controller.getPresenter();
+        presenter = (MessageMenu) controller.getPresenter();
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
@@ -48,10 +51,6 @@ public class MessageView extends AccountView {
         sendMsg.setToolTipText("send the entered message to entered user(s)");
         chooseChat = newButton("choose chat");
         chooseChat.setToolTipText("choose a chat to view");
-
-        /*scrollPane = new JScrollPane(messageField);
-        contentPane.add(messageField, BorderLayout.CENTER);
-        scrollPane.setVisible(false);*/
     }
 
     private void showCheckInbox() {

@@ -10,7 +10,6 @@ package View.Central;
 import Presenter.Central.ConventionPlanningSystem;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.PersonController;
-import View.Central.*;
 import View.Account.Account;
 
 import javax.swing.*;
@@ -27,10 +26,18 @@ public class MainMenuView implements ActionListener {
     ConventionPlanningSystem cps;
     Account currAccount;
 
+    /**
+     * The view that displays information for the user to choose how to login, and calls the Account view if login is
+     * successful
+     */
     public MainMenuView() {
         cps = new ConventionPlanningSystem();
     }
 
+    /**
+     * Updates cps to a new controller with an updated Submenu
+     * @param menu an menu with updated entity managers
+     */
     public void update(SubMenu menu) {
         cps = new ConventionPlanningSystem(menu);
     }
@@ -81,7 +88,7 @@ public class MainMenuView implements ActionListener {
 
 
     /**
-     * Sets up the page
+     * Sets up the frame, initializes panel components
      */
     public void run () {
         frame = new JFrame();// Create and set up the frame
@@ -154,6 +161,7 @@ public class MainMenuView implements ActionListener {
 
         String accountChoice = (String)dropDownMenu.getSelectedItem();
 
+        assert accountChoice != null;
         PersonController controller = cps.getController(accountChoice);
         frame.setVisible(false);
         controller = login(controller);

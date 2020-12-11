@@ -5,7 +5,6 @@ import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgEventMenu;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class OrgEventView extends AccountView {
@@ -19,10 +18,14 @@ public class OrgEventView extends AccountView {
     JButton createRoomButton;
     JTextField inputField1, inputField2, messageField;
 
+    /**
+     * The view for organizer users to see their convention event options.
+     * @param controller OrgEventController for handling user input
+     */
     public OrgEventView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (OrgEventController) controller;
-        this.presenter = ((OrgEventController) controller).getPresenter();
+        this.presenter = (OrgEventMenu) controller.getPresenter();
 
         menuOp = this.presenter.getMenuOptions();
 
