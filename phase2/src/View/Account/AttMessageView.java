@@ -4,6 +4,7 @@ import Presenter.AttendeeController.AttMessageController;
 import Presenter.AttendeeController.AttMessageMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.InvalidFormatException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,8 +16,9 @@ public class AttMessageView extends MessageView {
     AttMessageController controller;
     AttMessageMenu presenter;
     AttMessageMenu announcementPresenter;
-    JButton createChatButton;
-    JLabel dialogPrompt;
+    JButton createChatButton, createGroupChatButton;
+    JLabel dialogPrompt, dialogPrompt2;
+    JTextField inputField2;
 
     public AttMessageView(SubMenu controller) {
         super(controller);
@@ -29,7 +31,11 @@ public class AttMessageView extends MessageView {
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
 
-        createChatButton = newButton("create chat");
+        dialogPrompt2 = new JLabel("");
+        initializeObject(dialogPrompt2);
+
+        createChatButton = newButton("Create chat");
+        createGroupChatButton = newButton("Create group chat");
         createChatButton.setToolTipText("create chat between you and entered user(s)");
     }
 
@@ -81,33 +87,52 @@ public class AttMessageView extends MessageView {
         new JTextField(100);
         inputField.setVisible(true);
 
-        createChatButton.setText("create group chat");
-        createChatButton.setActionCommand("create group chat");
-        createChatButton.setVisible(true);
+        dialogPrompt2.setText("Print the name of the group chat");
+        dialogPrompt2.setVisible(true);
+
+        new JTextField(100);
+        inputField2.setVisible(true);
+
+        createGroupChatButton.setVisible(true);
         backButton.setVisible(true);
     }
 
     private void createChat() {
         String participantID = inputField.getText();
 
+        JOptionPane.showConfirmDialog(null, controller.createChat(participantID),
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+        //try catch block here
+
         /*
         try {
-            label = new JLabel(this.controller.createChat(participantID));
+            if(controller.createChat(participantID).equals(presenter.printChatExists())) {
 
-        } catch(InvalidChoiceException e) {
-
-
+            }
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printChatNotCreated(e));
+            //presenter.printChatNotCreated(new InvalidChoiceException("user"));
+        } catch (InvalidFormatException f) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(f));
+            //presenter.printChatNotCreated(new
+            //        InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
         }
 
          */
 
-        JOptionPane.showConfirmDialog(null, "Chat Creation Successful",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    private void createGroupChat(){
+    private void createGroupChat(){ //TODO: convert participantIDs into an array of Strings
         String participantIDs = inputField.getText();
+        String groupName = inputField2.getText();
+
+        /*
+        JOptionPane.showConfirmDialog(null, controller.createGroupChat(participantIDs, groupName),
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+         */
     }
 
 
@@ -140,12 +165,12 @@ public class AttMessageView extends MessageView {
             showMainDropDownMenu();
         }
 
-        if (eventName.equals("create chat")) {
+        if (eventName.equals(createChatButton.getActionCommand())) {
             createChat();
             showMainDropDownMenu();
         }
 
-        if(eventName.equals("create group chat")) {
+        if(eventName.equals(createGroupChatButton.getActionCommand())) {
             createGroupChat();
             showMainDropDownMenu();
         }
