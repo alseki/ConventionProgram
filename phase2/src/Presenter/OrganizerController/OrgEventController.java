@@ -54,7 +54,6 @@ public class OrgEventController extends SubMenu {
         return this.roomManager.addRoom(name, capacity) != null;
     }
 
-
     // Methods for adding/cancelling Events in EventManager
 
     /**
@@ -98,17 +97,15 @@ public class OrgEventController extends SubMenu {
      */
     public boolean createEvent(String name, String speakerUsername, String startTime, String endTime, String
             description, int capacity, EventType type, String room) throws InvalidChoiceException {
-
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         String roomID = roomManager.getRoomID(room);
-
-        if (roomID == null) { // If the user inputs an incorrect room
+        if (roomID == null) {
             throw new InvalidChoiceException("room");
         }
-        if (speakerID.equals("") || speakerID == null) { // If the user inputs an incorrect speaker
+        if (speakerID.equals("") || speakerID == null) {
             throw new InvalidChoiceException("speaker");
         }
-        if (eventManager.contains(name)) { // If the user inputs an event name that already exists in the system
+        if (eventManager.contains(name)) {
             throw new OverwritingException("event");
         }
         LocalDateTime start = getFormattedTime(startTime);
@@ -163,12 +160,57 @@ public class OrgEventController extends SubMenu {
     }
 
     /**
+     * Cancels an Event in this Convention. Attendees are notified, then the Event is removed from Speaker's list of
+     * Events, and finally Speaker is notified in message from Organizer.
+     * @param eventName The ID of the Event to be cancelled
+     * @return true if Event was cancelled successfully
+     */
+    public boolean cancelEvent(String eventName) {
+        String eventID = eventManager.getEventID(eventName);
+        String chatName = eventManager.getEventChat(eventID);
+        String speakerID = eventManager.getSpeakerID(eventID);
+        LocalDateTime now = LocalDateTime.now();
+        int dayHour = now.getHour();
+        int dayMinute = now.getMinute();
+        LocalDateTime startTime = eventManager.getStartTime(eventID);
+        int eventHour = startTime.getHour();
+        int eventMinute = startTime.getMinute();
+        if (eventHour < dayHour && eventMinute < dayMinute) {
+            eventManager.removeEvent(eventID);
+            String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be " +
+                    "made shortly.";
+            this.eventMessage(eventName, chatName, messageContent);
+            String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been "
+                    + "notified. I will call you very soon.";
+            String organizerID = this.currentUserID;
+            ArrayList<String> contacts = personManager.getContactList(organizerID);
+            String eventType = convertEventTypeToString(eventManager.getEventType(eventID));
+            if (eventType != "PARTY"){
+                speakerManager.deleteEvent(eventID);
+            }
+            if (chatManager.existChat(organizerID, speakerID)) {
+                String existingChatID = chatManager.findChat(organizerID, speakerID);
+                messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
+
+            } else {
+                String newChatID = chatManager.createChat(organizerID, speakerID);
+                personManager.addChat(organizerID, newChatID);
+                messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // Methods for modifying existing Events
+
+    /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
      * @param speakerUsername   The username of the Speaker
      * @param eventID     The ID of the Panel
      * @return true iff the Speaker was signed up
      */
-    public boolean addSpeakerToPanel(String speakerUsername, String eventID) throws InvalidChoiceException, NotPanelException,
+    public void addSpeakerToPanel(String speakerUsername, String eventID) throws InvalidChoiceException, NotPanelException,
             CapacityException {
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
@@ -177,7 +219,9 @@ public class OrgEventController extends SubMenu {
         } else if (!(event.getClass().equals(Panel.class))) {
             throw new NotPanelException();
         } else {
-            return eventPermissions.signSpeakerUpForPanel(speakerID, eventID);
+            eventPermissions.signSpeakerUpForPanel(speakerID, eventID);
+            speakerManager.addPanel(speakerID, eventID);
+
         }
     }
 
@@ -187,94 +231,25 @@ public class OrgEventController extends SubMenu {
      * @param eventID     The ID of the Panel
      * @return true iff the Speaker was signed up
      */
-    public boolean removeSpeakerFromPanel(String speakerUsername, String eventID) throws InvalidChoiceException,
-            NotPanelException, CapacityException {
+    public void removeSpeakerFromPanel(String speakerUsername, String eventID) throws InvalidChoiceException,
+            NotPanelException {
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
+        Panel panel = (Panel) event;
         if (event == null) {
             throw new InvalidChoiceException("event");
         } else if (!(event.getClass().equals(Panel.class))) {
             throw new NotPanelException();
         } else {
-            return eventPermissions.removeSpeakerFromPanel(speakerID, eventID);
-        }
-    }
-
-
-
-
-
-
-    /**
-     * Cancels an Event in this Convention. Attendees are notified, then the Event is removed from Speaker's list of
-     * Events, and finally Speaker is notified in message from Organizer.
-     * @param eventName The ID of the Event to be cancelled
-     * @return true if Event was cancelled successfully
-     */
-
-    public boolean cancelEvent(String eventName) {
-
-        // TODO comment all sections of this function so it is legible.
-        // TODO add try catch blocks
-
-        // eventname, chatName, and speaker will be need below
-        String eventID = eventManager.getEventID(eventName);
-        String chatName = eventManager.getEventChat(eventID);
-        String speakerID = eventManager.getSpeakerID(eventID);
-
-        // getting the current time of day
-        LocalDateTime now = LocalDateTime.now();
-        int dayHour = now.getHour();
-        int dayMinute = now.getMinute();
-
-        // this is to get the start time of event
-        LocalDateTime startTime = eventManager.getStartTime(eventID);
-        int eventHour = startTime.getHour();
-        int eventMinute = startTime.getMinute();
-
-        // comparing start time of event to time of day (effectively permitting cancellation 1 minute before event starts: oh well!!)
-        if (eventHour < dayHour && eventMinute < dayMinute) {
-
-            // event will be removed if the time of day before time of event
-            eventManager.removeEvent(eventID);
-
-            // This message is pretty crucial for the purpose of the app. Attendees must be notified. And the message has to be sent in this method.
-            String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be made shortly.";
-            eventMessage(eventName, chatName, messageContent);
-
-            // This message is to Speaker (who is not in the chatID group linked with Event's creation. I asked Karyn and Ran about this.
-            // Speaker won't get the message through event's particular chatID like attendees would.
-            String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been notified. I will call you very soon.";
-
-            // So what is going on here is that Organizer has to message Speaker directly.
-
-            // This line, I think is unnecessary.
-            String organizerID = this.currentUserID;
-
-            // Oh, and what is below would not apply to PARTY, so there will have to be a check Event type, contradicting
-            // what I said below line 263 uugghh. (I wrote that first)
-
-            // So Organizer might already have a 1-1 chat with the speaker, if that is the case .. send message away
-            ArrayList<String> contacts = personManager.getContactList(organizerID);
-            if (chatManager.existChat(organizerID, speakerID)) {
-                String existingChatID = chatManager.findChat(organizerID, speakerID);
-                messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
-
-                // if such is not the case, Organizer has to "create" chat with the said speaker and send message
-            } else {
-                String newChatID = chatManager.createChat(organizerID, speakerID);
-                personManager.addChat(organizerID, newChatID);
-                messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
+            eventPermissions.removeSpeakerFromPanel(speakerID, eventID);
+            if (panel.numberPanelists(eventID) == 1) {
+                speakerManager.deleteEvent(eventID);
+                this.cancelEvent(eventID);
             }
-
-            // This is where event will be removed from speaker's Event list (I might add remove from already existing specific
-            // panel or non-panel lists, but uuggghhh, then that requires event type checks right here and .... ??
-            speakerManager.deleteEvent(eventID);
-
-            // I believe this should be a boolean function.
-            return true;
+            else {
+                speakerManager.deleteEventFromSpeaker(speakerID, eventID);
+            }
         }
-        return false;
     }
 
     /**
@@ -293,7 +268,7 @@ public class OrgEventController extends SubMenu {
         }
     }
 
-    // Methods for Messages and MessageManager
+    // Helper methods for Messages and MessageManager functionality of the methods above
 
     /**
      * This is a helper method for the methods above; updates SpeakerController's chat list
@@ -312,7 +287,6 @@ public class OrgEventController extends SubMenu {
     private void updateSpeakerChatWithAnnouncement (String personID, String announcementChatID){
         this.speakerManager.addAnnouncementChats(personID, announcementChatID);
     }
-
 
     /**
      * Adds a Message with content the AnnouncementChat contained within the Event with eventName*
