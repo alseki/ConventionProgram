@@ -4,6 +4,7 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.SpeakerController.SpeEventController;
 import Presenter.SpeakerController.SpeEventMenu;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +49,7 @@ public class SpeEventView extends AccountView {
         try {
             new ListDisplayView(presenter.getOwnEventsTitle(), controller.getEvents());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
         } finally {
             showMainDropDownMenu();
         }
