@@ -87,7 +87,7 @@ public class OrgEventController extends SubMenu {
     /**
      * Creates a new Event in this convention
      * @param name        The name of the Event to be created
-     * @param speakerID   The ID of the Speaker at this Event,
+     * @param speakerUsername   The username of the Speaker at this Event,
      * @param startTime   The start time of the Event to be created, as a LocalDateTime object
      * @param endTime     The end time of the Event to be created, as a LocalDateTime object
      * @param description The description for the Event to be created
@@ -96,13 +96,16 @@ public class OrgEventController extends SubMenu {
      * @param room        The name of the Room the Event is in
      * @return true iff the Talk was created successfully
      */
-    public boolean createEvent(String name, String speakerID, String startTime, String endTime, String
+    public boolean createEvent(String name, String speakerUsername, String startTime, String endTime, String
             description, int capacity, EventType type, String room) throws InvalidChoiceException {
+
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         String roomID = roomManager.getRoomID(room);
+
         if (roomID == null) { // If the user inputs an incorrect room
             throw new InvalidChoiceException("room");
         }
-        if (speakerID == "" || speakerID == null) { // If the user inputs an incorrect speaker
+        if (speakerID.equals("") || speakerID == null) { // If the user inputs an incorrect speaker
             throw new InvalidChoiceException("speaker");
         }
         if (eventManager.contains(name)) { // If the user inputs an event name that already exists in the system
@@ -161,12 +164,13 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
-     * @param speakerID   The ID of the Speaker
+     * @param speakerUsername   The username of the Speaker
      * @param eventID     The ID of the Panel
      * @return true iff the Speaker was signed up
      */
-    public boolean addSpeakerToPanel(String speakerID, String eventID) throws InvalidChoiceException, NotPanelException,
+    public boolean addSpeakerToPanel(String speakerUsername, String eventID) throws InvalidChoiceException, NotPanelException,
             CapacityException {
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         if (event == null) {
             throw new InvalidChoiceException("event");
@@ -179,12 +183,13 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
-     * @param speakerID   The ID of the Speaker
+     * @param speakerUsername   The username of the Speaker
      * @param eventID     The ID of the Panel
      * @return true iff the Speaker was signed up
      */
-    public boolean removeSpeakerFromPanel(String speakerID, String eventID) throws InvalidChoiceException,
+    public boolean removeSpeakerFromPanel(String speakerUsername, String eventID) throws InvalidChoiceException,
             NotPanelException, CapacityException {
+        String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         if (event == null) {
             throw new InvalidChoiceException("event");
@@ -203,17 +208,17 @@ public class OrgEventController extends SubMenu {
     /**
      * Cancels an Event in this Convention. Attendees are notified, then the Event is removed from Speaker's list of
      * Events, and finally Speaker is notified in message from Organizer.
-     * @param eventID The ID of the Event to be cancelled
+     * @param eventName The ID of the Event to be cancelled
      * @return true if Event was cancelled successfully
      */
 
-    private boolean cancelEvent(String eventID) {
+    private boolean cancelEvent(String eventName) {
 
         // TODO comment all sections of this function so it is legible.
         // TODO add try catch blocks
 
         // eventname, chatName, and speaker will be need below
-        String eventName = eventManager.getEventName(eventID);
+        String eventID = eventManager.getEventID(eventName);
         String chatName = eventManager.getEventChat(eventID);
         String speakerID = eventManager.getSpeakerID(eventID);
 
@@ -274,18 +279,19 @@ public class OrgEventController extends SubMenu {
 
     /**
      * Changes the capacity of an existing Event
-     * @param eventID The ID of the Event for which the capacity needs to be changed
+     * @param eventName The name of the Event for which the capacity needs to be changed
      * @param capacity The new capacity of the Event
      * @return true iff the capacity was changed
      */
-    public boolean changeCapacity(String eventID, int capacity) throws InvalidChoiceException {
-            if (eventManager.getEvent(eventID) != null) {
-                eventManager.setCapacity(eventID, capacity);
-                return true;
-            } else {
-                throw new InvalidChoiceException("event");
-            }
+    public boolean changeCapacity(String eventName, int capacity) throws InvalidChoiceException {
+        String eventID = eventManager.getEventID(eventName);
+        if (eventManager.getEvent(eventID) != null) {
+            eventManager.setCapacity(eventID, capacity);
+            return true;
+        } else {
+            throw new InvalidChoiceException("event");
         }
+    }
 
     // Methods for Messages and MessageManager
 
