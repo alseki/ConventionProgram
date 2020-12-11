@@ -27,7 +27,7 @@ public class EmpEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"View conference events list", "View list of rooms",};
+        String[] options = {"View convention events list", "View list of rooms",};
         return options;
     }
 

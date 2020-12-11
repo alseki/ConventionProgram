@@ -98,7 +98,7 @@ public class OrganizerController extends PersonController {
     @Override
     public String[] getMenuOptions() {
         String[] orgOptions  = {"View your event information", "View attendees' requests", "Create and delete user accounts",
-                "View & edit conference event list"};
+                "View & edit convention event list"};
         String[] options = new String[6];
         System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
         System.arraycopy(orgOptions, 0, options, 2, 4);

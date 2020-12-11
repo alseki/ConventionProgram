@@ -21,9 +21,10 @@ public class ListDisplayView implements ActionListener {
     public ListDisplayView(String title, String[] options) {
         frame = new JFrame(title); // Create and set up the frame
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setBorder(BorderFactory.createEmptyBorder(300, 300, 300, 300));//Sets size of frame
+        contentPane.setPreferredSize(new Dimension(400,660));
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
-        contentPane.setLayout(new FlowLayout());
+        contentPane.setLayout(null);
+        //contentPane.setLayout(new FlowLayout());
 
         StringBuilder list = new StringBuilder();
         for (String option: options) {
@@ -39,7 +40,7 @@ public class ListDisplayView implements ActionListener {
         printedList.setVisible(true);
 
         returnButton = new JButton("return");
-        returnButton.setLocation(0, 0);
+        returnButton.setBounds(10, 600, 80, 30);
         returnButton.setActionCommand("close");
         returnButton.addActionListener(this);
         returnButton.setToolTipText("click this button to return to previous screen");

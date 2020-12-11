@@ -75,7 +75,7 @@ public class MessageView extends AccountView {
 
     private void showViewChats() {
         try {
-            msgList = new ListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
+            msgList = new ChatListDisplayView(presenter.getChatListTitle(), presenter.getChatList());
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());

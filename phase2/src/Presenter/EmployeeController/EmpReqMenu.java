@@ -25,7 +25,7 @@ public class EmpReqMenu extends RequestMenuParent {
      */
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"Return to Main Menu", "View the Request Board", "View specific request",
+        return new String[]{"View the Request Board", "View specific request",
                 "See if a request is being looked after", "Make a request", "See my requests"};
     }
 

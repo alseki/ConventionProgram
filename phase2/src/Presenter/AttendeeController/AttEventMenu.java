@@ -30,7 +30,7 @@ public class AttEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"View conference events list", "Sign up for an event",
+        return new String[]{"View convention events list", "Sign up for an event",
                 "Cancel your spot in an event", "View events you've signed up for"};
     }
 
@@ -38,7 +38,7 @@ public class AttEventMenu extends EventMenu {
 
     public String printRoomChoicePrompt() {
         return "\n Which room's schedule do you want to see? \n (Press 0 for options, or press 1 to see " +
-                "all events in the conference.)";
+                "all events in the convention.)";
     }
 
     /**

@@ -22,21 +22,21 @@ abstract class RoomAccess {
 public class RoomManager extends RoomAccess implements Serializable {
 
     /** A mapping of Room IDs to the lists of IDs for Events taking place in those Rooms. */
-    private Map<String, ArrayList<String>> roomEventList;
+    private final Map<String, ArrayList<String>> roomEventList;
 
     /** A mapping of Room IDs to their respective Room objects. */
-    private Map<String, Room> roomList;
+    private final Map<String, Room> roomList;
 
     /** A mapping of Room names to their respective IDs. */
-    private Map<String, String> roomsByName;
+    private final Map<String, String> roomsByName;
 
     /**
      * Constructor for RoomManager objects
      */
     public RoomManager() {
-        roomEventList = new TreeMap<String, ArrayList<String>>();
-        roomList = new TreeMap<String, Room>();
-        roomsByName = new TreeMap<String, String>();
+        roomEventList = new TreeMap<>();
+        roomList = new TreeMap<>();
+        roomsByName = new TreeMap<>();
     }
 
     /**
@@ -142,7 +142,7 @@ public class RoomManager extends RoomAccess implements Serializable {
         Room thisRoom = new Room(name, capacity);
         this.roomList.put(thisRoom.getID(), thisRoom);
         this.roomsByName.put(thisRoom.getName(), thisRoom.getID());
-        this.roomEventList.put(thisRoom.getID(), new ArrayList<String>());
+        this.roomEventList.put(thisRoom.getID(), new ArrayList<>());
         return thisRoom.getID();
     }
 
