@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 public class MessageView extends AccountView {
     MessageController controller;
     MessageMenu presenter;
-    JLabel dialogPrompt;
+    JLabel dialogPrompt, dialogPrompt2;
     JButton sendMsg, chooseChat;
     ListDisplayView msgList;
     JTextField inputField;
@@ -31,8 +31,12 @@ public class MessageView extends AccountView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
+
         inputField = new JTextField(20);
         initializeObject(inputField);
+
+        dialogPrompt2 = new JLabel("");
+        initializeObject(dialogPrompt2);
 
         messageField = new JTextArea(5, 20);
         messageField.setPreferredSize(new Dimension(20, 20));
@@ -40,7 +44,7 @@ public class MessageView extends AccountView {
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
 
-        sendMsg = newButton("send message");
+        sendMsg = newButton("Send message");
         sendMsg.setToolTipText("send the entered message to entered user(s)");
         chooseChat = newButton("choose chat");
         chooseChat.setToolTipText("choose a chat to view");
@@ -104,23 +108,27 @@ public class MessageView extends AccountView {
     }
 
     private void showSendMsg() {
-        dialogPrompt.setText(presenter.printContentPrompt());
+        dialogPrompt.setText(presenter.printChatIdMessagePrompt());
         dialogPrompt.setVisible(true);
 
         inputField.setVisible(true);
+
+        dialogPrompt2.setText(presenter.printContentPrompt());
+        dialogPrompt2.setVisible(true);
+
         messageField.setVisible(true);
 
         sendMsg.setVisible(true);
         backButton.setVisible(true);
     }
 
-    //TODO: send msg method is in MessageController.
+    //FIXME: this method won't work until MessageController's send Message method is fixed
     private void sendMsg() {
-        String subject = inputField.getText();
+        String chatID = inputField.getText();
         String msg = messageField.getText();
 
         try {
-            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(subject, msg),
+            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatID, msg),
                     "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidChoiceException e){
             exceptionDialogBox(presenter.exceptionTitle(), "Wrongg");
@@ -156,12 +164,12 @@ public class MessageView extends AccountView {
             showSendMsg();
         }
 
-        if (eventName.equals("choose chat")) {
+        if (eventName.equals(chooseChat.getActionCommand())) {
             showViewMsgsInChat();
             showMainDropDownMenu();
         }
 
-        if (eventName.equals("send msg")) {
+        if (eventName.equals(sendMsg.getActionCommand())) {
             sendMsg();
             showMainDropDownMenu();
         }
