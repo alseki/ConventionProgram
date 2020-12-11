@@ -25,8 +25,8 @@ public class MessageController extends SubMenu {
     /**
      * Sends a new Message
      */
-    public String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
-        sendMessage(ID, content);
+    public String sendMessageChoice(String chatName, String content) throws InvalidChoiceException {
+        this.sendMessage(chatName, content);
         return presenter.messageSent();
     }
 
@@ -177,6 +177,11 @@ public class MessageController extends SubMenu {
         ArrayList<String> personIds = new ArrayList<>();
         for (String user: usernames){personIds.add(personManager.getCurrentUserID(user));}
         return chatManager.searchChatsContaining(personIds);}
+
+
+    public boolean takenChatName(String chatName){
+        personManager.getChats(currentUserID);
+    }
     /*
     protected void addPersonToChats(String chatname, ArrayList<String> usernames){
 

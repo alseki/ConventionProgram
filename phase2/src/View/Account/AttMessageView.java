@@ -139,7 +139,7 @@ public class AttMessageView extends MessageView {
     }
 
 
-    private void createGroupChat(){ //TODO: -- DONE: convert participantIDs into an array of Strings
+    private void createGroupChat(){ //DONE: convert participantIDs into an array of Strings
         String commaSeparated = inputField.getText();
         ArrayList<String> participantUsernames = new ArrayList<>(Arrays.asList(commaSeparated.split(",")));
         String groupName = inputField2.getText();

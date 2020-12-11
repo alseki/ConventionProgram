@@ -174,8 +174,8 @@ public class MessageMenu implements SubMenuPrinter {
     //TODO: Ran: want to move this feature as an option after the User viewing the chatList.
     //TODO: make it as a button/textField in Option 3.
 
-    public String getChatTitle(String chatID) {
-
+    public String getChatTitle(String chatName) {
+        String chatID = chatManager.findChatByName(chatName);
         StringBuilder participants = new StringBuilder();
         ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
         participants.append(personManager.getCurrentUsername(personIDs.get(0)));
@@ -198,7 +198,8 @@ public class MessageMenu implements SubMenuPrinter {
      * Show the messages in one chat by chatID.
      * For Phase 1 we also use this to view Announcements in AnnouncementChat.
      */
-    public String[] getChat(String chatID) throws InvalidChoiceException {
+    public String[] getChat(String chatName) throws InvalidChoiceException {
+        String chatID = chatManager.findChatByName(chatName);
         if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
@@ -211,7 +212,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter chatName of the chat want to send message in.
      */
-    public String printChatIdMessagePrompt(){
+    public String printChatNameMessagePrompt(){
         return "Which chat do you want to send message to? Enter the chatName.";
     }
 

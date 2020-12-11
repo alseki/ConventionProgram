@@ -95,9 +95,9 @@ public class MessageView extends AccountView {
     }
 
     private void showViewMsgsInChat() {
-        String chatID = inputField.getText(); //FIXME: now we can use Chat.name
+        String chatName = inputField.getText();
         try {
-            msgList = new ListDisplayView(presenter.getChatTitle(chatID), presenter.getChat(chatID));
+            msgList = new ListDisplayView(presenter.getChatTitle(chatName), presenter.getChat(chatName));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.printException(e));
@@ -105,7 +105,7 @@ public class MessageView extends AccountView {
     }
 
     private void showSendMsg() {
-        dialogPrompt.setText(presenter.printChatIdMessagePrompt());
+        dialogPrompt.setText(presenter.printChatNameMessagePrompt());
         dialogPrompt.setVisible(true);
 
         inputField.setVisible(true);
@@ -121,11 +121,11 @@ public class MessageView extends AccountView {
 
     //FIXME: this method won't work until MessageController's send Message method is fixed
     private void sendMsg() {
-        String chatID = inputField.getText();
+        String chatName = inputField.getText();
         String msg = messageField.getText();
 
         try {
-            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatID, msg),
+            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatName, msg),
                     "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidChoiceException e){
             exceptionDialogBox(presenter.printException(e));
