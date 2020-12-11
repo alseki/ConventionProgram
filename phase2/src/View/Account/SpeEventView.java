@@ -12,10 +12,11 @@ import java.awt.event.ActionEvent;
 public class SpeEventView extends AccountView {
     SpeEventController controller;
     SpeEventMenu presenter;
-    private JLabel dialog = new JLabel("");
-    private JTextField inputField = new JTextField(20);
+    private final JLabel dialog = new JLabel("");
+    private final JTextField inputField = new JTextField(20);
+    private JButton selectButton = newButton("select");
     JComboBox<String> eventOptions;
-    private String[] menuOp;
+    private final String[] menuOp;
 
     /**
      * The view for speaker users to see their convention event options.
@@ -29,14 +30,16 @@ public class SpeEventView extends AccountView {
         contentPane.setBackground(new Color(255, 10, 190));
         menuOp = presenter.getMenuOptions();
 
+        initializeObject(dialog);
         eventOptions = new JComboBox<>(presenter.getEventOptions());
-
-
-
+        initializeObject(eventOptions);
 
     }
 
-    private void setupMakeAnnouncement() {
+    private void showMakeAnnouncement() {
+        dialog.setText(presenter.printEventNamePrompt());
+        dialog.setVisible(true);
+        eventOptions.setVisible(true);
 
     }
 
@@ -61,15 +64,14 @@ public class SpeEventView extends AccountView {
         if (eventName.equals(menuOp[0])) { // View convention Event list
             hideMainDropDownMenu();
             showConventionEvents();
-
         }
         if (eventName.equals(menuOp[1])) { // View user events
             hideMainDropDownMenu();
             showEventsSpeakingAt();
         }
         if (eventName.equals(menuOp[2])) { // Make announcement
-
-
+            hideMainDropDownMenu();
+            showMakeAnnouncement();
         }
 
 

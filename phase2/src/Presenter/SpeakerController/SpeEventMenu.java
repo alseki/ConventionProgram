@@ -38,7 +38,7 @@ public class SpeEventMenu extends EventMenu {
      * Prompts user to enter eventName of the event want to send message to.
      */
     public String printEventNamePrompt() {
-        return "Enter the NAME of the Event you want to send message to.";
+        return "What would you like to make an announcement for?";
     }
 
     /**
