@@ -24,7 +24,13 @@ public class ListDisplayView implements ActionListener {
         contentPane.setPreferredSize(new Dimension(400,660));
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
         //contentPane.setLayout(null);
-        //contentPane.setLayout(new FlowLayout());
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = GridBagConstraints.REMAINDER;
+        c.gridx = 0;
+        c.gridy = 0;
+        contentPane.setLayout(layout);
 
         StringBuilder list = new StringBuilder();
         for (String option: options) {
@@ -33,31 +39,26 @@ public class ListDisplayView implements ActionListener {
             list.append("<br><br>");
         }
 
-        /*printedList = new JLabel("<html>" + list.toString() + "<html/>");
-        printedList.setBounds(10, 10, 300, 300);
-        contentPane.add(printedList);
-        printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        printedList.setVisible(true);*/
-
-        JEditorPane editorPane = new JEditorPane();
+        JEditorPane editorPane = new JEditorPane("text/html", "<html>" + list.toString() + "<html/>");
         editorPane.setEditable(false);
-        editorPane.setText("Hello World!");
         JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        editorScrollPane.setPreferredSize(new Dimension(250, 145));
-        editorScrollPane.setMinimumSize(new Dimension(10, 10));
+        editorScrollPane.setPreferredSize(new Dimension(400, 600));
+        editorScrollPane.setMinimumSize(new Dimension(300, 100));
         editorScrollPane.setBackground(null);
         editorScrollPane.setBorder(null);
+        layout.addLayoutComponent(editorScrollPane, c);
         contentPane.add(editorScrollPane);
 
 
+        c.gridy = GridBagConstraints.BELOW_BASELINE + 1;
         returnButton = new JButton("return");
         returnButton.setBounds(10, 600, 80, 30);
         returnButton.setActionCommand("close");
         returnButton.addActionListener(this);
         returnButton.setToolTipText("click this button to return to previous screen");
+        layout.addLayoutComponent(returnButton, c);
         contentPane.add(returnButton);
 
         frame.setContentPane(contentPane);// Add content pane to frame

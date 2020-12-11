@@ -76,7 +76,7 @@ public class OrgEventController extends SubMenu {
      * @param type type of the new Event (as a String)
      * @return The type of the new Event (as an EventType object)
      */
-    private EventType getEventType(String type) throws InvalidChoiceException {
+    public EventType getEventType(String type) throws InvalidChoiceException {
         try {
             return EventType.valueOf(type);
         } catch (IllegalArgumentException e) {
@@ -329,10 +329,10 @@ public class OrgEventController extends SubMenu {
 
     @Override
     public OrgEventMenu getPresenter() {
-            return this.presenter;
-        }
-
+        return this.presenter;
     }
+
+}
 
 
 
