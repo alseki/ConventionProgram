@@ -216,18 +216,18 @@ public class ChatManager implements Serializable {
     }
 
     /**
-     * Return collection of all Chats where the inputted person ID is part of the member.
+     * Return collection of chatNames of all Chats where the inputted person ID is part of the member.
      * @param personIds the IDs of the persons
-     * @return ArrayList of Chats containing the inputted person ID
+     * @return ArrayList of chatNames of all Chats containing the inputted person ID
      */
-    public ArrayList <Chat> searchChatsContaining(ArrayList <String> personIds){
-        ArrayList <Chat> chats = new ArrayList<>();
+    public ArrayList <String> searchChatsContaining(ArrayList <String> personIds){
+        ArrayList <String> chats = new ArrayList<>();
         for (Chat c: chatsList){
             int num = 0;
             for (String personId: personIds){
                 if (c.getPersonIds().contains(personId)){
                     num = num + 1; }
-            }if (num == personIds.size()){chats.add(c);}
+            }if (num == personIds.size()){chats.add(c.getName());}
         }
         return chats;
     }
@@ -355,6 +355,20 @@ public class ChatManager implements Serializable {
             }
         }
         return null;
+    }
+
+    public String findChat(ArrayList<String> userIds){
+        ArrayList<String> users = new ArrayList<>(userIds);
+        Collections.sort(users);
+        for (Chat c : chatsList) {
+            ArrayList<String> members = c.getPersonIds();
+            Collections.sort(members);
+            if (members.equals(users)) {
+                return c.getId();
+            }
+        }
+        return null;
+
     }
 
     /**
