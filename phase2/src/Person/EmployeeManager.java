@@ -135,7 +135,7 @@ public class EmployeeManager extends PersonManager {
         return nameUsernamePassword;
     }
 
-    public ArrayList getRequestsIDs(String userID){
+    public ArrayList<String> getRequestsIDs(String userID){
         return requestIds;
     }
 

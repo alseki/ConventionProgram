@@ -7,6 +7,7 @@ import Presenter.Central.SubMenu;
 import Presenter.EmployeeController.EmpEventController;
 import Presenter.EmployeeController.EmpReqController;
 import Presenter.OrganizerController.OrgEventController;
+import Presenter.OrganizerController.OrgPersonController;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
@@ -35,11 +36,10 @@ public class AccountViewFactory {
         else if (controller instanceof OrgEventController) {
             new OrgEventView(controller);
         }
-
-        // TODO OrgPersonView
-//        else if (controller instanceof OrgPersonController) {
-//            new OrgPersonView(controller);
-//        }
+        //TODO OrgPersonView
+        else if (controller instanceof OrgPersonController) {
+            new OrgPersonView(controller);
+        }
         else if (controller instanceof OrgReqController) {
             new OrgReqView(controller);
         }

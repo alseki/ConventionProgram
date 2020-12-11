@@ -23,7 +23,7 @@ public class ListDisplayView implements ActionListener {
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
         contentPane.setPreferredSize(new Dimension(400,660));
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
-        contentPane.setLayout(null);
+        //contentPane.setLayout(null);
         //contentPane.setLayout(new FlowLayout());
 
         StringBuilder list = new StringBuilder();
@@ -33,12 +33,25 @@ public class ListDisplayView implements ActionListener {
             list.append("<br><br>");
         }
 
-        printedList = new JLabel("<html>" + list.toString() + "<html/>");
+        /*printedList = new JLabel("<html>" + list.toString() + "<html/>");
         printedList.setBounds(10, 10, 300, 300);
         contentPane.add(printedList);
         printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        printedList.setVisible(true);
+        printedList.setVisible(true);*/
+
+        JEditorPane editorPane = new JEditorPane();
+        editorPane.setEditable(false);
+        editorPane.setText("Hello World!");
+        JScrollPane editorScrollPane = new JScrollPane(editorPane);
+        editorScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        editorScrollPane.setPreferredSize(new Dimension(250, 145));
+        editorScrollPane.setMinimumSize(new Dimension(10, 10));
+        editorScrollPane.setBackground(null);
+        editorScrollPane.setBorder(null);
+        contentPane.add(editorScrollPane);
+
 
         returnButton = new JButton("return");
         returnButton.setBounds(10, 600, 80, 30);
@@ -46,7 +59,6 @@ public class ListDisplayView implements ActionListener {
         returnButton.addActionListener(this);
         returnButton.setToolTipText("click this button to return to previous screen");
         contentPane.add(returnButton);
-        returnButton.setVisible(true);
 
         frame.setContentPane(contentPane);// Add content pane to frame
         frame.pack();// Size and then display the frame.

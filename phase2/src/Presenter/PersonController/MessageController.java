@@ -65,7 +65,7 @@ public class MessageController extends SubMenu {
      * Show the messages in a chat by chatName.
      */
     protected String[] seeMessages(String chatName) throws InvalidChoiceException {
-        return presenter.getChat(chatManager.findChatByName(chatName).getId());
+        return presenter.getChat(chatManager.findChatByName(chatName));
     }
 
     // Option 5
@@ -76,7 +76,7 @@ public class MessageController extends SubMenu {
      * @param messageContent The contents of the message the current user wants to send
      */
     protected void sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
-        String chatID = chatManager.findChatByName(chatName).getId();
+        String chatID = chatManager.findChatByName(chatName);
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
@@ -96,7 +96,7 @@ public class MessageController extends SubMenu {
      * mark messages in a chat as read after OPTION 4 -- VIEW MESSAGES IN CHAT --
      */
     protected void chatViewed (String chatName) {
-        for (String msgId : chatManager.findChatByName(chatName).getMessageIds()) {
+        for (String msgId : chatManager.getMessageIds(chatManager.findChatByName(chatName))) {
             messageManager.changeStatusRead(msgId);
         }
     }
@@ -112,8 +112,8 @@ public class MessageController extends SubMenu {
      * @param chatName name of the Chat the user wants to exit from
      */
     protected void deleteChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName).getId();
-        ArrayList<String> personIds = chatManager.getUnknownTypeChat(chatId).getPersonIds();
+        String chatId = chatManager.findChatByName(chatName);
+        ArrayList<String> personIds = chatManager.getPersonIds(chatId);
         if (personIds.size() <= 2){
             for(String personId: personIds) {
                 personManager.removeChat(personId, chatId);
@@ -141,7 +141,7 @@ public class MessageController extends SubMenu {
      */
 
     protected void archiveChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName).getId();
+        String chatId = chatManager.findChatByName(chatName);
         for (String cId : personManager.getChats(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.archiveChatByPersonId(currentUserID, chatId);
@@ -151,7 +151,7 @@ public class MessageController extends SubMenu {
     }
 
     protected void unArchiveChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName).getId();
+        String chatId = chatManager.findChatByName(chatName);
         for (String cId : personManager.getCurrentArchivedChatList(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.removeArchiveChatByPersonId(currentUserID, chatId);
@@ -178,7 +178,11 @@ public class MessageController extends SubMenu {
         for (String user: usernames){personIds.add(personManager.getCurrentUserID(user));}
         return chatManager.searchChatsContaining(personIds);}
 
+    protected void addPersonToChats(String chatname, ArrayList<String> usernames){
 
+        String chatId = chatManager.findChatByName(chatname);
+        for (String username: usernames){chatManager.addPersonIds(chatId, personManager.getCurrentUserID(username));}
+        for (String personId: chatManager.getPersonIds(chatId)){personManager.addChat(personId, chatId);}}
     @Override
     public MessageMenu getPresenter() {
         return this.presenter;
