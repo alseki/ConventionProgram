@@ -5,14 +5,11 @@ package Presenter.AttendeeController;
 // Date Created: 01/11/2020
 // Date Modified: 09/12/2020
 
-import Presenter.Central.SubMenuPrinter;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Central.SubMenu;
 import Event.CapacityException;
 import Event.EventPermissions;
 import Person.AttendeeManager;
-
-import java.util.Scanner;
 
 public class AttEventController extends SubMenu {
 
@@ -35,57 +32,6 @@ public class AttEventController extends SubMenu {
      */
     public String getCurrentUserID() {
         return currentUserID;
-    }
-
-    /**
-     * Takes user input and calls appropriate methods, until user wants to return to Main Menu
-     */
-    public void menuChoice() {
-        do {
-            switch(1) {
-                case 1:
-                    // TODO reformat see event list option
-                    /*try {
-                        String roomID = this.getRoomChoice();
-                        if (roomID.equals("1")) {
-                            presenter.printEventList();
-                        } else {
-                            presenter.printRoomEventList(roomManager.getEventIDs(roomID),
-                                    roomManager.getRoomName(roomID));
-                        }
-                    } catch (InvalidChoiceException e) {
-                        presenter.printException(e);
-                    }*/
-                    break;
-                case 4:
-                    // TODO figure out how to print AttendeeEventList
-                    //presenter.printAttendeeEventList();
-                    break;
-            }
-        }
-        while (true);
-
-    }
-
-    /**
-     * Takes user input to pick a Room for which that user wishes to view the Events held there
-     * @return the ID of the Room chosen
-     */
-   /* private String getRoomChoice() throws InvalidChoiceException {
-        presenter.printRoomChoicePrompt();
-        String room = "";//SubMenu.readInput(input);
-        if (room.equals("0")) {
-            presenter.printRoomList();
-            room = "";//SubMenu.readInput(input);
-        }
-        if (room.equals("1")) {
-            return "1";
-        }
-        if (roomManager.getRoomID(room) != null) {
-            return roomManager.getRoomID(room);
-        } else {
-            throw new InvalidChoiceException("room");
-        }
     }
 
     /**
@@ -117,6 +63,12 @@ public class AttEventController extends SubMenu {
         boolean eventRemovedFromPerson = attendeeManager.removeSpotFromEvents(currentUserID, event);
         attendeeManager.removeAnChat(currentUserID, eventManager.getEventChat(event));
         return personRemovedFromEvent && eventRemovedFromPerson;
+    }
+
+    public String[] getEventsSignedUpFor() throws InvalidChoiceException{
+        String [] eventIDs = {};
+        eventIDs = attendeeManager.getEventList(currentUserID).toArray(eventIDs);
+        return presenter.getEventList((eventIDs));
     }
 
     @Override

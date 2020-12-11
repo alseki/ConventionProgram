@@ -132,8 +132,8 @@ public class AttEventView extends AccountView {
      */
     private void viewOwnEvents() {
         try {
-            eventList = new ListDisplayView(presenter.ownEventListTitle(),
-                    presenter.getEventList(controller.getCurrentUserID()));
+            // TODO get rid of "eventlist ="
+            eventList = new ListDisplayView(presenter.ownEventListTitle(), controller.getEventsSignedUpFor());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
         } finally {

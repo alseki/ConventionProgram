@@ -9,9 +9,6 @@ import java.util.Map;
 
 public class AttendeeManager extends PersonManager{
 
-    // private List<Attendee> allAttendees;
-
-
     public AttendeeManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
     }
