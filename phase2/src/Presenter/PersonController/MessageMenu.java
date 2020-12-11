@@ -137,7 +137,7 @@ public class MessageMenu implements SubMenuPrinter {
      * @param chatIDs The list of IDs the chats to print out
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
      */
-    protected String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
+    public String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
@@ -147,10 +147,11 @@ public class MessageMenu implements SubMenuPrinter {
     }
 
     /**
-     * Returns a list of formatted chat summaries for this user's chat
+     * Returns a list of chatIds of the current User.
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     * @return a list of chatIds of the current User.
      */
-    public String[] getChatList() throws InvalidChoiceException {
+    public ArrayList<String> getChatList() throws InvalidChoiceException {
         ArrayList<String> unReadChatList = new ArrayList<>();
         ArrayList<String> chatList = new ArrayList<>();
         for (String chatId : personManager.getChats(currentUserID)) {
@@ -164,7 +165,7 @@ public class MessageMenu implements SubMenuPrinter {
             }
         }
         chatList.addAll(unReadChatList);
-        return getChats(chatList);
+        return chatList;
     }
 
 
@@ -233,7 +234,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter chatname of the Chat that they want to archive
      */
-    public void printArchiveChatPrompt(){System.out.println("Which chat do you want to archive? Enter the chatName.");}
+    public void printArchiveChatPrompt(){ System.out.println("Which chat do you want to archive? Enter the chatName.");}
 
     protected String chatArchived(){return "Chat archived!";}
 
@@ -251,8 +252,50 @@ public class MessageMenu implements SubMenuPrinter {
     // Option 102 -------------------- Archive Message --------------------
     // method in MessageController
 
+    public String printArchiveMessagePrompt(){return "Select the message that you would like to archive: ";}
+
+    public String printArchivedMessagePrompt(){return "Message archived!";}
+
     // Option 103 -------------------- Remove archived message ---------------------
     // method in MessageController
+
+    public String printUnarchiveMessagePrompt(){return "Select the archived message that you would like to restore: ";}
+
+    public String printUnarchivedMessagePrompt(){return "Archived message restored!";}
+
+    // Option 104 =--------------------delete Chat----------------------------------
+    // method in MessageController
+
+    public String printDeleteChatPrompt(){
+        return ("Which chat do you want to delete from your account? Enter the chatName.");}
+
+    public String printDeletedChat(){return "Chat is successfully deleted from your account.";}
+
+    // ----------------------------- searchChatByUsernames ---------------------------------
+
+    public String printSearchChatByUsernamesPrompt(){return "Enter the usernames of users in the Chat you are looking for." +
+            " Separate by commas, no space. (example: userA,userB,userC,userD";}
+
+    public String printSearchedChats(){return "Here are the results of Chats lookup by usernames: ";}
+
+    // ----------------------------- Mark Chat as READ ---------------------------------
+
+    public String printMarkChatRead(){return "Which chat do you want to mark as \"read\"? Enter the chatName.";}
+
+    public String printMarkedChatAsRead(String chatName){return "The chat: " + chatName + " is marked as \"read\".";}
+
+    // ----------------------------- Mark Chat as UNREAD ---------------------------------
+
+    public String printMarkChatUnread(){return "Which chat do you want to mark as \"unread\"? Enter the chatName.";}
+
+    public String printMarkedChatAsUnread(String chatName){return "The chat: " + chatName + " is marked as \"unread\".";}
+
+    // -----------------------------  ---------------------------------
+
+
+
+    // -----------------------------  ---------------------------------
+
 
     // ----------------------------- Helpers ---------------------------------
     // method in MessageController
@@ -274,16 +317,16 @@ public class MessageMenu implements SubMenuPrinter {
         String time = messageManager.getDateTime(messageId);
         String message = messageManager.getContent(messageId);
         if (messageManager.getReadStatus(messageId)) {
-            return  "[Unread]" + "\n" +
-                    "From: " + sender + "[Username]" + "\n" +
-                    "To: " + receiver + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
+            return  "[Unread]" + "<br>" +
+                    "From: " + sender + "[Username]" + "<br>" +
+                    "To: " + receiver + "<br>" +
+                    "Time sent:" + time + "<br>" +
+                    "Message:" + message + "<br>";
         } else {
-            return "From: " + sender + "[Username]" + "\n" +
-                    "To: " + receiver + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
+            return "From: " + sender + "[Username]" + "<br>" +
+                    "To: " + receiver + "<br>" +
+                    "Time sent:" + time + "<br>" +
+                    "Message:" + message + "<br>";
         }
     }
 
