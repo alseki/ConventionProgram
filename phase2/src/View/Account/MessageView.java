@@ -116,7 +116,15 @@ public class MessageView extends AccountView {
 
     //TODO: send msg method is in MessageController.
     private void sendMsg() {
+        String subject = inputField.getText();
+        String msg = messageField.getText();
 
+        try {
+            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(subject, msg),
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e){
+            exceptionDialogBox(presenter.exceptionTitle(), "Wrongg");
+        }
     }
 
     @Override

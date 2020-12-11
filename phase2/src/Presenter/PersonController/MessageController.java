@@ -25,7 +25,7 @@ public class MessageController extends SubMenu {
     /**
      * Sends a new Message
      */
-    protected String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
+    public String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
         sendMessage(ID, content);
         return presenter.messageSent();
     }
