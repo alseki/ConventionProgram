@@ -90,23 +90,6 @@ public class AttMessageView extends MessageView {
         backButton.setVisible(true);
     }
 
-    private void showCreateGroupChat() {
-        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
-        dialogPrompt.setVisible(true);
-
-        new JTextField(50);
-        inputField.setVisible(true);
-
-        dialogPrompt2.setText("Enter the name of the group chat you would like to create");
-        dialogPrompt2.setVisible(true);
-
-        new JTextField(50);
-        inputField2.setVisible(true);
-
-        createGroupChatButton.setVisible(true);
-        backButton.setVisible(true);
-    }
-
     private void createChat() {
         String participantUsername = inputField.getText();
         String chatName = inputField2.getText();
@@ -137,6 +120,24 @@ public class AttMessageView extends MessageView {
 
 
     }
+
+    private void showCreateGroupChat() {
+        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
+        dialogPrompt.setVisible(true);
+
+        new JTextField(50);
+        inputField.setVisible(true);
+
+        dialogPrompt2.setText("Enter the name of the group chat you would like to create");
+        dialogPrompt2.setVisible(true);
+
+        new JTextField(50);
+        inputField2.setVisible(true);
+
+        createGroupChatButton.setVisible(true);
+        backButton.setVisible(true);
+    }
+
 
     private void createGroupChat(){ //TODO: -- DONE: convert participantIDs into an array of Strings
         String commaSeparated = inputField.getText();
