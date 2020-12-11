@@ -11,7 +11,7 @@ public class EmpReqController extends OrgReqController {
 
     public EmpReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu, currentUserID);
-        presenter = new OrgReqMenu(requestManager, personManager);
+        presenter = new OrgReqMenu(requestManager, personManager, currentUserID);
         this.currentUserID = currentUserID;
     }
 

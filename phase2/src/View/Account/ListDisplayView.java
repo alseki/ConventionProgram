@@ -34,7 +34,7 @@ public class ListDisplayView implements ActionListener {
         }
 
         printedList = new JLabel("<html>" + list.toString() + "<html/>");
-        printedList.setBounds(10, 10, 200, 300);
+        printedList.setBounds(10, 10, 300, 300);
         contentPane.add(printedList);
         printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));

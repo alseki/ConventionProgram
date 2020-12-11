@@ -17,9 +17,10 @@ public class AttReqMenu implements SubMenuPrinter {
      * constructor for request menu parent
      * @param reqM request manager object
      */
-    public AttReqMenu(RequestManager reqM, PersonManager perM){
+    public AttReqMenu(RequestManager reqM, PersonManager perM, String currentUserID){
         this.reqM = reqM;
         this.perM = perM;
+        this.currentUserID = currentUserID;
     }
 
     /**
@@ -37,20 +38,19 @@ public class AttReqMenu implements SubMenuPrinter {
      * @return String of formated request
      */
     public String seeRequest(String reqId) throws InvalidChoiceException {
-        return requestFormat() + printRequest(reqId);
-
+        if (reqM.requestExists(reqId)) {
+            return formatRequestString(reqId);
+        } else {
+            throw new InvalidChoiceException("request");
+        }
     }
 
-    /**
-     * request format
-     * @return "Request Id \t" + "Requests Content \t" + "Pending/Fulfilled \t" + "requesting User Id \n"
-     */
-    protected String requestFormat(){
-        return "Request Id \t" + "Requests Content \t" + "Pending/Fulfilled \t" + "requesting User Id \n";
+    public String viewRequestTitle() {
+        return "-- VIEW REQUESTS --";
     }
 
-    public String myRequestTitle() {
-        return "-- YOUR REQUESTS --";
+    public String makeRequestTitle() {
+        return "-- MAKE A REQUEST --";
     }
 
     /**
@@ -74,20 +74,6 @@ public class AttReqMenu implements SubMenuPrinter {
         }
     }
 
-    /**
-     * prints the requests of request with reqId
-     * @param reqId string
-     * @return String of request
-     */
-    protected String printRequest(String reqId) throws InvalidChoiceException {
-
-        if (reqM.requestExists(reqId)) {return formatRequestString(reqId);
-        }
-        else{
-            throw new InvalidChoiceException("request");
-        }
-    }
-
 
     /**
      * prompt for request content
@@ -105,7 +91,7 @@ public class AttReqMenu implements SubMenuPrinter {
     }
 
 
-    public String seeRequestTitle(String reqId) {
+    public String specificRequestTitle(String reqId) {
         return "This is the request with id" + reqId;
     }
 
@@ -134,20 +120,20 @@ public class AttReqMenu implements SubMenuPrinter {
     private String formatRequestString(String reqID) {
         StringBuilder sb = new StringBuilder();
         sb.append(reqID);
-        sb.append("\t");
+        sb.append("\n Request: ");
         sb.append(reqM.getContent(reqID));
-        sb.append("\t");
+        sb.append("\n Requested by: ");
         sb.append(perM.getCurrentUsername(reqM.getRequesterID(reqID)));
-        sb.append("\t");
+        sb.append("\n Status: ");
         if(!reqM.getRequestFulfilled(reqID)){
             sb.append("Pending");
         }
         else{
             sb.append("Fulfilled");
         }
-        sb.append("\t");
-        sb.append("Current handlers: ");
-        sb.append(formatPersonList(reqM.getHandlers(reqID)));
+        //sb.append("\t");
+        //sb.append("Current handlers: ");
+        //sb.append(formatPersonList(reqM.getHandlers(reqID)));
         sb.append("\n");
         return sb.toString();
     }

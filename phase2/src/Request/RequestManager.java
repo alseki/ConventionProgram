@@ -1,5 +1,7 @@
 package Request;
 
+import org.omg.CORBA.Request;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,14 +24,6 @@ public class RequestManager implements Serializable {
         requestsList.add(req);
     }
 
-    public void removeRequest(RequestEntity req) {
-        requestsList.remove(req);
-    }
-
-    public ArrayList getRequestLists(){
-        return requestsList;
-    }
-
     /**
      * creates a reauest
      *
@@ -39,7 +33,7 @@ public class RequestManager implements Serializable {
      */
     public boolean createRequest(String reqUserId, String reqContent) {
         RequestEntity req = new RequestEntity(reqContent, reqUserId);
-        updateMap(reqUserId, req);
+        updateMap(req.getRequestID(), req);
         addRequest(req);
         return true;
     }
@@ -76,7 +70,8 @@ public class RequestManager implements Serializable {
     }
 
     private RequestEntity getRequestEntity(String reqId) {
-        return idToRequest.get(reqId);
+        RequestEntity rq = idToRequest.get(reqId);
+        return rq;
     }
 
     protected ArrayList<RequestEntity> getAllRequests() {
@@ -89,7 +84,8 @@ public class RequestManager implements Serializable {
      * @return The request's content
      */
     public String getContent(String reqID) {
-        return getRequestEntity(reqID).getRequestContent();
+        RequestEntity rq = getRequestEntity(reqID);
+        return rq.getRequestContent();
     }
 
     /**

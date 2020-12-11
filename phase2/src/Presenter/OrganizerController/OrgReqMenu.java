@@ -15,8 +15,8 @@ public class OrgReqMenu extends AttReqMenu {
      * constructor
      * @param reqM a request manager
      */
-    public OrgReqMenu(RequestManager reqM, PersonManager perM){
-        super(reqM, perM);
+    public OrgReqMenu(RequestManager reqM, PersonManager perM, String currentUserID){
+        super(reqM, perM, currentUserID);
     }
 
     /**

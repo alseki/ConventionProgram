@@ -31,68 +31,85 @@ public class AttReqView extends AccountView {
 
         contentPane.setBackground(greenBG);
 
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
+
         submit = new JButton("submit");
         initializeObject(submit);
-
-        initializeObject(dialogPrompt);
-        initializeObject(inputField);
     }
 
 
 
     private void showMakeReq() {
         submit.setActionCommand("make");
+        submit.addActionListener(this);
         submit.setVisible(true);
 
-        dialogPrompt = new JLabel(presenter.makeRequestPrompt());
-        dialogPrompt.setVisible(true);
+        frame.setTitle(presenter.makeRequestTitle());
+        dialogPrompt.setText(presenter.makeRequestPrompt());
 
-        inputField = new JTextField(200);
+        inputField = new JTextField(50);
+        initializeObject(inputField);
         inputField.setVisible(true);
     }
 
     private void makeReq() {
-        dialogPrompt = new JLabel(presenter.printRequestCreated());
+        inputField.setVisible(false);
+        submit.setVisible(false);
+
+        controller.createRequest(inputField.getText());
+
+        dialogPrompt.setText(presenter.printRequestCreated());
         dialogPrompt.setVisible(true);
 
         backButton.setVisible(true);
     }
 
     private void showChooseReqPrompt() {
-        dialogPrompt = new JLabel(presenter.seeRequestPrompt());
+        dialogPrompt.setText(presenter.seeRequestPrompt());
         dialogPrompt.setVisible(true);
 
-        inputField = new JTextField(200);
+        inputField = new JTextField(30);
+        initializeObject(inputField);
         inputField.setVisible(true);
 
+        dialogPrompt.setText(presenter.seeRequestPrompt());
+
+        frame.setTitle(presenter.viewRequestTitle());
+
         submit.setActionCommand("show");
+        submit.addActionListener(this);
         submit.setVisible(true);
     }
 
     private void showReq() {
         inputField.setVisible(false);
+        submit.setVisible(false);
 
         String reqID = inputField.getText();
 
         try {
             backButton.setVisible(true);
 
-            dialogPrompt = new JLabel(presenter.seeRequest(reqID));
-            dialogPrompt.setVisible(true);
+            dialogPrompt.setText(presenter.seeRequest(reqID));
+            dialogPrompt.setBounds(10, 10, 300, 300);
 
-            frame.setTitle(presenter.seeRequestTitle(reqID));
+            frame.setTitle(presenter.specificRequestTitle(reqID));
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
             dialogPrompt.setVisible(false);
+            frame.setTitle(presenter.getMenuTitle());
             showMainDropDownMenu();
         }
     }
 
     private void showMyReqs() {
         try {
-            reqsList = new ListDisplayView(presenter.myRequestTitle(), presenter.myRequests());
+            reqsList = new ListDisplayView(presenter.viewRequestTitle(), presenter.myRequests());
+            showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            showMainDropDownMenu();
         }
     }
 
@@ -135,6 +152,7 @@ public class AttReqView extends AccountView {
 
         if (eventName.equals("back")) {
             showMainDropDownMenu();
+            frame.setTitle(presenter.getMenuTitle());
         }
 
         /*if(eventName.equals(menuOp[3])) {

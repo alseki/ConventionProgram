@@ -15,12 +15,12 @@ public class AttReqController extends SubMenu {
      */
     public AttReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
-        this.presenter = new AttReqMenu(requestManager, personManager);
+        this.presenter = new AttReqMenu(requestManager, personManager, currentUserID);
         this.currentUserID = currentUserID;
     }
 
-    private void createRequest(String content) {
-        requestManager.createRequest(this.currentUserID, content);
+    public void createRequest(String content) {
+        requestManager.createRequest(currentUserID, content);
     }
 
     /**
