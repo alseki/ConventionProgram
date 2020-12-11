@@ -205,7 +205,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to enter the content of the announcement
      * @return
      */
-    public java.lang.String printMessageContentPrompt(){
+    public String printMessageContentPrompt(){
         return "Please enter your announcement below";
     }
 

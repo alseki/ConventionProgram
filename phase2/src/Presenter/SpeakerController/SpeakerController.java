@@ -15,6 +15,7 @@ import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.SpeakerManager;
+import Presenter.PersonController.UserInfoController;
 import Request.RequestManager;
 
 public class SpeakerController extends PersonController {
@@ -34,12 +35,15 @@ public class SpeakerController extends PersonController {
         String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
-                return new ContactController(this, currentUserID);
+                return new UserInfoController(this, currentUserID);
             }
             else if (choice.equals(options[1])) {
-                return new MessageController(this, currentUserID);
+                return new ContactController(this, currentUserID);
             }
             else if (choice.equals(options[2])) {
+                return new MessageController(this, currentUserID);
+            }
+            else if (choice.equals(options[3])) {
                 return new SpeEventController(this, manager, currentUserID);
             }
         }
@@ -49,9 +53,9 @@ public class SpeakerController extends PersonController {
     @Override
     public String[] getMenuOptions() {
         String[] speOptions  = {"View your event information"};
-        String[] options = new String[3];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(speOptions, 0, options, 2, 1);
+        String[] options = new String[4];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        System.arraycopy(speOptions, 0, options, 3, 1);
         return options;
     }
 

@@ -18,10 +18,11 @@ public class OrgEventView extends AccountView {
     // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
     //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
     JLabel dpMain, dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8; // dp = "dialogue prompt"
-    JButton createRoomButton, createEventButton;
+    JButton createRoomButton, createEventButton, makeAnnouncementButton;
     JTextField input1, input2, input3, input4, input5, input6, input7, input8;
     JComboBox<String> allEvents;
     ListDisplayView allEventTypes, allRooms;
+    JTextArea messageField;
 
     /**
      * The view for organizer users to see their convention event options.
@@ -41,16 +42,53 @@ public class OrgEventView extends AccountView {
 
         dp1 = new JLabel("");
         initializeObject(dp1);
-        input1 = new JTextField(50);
+        input1 = new JTextField(20);
         initializeObject(input1);
 
         dp2 = new JLabel("");
         initializeObject(dp2);
-        input2 = new JTextField(50);
+        input2 = new JTextField(20);
         initializeObject(input2);
+
+        dp3 = new JLabel("");
+        initializeObject(dp3);
+        input3 = new JTextField(20);
+        initializeObject(input3);
+
+        dp4 = new JLabel("");
+        initializeObject(dp4);
+        input4 = new JTextField(20);
+        initializeObject(input4);
+
+        dp5 = new JLabel("");
+        initializeObject(dp5);
+        input5 = new JTextField(20);
+        initializeObject(input5);
+
+        dp6 = new JLabel("");
+        initializeObject(dp6);
+        input6 = new JTextField(20);
+        initializeObject(input6);
+
+        dp7 = new JLabel("");
+        initializeObject(dp7);
+        input7 = new JTextField(20);
+        initializeObject(input7);
+
+        dp8 = new JLabel("");
+        initializeObject(dp8);
+        input8 = new JTextField(20);
+        initializeObject(input8);
+
+        messageField = new JTextArea(5, 20);
+        messageField.setPreferredSize(new Dimension(20, 20));
+        messageField.setLineWrap(true);
+        messageField.setWrapStyleWord(true);
+        initializeObject(messageField);
 
         createRoomButton = newButton("Create room");
         createEventButton = newButton("Create Event");
+        makeAnnouncementButton = newButton("Make Announcement");
     }
 
 
@@ -168,13 +206,23 @@ public class OrgEventView extends AccountView {
     private void showMakeEventAnnouncement() {
         backButton.setVisible(true);
 
-        dp1.setText(presenter.printEventMessageIntro());
+        dpMain.setText(presenter.printEventMessageIntro());
+        dpMain.setVisible(true);
+
+        dp1.setText(presenter.printEventNamePrompt());
         dp1.setVisible(true);
+        input1.setVisible(true);
 
-        // some text field here that takes in the announcement
+        dp2.setText(presenter.printChatNamePrompt());
+        dp2.setVisible(true);
+        input2.setVisible(true);
+
+        dp3.setText(presenter.printMessageContentPrompt());
+        dp3.setVisible(true);
+        messageField.setVisible(true);
+
+        makeAnnouncementButton.setVisible(true);
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent event) {

@@ -62,9 +62,10 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
 
     @Override
     public String[] getMenuOptions() {
-        options  = new String[2];
-        options[0] = "View your contacts";
-        options[1] = "View your messages";
+        options  = new String[3];
+        options[0] = "Change account settings";
+        options[1] = "View your contacts";
+        options[2] = "View your messages";
         return options;
     }
 
