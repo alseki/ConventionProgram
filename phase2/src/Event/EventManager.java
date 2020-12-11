@@ -136,6 +136,19 @@ public class EventManager extends EventAccess implements Serializable {
     }
 
     /**
+     * Returns the description of an Event stored in this EventManager, given its ID
+     * @param eventID The ID of the Event
+     * @return The description of the Event, as a String
+     */
+    public String getDescription(String eventID){
+        try {
+            return events.get(eventID).getDescription();
+        } catch (NullPointerException n) {
+            return null;
+        }
+    }
+
+    /**
      * Returns the ID of speaker of Event in this EventManager, given event's ID - for OrgEventController
      * @param eventID The ID of the Event
      * @return The ID of the speaker, as a String

@@ -20,8 +20,12 @@ public class RequestManager implements Serializable {
 
     }
 
-    private void addRequest(RequestEntity req) {
+    public void addRequest(RequestEntity req) {
         requestsList.add(req);
+    }
+
+    public void removeRequest(RequestEntity req) {
+        requestsList.remove(req);
     }
 
     /**
@@ -69,7 +73,7 @@ public class RequestManager implements Serializable {
         idToRequest.put(str, req);
     }
 
-    private RequestEntity getRequestEntity(String reqId) {
+    public RequestEntity getRequestEntity(String reqId) {
         RequestEntity rq = idToRequest.get(reqId);
         return rq;
     }

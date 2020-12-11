@@ -38,6 +38,10 @@ public class OrgEventView extends AccountView {
 
         contentPane.setBackground(new Color(200, 10, 150));
 
+        createRoomButton = newButton("Create room");
+        createEventButton = newButton("Create Event");
+        makeAnnouncementButton = newButton("Make Announcement");
+
         dpMain = new JLabel("");
         initializeObject(dpMain);
 
@@ -86,10 +90,6 @@ public class OrgEventView extends AccountView {
         messageField.setLineWrap(true);
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
-
-        createRoomButton = newButton("Create room");
-        createEventButton = newButton("Create Event");
-        makeAnnouncementButton = newButton("Make Announcement");
     }
 
 
@@ -175,7 +175,7 @@ public class OrgEventView extends AccountView {
     private void createEvent() {
         String nameOfEvent = input1.getText();
         String eventType = input2.getText();
-        int eventCap = Integer.parseInt(input3.getText());
+        String eventCap = input3.getText();
         String roomName = input4.getText();
         String speakerUsername = input5.getText();
         String startTime = input6.getText();
@@ -191,7 +191,10 @@ public class OrgEventView extends AccountView {
                 } catch (NoDataException d) {
                     exceptionDialogBox(presenter.printException(d));
                 }
-            } else if(controller.createEvent(nameOfEvent, speakerUsername, startTime, endTime, eventDesc, eventCap,
+            } else if(eventType.equals("") && roomName.equals("")) {
+                JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), "Please enter information carefully",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            } else if(controller.createEvent(nameOfEvent, speakerUsername, startTime, endTime, eventDesc, Integer.parseInt(eventCap),
                     controller.getEventType(eventType), roomName)){
                 JOptionPane.showConfirmDialog(null, "Success", "Event has been created!",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);

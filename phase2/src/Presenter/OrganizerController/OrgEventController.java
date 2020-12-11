@@ -212,7 +212,7 @@ public class OrgEventController extends SubMenu {
      * @return true if Event was cancelled successfully
      */
 
-    private boolean cancelEvent(String eventName) {
+    public boolean cancelEvent(String eventName) {
 
         // TODO comment all sections of this function so it is legible.
         // TODO add try catch blocks
