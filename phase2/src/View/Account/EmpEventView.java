@@ -1,12 +1,8 @@
 package View.Account;
 
-import Presenter.AttendeeController.AttEventController;
-import Presenter.AttendeeController.AttEventMenu;
 import Presenter.Central.SubMenu;
 import Presenter.EmployeeController.EmpEventController;
 import Presenter.EmployeeController.EmpEventMenu;
-import Presenter.OrganizerController.OrgEventController;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -15,10 +11,14 @@ public class EmpEventView extends AccountView {
     EmpEventMenu presenter;
     String[] menuOp;
 
+    /**
+     * The view for employee users to see their convention event options.
+     * @param controller EmpEventController for handling user input
+     */
     public EmpEventView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (EmpEventController) controller;
-        this.presenter = ((EmpEventController) controller).getPresenter();
+        this.presenter = (EmpEventMenu) controller.getPresenter();
 
         contentPane.setBackground(new Color(130, 255, 140));
 

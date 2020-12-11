@@ -17,10 +17,14 @@ public class ContactView extends AccountView {
     JTextField inputAddContact;
     ListDisplayView allContacts;
 
+    /**
+     * The view for users to see contact options.
+     * @param controller ContactController for handling user input
+     */
     public ContactView(SubMenu controller) {
         super(controller.getPresenter());
         this.controller = (ContactController) controller;
-        this.presenter = ((ContactController) controller).getPresenter();
+        this.presenter = (ContactMenu) controller.getPresenter();
         contentPane.setBackground(yellowBG);// Sets background colour
 
         setupAddContact();
