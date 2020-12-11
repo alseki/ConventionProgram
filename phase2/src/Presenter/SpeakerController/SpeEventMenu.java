@@ -27,7 +27,7 @@ public class SpeEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"View conference events list", "View your events", "Make an announcement to one of your events",
+        return new String[]{"View convention events list", "View your events", "Make an announcement to one of your events",
                 "Make an announcement to some of your events", "Make an announcement to a list of your events"};
     }
 
