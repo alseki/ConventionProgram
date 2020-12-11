@@ -40,20 +40,28 @@ public class RequestEntity implements Serializable {
 
     /**
      * getter for fulfilled status
-     * @return boolean
+     * @return True if fulfilled, False otherwise
      */
         public boolean getFulfilled () {
             return this.fulfilled;
         }
 
     /**
-     *
-     * @return
+     * Get the list of employees handling a request
+     * @return That list of employees
      */
 
     public ArrayList getEmployeeHandlingRequest() {
             return this.employeeHandlingRequest;
         }
+
+    /**
+     * Add an employee to the list of those handling a request
+      * @param userID The ID of the employee
+     */
+    public void addEmployeeHandler(String userID) {
+        employeeHandlingRequest.add(userID);
+    }
 
     /**
      * getter for the requesting user id

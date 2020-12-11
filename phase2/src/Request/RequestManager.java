@@ -98,12 +98,22 @@ public class RequestManager implements Serializable {
 
 
     /**
-     * to update an entity
+     * to update a request when it is filled
      * @param reqId string for request id
      */
     public void updateEntity(String reqId){
         RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
+    }
+
+    /**
+     * to update a request when it is filled
+     * @param reqId string for request id
+     */
+    public void updateEntity(String reqId, String userID){
+        RequestEntity req = getRequestEntity(reqId);
+        req.setFulfilled();
+        req.addEmployeeHandler(userID);
     }
 
     /**
@@ -152,6 +162,15 @@ public class RequestManager implements Serializable {
      */
     public boolean requestExists(String reqID){
         return idToRequest.containsKey(reqID);
+    }
+
+    /**
+     * Returns the list of employees handling this request
+     * @param reqID
+     * @return An arraylist of the employees handling the request
+     */
+    public ArrayList<String> getHandlers(String reqID) {
+        return getRequestEntity(reqID).getEmployeeHandlingRequest();
     }
 
 }

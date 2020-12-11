@@ -6,10 +6,9 @@ package Presenter.OrganizerController;
 // Date Created: 01/11/2020
 // Date Modified: 19/11/2020
 
-import Event.Event;
 import Event.EventManager;
 import Event.EventPermissions;
-import Event.Panel;
+import Event.Panel; //TODO: controllers shouldn't access entities wherever possible!!!
 import Person.*;
 import Person.PersonManager;
 import Presenter.Central.SubMenu;
@@ -20,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class OrgPersonController extends SubMenu {

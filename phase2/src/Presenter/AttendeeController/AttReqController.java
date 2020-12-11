@@ -6,7 +6,6 @@ import Request.RequestManager;
 
 public class AttReqController extends SubMenu {
     protected RequestManager reqM;
-    protected int currentRequest;
     protected AttReqMenu presenter;
     private String currentUserID;
 
@@ -21,22 +20,8 @@ public class AttReqController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
-    public String makeRequestPrompt() {
-        return presenter.makeRequestPrompt();
-    }
-
-    private void createRequest(){
-        String content = "";//SubMenu.readInput(input);
+    private void createRequest(String content) {
         reqM.createRequest(this.currentUserID, content);
-    }
-    private String specificRequest(String reqId){
-        return presenter.seeSpecificRequestPrompt(reqId);
-        //String id = "";//SubMenu.readInput(input);
-        //presenter.seeRequest(id);
-
-    }
-    public String myRequests(){
-        return presenter.myRequests(currentUserID);
     }
 
     /**
@@ -44,7 +29,7 @@ public class AttReqController extends SubMenu {
      * @return this.presenter (AttReqMenu)
      */
     @Override
-    public AttReqMenu getPresenter() {
+    public SubMenuPrinter getPresenter() {
         return this.presenter;
     }
 }

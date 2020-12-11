@@ -1,17 +1,17 @@
 package Presenter.EmployeeController;
 
 import Presenter.Central.SubMenu;
+import Presenter.OrganizerController.OrgReqController;
+import Presenter.OrganizerController.OrgReqMenu;
 import Request.RequestManager;
 
-public class EmpReqController extends SubMenu {
-    protected RequestManager reqM;
-    protected int currentRequest;
-    protected EmpReqMenu presenter;
+public class EmpReqController extends OrgReqController {
+    protected OrgReqMenu presenter;
     private String currentUserID;
 
     public EmpReqController(SubMenu subMenu, String currentUserID) {
-        super(subMenu);
-        this.presenter = new EmpReqMenu(reqM);
+        super(subMenu, currentUserID);
+        presenter = new OrgReqMenu(requestManager, personManager);
         this.currentUserID = currentUserID;
     }
 
@@ -31,32 +31,9 @@ public class EmpReqController extends SubMenu {
 //
 //    }
 
-
-    private String seeRequests(){
-        return presenter.seeRequests();
-    }
-
-    private String specificRequest(String reqId){
-        return presenter.seeSpecificRequestPrompt(reqId);
-        //String id = "";//SubMenu.readInput(input);
-        //presenter.seeRequest(id);
-    }
-    private void request(){
-        presenter.makeRequestPrompt();
-        String content = "";//SubMenu.readInput(input);
-        requestManager.createRequest(this.currentUserID, content);
-    }
-    private String myRequests(){
-        return presenter.myRequests(currentUserID);
-    }
-
-    private String handleRequest(){
-        return presenter.seeHandleRequestPrompt(currentUserID);
-    }
-
-
     @Override
-    public EmpReqMenu getPresenter() {
-        return this.presenter;
+    public String fulfillRequest(String reqId){
+        requestManager.updateEntity(reqId, currentUserID);
+        return presenter.fulfillResponse(reqId);
     }
 }

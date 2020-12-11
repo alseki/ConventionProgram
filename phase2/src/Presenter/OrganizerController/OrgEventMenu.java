@@ -3,7 +3,7 @@ package Presenter.OrganizerController;
 // Programmers: Cara McNeil, Eytan Weinstein
 // Description: Prints information pertaining to an OrganizerController's Event planning
 // Date Created: 13/11/2020
-// Date Modified: 07/12/2020
+// Date Modified: 10/12/2020
 
 import Event.EventManager;
 import Event.EventType;
@@ -37,21 +37,21 @@ public class OrgEventMenu extends EventMenu {
      * Prompts user to input the name of the Room they wish to add
      */
     public String addRoomPrompt() {
-        return "\nTo create a new room, please fill in the following information:";
+        return "To create a new room, please fill in the following information:";
     }
 
     /**
      * Prompts user to input the name of the Room they wish to add
      */
     public String roomNamePrompt() {
-        return "\nWhat is the name of the room you want to create?";
+        return "What is the name of the room you want to create?";
     }
 
     /**
      * Prompts user to input the capacity of the Room they wish to add
      */
     public String roomCapacityPrompt() {
-        return "\nWhat is the capacity of the room you want to create?";
+        return "What is the capacity of the room you want to create?";
     }
 
     // OPTION 2
@@ -60,14 +60,14 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to create an Event
      */
     public String printCreateEventPrompt(){
-        return "\nTo create a new event, please fill in the following information:";
+        return "To create a new event, please fill in the following information:";
     }
 
     /**
      * Prompts the user to choose the type of Event they wish to create
      */
     public String printEventTypePrompt(){
-        return "\nWhat kind of event do you want to create? (Enter 0 for options)";
+        return "What kind of event do you want to create? (Enter 0 for options)";
     }
 
     /**
@@ -97,42 +97,35 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to choose a Room for an Event (by name)
      */
     public String printRoomNamePrompt(){
-        return "\nWhich room is this event held in? (Enter 0 for options)";
+        return "Which room is this event held in? (Enter 0 for options)";
     }
 
     /**
      * Prompts the user to name the new Event
      */
     public String printEventNamePrompt(){
-        return "\nWhat is the name of this event?";
+        return "What is the name of this event?";
     }
 
     public String printChatNamePrompt(){
-        return "\nWhat is the name of this chat?";
+        return "What is the name of this chat?";
     }
 
     /**
      * Prompts the user to enter a description for the new Event
      */
     public String printDescriptionPrompt(){
-        return "\nPlease type a brief description for this new event:";
+        return "Please type a brief description for this new event:";
     }
 
     /**
      * Prompts the user to enter a start time for the new Event
      */
     public String printStartTimePrompt(){
-        return "\nAt what time will the event start?. \nPlease enter the exact date and time in 24-hour clock " +
+        return "At what time will the event start?. \nPlease enter the exact date and time in 24-hour clock " +
                 "notation. \nFor example, to schedule an event at 11:30 pm on March 4, 2020, you would type the date," +
-                "followed by a space, \nfollowed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and " +
+                "followed by a space, followed by the 24-hour time, as follows: '2020-03-04 23:30'. \nBe slow and " +
                 "careful!";
-    }
-
-    /**
-     * Notifies the user that their start time entry was invalid
-     */
-    public String printDateError(){
-        return "\nThis is not a valid date. Try again. Be slow and careful!";
     }
 
     /**
@@ -162,28 +155,28 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to enter a name for the SpeakerController
      */
     public String printAddNamePrompt(){
-        return "\nWhat is the speaker's full name?";
+        return "What is the speaker's full name?";
     }
 
     /**
      * Prompts the user to add a password for the SpeakerController
      */
     public String printAddPasswordPrompt(){
-        return "\nPlease enter a password for the speaker:";
+        return "Please enter a password for the speaker:";
     }
 
     /**
      * Prompts the user to add a username for the SpeakerController
      */
     public String printAddUsernamePrompt(){
-        return "\nPlease enter a username for the speaker:";
+        return "Please enter a username for the speaker:";
     }
 
     /**
      * Prompts the user to add an email for the SpeakerController
      */
     public String printAddEmailPrompt(){
-        return "\nWhat is the speaker's e-mail address?";
+        return "What is the speaker's e-mail address?";
     }
 
     // OPTION 4
@@ -192,7 +185,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts the user to make an announcement about an Event
      */
     public String printEventMessageIntro(){
-        return "\nTo make an announcement about an event, please fill in the following information:";
+        return "To make an announcement about an event, please fill in the following information:";
     }
 
     /**
@@ -200,7 +193,7 @@ public class OrgEventMenu extends EventMenu {
      * @return
      */
     public java.lang.String printMessageContentPrompt(){
-        return "\nPlease enter your announcement below";
+        return "Please enter your announcement below";
     }
 
 
@@ -215,7 +208,7 @@ public class OrgEventMenu extends EventMenu {
      * Prompts user to update the capacity of an Event
      * @return
      */
-    public String printUpdateCapacity(){return "\nTo update the capacity of an Event, please fill in the " +
+    public String printUpdateCapacity(){return "To update the capacity of an Event, please fill in the " +
             "following information:";}
 
     /**
@@ -223,7 +216,7 @@ public class OrgEventMenu extends EventMenu {
       * @param eventId ID of event that will have updated capacity
      * @return
      */
-    public String printChangeCapacity(String eventId){return "\nPlease enter the new capacity of event: " +
+    public String printChangeCapacity(String eventId){return "Please enter the new capacity of event: " +
             events.getEventName(eventId);}
 
 

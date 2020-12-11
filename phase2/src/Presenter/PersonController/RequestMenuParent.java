@@ -1,6 +1,7 @@
 package Presenter.PersonController;
 
 import Presenter.Central.SubMenuPrinter;
+import Presenter.Exceptions.InvalidChoiceException;
 import Request.RequestManager;
 
 public abstract class RequestMenuParent implements SubMenuPrinter {
@@ -30,7 +31,7 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
      * @param reqId String
      * @return String of formated request
      */
-    public String seeRequest(String reqId){
+    public String seeRequest(String reqId) throws InvalidChoiceException {
         return requestFormat() + printRequest(reqId);
 
     }
@@ -58,8 +59,13 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
      * @param reqId string
      * @return String of request
      */
-    protected String printRequest(String reqId) {
-        return reqM.getStringOfRequest(reqId);
+    protected String printRequest(String reqId) throws InvalidChoiceException {
+
+        if (reqM.requestExists(reqId)) {return reqM.getStringOfRequest(reqId);
+        }
+        else{
+            throw new InvalidChoiceException("request");
+        }
     }
 
 
@@ -74,7 +80,7 @@ public abstract class RequestMenuParent implements SubMenuPrinter {
     /**
      * prompt the get request Id for a request
      */
-    public String seeSpecificRequestPrompt(String reqId){
+    public String seeSpecificRequestPrompt(String reqId) {
         return "This is the request with id" + reqId;
     }
 

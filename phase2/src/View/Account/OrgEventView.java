@@ -52,46 +52,48 @@ public class OrgEventView extends AccountView {
     private void showCreateEvent() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.printCreateEventPrompt());
+        String title = presenter.printCreateEventPrompt();
+        dialogPrompt.setText(title);
         dialogPrompt.setVisible(true);
 
         String eventType = JOptionPane.showInputDialog(null, presenter.printEventTypePrompt(),
-                "Type", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String eventRoom = JOptionPane.showInputDialog(null, presenter.printRoomNamePrompt(),
-                "Room", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String eventName = JOptionPane.showInputDialog(null, presenter.printEventNamePrompt(),
-                "Name", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String eventChat = JOptionPane.showInputDialog(null, presenter.printChatNamePrompt(),
-                "Chat", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String eventDesc = JOptionPane.showInputDialog(null, presenter.printDescriptionPrompt(),
-                "Description", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String eventTime = JOptionPane.showInputDialog(null, presenter.printStartTimePrompt(),
-                "Start time", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
     }
 
     private void showCreateSpeakerAcc() {
         backButton.setVisible(true);
 
-        dialogPrompt.setText(presenter.printAddSpeakerPrompt());
+        String title = presenter.printAddSpeakerPrompt();
+        dialogPrompt.setText(title);
         dialogPrompt.setVisible(true);
 
         String speName = JOptionPane.showInputDialog(null, presenter.printAddNamePrompt(),
-                "Full name", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String speUser = JOptionPane.showInputDialog(null, presenter.printAddUsernamePrompt(),
-                "Username", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String spePassword = JOptionPane.showInputDialog(null, presenter.printAddPasswordPrompt(),
-                "Password", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
 
         String speEmail = JOptionPane.showInputDialog(null, presenter.printAddEmailPrompt(),
-                "Email", JOptionPane.PLAIN_MESSAGE);
+                title, JOptionPane.PLAIN_MESSAGE);
     }
 
     private void showMakeEventAnnouncement() {

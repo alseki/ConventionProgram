@@ -1,21 +1,24 @@
 package Presenter.OrganizerController;
 
+import Person.PersonManager;
 import Presenter.PersonController.RequestMenuParent;
 import Request.RequestManager;
 
 // Programmers:
 // Description:
 // Date Created:
-// Date Modified: 02/12/2020
+// Date Modified: 11/12/2020
 
 public class OrgReqMenu extends RequestMenuParent {
+    PersonManager perM;
 
     /**
      * constructor
      * @param reqM a request manager
      */
-    public OrgReqMenu(RequestManager reqM){
+    public OrgReqMenu(RequestManager reqM, PersonManager perM){
         super(reqM);
+        this.perM = perM;
     }
 
     /**
@@ -44,7 +47,7 @@ public class OrgReqMenu extends RequestMenuParent {
      * @param reqId String
      * @return "The request with id" + reqId + "has been fulfilled"
      */
-    public String fulfillRequestPrompt(String reqId){
+    public String fulfillResponse(String reqId){
         return "The request with id" + reqId + "has been fulfilled";
     }
 
@@ -54,7 +57,13 @@ public class OrgReqMenu extends RequestMenuParent {
      * @return "The request with id" + reqId + "has been fulfilled"
      */
     public String handlingRequestPrompt(String reqId){
-        return "The request with id" + reqId + "is being taken care of";
+        StringBuilder users = new StringBuilder();
+        for (String id: reqM.getHandlers(reqId)) {
+            users.append(perM.getCurrentUsername(id));
+            users.append(", ");
+        }
+        users.delete(users.length()-3, users.length());
+        return "The request with id " + reqId + " is being taken care of by " + users;
     }
 
 
