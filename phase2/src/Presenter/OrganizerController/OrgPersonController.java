@@ -484,7 +484,7 @@ public class OrgPersonController extends SubMenu {
 
         @Override
         public SubMenuPrinter getPresenter () {
-            return null;
+            return presenter;
         }
     }
 
