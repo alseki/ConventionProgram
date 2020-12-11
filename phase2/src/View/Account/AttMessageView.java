@@ -7,6 +7,8 @@ import Presenter.Exceptions.InvalidChoiceException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class AttMessageView extends MessageView {
@@ -125,8 +127,9 @@ public class AttMessageView extends MessageView {
 
     }
 
-    private void createGroupChat(){ //TODO: convert participantIDs into an array of Strings
-        String participantIDs = inputField.getText();
+    private void createGroupChat(){ //TODO: -- DONE: convert participantIDs into an array of Strings
+        String commaSeparated = inputField.getText();
+        ArrayList<String> participantIDs = new ArrayList<>(Arrays.asList(commaSeparated.split(",")));
         String groupName = inputField2.getText();
 
         /*
