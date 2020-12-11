@@ -42,42 +42,42 @@ public class OrgEventView extends AccountView {
 
         dp1 = new JLabel("");
         initializeObject(dp1);
-        input1 = new JTextField(50);
+        input1 = new JTextField(20);
         initializeObject(input1);
 
         dp2 = new JLabel("");
         initializeObject(dp2);
-        input2 = new JTextField(50);
+        input2 = new JTextField(20);
         initializeObject(input2);
 
         dp3 = new JLabel("");
         initializeObject(dp3);
-        input3 = new JTextField(50);
+        input3 = new JTextField(20);
         initializeObject(input3);
 
         dp4 = new JLabel("");
         initializeObject(dp4);
-        input4 = new JTextField(50);
+        input4 = new JTextField(20);
         initializeObject(input4);
 
         dp5 = new JLabel("");
         initializeObject(dp5);
-        input5 = new JTextField(50);
+        input5 = new JTextField(20);
         initializeObject(input5);
 
         dp6 = new JLabel("");
         initializeObject(dp6);
-        input6 = new JTextField(50);
+        input6 = new JTextField(20);
         initializeObject(input6);
 
         dp7 = new JLabel("");
         initializeObject(dp7);
-        input7 = new JTextField(50);
+        input7 = new JTextField(20);
         initializeObject(input7);
 
         dp8 = new JLabel("");
         initializeObject(dp8);
-        input8 = new JTextField(50);
+        input8 = new JTextField(20);
         initializeObject(input8);
 
         messageField = new JTextArea(5, 20);
@@ -223,8 +223,6 @@ public class OrgEventView extends AccountView {
 
         makeAnnouncementButton.setVisible(true);
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent event) {
