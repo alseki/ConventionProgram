@@ -30,9 +30,6 @@ public class AccountViewFactory {
         else if (controller instanceof AttEventController) {
             new AttEventView(controller);
         }
-        else if (controller instanceof AttReqController) {
-            new AttReqView(controller);
-        }
         else if (controller instanceof OrgEventController) {
             new OrgEventView(controller);
         }
@@ -54,6 +51,9 @@ public class AccountViewFactory {
         }
         else if (controller instanceof EmpReqController) {
             new OrgReqView(controller);
+        }
+        else if (controller instanceof AttReqController) {
+            new AttReqView(controller);
         }
     }
 }
