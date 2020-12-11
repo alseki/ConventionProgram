@@ -140,8 +140,6 @@ public class MessageController extends SubMenu {
      * @param chatName
      */
 
-
-
     protected void archiveChat(String chatName){
         String chatId = chatManager.findChatByName(chatName).getId();
         for (String cId : personManager.getChats(currentUserID)) {

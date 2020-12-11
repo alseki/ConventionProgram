@@ -254,6 +254,14 @@ public class MessageMenu implements SubMenuPrinter {
     // Option 103 -------------------- Remove archived message ---------------------
     // method in MessageController
 
+    // Option 104 =--------------------delete Chat----------------------------------
+    // method in MessageController
+
+    public void printDeleteChatPrompt(){
+        System.out.println("Which chat do you want to delete from your account? Enter the chatName.");}
+
+    public void printSearchChatByChatnamePrompt(){}
+
     // ----------------------------- Helpers ---------------------------------
     // method in MessageController
 
