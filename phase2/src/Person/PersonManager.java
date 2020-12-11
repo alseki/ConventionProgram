@@ -21,7 +21,6 @@ public abstract class PersonManager {
         this.idToPerson = idToPerson;
     }
 
-    //TODO: make this better?
     public Map[] unpack() {
         return new Map[]{usernameToPerson, idToPerson};
     }
@@ -36,6 +35,29 @@ public abstract class PersonManager {
      *         in the other User-specific managers
      */
     public abstract boolean createAccount(String name, String username, String password, String email);
+
+    public boolean changeUsername(String id, String newUsername) {
+        if (getPersonByUsername(newUsername) == null) {
+            Person p = getPerson(id);
+            String oldUser = p.username;
+            p.setUsername(newUsername);
+            usernameToPerson.remove(oldUser);
+            usernameToPerson.put(newUsername, p);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void changeEmail(String id, String newEmail) {
+        Person p = getPerson(id);
+        p.setEmail(newEmail);
+    }
+
+    public void changePassword(String id, String newPassword) {
+        Person p = getPerson(id);
+        p.setPassword(newPassword);
+    }
 
     public boolean cancelAccount(String userID){
         if(idToPerson.containsKey((userID))){

@@ -18,6 +18,7 @@ import Presenter.AttendeeController.AttMessageController;
 import Presenter.Central.SubMenu;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.PersonController;
+import Presenter.PersonController.UserInfoController;
 import Request.RequestManager;
 
 public class OrganizerController extends PersonController {
@@ -70,21 +71,24 @@ public class OrganizerController extends PersonController {
         String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
-                return new ContactController(this, currentUserID);
+                return new UserInfoController(this, currentUserID);
             }
             else if (choice.equals(options[1])) {
-                return new AttMessageController(this, currentUserID, attendeeManager);
+                return new ContactController(this, currentUserID);
             }
             else if (choice.equals(options[2])) {
+                return new AttMessageController(this, currentUserID, attendeeManager);
+            }
+            else if (choice.equals(options[3])) {
                 return new AttEventController(this, currentUserID, attendeeManager);
             }
-            else if (choice.equals(options[3])){
+            else if (choice.equals(options[4])){
                 return new OrgReqController(this, currentUserID);
             }
-            else if (choice.equals(options[4])) {
+            else if (choice.equals(options[5])) {
                 return new OrgPersonController(this, currentUserID, attendeeManager, employeeManager, speakerManager);
             }
-            else if (choice.equals(options[5])) {
+            else if (choice.equals(options[6])) {
                 return new OrgEventController(this, currentUserID, speakerManager, employeeManager);
             }
         }
@@ -99,9 +103,9 @@ public class OrganizerController extends PersonController {
     public String[] getMenuOptions() {
         String[] orgOptions  = {"View your event information", "View attendees' requests", "Create and delete user accounts",
                 "View & edit convention event list"};
-        String[] options = new String[6];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(orgOptions, 0, options, 2, 4);
+        String[] options = new String[7];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        System.arraycopy(orgOptions, 0, options, 3, 4);
         return options;
     }
 }

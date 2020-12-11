@@ -13,6 +13,7 @@ import Event.RoomManager;
 import Message.ChatManager;
 import Message.MessageManager;
 import Person.AttendeeManager;
+import Presenter.PersonController.UserInfoController;
 import Request.RequestManager;
 
 public class AttendeeController extends PersonController {
@@ -36,15 +37,18 @@ public class AttendeeController extends PersonController {
         String[] options = getMenuOptions();
         if (super.loggedIn) {
             if (choice.equals(options[0])) {
-                return new ContactController(this, currentUserID);
+                return new UserInfoController(this, currentUserID);
             }
             else if (choice.equals(options[1])) {
-                return new AttMessageController(this, currentUserID, manager);
+                return new ContactController(this, currentUserID);
             }
             else if (choice.equals(options[2])) {
+                return new AttMessageController(this, currentUserID, manager);
+            }
+            else if (choice.equals(options[3])) {
                 return new AttEventController(this, currentUserID, manager);
             }
-            else if (choice.equals(options[3])){
+            else if (choice.equals(options[4])){
                 return new AttReqController(this, currentUserID);
             }
         }
@@ -54,9 +58,9 @@ public class AttendeeController extends PersonController {
     @Override
     public String[] getMenuOptions() {
         String[] attendeeOptions  = {"View your event information", "View your requests"};
-        String[] options = new String[4];
-        System.arraycopy(super.getMenuOptions(), 0, options, 0, 2);
-        System.arraycopy(attendeeOptions, 0, options, 2, 2);
+        String[] options = new String[5];
+        System.arraycopy(super.getMenuOptions(), 0, options, 0, 3);
+        System.arraycopy(attendeeOptions, 0, options, 3, 2);
         return options;
     }
 }

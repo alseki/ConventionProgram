@@ -11,6 +11,7 @@ import Presenter.OrganizerController.OrgPersonController;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.PersonController.ContactController;
 import Presenter.PersonController.MessageController;
+import Presenter.PersonController.UserInfoController;
 import Presenter.SpeakerController.SpeEventController;
 
 
@@ -48,6 +49,9 @@ public class AccountViewFactory {
         }
         else if (controller instanceof EmpEventController) {
             new EmpEventView(controller);
+        }
+        else if (controller instanceof UserInfoController) {
+            new UserInfoView(controller);
         }
         else if (controller instanceof EmpReqController) {
             new OrgReqView(controller);
