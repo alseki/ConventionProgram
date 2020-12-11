@@ -13,6 +13,7 @@ public class ChatListDisplayView extends ListDisplayView{
     JDialog chatSerialNumber;
     JPanel dialogPanel;
     Container container;
+    InputRequestView request;
 
     public ChatListDisplayView(String title, String[] options) {
         super(title, options);
@@ -41,39 +42,6 @@ public class ChatListDisplayView extends ListDisplayView{
         contentPane.add(exitButton);
         exitButton.setVisible(true);
 
-        /*JRadioButton jb1 = new JRadioButton("11111111111111"+"\n" + "22222222222222");
-        jb1.setBounds(10, 20, 380, 30);
-        JRadioButton jb2 = new JRadioButton("2");
-        JRadioButton jb3 = new JRadioButton("3");
-
-        ButtonGroup group = new ButtonGroup();
-        group.add(jb1);
-        group.add(jb2);
-        group.add(jb3);
-
-
-        contentPane.add(jb1);
-        contentPane.add(jb2);
-        contentPane.add(jb3);
-        frame.pack();*/
-        StringBuilder list = new StringBuilder();
-        for (String option: options) {
-            list.append("<li>");
-            list.append(option);
-            list.append("<br><br>");
-        }
-
-        printedList = new JLabel("<html>" + list.toString() + "</html>");
-        printedList.setBounds(10, 10, 200, 300);
-        contentPane.add(printedList);
-        printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-        printedList.setVisible(true);
-
-
-
-
-
 
     }
 
@@ -83,7 +51,13 @@ public class ChatListDisplayView extends ListDisplayView{
             hide();
         }
         if (event.getActionCommand().equals("checkMessages")) {
-            //hide();
+            request = new InputRequestView("Input the Serial Number of the Chat", 1);
+        }
+        if (event.getActionCommand().equals("Archive")) {
+            request = new InputRequestView("Input the Serial Number of the Chat", 2);
+        }
+        if (event.getActionCommand().equals("exitChat")) {
+            request = new InputRequestView("Input the Serial Number of the Chat", 3);
         }
 
     }

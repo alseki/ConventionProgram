@@ -44,7 +44,7 @@ public class AttMessageView extends MessageView {
     private void showViewAnnouncementChannels() {
         try {
             msgList = new ListDisplayView(announcementPresenter.getChatListTitle(),
-                    announcementPresenter.getChatList());
+                    announcementPresenter.getChats(announcementPresenter.getChatList()));
             showMainDropDownMenu();
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.exceptionTitle(), e.getMessage());

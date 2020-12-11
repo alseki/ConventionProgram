@@ -137,7 +137,7 @@ public class MessageMenu implements SubMenuPrinter {
      * @param chatIDs The list of IDs the chats to print out
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
      */
-    protected String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
+    public String[] getChats(ArrayList<String> chatIDs) throws InvalidChoiceException {
         String[] chatList = new String[chatIDs.size()];
         for (int i = 0; i < chatList.length; i++) {
             String chat = chatIDs.get(i);
@@ -149,8 +149,9 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Returns a list of formatted chat summaries for this user's chat
      * @throws InvalidChoiceException if the list is empty or the chat IDs are invalid
+     * @return
      */
-    public String[] getChatList() throws InvalidChoiceException {
+    public ArrayList<String> getChatList() throws InvalidChoiceException {
         ArrayList<String> unReadChatList = new ArrayList<>();
         ArrayList<String> chatList = new ArrayList<>();
         for (String chatId : personManager.getChats(currentUserID)) {
@@ -164,7 +165,7 @@ public class MessageMenu implements SubMenuPrinter {
             }
         }
         chatList.addAll(unReadChatList);
-        return getChats(chatList);
+        return chatList;
     }
 
 
@@ -282,16 +283,16 @@ public class MessageMenu implements SubMenuPrinter {
         String time = messageManager.getDateTime(messageId);
         String message = messageManager.getContent(messageId);
         if (messageManager.getReadStatus(messageId)) {
-            return  "[Unread]" + "\n" +
-                    "From: " + sender + "[Username]" + "\n" +
-                    "To: " + receiver + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
+            return  "[Unread]" + "<br>" +
+                    "From: " + sender + "[Username]" + "<br>" +
+                    "To: " + receiver + "<br>" +
+                    "Time sent:" + time + "<br>" +
+                    "Message:" + message + "<br>";
         } else {
-            return "From: " + sender + "[Username]" + "\n" +
-                    "To: " + receiver + "\n" +
-                    "Time sent:" + time + "\n" +
-                    "Message:" + message + "\n";
+            return "From: " + sender + "[Username]" + "<br>" +
+                    "To: " + receiver + "<br>" +
+                    "Time sent:" + time + "<br>" +
+                    "Message:" + message + "<br>";
         }
     }
 
