@@ -1,11 +1,8 @@
 package Presenter.OrganizerController;
 
-// Programmers:
-// Description: All the methods that deal with userAccounts in OrganizerController Event Menu
-// Date Created: 01/11/2020
-// Date Modified: 19/11/2020
-
+import Event.CapacityException;
 import Event.EventPermissions;
+import Event.NotPanelException;
 import Event.Panel;
 import Person.AttendeeManager;
 import Person.EmployeeManager;
@@ -13,9 +10,9 @@ import Person.OrganizerManager;
 import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Central.SubMenuPrinter;
+import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.OverwritingException;
 import Request.RequestEntity;
-import Request.RequestManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,7 +26,7 @@ import java.util.ArrayList;
 
 public class OrgPersonController extends SubMenu {
 
-    // OrgPersonController implements methods that add/remove user accounts, ...
+    // OrgPersonController implements methods that add/remove user accounts.
 
     private String currentUserID;
     private AttendeeManager attendeeManager;
@@ -37,7 +34,7 @@ public class OrgPersonController extends SubMenu {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
     private EventPermissions eventPermissions;
-    private RequestManager requestManager;
+    private OrgEventController orgEventController;
     private OrgPersonMenu presenter;
 
     /**
@@ -57,6 +54,7 @@ public class OrgPersonController extends SubMenu {
         this.organizerManager = (OrganizerManager) personManager;
         this.speakerManager = speakerManager;
         this.eventPermissions = new EventPermissions(roomManager, eventManager);
+        this.orgEventController = new OrgEventController(subMenu, currentUserID, speakerManager, employeeManager);
         this.presenter = new OrgPersonMenu(roomManager, eventManager, personManager);
     }
 
@@ -112,7 +110,6 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Creates a new Speaker account and adds it to the system
-     *
      * @param name     The name of the Speaker
      * @param username The username of the Speaker
      * @param password The password of the Speaker
@@ -181,7 +178,44 @@ public class OrgPersonController extends SubMenu {
             this.deleteRequests(userID);
             organizerManager.cancelAccount(userID);}
         else {
-            throw new OverwritingException("while account");
+            throw new OverwritingException("while deleting account");
+        }
+    }
+
+    /**
+     * Deletes a Speaker account from the system; also deletes this Speaker from all Event Speaker lists, all
+     * chats, and all other users' contact lists. In addition, sends a Message to all their contacts to let them know
+     * that they can no longer contact this user, and deletes those non-Panels at which this Speaker is
+     * scheduled to speak (though not those currently in progress.
+     * @param username The username of the Speaker whose account is to be deleted
+     */
+    public void cancelSpeakerAccount(String username) throws InvalidChoiceException, NotPanelException,
+            CapacityException {
+        if(personManager.findPerson(username)) {
+            String speakerID = personManager.getCurrentUserID(username);
+            this.deleteUserFromChatGroups(speakerID);
+            this.removeFromOtherUsersContactLists(speakerID);
+            this.deleteRequests(speakerID);
+            ArrayList<String> panels = speakerManager.getSpeakerInPanels(speakerID);
+            ArrayList<String> nonPanels = speakerManager.getSpeakerInNonPanels(speakerID);
+            if (!panels.isEmpty()) {
+                for (String eventId : panels) {
+                    removeSpeakerFromPanelEvent(speakerID, eventId);
+                }
+            }
+            if (!nonPanels.isEmpty()) {
+                for (String eventId : nonPanels) {
+                    removeSpeakerFromNonPanelEvent(speakerID, eventId);
+                }
+            }
+            speakerManager.getSpeakerInNonPanels(speakerID).clear();
+            speakerManager.getSpeakerInPanels(speakerID).clear();
+            speakerManager.getContactList(speakerID).clear();
+            speakerManager.getChats(speakerID).clear();
+            informOrganizersSpeakerDeletion(this.currentUserID, speakerID);
+        }
+        else {
+            throw new OverwritingException("while deleting account");
         }
     }
 
@@ -282,152 +316,53 @@ public class OrgPersonController extends SubMenu {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    public boolean removeSpeakerFromNonPanelEvent(String speakerID, String eventID) {
-        // for non-panel events, this will entail cancelling the event. Organizer will have to set up new event with the new details, and attendees will have to sign up again
-        // should a new non-panel event be nearly identical
-
-        // TODO add try catch blocks
-
-        // Here, checking the time of the event, so that Panel has not ALREADY started, and speaker account can not be deleted just yet
-        String eventName = eventManager.getEventName(eventID);
-        String chatName = eventManager.getEventChat(eventID);
+    /** This is a helper method that removes a Speaker from all Events that are not Panels, and cancels those non-Panels
+     * (though not those currently in progress).
+     * @param speakerID The ID of the Speaker
+     * @param eventID The ID of the Event
+     */
+    public void removeSpeakerFromNonPanelEvent(String speakerID, String eventID) {
         LocalDateTime now = LocalDateTime.now();
         int dayHour = now.getHour();
         int dayMinute = now.getMinute();
-
-        //same startTime method below: the same one in OrEventController
         LocalDateTime startTime = getStartTime(eventID);
         int eventHour = startTime.getHour();
         int eventMinute = startTime.getMinute();
         if (eventHour < dayHour && eventMinute < dayMinute) {
-            // 1) will remove the eventManager
             eventManager.removeEvent(eventID);
-            // 2) will cancel the Event
-            // FIXME
-            //orgEventController.cancelEvent(eventID);
-
-            String organizerID = this.currentUserID;
+            this.orgEventController.cancelEvent(eventID);
         }
-        // remove Talk means all events speaker is signed up to speak at: this includes allTalks and allTalksDictionary in SpeakerManager.
-        // speakerManager.removeTalk(speakerID, eventID);
-        return true;
     }
 
-    public boolean removeSpeakerFromPanelEvent(String speakerID, String eventID) {
+    /** This is a helper method that removes a Speaker from all Panels, and cancels those Panels which have no Speakers
+     * as a result (though not those currently in progress).
+     * @param speakerID The ID of the Speaker
+     * @param eventID The ID of the Event
+     */
+    public boolean removeSpeakerFromPanelEvent(String speakerID, String eventID) throws NotPanelException,
+            InvalidChoiceException, CapacityException {
         Boolean isPanel = eventManager.getEventType(eventID).equals("PANEL");
         Panel panel = (Panel) eventManager.getEvent(eventID);
         Boolean isEmpty = panel.isPanelEmpty(eventID);
         Boolean isSpeaker = panel.isSpeakerInPanel(speakerID);
-
-        String eventName = eventManager.getEventName(eventID);
-        String chatName = eventManager.getEventChat(eventID);
         LocalDateTime now = LocalDateTime.now();
         int dayHour = now.getHour();
         int dayMinute = now.getMinute();
-
-        //same startTime method below: the same one in OrEventController
         LocalDateTime startTime = getStartTime(eventID);
         int eventHour = startTime.getHour();
         int eventMinute = startTime.getMinute();
         if ((eventHour < dayHour) && (eventMinute < dayMinute) && isPanel && !isEmpty && isSpeaker) {
-            // FIXME
-            /*if (panel.numberPanelists(eventID) == 1) {
+            if (panel.numberPanelists(eventID) == 1) {
                 orgEventController.removeSpeakerFromPanel(speakerID, eventID);
                 orgEventController.cancelEvent(eventID);
             } else {
                 orgEventController.removeSpeakerFromPanel(speakerID, eventID);
-            }*/
+            }
             return true;
 
         }
         return false;
     }
-
-
-
-
-
-
-    public void cancelSpeakerAccount(String username) throws OverwritingException {
-        if(personManager.findPerson(username)) {
-            String speakerID = personManager.getCurrentUserID(username);
-            // this is removing speaker ID from the contact lists of other users, if speaker bothered to do that
-            removeFromOtherUsersContactLists(speakerID);
-
-            // getting the lists of nonPanel and Panels speaker to be deleted was signed up to speak at
-            ArrayList<String> panels = speakerManager.getSpeakerInPanels(speakerID);
-            ArrayList<String> nonPanels = speakerManager.getSpeakerInNonPanels(speakerID);
-
-            // to make sure that panel is not empty. Remember this is speaker's list of panel events, not the Panel entity's list of speakers
-            // then using this eventID to delete speaker from the Panel itself
-            if (!panels.isEmpty()) {
-                for (String eventId : panels) {
-                    removeSpeakerFromPanelEvent(speakerID, eventId);
-                }
-            }
-
-            // to make sure that non-panel list is not empty. Same as above.
-            if (!nonPanels.isEmpty()) {
-                for (String eventId : nonPanels) {
-                    removeSpeakerFromNonPanelEvent(speakerID, eventId);
-                }
-            }
-
-            // rendering "clear" all the maps and arrayLists in SpeakerManager and speaker than contains speaker's ID and person object in the
-            // case of maps
-            //speakerManager.getAllTalksBySpeaker(speakerID).clear();
-            // speakerManager.getAllTalksBySpeaker(speakerID).clear();
-            //speakerManager.getSpeakerIdAllTalks(speakerID).clear();
-            speakerManager.getSpeakerInNonPanels(speakerID).clear();
-            speakerManager.getSpeakerInPanels(speakerID).clear();
-            speakerManager.getContactList(speakerID).clear();
-            speakerManager.getChats(speakerID).clear();
-
-            // have organizer send message to other panelists - see method below
-            informOrganizersSpeakerDeletion(this.currentUserID, speakerID);
-        }
-        else {
-            throw new OverwritingException("while delete account");
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /**
-         * Adds a Message with content the AnnouncementChat contained within the Event with eventName*
-         * @param eventName The name of the Event
-         * @param chatName The name of the Chat
-         */
-        private void eventMessage (String eventName, String chatName, String messageContent){
-            String eventID = eventManager.getEventID(eventName);
-            String chatID = eventManager.getEventChat(chatName);
-            String ev = eventManager.getEventChat(eventID);
-            String m = messageManager.createMessage(eventID, chatID, messageContent);
-            chatManager.addMessageIds(ev, m);
-        }
 
         /**
          * Chooses a valid start time for the new Event
@@ -438,14 +373,6 @@ public class OrgPersonController extends SubMenu {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return LocalDateTime.parse(time, formatter);
         }
-
-
-
-
-//    public String createAnnouncementChat(String eventId, ArrayList<String> attendeeIds, String chatName){
-//        Chat ac = new Chat(eventId, attendeeIds, chatName);
-//        aChatsList.add(ac);
-//        return ac.getId();
 
         @Override
         public SubMenuPrinter getPresenter () {
