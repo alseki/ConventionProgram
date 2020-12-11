@@ -34,9 +34,10 @@ public class ListDisplayView implements ActionListener {
         }
 
         printedList = new JLabel("<html>" + list.toString() + "<html/>");
+        printedList.setBounds(10, 10, 200, 300);
         contentPane.add(printedList);
         printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
         printedList.setVisible(true);
 
         returnButton = new JButton("return");
@@ -65,7 +66,7 @@ public class ListDisplayView implements ActionListener {
     /**
      * Hides every component stored in contentPane
      */
-    private void hide() {
+    void hide() {
         for (Component item: contentPane.getComponents()) {
             item.setVisible(false);
         }

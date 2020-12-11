@@ -56,8 +56,19 @@ public class ChatListDisplayView extends ListDisplayView{
         contentPane.add(jb2);
         contentPane.add(jb3);
         frame.pack();*/
+        StringBuilder list = new StringBuilder();
+        for (String option: options) {
+            list.append("<li>");
+            list.append(option);
+            list.append("<br><br>");
+        }
 
-
+        printedList = new JLabel("<html>" + list.toString() + "</html>");
+        printedList.setBounds(10, 10, 200, 300);
+        contentPane.add(printedList);
+        printedList.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        //printedList.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        printedList.setVisible(true);
 
 
 
