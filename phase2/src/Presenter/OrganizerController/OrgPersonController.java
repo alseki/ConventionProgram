@@ -375,8 +375,8 @@ public class OrgPersonController extends SubMenu {
         }
 
         @Override
-        public SubMenuPrinter getPresenter () {
-            return null;
+        public OrgPersonMenu getPresenter () {
+            return this.presenter;
         }
     }
 
