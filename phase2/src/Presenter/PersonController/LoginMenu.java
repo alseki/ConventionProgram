@@ -43,9 +43,14 @@ public class LoginMenu implements SubMenuPrinter {
      */
     @Override
     public String[] getMenuOptions() {
-        String[] options = {"To return to start page, Enter '0'.","To Login, Enter '1'.",
-                "To Create a new account, Enter '2'."};
-        return options;
+        if(accountChoice == 1) {
+            String[] options = {"To return to start page, Enter '0'.", "To Login, Enter '1'.",
+                    "To Create a new account, Enter '2'."};
+            return options;
+        } else {
+            String[] options = {"To return to start page, Enter '0'.", "To Login, Enter '1'."};
+            return options;
+        }
     }
 
 

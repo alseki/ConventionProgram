@@ -13,7 +13,6 @@ import Presenter.PersonController.MessageMenu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 
 public class MessageView extends AccountView {
     MessageController controller;
