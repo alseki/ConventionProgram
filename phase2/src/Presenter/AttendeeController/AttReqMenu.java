@@ -35,7 +35,7 @@ public class AttReqMenu implements SubMenuPrinter {
     /**
      * allows you to see a format request for request with reqid
      * @param reqId String
-     * @return String of formated request
+     * @return String of formatted request
      */
     public String seeRequest(String reqId) throws InvalidChoiceException {
         if (reqM.requestExists(reqId)) {
@@ -60,6 +60,18 @@ public class AttReqMenu implements SubMenuPrinter {
     public String[] myRequests() throws InvalidChoiceException{
         try {
             ArrayList<String> requests = reqM.getRequestsByUser(currentUserID);
+            return requestsList(requests);
+        } catch (NullPointerException e) {
+            throw new NoDataException("request");
+        }
+    }
+
+    /**
+     * Prints out a list of requests in proper format
+     * @return the list of requests
+     */
+    public String[] requestsList(ArrayList<String> requests) throws InvalidChoiceException{
+        try {
             String[] r = new String[requests.size()];
             if (requests != null) {
                 for (int i = 0; i < requests.size(); i++) {
@@ -67,7 +79,7 @@ public class AttReqMenu implements SubMenuPrinter {
                 }
                 return r;
             } else {
-                throw new NoDataException("requests of your");
+                throw new NoDataException("such request");
             }
         } catch (NullPointerException e) {
             throw new NoDataException("request");

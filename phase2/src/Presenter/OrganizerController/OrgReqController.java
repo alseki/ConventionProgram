@@ -20,9 +20,13 @@ public class OrgReqController extends AttReqController {
         this.currentUserID = currentUserID;
     }
 
-    public  String fulfillRequest(String reqId){
-        requestManager.updateEntity(reqId);
-        return presenter.fulfillResponse(reqId);
+    public String fulfillRequest(String reqId) throws InvalidChoiceException{
+        if (requestManager.requestExists(reqId)) {
+            requestManager.updateEntity(reqId);
+            return presenter.fulfillRequestConfirmed(reqId);
+        } else {
+            throw new InvalidChoiceException("request");
+        }
     }
 
     /**
