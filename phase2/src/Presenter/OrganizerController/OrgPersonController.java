@@ -1,6 +1,5 @@
 package Presenter.OrganizerController;
 
-
 // Programmers:
 // Description: All the methods that deal with userAccounts in OrganizerController Event Menu
 // Date Created: 01/11/2020
@@ -43,7 +42,6 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Constructor for OrgPersonController objects
-     *
      * @param subMenu         The submenu which implements options
      * @param currentUserID   The ID for the current user of this controller
      * @param attendeeManager The AttendeeManager which manages the Attendees at this convention
@@ -66,7 +64,6 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Creates a new Attendee account and adds it to the system
-     *
      * @param name     The name of the Attendee
      * @param username The username of the Attendee
      * @param password The password of the Attendee
@@ -83,7 +80,6 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Creates a new Employee account and adds it to the system
-     *
      * @param name     The name of the Employee
      * @param username The username of the Employee
      * @param password The password of the Employee
@@ -100,7 +96,6 @@ public class OrgPersonController extends SubMenu {
 
     /**
      * Creates a new Organizer account and adds it to the system
-     *
      * @param name     The name of the Organizer
      * @param username The username of the Organizer
      * @param password The password of the Organizer
@@ -132,7 +127,7 @@ public class OrgPersonController extends SubMenu {
         }
     }
 
-    // Methods for deleting user accounts (and their associated helper methods)
+    // Methods for deleting user accounts
 
     /**
      * Deletes an Attendee account from the system; also deletes this Attendee from all Event Attendee lists, all chats,
@@ -170,6 +165,27 @@ public class OrgPersonController extends SubMenu {
             throw new OverwritingException("while deleting account");
         }
     }
+
+    /**
+     * Deletes an Organizer account from the system; also deletes this Organizer from all Event Attendee lists, all
+     * chats, and all other users' contact lists. In addition, sends a Message to all their contacts to let them know
+     * that they can no longer contact this user.
+     * @param username The username of the Organizer whose account is to be deleted
+     */
+    public void cancelOrganizerAccount(String username) throws OverwritingException {
+        if(!personManager.findPerson(username)){
+            String userID = personManager.getCurrentUserID(username);
+            this.deleteUserFromEvent(userID);
+            this.deleteUserFromChatGroups(userID);
+            this.removeFromOtherUsersContactLists(userID);
+            this.deleteRequests(userID);
+            organizerManager.cancelAccount(userID);}
+        else {
+            throw new OverwritingException("while account");
+        }
+    }
+
+    // Helper methods for deleting user accounts
 
     /**
      * This is a helper method for the account deletion methods above; removes the user from all Events for which
@@ -243,16 +259,40 @@ public class OrgPersonController extends SubMenu {
         }
     }
 
+    /** This is a helper method that informs all Organizers that a Speaker account has been deleted.
+     * @param organizerID The ID of the Organizer
+     * @param speakerID The ID of the Speaker
+     */
+    public void informOrganizersSpeakerDeletion(String organizerID, String speakerID) {
+        String speakerName = personManager.getCurrentUsername(speakerID);
+        String messageContentToOrganizers = "Account of speaker with username: " + speakerName + " and userID: " +
+                speakerID + " has been deleted";
+        ArrayList<String> fellowOrganizers = organizerManager.getOrganizerOnlyMapByID(organizerID);
+        if (!fellowOrganizers.isEmpty()) {
+            for (String fellowOrg : fellowOrganizers) {
+                if (!fellowOrg.equals(organizerID) && chatManager.existChat(organizerID, fellowOrg)) {
+                    String existingChatID = chatManager.findChat(organizerID, fellowOrg);
+                    messageManager.createMessage(organizerID, fellowOrg, existingChatID, messageContentToOrganizers);
+                } else {
+                    String newChatID = chatManager.createChat(organizerID, fellowOrg);
+                    personManager.addChat(organizerID, newChatID);
+                    messageManager.createMessage(organizerID, fellowOrg, newChatID, messageContentToOrganizers);
+                }
+            }
+        }
+    }
 
-    // TODO See line 207
-
-    // TODO when deleting accounts: remove their ID from all chats, and remove their ID from all events & MESSAGE other users in chat that
-    // TODO right before a events commences yeah [4:37 PM] there's a method in eventmanager or eventpermissions or something to
-    //  remove a person from an event... FOR chat, get all their chatIDS (one function) for this and delete their user ID from chat same
-    // for events. get all events they're signed up for
 
 
-    // This is a helper method for delete account
+
+
+
+
+
+
+
+
+
 
     public boolean removeSpeakerFromNonPanelEvent(String speakerID, String eventID) {
         // for non-panel events, this will entail cancelling the event. Organizer will have to set up new event with the new details, and attendees will have to sign up again
@@ -365,63 +405,13 @@ public class OrgPersonController extends SubMenu {
 
 
 
-    public void cancelOrganizerAccount(String username) throws OverwritingException {
-        if(!personManager.findPerson(username)){
-            String userID = personManager.getCurrentUserID(username);
-
-        String orgUsername = personManager.getCurrentUsername(userID);
-        String messageContentToOrganizers = "Account of organizer with username: " + orgUsername + " and userID: " + userID + " has been deleted";
-
-//        ArrayList<String> fellowOrganizers = organizerManager.getOrganizerOnlyMapByID(userID);
-//        for (String fellowOrg : fellowOrganizers) {
-//            if (!fellowOrg.equals(userID) && chatManager.existChat(userID, fellowOrg)) {
-//                String existingChatID = chatManager.findChat(userID, fellowOrg);
-//                messageManager.createMessage(userID, fellowOrg, existingChatID, messageContentToOrganizers);
-//            } else {
-//                String newChatID = chatManager.createChat(userID, fellowOrg);
-//                personManager.addChat(userID, newChatID);
-//                messageManager.createMessage(userID, fellowOrg, newChatID, messageContentToOrganizers);
-//            }
-//            deleteUserFromEvent(userID);
-//            deleteUserFromChatGroups(userID);
-//            removeFromOtherUsersContactLists(userID);
-//            organizerManager.cancelAccount(userID);
-//            return true;
-        //}
-        deleteUserFromEvent(userID);
-        deleteUserFromChatGroups(userID);
-        removeFromOtherUsersContactLists(userID);
-        organizerManager.cancelAccount(userID);}
-        else {
-            throw new OverwritingException("while account");
-        }
-
-
-    }
 
 
 
-    
 
-    public boolean informOrganizersSpeakerDeletion(String currentUserID, String speakerID) {
-        String speakerName = personManager.getCurrentUsername(speakerID);
-        String messageContentToOrganizers = "Account of speaker with username: " + speakerName + " and userID: " + speakerID + " has been deleted";
 
-        ArrayList<String> fellowOrganizers = organizerManager.getOrganizerOnlyMapByID(currentUserID);
-        if (!fellowOrganizers.isEmpty()) {
-            for (String fellowOrg : fellowOrganizers) {
-                if (!fellowOrg.equals(currentUserID) && chatManager.existChat(currentUserID, fellowOrg)) {
-                    String existingChatID = chatManager.findChat(currentUserID, fellowOrg);
-                    messageManager.createMessage(currentUserID, fellowOrg, existingChatID, messageContentToOrganizers);
-                } else {
-                    String newChatID = chatManager.createChat(currentUserID, fellowOrg);
-                    personManager.addChat(currentUserID, newChatID);
-                    messageManager.createMessage(currentUserID, fellowOrg, newChatID, messageContentToOrganizers);
-                }
-            } return true;
-        } return false;
 
-    }
+
 
 
 
