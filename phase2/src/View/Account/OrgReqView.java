@@ -20,7 +20,7 @@ public class OrgReqView extends AccountView {
         this.controller =  (OrgReqController) controller;
         this.presenter = (OrgReqMenu) controller.getPresenter();
 
-        contentPane.setBackground(new Color(100, 200, 100));
+        contentPane.setBackground(greenBG);
     }
 
     private void showViewSpecificReq() {

@@ -1,7 +1,7 @@
 package Presenter.OrganizerController;
 
 import Person.PersonManager;
-import Presenter.PersonController.RequestMenuParent;
+import Presenter.AttendeeController.AttReqMenu;
 import Request.RequestManager;
 
 // Programmers:
@@ -9,16 +9,14 @@ import Request.RequestManager;
 // Date Created:
 // Date Modified: 11/12/2020
 
-public class OrgReqMenu extends RequestMenuParent {
-    PersonManager perM;
+public class OrgReqMenu extends AttReqMenu {
 
     /**
      * constructor
      * @param reqM a request manager
      */
     public OrgReqMenu(RequestManager reqM, PersonManager perM){
-        super(reqM);
-        this.perM = perM;
+        super(reqM, perM);
     }
 
     /**
@@ -29,17 +27,6 @@ public class OrgReqMenu extends RequestMenuParent {
     public String[] getMenuOptions() {
         return new String[]{"View a specific request", "View requests", "Fulfill a request",
             "Make a request", "See my requests", "Modify a request"};
-    }
-
-    /**
-     * see all the requests that are in the system
-     */
-    public String seeRequests() {
-        StringBuilder reqs = new StringBuilder();
-        for (String id: reqM.getAllRequestUserIds()) {
-            reqs.append(reqM.getRequestStringForPerson(id));
-        }
-        return requestFormat() + reqs;
     }
 
     /**

@@ -23,6 +23,8 @@ public abstract class AccountView implements ActionListener {
     public static final Color whiteBG = new Color(255, 255, 200);
     public static final Color yellowBG = new Color(255, 200, 0);
     public static final Color pinkBG = new Color(255, 100, 200);
+    public static final Color blueBG = new Color(100, 200, 232);
+    public static final Color greenBG = new Color(100, 200, 100);
 
     /**
      * Abstract class; A view that is instantiated and run by the Account Class.

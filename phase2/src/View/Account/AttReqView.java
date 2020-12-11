@@ -3,6 +3,7 @@ package View.Account;
 import Presenter.AttendeeController.AttReqController;
 import Presenter.AttendeeController.AttReqMenu;
 import Presenter.Central.SubMenu;
+import Presenter.Exceptions.InvalidChoiceException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,9 @@ public class AttReqView extends AccountView {
     AttReqMenu presenter;
     String[] menuOp;
     JLabel dialogPrompt;
+    JTextField inputField;
+    ListDisplayView reqsList;
+    JButton submit;
 
     /**
      * The view for attendee users to see their request options.
@@ -25,35 +29,77 @@ public class AttReqView extends AccountView {
 
         menuOp = this.presenter.getMenuOptions();
 
-        contentPane.setBackground(new Color(100, 200, 232));
+        contentPane.setBackground(greenBG);
 
-        dialogPrompt = new JLabel("");
+        submit = new JButton("submit");
+        initializeObject(submit);
+
         initializeObject(dialogPrompt);
+        initializeObject(inputField);
     }
+
 
 
     private void showMakeReq() {
-        backButton.setVisible(true);
+        submit.setActionCommand("make");
+        submit.setVisible(true);
 
-        dialogPrompt = new JLabel(this.controller.makeRequestPrompt());
+        dialogPrompt = new JLabel(presenter.makeRequestPrompt());
         dialogPrompt.setVisible(true);
+
+        inputField = new JTextField(200);
+        inputField.setVisible(true);
     }
 
-    private void showViewReqInfo() {
+    private void makeReq() {
+        dialogPrompt = new JLabel(presenter.printRequestCreated());
+        dialogPrompt.setVisible(true);
+
+        backButton.setVisible(true);
+    }
+
+    private void showChooseReqPrompt() {
+        dialogPrompt = new JLabel(presenter.seeRequestPrompt());
+        dialogPrompt.setVisible(true);
+
+        inputField = new JTextField(200);
+        inputField.setVisible(true);
+
+        submit.setActionCommand("show");
+        submit.setVisible(true);
+    }
+
+    private void showReq() {
+        inputField.setVisible(false);
+
+        String reqID = inputField.getText();
+
+        try {
+            backButton.setVisible(true);
+
+            dialogPrompt = new JLabel(presenter.seeRequest(reqID));
+            dialogPrompt.setVisible(true);
+
+            frame.setTitle(presenter.seeRequestTitle(reqID));
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            dialogPrompt.setVisible(false);
+            showMainDropDownMenu();
+        }
+    }
+
+    private void showMyReqs() {
+        try {
+            reqsList = new ListDisplayView(presenter.myRequestTitle(), presenter.myRequests());
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+        }
+    }
+
+    /*private void modifyReq() {
         backButton.setVisible(true);
 
-        String reqs = this.controller.myRequests();
-    }
-
-    private void showMyReq() {
-        backButton.setVisible(true);
-
-    }
-
-    private void modifyReq() {
-        backButton.setVisible(true);
-
-    }
+    }*/
 
 
     @Override
@@ -71,18 +117,30 @@ public class AttReqView extends AccountView {
 
         if(eventName.equals(menuOp[1])) {
             hideMainDropDownMenu();
-            showViewReqInfo();
+            showChooseReqPrompt();
         }
 
         if(eventName.equals(menuOp[2])) {
             hideMainDropDownMenu();
-            showMyReq();
+            showMyReqs();
         }
 
-        if(eventName.equals(menuOp[3])) {
+        if (eventName.equals("make")) {
+            makeReq();
+        }
+
+        if (eventName.equals("show")) {
+            showReq();
+        }
+
+        if (eventName.equals("back")) {
+            showMainDropDownMenu();
+        }
+
+        /*if(eventName.equals(menuOp[3])) {
             hideMainDropDownMenu();
             modifyReq();
-        }
+        }*/
     }
 }
 // ignore this comment

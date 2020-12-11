@@ -54,8 +54,8 @@ public class RequestManager implements Serializable {
     public boolean modifyRequest(String reqUserId, String reqId) {
         RequestEntity req = getRequestEntity(reqId);
         if (!req.getFulfilled()) {
-            String oldRequest = getStringOfRequest(reqId);
-            createRequest(oldRequest, reqUserId);
+            //String oldRequest = getStringOfRequest(reqId);
+            //createRequest(oldRequest, reqUserId);
         }
         return true;
 
@@ -83,20 +83,57 @@ public class RequestManager implements Serializable {
         return requestsList;
     }
 
-    public ArrayList getRequestsByUser(String userID) {
+    /**
+     * Getter for the content of this request
+     * @param reqID The request's ID
+     * @return The request's content
+     */
+    public String getContent(String reqID) {
+        return getRequestEntity(reqID).getRequestContent();
+    }
+
+    /**
+     * Getter for the ID of the person who made this request
+     * @param reqID The request's ID
+     * @return The userID
+     */
+    public String getRequesterID(String reqID) {
+        return getRequestEntity(reqID).getRequestingUserId();
+    }
+
+    /**
+     * Getter for the state of the request
+     * @param reqID The request's ID
+     * @return True if it's fulfilled; False if not
+     */
+    public boolean getRequestFulfilled(String reqID) {
+        return getRequestEntity(reqID).getFulfilled();
+    }
+
+    /**
+     * Returns the list of employees handling this request
+     * @param reqID The request id
+     * @return An arraylist of the employees handling the request
+     */
+    public ArrayList<String> getHandlers(String reqID) {
+        return getRequestEntity(reqID).getEmployeeHandlingRequest();
+    }
+
+    /**
+     * returns all requests made by a particular user
+     * @param userID The user's ID
+     * @return an arraylist of the user's requests
+     */
+    public ArrayList getRequestsByUser(String userID) throws NullPointerException {
         ArrayList<String> userRequestIDs = new ArrayList<>();
         for (RequestEntity request : requestsList) {
             if (request.getRequestingUserId().equals(userID)) {
-                userRequestIDs.add(request.getRequestId());
+                userRequestIDs.add(request.getRequestID());
             }
 
         }
-        return null;
+        return userRequestIDs;
     }
-
-
-
-
     /**
      * to update a request when it is filled
      * @param reqId string for request id
@@ -114,33 +151,6 @@ public class RequestManager implements Serializable {
         RequestEntity req = getRequestEntity(reqId);
         req.setFulfilled();
         req.addEmployeeHandler(userID);
-    }
-
-    /**
-     * allows you to get all the requests for the person with person id
-     * @param personId String
-     * @return format of requests for all the requests for this person.
-     */
-    public String getRequestStringForPerson(String personId){
-        StringBuilder reqs = new StringBuilder();
-        for(RequestEntity req: this.requestsList){
-            if(req.getRequestingUserId().equals(personId)){
-                reqs.append(req.toString());
-            }
-        }
-        return reqs.toString();
-    }
-
-    /**
-     * get the string format of request with request id
-     * @param reqId string representing the request id
-     * @return string format of request entity
-     */
-
-    public String getStringOfRequest(String reqId) {
-        RequestEntity req = getRequestEntity(reqId);
-        return req.toString();
-
     }
 
     /**
@@ -162,15 +172,6 @@ public class RequestManager implements Serializable {
      */
     public boolean requestExists(String reqID){
         return idToRequest.containsKey(reqID);
-    }
-
-    /**
-     * Returns the list of employees handling this request
-     * @param reqID
-     * @return An arraylist of the employees handling the request
-     */
-    public ArrayList<String> getHandlers(String reqID) {
-        return getRequestEntity(reqID).getEmployeeHandlingRequest();
     }
 
 }

@@ -154,25 +154,6 @@ public class OrgEventView extends AccountView {
 
     }
 
-    private void showCreateSpeakerAcc() {
-        backButton.setVisible(true);
-
-        dp1.setText(presenter.printAddSpeakerPrompt());
-        dp1.setVisible(true);
-
-        String speName = JOptionPane.showInputDialog(null, presenter.printAddNamePrompt(),
-                title, JOptionPane.PLAIN_MESSAGE);
-
-        String speUser = JOptionPane.showInputDialog(null, presenter.printAddUsernamePrompt(),
-                title, JOptionPane.PLAIN_MESSAGE);
-
-        String spePassword = JOptionPane.showInputDialog(null, presenter.printAddPasswordPrompt(),
-                title, JOptionPane.PLAIN_MESSAGE);
-
-        String speEmail = JOptionPane.showInputDialog(null, presenter.printAddEmailPrompt(),
-                title, JOptionPane.PLAIN_MESSAGE);
-    }
-
     private void showMakeEventAnnouncement() {
         backButton.setVisible(true);
 
@@ -203,11 +184,6 @@ public class OrgEventView extends AccountView {
         }
 
         if(eventName.equals(menuOp[2])) {
-            hideMainDropDownMenu();
-            showCreateSpeakerAcc();
-        }
-
-        if(eventName.equals(menuOp[3])) {
             hideMainDropDownMenu();
             showMakeEventAnnouncement();
         }

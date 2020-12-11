@@ -84,14 +84,6 @@ public class RequestEntity implements Serializable {
         }
 
     /**
-     * getter for the request id
-     * @return string representing the request id
-     */
-    public String getRequestId () {
-            return this.requestingUserId;
-        }
-
-    /**
      * getter for events concerned
      * @return String
      */
@@ -105,34 +97,6 @@ public class RequestEntity implements Serializable {
     public void setFulfilled () {
             this.fulfilled = true;
         }
-
-    /**
-     * To string method for request entity
-     * comes in the format of requestId     requestContent      pending/fulfilled       requestingUserID
-     * @return string
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(requestId);
-        sb.append("\t");
-        sb.append(requestContent);
-        sb.append("\t");
-        if(!this.employeeHandlingRequest.isEmpty()){
-            sb.append(employeeHandlingRequest + " handling request");
-        }
-        sb.append("\t");
-        if(!this.fulfilled){
-            sb.append("Pending");
-        }
-        else{
-            sb.append("Fulfilled");
-        }
-        sb.append("\t");
-        sb.append(requestingUserId);
-        sb.append("\n");
-        return sb.toString();
-    }
 
 
 

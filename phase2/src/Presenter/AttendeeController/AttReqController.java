@@ -5,7 +5,6 @@ import Presenter.Central.SubMenuPrinter;
 import Request.RequestManager;
 
 public class AttReqController extends SubMenu {
-    protected RequestManager reqM;
     protected AttReqMenu presenter;
     private String currentUserID;
 
@@ -16,12 +15,12 @@ public class AttReqController extends SubMenu {
      */
     public AttReqController(SubMenu subMenu, String currentUserID) {
         super(subMenu);
-        this.presenter = new AttReqMenu(reqM);
+        this.presenter = new AttReqMenu(requestManager, personManager);
         this.currentUserID = currentUserID;
     }
 
     private void createRequest(String content) {
-        reqM.createRequest(this.currentUserID, content);
+        requestManager.createRequest(this.currentUserID, content);
     }
 
     /**

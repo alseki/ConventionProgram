@@ -53,7 +53,7 @@ public class AccountViewFactory {
             new EmpEventView(controller);
         }
         else if (controller instanceof EmpReqController) {
-            new EmpReqView(controller);
+            new OrgReqView(controller);
         }
     }
 }
