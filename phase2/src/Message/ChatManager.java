@@ -267,7 +267,7 @@ public class ChatManager implements Serializable {
      * @param chatId ID of a Chat object that may be Chat or AnnouncementChat
      * @return Chat object corresponding to the chatId. Null is returned if the ID is invalid.
      */
-    public Chat getUnknownTypeChat(String chatId){
+    private Chat getUnknownTypeChat(String chatId){
         for(Chat c: chatsList){
             if(c.getId().equals(chatId)){
                 return c;} }
@@ -372,17 +372,19 @@ public class ChatManager implements Serializable {
     }
 
     /**
-     * Find chat by chatId.
+     * Find chat Id by chatName
+     * @param chatName Name of Chat
+     * @return ID of chat corresponding to chatName
      */
-    public Chat findChatByName(String chatName) {
+    public String findChatByName(String chatName) {
         for (Chat c : chatsList) {
             if (c.getName().equals(chatName)) {
-                return c;
+                return c.getId();
             }
         }
         for (Chat c : aChatsList) {
             if (c.getName().equals(chatName)) {
-                return c;
+                return c.getId();
             }
         }
         return null;

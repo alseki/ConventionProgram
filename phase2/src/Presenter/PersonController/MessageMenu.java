@@ -121,7 +121,7 @@ public class MessageMenu implements SubMenuPrinter {
         for (String participantID : chatManager.getPersonIds(chatID)){
             participants.append("\n").append(personManager.getCurrentUsername(participantID));
         }
-        for (String msgId : chatManager.getUnknownTypeChat(chatID).getMessageIds()) {
+        for (String msgId : chatManager.getMessageIds(chatID)) {
             if (messageManager.getReadStatus(msgId)) {
                 return "[Unread]" + "<br>" +
                         "ChatName: " + chatManager.getChatName(chatID) + "<br>" +
@@ -155,8 +155,8 @@ public class MessageMenu implements SubMenuPrinter {
         ArrayList<String> unReadChatList = new ArrayList<>();
         ArrayList<String> chatList = new ArrayList<>();
         for (String chatId : personManager.getChats(currentUserID)) {
-            if (!chatManager.getUnknownTypeChat(chatId).getAnnouncementOrNot()) {
-                for (String msgId : chatManager.getUnknownTypeChat(chatId).getMessageIds()) {
+            if (!chatManager.getChatType(chatId)) {
+                for (String msgId : chatManager.getMessageIds(chatId)) {
                     if (messageManager.getReadStatus(msgId)) {
                         unReadChatList.add(chatId);
                     }
@@ -234,7 +234,7 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter chatname of the Chat that they want to archive
      */
-    public void printArchiveChatPrompt(){ System.out.println("Which chat do you want to archive? Enter the chatName.");}
+    public String printArchiveChatPrompt(){ return("Which chat do you want to archive? Enter the chatName.");}
 
     protected String chatArchived(){return "Chat archived!";}
 
@@ -244,8 +244,8 @@ public class MessageMenu implements SubMenuPrinter {
     /**
      * Prompts user to enter chatName of the Chat that they want to de-archive chat
      */
-    public void printUnarchiveChatPrompt(){
-        System.out.println("Which archived chat do you want to restore to the original location? Enter the chatName.");}
+    public String printUnarchiveChatPrompt(){
+        return("Which archived chat do you want to restore to the original location? Enter the chatName.");}
 
     protected String chatUnarchived(){return "Archived chat restored!";}
 
