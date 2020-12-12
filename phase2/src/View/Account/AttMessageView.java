@@ -113,9 +113,9 @@ public class AttMessageView extends MessageView {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(f));
             //presenter.printChatNotCreated(new
             //        InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
-        }
+        }*/
 
-         */
+
 
 
     }
