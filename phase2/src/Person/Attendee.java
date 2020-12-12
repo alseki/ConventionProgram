@@ -1,9 +1,6 @@
 package Person;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Attendee extends Person {
 
@@ -33,7 +30,7 @@ public class Attendee extends Person {
 
     /**
      * returns the events that the attendee has signed up for
-     * @return ArrayList<String> eventsSignedup the events that the person has signed up for.
+     * @return ArrayList<String> events SignedUp the events that the person has signed up for.
      */
     public ArrayList<String> getEventsSignedUp(){
         return this.eventsSignedUp;

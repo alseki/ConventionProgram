@@ -1,9 +1,5 @@
 package Person;
 
-import Request.RequestEntity;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -97,9 +93,9 @@ public class AttendeeManager extends PersonManager{
     }
 
     /**
-     * Adds a chat
-     * @param currentID
-     * @param chatID
+     * Adds a chat into announcement chats for attendee with chatID set up by announcement for all those in events
+     * @param currentID the user's ID
+     * @param chatID the chatID of the event which has announcements issued about it
      */
     public void addAnChat(String currentID, String chatID) {
         Attendee attendee = (Attendee)getPerson(currentID);
@@ -107,9 +103,9 @@ public class AttendeeManager extends PersonManager{
     }
 
     /**
-     * Removes a chat
-     * @param currentID
-     * @param chatID
+     * Removes a chat from announcement chats for attendee with chatID set up by announcement for all those in events
+     * @param currentID the user's ID
+     * @param chatID the chatID of the event which has announcements issued about it
      */
     public void removeAnChat(String currentID, String chatID) {
         Attendee attendee = (Attendee)getPerson(currentID);
@@ -118,8 +114,8 @@ public class AttendeeManager extends PersonManager{
 
     /**
      *
-     * @param currentUserID
-     * @return ArrayList<String>,of chatID of messages receieved by the User
+     * @param currentUserID of the attendee
+     * @return ArrayList<String>,of chatID of messages received by the User; getAnCatList() is from PersonManager
      */
 
     public ArrayList<String> getAnChats(String currentUserID) {

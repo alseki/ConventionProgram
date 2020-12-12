@@ -27,10 +27,11 @@ public class OrgEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"Create a new room", "Create a new event", "Make an announcement to the attendees of an event"};
+        return new String[]{"Create a new room", "Create a new event",
+                "Make an announcement to the attendees of an event"};
     }
 
-    // OPTION 1
+    // Prompts for addRoom
 
     /**
      * Prompts user to input the name of the Room they wish to add
@@ -53,7 +54,7 @@ public class OrgEventMenu extends EventMenu {
         return "What is the capacity of the room you want to create?";
     }
 
-    // OPTION 2
+    // Prompts for createEvent
 
     /**
      * Prompts the user to create an Event
