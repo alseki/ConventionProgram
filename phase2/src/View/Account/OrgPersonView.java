@@ -289,39 +289,39 @@ public class OrgPersonView extends AccountView {
             showCreateOrg();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[4])) { // create speaker acc
+        if(eventName.equals(presenter.getMenuOptions()[4])) { // cancel speaker acc
             hideMainDropDownMenu();
             showCancelSpe();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[5])) { // create attendee acc
+        if(eventName.equals(presenter.getMenuOptions()[5])) { // cancel attendee acc
             hideMainDropDownMenu();
             showCancelAtt();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[6])) { // create employee acc
+        if(eventName.equals(presenter.getMenuOptions()[6])) { // cancel employee acc
             hideMainDropDownMenu();
             showCancelEmp();
         }
 
-        if(eventName.equals(presenter.getMenuOptions()[7])) { // create organizer acc
+        if(eventName.equals(presenter.getMenuOptions()[7])) { // cancel organizer acc
             hideMainDropDownMenu();
             showCancelOrg();
         }
 
-        if(eventName.equals("speakerCreate")) { // cancel speaker acc
+        if(eventName.equals("speakerCreate")) { // create speaker acc
             createSpe();
         }
 
-        if(eventName.equals("organizerCreate")) { // cancel attendee acc
+        if(eventName.equals("organizerCreate")) { // create attendee acc
             createOrg();
         }
 
-        if(eventName.equals("attendeeCreate")) { // cancel employee acc
+        if(eventName.equals("attendeeCreate")) { // create employee acc
             createAtt();
         }
 
-        if(eventName.equals("employeeCreate")) { // cancel organizer acc
+        if(eventName.equals("employeeCreate")) { // create organizer acc
             createEmp();
         }
 
