@@ -1,6 +1,5 @@
 package Request;
 
-import org.omg.CORBA.Request;
 
 import java.io.Serializable;
 import java.util.ArrayList;

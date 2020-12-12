@@ -109,10 +109,10 @@ public class MessageController extends SubMenu {
      * If Chat contains 3 people, permanently delete Chat if there already exists private chat among rest of members, or
      * set the Chat type to Chat (not announcement Chat) otherwise.
      * If Chat contains more than 3 people, simply let the user exit Chat.
-     * @param chatName name of the Chat the user wants to exit from
+     * @param chatId Id of the Chat the user wants to exit from
      */
-    protected void deleteChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName);
+    public void deleteChat(String chatId){
+        //String chatId = chatManager.findChatByName(chatName);
         ArrayList<String> personIds = chatManager.getPersonIds(chatId);
         if (personIds.size() <= 2){
             for(String personId: personIds) {
@@ -127,7 +127,7 @@ public class MessageController extends SubMenu {
             if (chatManager.findChat(original)!=null){existsPrivate = true;}
             personManager.removeChat(currentUserID, chatId);
             chatManager.removePersonIds(chatId, currentUserID);
-            if (existsPrivate) {this.deleteChat(chatName);}
+            if (existsPrivate) {this.deleteChat(chatId);}
             else {chatManager.setChatTypeToChat(chatId);}
         } else {
             personManager.removeChat(currentUserID, chatId);
@@ -137,11 +137,10 @@ public class MessageController extends SubMenu {
 
     /**
      * Add
-     * @param chatName
+     * @param chatId
      */
 
-    protected void archiveChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName);
+    public void archiveChat(String chatId){
         for (String cId : personManager.getChats(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.archiveChatByPersonId(currentUserID, chatId);
@@ -150,8 +149,7 @@ public class MessageController extends SubMenu {
         }
     }
 
-    protected void unArchiveChat(String chatName){
-        String chatId = chatManager.findChatByName(chatName);
+    public void unArchiveChat(String chatId){
         for (String cId : personManager.getCurrentArchivedChatList(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.removeArchiveChatByPersonId(currentUserID, chatId);
@@ -160,12 +158,20 @@ public class MessageController extends SubMenu {
         }
     }
 
-    protected void archiveMessage(String msgId){
+    public void archiveMessage(String msgId){
         personManager.addCurrentFavorites(currentUserID, msgId);
     }
 
-    protected void unArchiveMessage(String msgId){
+    public void unArchiveMessage(String msgId){
         personManager.removeCurrentFavorites(currentUserID, msgId);
+    }
+
+    public void unreadMessage(String msgId) {
+        messageManager.changeStatusUnread(msgId);
+    }
+
+    public void readMessage(String msgId) {
+        messageManager.changeStatusRead(msgId);
     }
 
     /**
