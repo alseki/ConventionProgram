@@ -186,16 +186,21 @@ public class MessageController extends SubMenu {
 
     /**
      * Tells if the chatName is already taken (true) or not taken (false).
+     * @param personIDs IDs of the users that are going to be checked if they have a Chat with same name in their ChatList
      * @param chatName Name of the Chat
      * @return true iff chatName is taken by an existing Chat in chatList of the this user Person object.
      * Else, return false.
      */
-    public boolean chatNameTaken(String chatName){
-        ArrayList <String> userChatIDs = personManager.getChats(currentUserID);
-        for (String chatID: userChatIDs){
-            if (chatManager.getChatName(chatID).equals(chatName)) {
-            return true;}
-            }return false;}
+    public boolean chatNameTaken(ArrayList<String> personIDs, String chatName){
+        ArrayList <String> userIDs = new ArrayList<>(personIDs);
+        userIDs.add(currentUserID);
+        for (String userID: userIDs){
+            ArrayList <String> userChatIDs = personManager.getChats(userID);
+            for (String chatID: userChatIDs){
+                if (chatManager.getChatName(chatID).equals(chatName)) {return true;}
+            }
+        }
+        return false;}
 
     /*
     protected void addPersonToChats(String chatname, ArrayList<String> usernames){

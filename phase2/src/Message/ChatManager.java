@@ -37,11 +37,12 @@ public class ChatManager implements Serializable {
      * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
      * @param guestId IDs of guest
+     * @param chatName the name of this chat, set up by who create it.
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public String createChat(String ownerId, String guestId, String name){
+    public String createChat(String ownerId, String guestId, String chatName){
         //if ((ownerId.equals(guestId))||(this.existChat(ownerId, guestId))){return null;}
-        Chat newC = new Chat(ownerId, guestId, name);
+        Chat newC = new Chat(ownerId, guestId, chatName);
         chatsList.add(newC);
         return newC.getId();
     }
@@ -350,7 +351,7 @@ public class ChatManager implements Serializable {
         for (Chat c : chatsList) {
             ArrayList<String> members = c.getPersonIds();
             Collections.sort(members);
-            if (members.equals(guestsId)) {
+            if (members.equals(personIds)) {
                 return c.getId();
             }
         }
