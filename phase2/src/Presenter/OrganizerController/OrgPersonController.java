@@ -169,6 +169,8 @@ public class OrgPersonController extends SubMenu {
      * that they can no longer contact this user.
      * @param username The username of the Organizer whose account is to be deleted
      */
+
+    // replaced InvalidChoiceException  with OverWritingException : the bug in OrgPersonView is gone
     public void cancelOrganizerAccount(String username) throws OverwritingException {
         if(!personManager.findPerson(username)){
             String userID = personManager.getCurrentUserID(username);
@@ -308,8 +310,8 @@ public class OrgPersonController extends SubMenu {
                     String existingChatID = chatManager.findChat(organizerID, fellowOrg);
                     messageManager.createMessage(organizerID, fellowOrg, existingChatID, messageContentToOrganizers);
                 } else {
-                    //FIXME: error this line
-                    String newChatID = chatManager.createChat(organizerID, fellowOrg, "new chat");
+                    String newChatID = chatManager.createChat(organizerID, fellowOrg,
+                            "Speaker Deletion Notification");
                     personManager.addChat(organizerID, newChatID);
                     messageManager.createMessage(organizerID, fellowOrg, newChatID, messageContentToOrganizers);
                 }

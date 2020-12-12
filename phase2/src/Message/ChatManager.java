@@ -41,7 +41,7 @@ public class ChatManager implements Serializable {
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
     public String createChat(String ownerId, String guestId, String chatName){
-        //if ((ownerId.equals(guestId))||(this.existChat(ownerId, guestId))){return null;}
+        if ((ownerId.equals(guestId))||(this.existChat(ownerId, guestId))){return null;}
         Chat newC = new Chat(ownerId, guestId, chatName);
         chatsList.add(newC);
         return newC.getId();
@@ -56,7 +56,7 @@ public class ChatManager implements Serializable {
      *         null iff (ArrayList guestIds only contain ownerId) OR (a group Chat with same member exists)
      */
     public String createChat(String ownerId, ArrayList <String> guestIds, String chatName){
-        //if (((guestIds.size()==1) && guestIds.contains(ownerId))||(this.existChat(ownerId, guestIds))){return null;}
+        if (((guestIds.size()==1) && guestIds.contains(ownerId))||(this.existChat(ownerId, guestIds))){return null;}
         Chat newC = new Chat(ownerId, guestIds, chatName);
         chatsList.add(newC);
         return newC.getId();}

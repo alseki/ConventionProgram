@@ -2,6 +2,7 @@ package View.Account;
 
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import Presenter.Exceptions.OverwritingException;
 import Presenter.OrganizerController.OrgPersonController;
 import Presenter.OrganizerController.OrgPersonMenu;
 
@@ -89,43 +90,8 @@ public class OrgPersonView extends AccountView {
         dp3.setText(presenter.printAddSpeakerUsernamePrompt());
         dp4.setText(presenter.printAddSpeakerEmailPrompt());
 
-        submit.setActionCommand("speaker");
+        submit.setActionCommand("speakerCreate");
         submit.addActionListener(this);
-    }
-
-    private void showCreateAtt() {
-        clearInput();
-        dp1.setText(presenter.printAddAttendeeNamePrompt());
-        dp2.setText(presenter.printAddAttendeePasswordPrompt());
-        dp3.setText(presenter.printAddAttendeeUsernamePrompt());
-        dp4.setText(presenter.printAddAttendeeEmailPrompt());
-
-        submit.setActionCommand("attendee");
-        submit.addActionListener(this);
-    }
-
-    private void showCreateEmp() {
-        clearInput();
-        dp1.setText(presenter.printAddEmployeeNamePrompt());
-        dp2.setText(presenter.printAddEmployeePasswordPrompt());
-        dp3.setText(presenter.printAddEmployeeUsernamePrompt());
-        dp4.setText(presenter.printAddEmployeeEmailPrompt());
-
-        submit.setActionCommand("employee");
-        submit.addActionListener(this);
-
-    }
-
-    private void showCreateOrg() {
-        clearInput();
-        dp1.setText(presenter.printAddOrganizerNamePrompt());
-        dp2.setText(presenter.printAddOrganizerPasswordPrompt());
-        dp3.setText(presenter.printAddOrganizerUsernamePrompt());
-        dp4.setText(presenter.printAddOrganizerEmailPrompt());
-
-        submit.setActionCommand("organizer");
-        submit.addActionListener(this);
-
     }
 
     private void createSpe() {
@@ -138,24 +104,16 @@ public class OrgPersonView extends AccountView {
         }
     }
 
-    private void createEmp() {
-        try {
-            controller.createEmployee(input1.getText(), input3.getText(), input2.getText(), input4.getText());
-        } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.printException(e));
-        }finally {
-            showMainDropDownMenu();
-        }
-    }
 
-    private void createOrg() {
-        try {
-            controller.createOrganizer(input1.getText(), input3.getText(), input2.getText(), input4.getText());
-        } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.printException(e));
-        }finally {
-            showMainDropDownMenu();
-        }
+    private void showCreateAtt() {
+        clearInput();
+        dp1.setText(presenter.printAddAttendeeNamePrompt());
+        dp2.setText(presenter.printAddAttendeePasswordPrompt());
+        dp3.setText(presenter.printAddAttendeeUsernamePrompt());
+        dp4.setText(presenter.printAddAttendeeEmailPrompt());
+
+        submit.setActionCommand("attendeeCreate");
+        submit.addActionListener(this);
     }
 
     private void createAtt() {
@@ -168,22 +126,144 @@ public class OrgPersonView extends AccountView {
         }
     }
 
-/*    private void showCancelSpe() {
-        clearOpenInputBox();
-        dp1.setText(presenter.c);
+
+    private void showCreateEmp() {
+        clearInput();
+        dp1.setText(presenter.printAddEmployeeNamePrompt());
+        dp2.setText(presenter.printAddEmployeePasswordPrompt());
+        dp3.setText(presenter.printAddEmployeeUsernamePrompt());
+        dp4.setText(presenter.printAddEmployeeEmailPrompt());
+
+        submit.setActionCommand("employeeCreate");
+        submit.addActionListener(this);
     }
+
+    private void createEmp() {
+        try {
+            controller.createEmployee(input1.getText(), input3.getText(), input2.getText(), input4.getText());
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }finally {
+            showMainDropDownMenu();
+        }
+    }
+
+
+    private void showCreateOrg() {
+        clearInput();
+        dp1.setText(presenter.printAddOrganizerNamePrompt());
+        dp2.setText(presenter.printAddOrganizerPasswordPrompt());
+        dp3.setText(presenter.printAddOrganizerUsernamePrompt());
+        dp4.setText(presenter.printAddOrganizerEmailPrompt());
+
+        submit.setActionCommand("organizerCreate");
+        submit.addActionListener(this);
+    }
+
+    private void createOrg() {
+        try {
+            controller.createOrganizer(input1.getText(), input3.getText(), input2.getText(), input4.getText());
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }finally {
+            showMainDropDownMenu();
+        }
+    }
+
+
+    private void showCancelSpe() {
+        clearOpenInputBox();
+        clearInput();
+        dp1.setVisible(false);
+        dp2.setVisible(false);
+        dp4.setVisible(false);
+        dp3.setText(presenter.printAddSpeakerUsernamePrompt());
+
+        submit.setActionCommand("speakerCancel");
+        submit.addActionListener(this);
+    }
+
+    private void cancelSpe() {
+        /*
+        try {
+            controller.cancelSpeakerAccount(input3.getText());
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        } finally {
+            showMainDropDownMenu();
+        }
+         */
+    }
+
 
     private void showCancelAtt() {
+        clearOpenInputBox();
+        clearInput();
+        dp1.setVisible(false);
+        dp2.setVisible(false);
+        dp4.setVisible(false);
+        dp3.setText(presenter.printAddAttendeeUsernamePrompt());
 
+        submit.setActionCommand("attendeeCancel");
+        submit.addActionListener(this);
     }
+
+    private void cancelAtt() {
+        try {
+            controller.cancelAttendeeAccount(input3.getText());
+        } catch (OverwritingException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }finally {
+            showMainDropDownMenu();
+        }
+    }
+
 
     private void showCancelEmp() {
+        clearOpenInputBox();
+        clearInput();
+        dp1.setVisible(false);
+        dp2.setVisible(false);
+        dp4.setVisible(false);
+        dp3.setText(presenter.printAddEmployeeUsernamePrompt());
 
+        submit.setActionCommand("employeeCancel");
+        submit.addActionListener(this);
     }
 
-    private void showCancelOrg() {
+    private void cancelEmp() {
+        try {
+            controller.cancelEmployeeAccount(input3.getText());
+        } catch (OverwritingException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }finally {
+            showMainDropDownMenu();
+        }
+    }
 
-    }*/
+
+    private void showCancelOrg() {
+        clearOpenInputBox();
+        clearInput();
+        dp1.setVisible(false);
+        dp2.setVisible(false);
+        dp4.setVisible(false);
+        dp3.setText(presenter.printAddOrganizerUsernamePrompt());
+
+        submit.setActionCommand("organizerCancel");
+        submit.addActionListener(this);
+    }
+
+    private void cancelOrg() {
+        try {
+            controller.cancelOrganizerAccount(input3.getText());
+        } catch (OverwritingException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }finally {
+            showMainDropDownMenu();
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -209,20 +289,56 @@ public class OrgPersonView extends AccountView {
             showCreateOrg();
         }
 
-        if(eventName.equals("speaker")) { // cancel speaker acc
+        if(eventName.equals(presenter.getMenuOptions()[4])) { // cancel speaker acc
+            hideMainDropDownMenu();
+            showCancelSpe();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[5])) { // cancel attendee acc
+            hideMainDropDownMenu();
+            showCancelAtt();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[6])) { // cancel employee acc
+            hideMainDropDownMenu();
+            showCancelEmp();
+        }
+
+        if(eventName.equals(presenter.getMenuOptions()[7])) { // cancel organizer acc
+            hideMainDropDownMenu();
+            showCancelOrg();
+        }
+
+        if(eventName.equals("speakerCreate")) { // create speaker acc
             createSpe();
         }
 
-        if(eventName.equals("organizer")) { // cancel attendee acc
+        if(eventName.equals("organizerCreate")) { // create attendee acc
             createOrg();
         }
 
-        if(eventName.equals("attendee")) { // cancel employee acc
+        if(eventName.equals("attendeeCreate")) { // create employee acc
             createAtt();
         }
 
-        if(eventName.equals("employee")) { // cancel organizer acc
+        if(eventName.equals("employeeCreate")) { // create organizer acc
             createEmp();
+        }
+
+        if(eventName.equals("speakerCancel")) { // cancel speaker acc
+            cancelSpe();
+        }
+
+        if(eventName.equals("organizerCancel")) { // cancel attendee acc
+            cancelOrg();
+        }
+
+        if(eventName.equals("attendeeCancel")) { // cancel employee acc
+            cancelAtt();
+        }
+
+        if(eventName.equals("employeeCancel")) { // cancel organizer acc
+            cancelEmp();
         }
     }
 }

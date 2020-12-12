@@ -195,8 +195,8 @@ public class OrgEventController extends SubMenu {
                 messageManager.createMessage(organizerID, speakerID, existingChatID, messageContentToSpeaker);
 
             } else {
-                //FIXME: error
-                String newChatID = chatManager.createChat(organizerID, speakerID, "new chat");
+                String newChatID = chatManager.createChat(organizerID, speakerID,
+                        "Event Cancellation Notification");
                 personManager.addChat(organizerID, newChatID);
                 messageManager.createMessage(organizerID, speakerID, newChatID, messageContentToSpeaker);
             }

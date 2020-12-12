@@ -5,21 +5,25 @@ import java.util.Map;
 
 public class OrganizerManager extends PersonManager{
 
-    /**
-     * constructor for OrganizerManager
-     * @param usernameToPerson a map of String linking username to organizer object
-     * @param idToPerson a map of String linking id to ogranizer object
-     */
 
-    // dictionary of all organizers; this is under the theme of having an short list for organizers to looks up each other
+
+    // lists of all organizers; this is under the theme of having a short list for organizers to look up each other
     protected ArrayList usernameToOrganizer = new ArrayList<>();
     protected ArrayList userIdToOrganizer = new ArrayList<>();
 
+
+    /**
+     * constructor for OrganizerManager
+     * @param usernameToPerson a map of String linking username to organizer object
+     * @param idToPerson a map of String linking id to organizer object
+     */
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson) {
         super(usernameToPerson, idToPerson);
 
     }
 
+    // this is a second constructor for OrganizerManager for the logging-in of the first organizer for the convention
+    // see firstLogin() below
     public OrganizerManager(Map<String, Person> usernameToPerson, Map<String, Person> idToPerson, boolean firstLogIn) {
         super(usernameToPerson, idToPerson);
         if (firstLogIn) {
@@ -27,7 +31,6 @@ public class OrganizerManager extends PersonManager{
         }
 
     }
-
 
     /**
      * checks to see if there exists an organizer with this username and if there doesn't creates a new organize object
@@ -98,7 +101,7 @@ public class OrganizerManager extends PersonManager{
     }
 
 
-    /** a getter for the signedup events
+    /** a getter for the signed up events
      * @param organizerId a string representing the organizer id
      * @return an ArrayList</String> representing the id's of the lists
      */
@@ -107,20 +110,30 @@ public class OrganizerManager extends PersonManager{
     }
 
 
+    /**
+     * this is to update one of the maps
+     * @param username of organizer
+     * @param org object
+     */
     private void updateUsernameToPerson(String username, Organizer org){
         usernameToPerson.put(username,org);
     }
 
-    public ArrayList getOrganizerOnlyMapByID(String userID){
+    /**
+     *
+     * @param userID of organizer
+     * @return the entire list of organizers, for purposes in other controllers
+     */
+    public ArrayList<String> getOrganizerOnlyMapByID(String userID){
         return userIdToOrganizer;
     }
 
-    public ArrayList getOrganizerOnlyMapByUsername(String userID){
-        return userIdToOrganizer;
-    }
+
+    /**
+     * - This is a function that will be used when the first organizer of the convention logs into the system
+     */
     private void firstLogin() {
         createAccount("admin", "admin", "admin", null);
     }
-
 
 }

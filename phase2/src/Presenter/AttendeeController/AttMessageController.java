@@ -117,12 +117,14 @@ public class AttMessageController extends MessageController {
 
     /**
      * Create a new group chat if contacts are in this user's contactlist.
-     * @param contactIDs the ArrayList of contacts' IDs.
+     * @param contactUsernames the ArrayList of contacts' IDs.
      * @param chatName Name of the Chat being created
      * @return A message that contains the chat ID if the chat was created or already exists;
      * an error message, otherwise
      */
-    public String createGroupChat(ArrayList<String> contactIDs, String chatName) {
+    public String createGroupChat(ArrayList<String> contactUsernames, String chatName) {
+        ArrayList<String> contactIDs = new ArrayList<>();
+        for (String username: contactUsernames){ contactIDs.add(personManager.getCurrentUserID(username));}
         if (contactIDs == null || contactIDs.size() == 0) {
             return presenter.printChatNotCreated(new InvalidChoiceException("user"));
         }
