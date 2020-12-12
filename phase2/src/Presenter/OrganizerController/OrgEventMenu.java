@@ -27,37 +27,38 @@ public class OrgEventMenu extends EventMenu {
 
     @Override
     public String[] getMenuOptions() {
-        return new String[]{"Create a new room", "Create a new event", "Make an announcement to the attendees of an event"};
+        return new String[]{"Create a new room", "Create a new event", "Cancel an existing event",
+                "Add a speaker to a panel", "Remove a speaker from a panel", "Change the capacity of an existing event"};
     }
 
-    public String[] getEventOptions() {
-        return new String[]{"All Events", "Specific Event"};
-    }
 
-    // OPTION 1
+    // Prompts for addRoom
+
 
     /**
-     * Prompts user to input the name of the Room they wish to add
+     * Prompts the user to input the name of the Room they wish to add
      */
     public String addRoomPrompt() {
         return "To create a new room, please fill in the following information:";
     }
 
     /**
-     * Prompts user to input the name of the Room they wish to add
+     * Prompts the user to input the name of the Room they wish to add
      */
     public String roomNamePrompt() {
         return "What is the name of the room you want to create?";
     }
 
     /**
-     * Prompts user to input the capacity of the Room they wish to add
+     * Prompts the user to input the capacity of the Room they wish to add
      */
     public String roomCapacityPrompt() {
         return "What is the capacity of the room you want to create?";
     }
 
-    // OPTION 2
+
+    // Prompts for createEvent
+
 
     /**
      * Prompts the user to create an Event
@@ -152,14 +153,96 @@ public class OrgEventMenu extends EventMenu {
         return "\nWhat is the capacity of the event you want to create?";
     }
 
-    /**
-     * Prints a notice to the user that the Event they intended to sign up is full
-     */
-    public String printRoomTooSmall() {
-        return "That room cannot hold an event of that capacity!";
+
+    // Prompts for CancelEvent
+
+
+    public String cancelEventPrompt() {
+        return "\nTo cancel an existing room, please fill in the following information:";
     }
 
-    // OPTION 3
+    public String printEventNameToCancelPrompt(){
+        return "\nWhat is the name of the event you would like to cancel?";
+    }
+
+
+    // Prompts for AddSpeakerToPanel
+
+
+    public String addSpeakerToPanelPrompt() {
+        return "\nTo sign up a speaker for an existing panel, please fill in the following information:";
+    }
+
+    public String speakerToAddPrompt() {
+        return "\nWhat is the username of the speaker you wish to sign up?";
+    }
+
+    public String panelToAddToPrompt() {
+        return "\nWhat is name of the panel you wish to sign up this speaker for?";
+    }
+
+
+    // Prompts for RemoveSpeakerFromPanel
+
+
+    public String removeSpeakerFromPanelPrompt() {
+        return "\nTo remove a speaker from an existing panel, please fill in the following information:";
+    }
+
+    public String speakerToRemovePrompt() {
+        return "\nWhat is the username of the speaker you wish to remove?";
+    }
+
+    public String panelToRemoveFromPrompt() {
+        return "\nWhat is name of the panel you wish to remove this speaker from?";
+    }
+
+
+    // Prompts for ChangeEventCapacity
+
+
+    public String changeEventCapacityPrompt() {
+        return "\nTo change the capacity of an existing event, please fill in the following information:";
+    }
+
+    public String eventToChangePrompt() {
+        return "\nWhat is the name of the event for which you wish to change the capacity?";
+    }
+
+    public String newCapacityPrompt() {
+        return "\nWhat should the new capacity of this event be?";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Prompts user to update the capacity of an Event
+     * @return
+     */
+    public String printUpdateCapacity(){return "To update the capacity of an Event, please fill in the " +
+            "following information:";}
+
+    /**
+     * Prompts user to enter the new capacity of the event represented by its ID
+     * @param eventId ID of event that will have updated capacity
+     * @return
+     */
+    public String printChangeCapacity(String eventId){return "Please enter the new capacity of event: " +
+            events.getEventName(eventId);}
+
 
     /**
      * Prompts the user to add a SpeakerController account
@@ -199,6 +282,13 @@ public class OrgEventMenu extends EventMenu {
     // OPTION 4
 
     /**
+     * Prompts the user to make an announcement about an Event
+     */
+    public String printEventMessageIntro(){
+        return "To make an announcement about an event, please fill in the following information:";
+    }
+
+    /**
      * Prompts the user to enter the content of the announcement
      * @return
      */
@@ -206,36 +296,6 @@ public class OrgEventMenu extends EventMenu {
         return "Please enter your announcement below";
     }
 
-    /**
-     * Prompts the user to enter the content of the announcement
-     * @return
-     */
-    public String printMessageSent(){
-        return "Your announcement was sent";
-    }
-
-
-
-    // add or remove speakerfrompanel takes in eventId and speaker ID (so take in eventname and speaker username)
-
-    //covertEventTypeToString takes in eventtype as a parameter, so take in eventName
-
-    //Ask for eventname in changeCapacity under OrgEventController
-
-    /**
-     * Prompts user to update the capacity of an Event
-     * @return
-     */
-    public String printUpdateCapacity(){return "To update the capacity of an Event, please fill in the " +
-            "following information:";}
-
-    /**
-     * Prompts user to enter the new capacity of the event represented by its ID
-      * @param eventId ID of event that will have updated capacity
-     * @return
-     */
-    public String printChangeCapacity(String eventId){return "Please enter the new capacity of event: " +
-            events.getEventName(eventId);}
 
 
 }
