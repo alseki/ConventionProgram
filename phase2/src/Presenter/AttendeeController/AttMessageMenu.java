@@ -31,11 +31,6 @@ public class AttMessageMenu extends MessageMenu {
         options[6] = "View the announcements from a particular event";
         options[7] = "Create a new chat";
         options[8] = "Create a new group chat";
-        options[9] = "Archive a chat";
-        options[10] = "Exit a chat";
-        options[11] = "Archive a message";
-        options[12] = "Unread message";
-        options[13] = "Read message";
         return options;
     }
 
