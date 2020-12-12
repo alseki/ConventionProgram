@@ -189,22 +189,22 @@ public class AttMessageView extends MessageView {
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
 
-        if(eventName.equals(menuOp[5])) {
+        if(eventName.equals(menuOp[10])) {
             hideMainDropDownMenu();
             showViewAnnouncementChannels();
         }
 
-        if(eventName.equals(menuOp[6])) {
+        if(eventName.equals(menuOp[11])) {
             hideMainDropDownMenu();
             showOpenAnChat();
         }
 
-        if(eventName.equals(menuOp[7])) {
+        if(eventName.equals(menuOp[12])) {
             hideMainDropDownMenu();
             showCreateChat();
         }
 
-        if(eventName.equals(menuOp[8])) {
+        if(eventName.equals(menuOp[13])) {
             hideMainDropDownMenu();
             showCreateGroupChat();
         }
@@ -228,13 +228,6 @@ public class AttMessageView extends MessageView {
         //
         //
         // ==========================
-        if(eventName.equals(createGroupChatButton.getActionCommand())) {
-            createGroupChat();
-            showMainDropDownMenu();
-        }
-        if(eventName.equals(createGroupChatButton.getActionCommand())) {
-            createGroupChat();
-            showMainDropDownMenu();
-        }
+
     }
 }

@@ -20,7 +20,7 @@ public class MessageView extends AccountView {
     MessageController controller;
     MessageMenu presenter;
     JLabel dialogPrompt, dialogPrompt2;
-    JButton sendMsg, chooseChat;
+    JButton sendMsg, chooseChat, archiveChatButton, leaveButton, archiveMsgButton, unreadMsgButton, readMsgButton;
     ListDisplayView msgList;
     JTextField inputField;
     JTextArea messageField;
@@ -53,6 +53,12 @@ public class MessageView extends AccountView {
         sendMsg.setToolTipText("send the entered message to entered user(s)");
         chooseChat = newButton("choose chat");
         chooseChat.setToolTipText("choose a chat to view");
+
+        archiveChatButton = newButton("Archive");
+        leaveButton = newButton("Leave");
+        archiveMsgButton = newButton("Archive Message");
+        unreadMsgButton = newButton("Unread Msg");
+        readMsgButton = newButton("Read Msg");
     }
 
     private void showCheckInbox() {
@@ -119,7 +125,6 @@ public class MessageView extends AccountView {
         backButton.setVisible(true);
     }
 
-    //FIXME: this method won't work until MessageController's send Message method is fixed
     private void sendMsg() {
         String chatName = inputField.getText();
         String msg = messageField.getText();
@@ -131,6 +136,87 @@ public class MessageView extends AccountView {
             exceptionDialogBox(presenter.printException(e));
         }
     }
+
+    private void showArchiveChat() {
+        dialogPrompt.setText(presenter.printArchiveChatPrompt());
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+
+        archiveChatButton.setVisible(true);
+    }
+
+    private void archiveChat() {
+        controller.archiveChat(inputField.getText());
+
+        JOptionPane.showConfirmDialog(null, "This chat has been archived",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showLeaveChat() {
+        dialogPrompt.setText("Enter the name of the chat you would like to delete");
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+
+        leaveButton.setVisible(true);
+    }
+
+    private void leave() {
+        controller.deleteChat(inputField.getText());
+
+        JOptionPane.showConfirmDialog(null, "You have left this chat",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showArchiveMsg() {
+        dialogPrompt.setText("Enter the ID of the message you would like to archive");
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+
+        archiveMsgButton.setVisible(true);
+    }
+
+    private void archiveMsg() {
+        controller.archiveMessage(inputField.getText());
+
+        JOptionPane.showConfirmDialog(null, "This message has been archived",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showMsgUnread() {
+        dialogPrompt.setText("Enter the ID of the message you would like to mark as unread");
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+
+        unreadMsgButton.setVisible(true);
+    }
+
+    private void msgUnread() {
+        controller.unreadMessage(inputField.getText());
+
+        JOptionPane.showConfirmDialog(null, "This message has been marked as unread",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showMsgRead() {
+        dialogPrompt.setText("Enter the ID of the message you would like to mark as read");
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+
+        readMsgButton.setVisible(true);
+    }
+
+    private void msgRead() {
+        controller.readMessage(inputField.getText());
+
+        JOptionPane.showConfirmDialog(null, "This message has been marked as read",
+                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -161,6 +247,34 @@ public class MessageView extends AccountView {
             showSendMsg();
         }
 
+        if(eventName.equals(menuOp[5])) { // archive a chat
+            hideMainDropDownMenu();
+            showArchiveChat();
+        }
+
+        if(eventName.equals(menuOp[6])) { // leave a chat
+            hideMainDropDownMenu();
+            showLeaveChat();
+        }
+
+        if(eventName.equals(menuOp[7])) { // archive a msg
+            hideMainDropDownMenu();
+            showArchiveMsg();
+        }
+
+        if(eventName.equals(menuOp[8])) {
+            hideMainDropDownMenu();
+            showMsgUnread();
+        }
+
+        if(eventName.equals(menuOp[9])) {
+            hideMainDropDownMenu();
+            showMsgRead();
+        }
+
+
+
+
         if (eventName.equals(chooseChat.getActionCommand())) {
             showViewMsgsInChat();
             showMainDropDownMenu();
@@ -169,6 +283,26 @@ public class MessageView extends AccountView {
         if (eventName.equals(sendMsg.getActionCommand())) {
             sendMsg();
             showMainDropDownMenu();
+        }
+
+        if(eventName.equals(archiveChatButton.getActionCommand())) {
+            archiveChat();
+        }
+
+        if(eventName.equals(leaveButton.getActionCommand())) {
+            leave();
+        }
+
+        if(eventName.equals(archiveMsgButton.getActionCommand())) {
+            archiveMsg();
+        }
+
+        if(eventName.equals(unreadMsgButton.getActionCommand())) {
+            msgUnread();
+        }
+
+        if(eventName.equals(readMsgButton.getActionCommand())) {
+            msgRead();
         }
 
     }
