@@ -31,8 +31,6 @@ public class ChatManager implements Serializable {
     //MODIFIED createChat (both of the two below: one taking String and String, other taking String and ArrayList<String>
     // so that it returns null iff inputted "guest" is the owner (ie the program user is trying to create a Chat by itself)
     // or when the Chat with same members already exist
-    //TODO Throw exceptions in controllers when we get null returned by create Chat, telling the user:
-    // TODO "Chat was not created. You either tried to create a Chat that already exists, or a Chat by yourself."
     /**
      * Create new Message.Message.Chat object between user and a contact, and add to the ChatsList
      * @param ownerId ID of the user owning this Chat object
@@ -403,11 +401,14 @@ public class ChatManager implements Serializable {
         }
     }
 
-    public String readStatusChat(String chatId){return getUnknownTypeChat(chatId).getReadStatus();}
+    public String readStatusChat(String chatId){return Objects.requireNonNull(getUnknownTypeChat(chatId)).getReadStatus(
+    );}
 
-    public void readChat(String chatId) {getUnknownTypeChat(chatId).markAsRead();}
+    public void readChat(String chatId) {
+        Objects.requireNonNull(getUnknownTypeChat(chatId)).markAsRead();}
 
-    public void unreadChat(String chatId) {getUnknownTypeChat(chatId).markAsUnread();}
+    public void unreadChat(String chatId) {
+        Objects.requireNonNull(getUnknownTypeChat(chatId)).markAsUnread();}
 
 }
 

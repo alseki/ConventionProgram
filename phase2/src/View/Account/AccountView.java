@@ -75,7 +75,6 @@ public abstract class AccountView extends Observable implements ActionListener {
         dropDownMenu.setVisible(true);
         continueButton.setVisible(true);
         closeButton.setVisible(true);
-        // TODO remove lines below once okay button stops being altered
         okayButton.setText("okay");
         okayButton.setActionCommand("okay");
     }
