@@ -19,7 +19,7 @@ public class AttMessageView extends MessageView {
     AttMessageMenu announcementPresenter;
     JButton createChatButton, createGroupChatButton;
     JLabel dialogPrompt, dialogPrompt2;
-    JTextField inputField2;
+    JTextField inputField, inputField2;
 
     /**
      * The view for attendee users to see their message options.
@@ -35,9 +35,13 @@ public class AttMessageView extends MessageView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
+        inputField = new JTextField(50);
+        initializeObject(inputField);
 
         dialogPrompt2 = new JLabel("");
         initializeObject(dialogPrompt2);
+        inputField2 = new JTextField(50);
+        initializeObject(inputField2);
 
         createChatButton = newButton("Create chat");
         createGroupChatButton = newButton("Create group chat");
@@ -77,35 +81,28 @@ public class AttMessageView extends MessageView {
         dialogPrompt.setText(presenter.printContactUsernamePrompt());
         dialogPrompt.setVisible(true);
 
-        new JTextField(100);
+        //inputField = new JTextField(50);
         inputField.setVisible(true);
+
+        dialogPrompt2.setText("Enter the name of the chat you would like to create");
+        dialogPrompt2.setVisible(true);
+
+        //inputField2 = new JTextField(50);
+        inputField2.setVisible(true);
 
         createChatButton.setVisible(true);
         backButton.setVisible(true);
     }
 
-    private void showCreateGroupChat() {
-        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
-        dialogPrompt.setVisible(true);
-
-        new JTextField(100);
-        inputField.setVisible(true);
-
-        dialogPrompt2.setText("Print the name of the group chat");
-        dialogPrompt2.setVisible(true);
-
-        new JTextField(100);
-        inputField2.setVisible(true);
-
-        createGroupChatButton.setVisible(true);
-        backButton.setVisible(true);
-    }
-
     private void createChat() {
-        String participantID = inputField.getText();
+        String participantUsername = inputField.getText();
+        String chatName = inputField2.getText();
+        /*
+        JOptionPane.showConfirmDialog(null, controller.createChat(participantUsername, chatName),
+                "Message", JOptionPane.DEFAULT_OPTION);
 
-        JOptionPane.showConfirmDialog(null, controller.createChat(participantID),
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+         */
+
 
         //try catch block here
 
@@ -128,16 +125,31 @@ public class AttMessageView extends MessageView {
 
     }
 
-    private void createGroupChat(){ //TODO: -- DONE: convert participantIDs into an array of Strings
+    private void showCreateGroupChat() {
+        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
+        dialogPrompt.setVisible(true);
+
+        new JTextField(50);
+        inputField.setVisible(true);
+
+        dialogPrompt2.setText("Enter the name of the group chat you would like to create");
+        dialogPrompt2.setVisible(true);
+
+        new JTextField(50);
+        inputField2.setVisible(true);
+
+        createGroupChatButton.setVisible(true);
+        backButton.setVisible(true);
+    }
+
+
+    private void createGroupChat(){ //DONE: convert participantIDs into an array of Strings
         String commaSeparated = inputField.getText();
-        ArrayList<String> participantIDs = new ArrayList<>(Arrays.asList(commaSeparated.split(",")));
+        ArrayList<String> participantUsernames = new ArrayList<>(Arrays.asList(commaSeparated.split(",")));
         String groupName = inputField2.getText();
 
-        /*
-        JOptionPane.showConfirmDialog(null, controller.createGroupChat(participantIDs, groupName),
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-         */
+        JOptionPane.showConfirmDialog(null, controller.createGroupChat(participantUsernames, groupName),
+                "Message", JOptionPane.DEFAULT_OPTION);
     }
 
 

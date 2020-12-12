@@ -25,8 +25,8 @@ public class MessageController extends SubMenu {
     /**
      * Sends a new Message
      */
-    public String sendMessageChoice(String ID, String content) throws InvalidChoiceException {
-        sendMessage(ID, content);
+    public String sendMessageChoice(String chatName, String content) throws InvalidChoiceException {
+        this.sendMessage(chatName, content);
         return presenter.messageSent();
     }
 
@@ -183,6 +183,20 @@ public class MessageController extends SubMenu {
         ArrayList<String> personIds = new ArrayList<>();
         for (String user: usernames){personIds.add(personManager.getCurrentUserID(user));}
         return chatManager.searchChatsContaining(personIds);}
+
+    /**
+     * Tells if the chatName is already taken (true) or not taken (false).
+     * @param chatName Name of the Chat
+     * @return true iff chatName is taken by an existing Chat in chatList of the this user Person object.
+     * Else, return false.
+     */
+    public boolean chatNameTaken(String chatName){
+        ArrayList <String> userChatIDs = personManager.getChats(currentUserID);
+        for (String chatID: userChatIDs){
+            if (chatManager.getChatName(chatID).equals(chatName)) {
+            return true;}
+            }return false;}
+
     /*
     protected void addPersonToChats(String chatname, ArrayList<String> usernames){
 

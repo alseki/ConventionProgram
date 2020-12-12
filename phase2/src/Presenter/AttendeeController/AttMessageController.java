@@ -33,10 +33,12 @@ public class AttMessageController extends MessageController {
 
     /**
      * Creates a new Chat
+     * @param username
+     * @param chatName Name of the Chat being created
      */
-    /*private String createChatChoice(String username) {
+    /*private String createChatChoice(String username, String chatName) {
         try {
-            String chatID = createChat(username);
+            String chatID = createChat(username, chatName);
             if(chatID!=null){return presenter.printChatCreated(chatID);}
         } catch (InvalidChoiceException e) {
             return presenter.printChatNotCreated(e);
@@ -47,11 +49,12 @@ public class AttMessageController extends MessageController {
     /**
      * Creates new Chat if contact is on contactList
      * @param contactUsername the username of the contact the current user wants create a Chat with
+     * @param chatName Name of the Chat being created
      * @return A message that contains the chat ID if the chat was created or already exists;
      * an error message, otherwise
      */
 
-    public String createChat(String contactUsername) {
+    public String createChat(String contactUsername, String chatName) {
         String contactID = attendeeManager.getCurrentUserID(contactUsername);
         if (contactID == null) {
             return presenter.printChatNotCreated(new InvalidChoiceException("user"));
@@ -66,7 +69,7 @@ public class AttMessageController extends MessageController {
                     InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
             //throw new InvalidFormatException("recipients", "You cannot create a chat with yourself!");
         }else {
-            String chatID = chatManager.createChat(currentUserID, contactID);
+            String chatID = chatManager.createChat(currentUserID, contactID, chatName);
             attendeeManager.addChat(contactID, chatID);
             attendeeManager.addChat(currentUserID, chatID);
             return presenter.printChatCreated(chatID);
@@ -115,6 +118,7 @@ public class AttMessageController extends MessageController {
     /**
      * Create a new group chat if contacts are in this user's contactlist.
      * @param contactIDs the ArrayList of contacts' IDs.
+     * @param chatName Name of the Chat being created
      * @return A message that contains the chat ID if the chat was created or already exists;
      * an error message, otherwise
      */

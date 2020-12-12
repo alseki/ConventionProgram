@@ -39,9 +39,9 @@ public class ChatManager implements Serializable {
      * @param guestId IDs of guest
      * @return the chatID iff new Message.Message.Chat object was successfully created and added to ChatList
      */
-    public String createChat(String ownerId, String guestId){
+    public String createChat(String ownerId, String guestId, String name){
         //if ((ownerId.equals(guestId))||(this.existChat(ownerId, guestId))){return null;}
-        Chat newC = new Chat(ownerId, guestId);
+        Chat newC = new Chat(ownerId, guestId, name);
         chatsList.add(newC);
         return newC.getId();
     }
@@ -403,6 +403,7 @@ public class ChatManager implements Serializable {
     public void readChat(String chatId) {getUnknownTypeChat(chatId).markAsRead();}
 
     public void unreadChat(String chatId) {getUnknownTypeChat(chatId).markAsUnread();}
+
 }
 
 // CRC Card Definition
