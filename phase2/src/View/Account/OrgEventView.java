@@ -112,10 +112,10 @@ public class OrgEventView extends AccountView {
 
     private void createRoom() {
         String roomName = input1.getText();
-        int roomCap = Integer.parseInt(input2.getText());
+        String roomCap = input2.getText();
 
         try {
-            if(controller.addRoom(roomName, roomCap)) {
+            if(controller.addRoom(roomName, Integer.parseInt(roomCap))) {
                 JOptionPane.showConfirmDialog(null, "Room creation successful!",
                         "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
             } else {
