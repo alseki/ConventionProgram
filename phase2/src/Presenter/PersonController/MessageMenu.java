@@ -370,6 +370,7 @@ public class MessageMenu implements SubMenuPrinter {
         String message = messageManager.getContent(messageId);
         if (messageManager.getReadStatus(messageId)) {
             return  "[Unread]" + "<br>" +
+                    "[ID]: " + messageId + "<br>" +
                     "From: " + sender + "[Username]" + "<br>" +
                     "To: " + receiver + "<br>" +
                     "Time sent:" + time + "<br>" +
