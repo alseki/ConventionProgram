@@ -26,9 +26,7 @@ public class OrgEventController extends SubMenu {
     private String currentUserID;
     private SpeakerManager speakerManager;
     private EmployeeManager employeeManager;
-    private OrganizerManager organizerManager;
     private EventPermissions eventPermissions;
-    private EventManager eventManager;
     private OrgEventMenu presenter;
 
     public OrgEventController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
@@ -181,7 +179,12 @@ public class OrgEventController extends SubMenu {
             eventManager.removeEvent(eventID);
             String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be " +
                     "made shortly.";
-            this.eventMessage(eventName, chatName, messageContent);
+            try {
+                this.eventMessage(eventName, chatName, messageContent);
+            }
+            catch (InvalidChoiceException e) {
+                return false;
+            }
             String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been "
                     + "notified. I will call you very soon.";
             String organizerID = this.currentUserID;
@@ -300,30 +303,15 @@ public class OrgEventController extends SubMenu {
      * @param eventName The name of the Event
      * @param chatName The name of the Chat
      */
-    private boolean eventMessage (String eventName, String chatName, String messageContent){
+    public void eventMessage (String eventName, String chatName, String messageContent) throws InvalidChoiceException{
         String eventID = eventManager.getEventID(eventName);
-        if (eventID != null) {
-            String chatID = eventManager.getEventChat(chatName);
-            String ev = eventManager.getEventChat(eventID);
-            String m = messageManager.createMessage(eventID, chatID, messageContent);
-            chatManager.addMessageIds(ev, m);
+        String chatID = eventManager.getEventChat(chatName);
+        if (eventID == null || chatID == null) {
+            throw new InvalidChoiceException("event");
         }
-    }
-
-    /**
-     * This is to send a message to all attendees of all of SpeakerController's events. For example, if SpeakerController wanted to
-     * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
-     * uses eventMessageForAttendees from above
-     * @param events ArrayList of Event Names hosted by the speaker
-     * @param messageContent String representing content of the message
-     */
-    public void multipleEventsAnnouncement (String[] events, String chatName, String messageContent) throws
-            InvalidChoiceException, InputMismatchException {
-        for (String event : events) {
-            if (!eventMessage(event, chatName, messageContent)) {
-                throw new NoDataException("event");
-            }
-        }
+        String ev = eventManager.getEventChat(eventID);
+        String m = messageManager.createMessage(eventID, chatID, messageContent);
+        chatManager.addMessageIds(ev, m);
     }
 
     @Override

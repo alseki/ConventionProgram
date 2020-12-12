@@ -24,6 +24,10 @@ public class OrgEventView extends AccountView {
     JComboBox<String> allEvents;
     ListDisplayView allEventTypes, allRooms;
     JTextArea messageField;
+    private JLabel dialogPrompt, nameOfEvent, nameOfChat;
+    private final JTextField inputField = new JTextField(20);
+    private final JTextField inputChatName = new JTextField(20);
+    private JButton selectButton, announcementButton;
 
     /**
      * The view for organizer users to see their convention event options.
@@ -88,11 +92,25 @@ public class OrgEventView extends AccountView {
         input8 = new JTextField(20);
         initializeObject(input8);
 
+        nameOfChat = new JLabel("");
+        initializeObject(nameOfChat);
+        initializeObject(inputChatName);
+
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
+
         messageField = new JTextArea(5, 20);
         messageField.setPreferredSize(new Dimension(20, 20));
         messageField.setLineWrap(true);
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
+
+        nameOfEvent = new JLabel("");
+        initializeObject(nameOfEvent);
+        initializeObject(inputField);
+
+        selectButton = newButton("select");
+        announcementButton = newButton("send announcement");
     }
 
     private void showCreateRoom() {
@@ -338,6 +356,39 @@ public class OrgEventView extends AccountView {
         } 
     }
 
+    private void showMakeAnnouncement() {
+        selectButton.setVisible(false);
+
+        nameOfChat.setText(presenter.printChatNamePrompt());
+        nameOfChat.setVisible(true);
+        inputChatName.setText("");
+        inputChatName.setVisible(true);
+
+        dialogPrompt.setText(presenter.printMessageContentPrompt());
+        dialogPrompt.setVisible(true);
+        messageField.setVisible(true);
+        announcementButton.setVisible(true);
+        nameOfEvent.setText(presenter.printEventNamePrompt());
+        inputField.setText("");
+        inputField.setVisible(true);
+        nameOfEvent.setVisible(true);
+    }
+
+    private void sendAnnouncement() {
+        hideAll();
+        String specificEventName = inputField.getText();
+        String nameOfChat = inputChatName.getText();
+        String message = messageField.getText();
+        try {
+            controller.eventMessage(specificEventName, nameOfChat, message);
+            hideAll();
+            dialogPrompt.setText(presenter.printMessageSent());
+            okayButton.setVisible(true);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -399,6 +450,14 @@ public class OrgEventView extends AccountView {
 
         if(eventName.equals(menuOp[6])) {
             hideMainDropDownMenu();
+        }
+
+        if(eventName.equals(menuOp[6])) {
+            showMakeAnnouncement();
+        }
+
+        if(eventName.equals("send announcement")) {
+            sendAnnouncement();
         }
 
     }

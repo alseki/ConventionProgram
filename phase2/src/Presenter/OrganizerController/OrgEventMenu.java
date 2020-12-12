@@ -28,7 +28,8 @@ public class OrgEventMenu extends EventMenu {
     @Override
     public String[] getMenuOptions() {
         return new String[]{"Create a new room", "Create a new event", "Cancel an existing event",
-                "Add a speaker to a panel", "Remove a speaker from a panel", "Change the capacity of an existing event"};
+                "Add a speaker to a panel", "Remove a speaker from a panel", "Change the capacity of an existing event",
+                "Add an announcement to an event"};
     }
 
 
@@ -214,20 +215,6 @@ public class OrgEventMenu extends EventMenu {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Prompts user to update the capacity of an Event
      * @return
@@ -286,6 +273,13 @@ public class OrgEventMenu extends EventMenu {
      */
     public String printEventMessageIntro(){
         return "To make an announcement about an event, please fill in the following information:";
+    }
+
+    /**
+     * Tell the User the message is sent.
+     */
+    public String printMessageSent() {
+        return"Announcement successfully sent!";
     }
 
     /**
