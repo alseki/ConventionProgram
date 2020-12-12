@@ -30,6 +30,10 @@ public class OrgEventMenu extends EventMenu {
         return new String[]{"Create a new room", "Create a new event", "Make an announcement to the attendees of an event"};
     }
 
+    public String[] getEventOptions() {
+        return new String[]{"All Events", "Specific Event"};
+    }
+
     // OPTION 1
 
     /**
@@ -195,18 +199,19 @@ public class OrgEventMenu extends EventMenu {
     // OPTION 4
 
     /**
-     * Prompts the user to make an announcement about an Event
+     * Prompts the user to enter the content of the announcement
+     * @return
      */
-    public String printEventMessageIntro(){
-        return "To make an announcement about an event, please fill in the following information:";
+    public String printMessageContentPrompt(){
+        return "Please enter your announcement below";
     }
 
     /**
      * Prompts the user to enter the content of the announcement
      * @return
      */
-    public String printMessageContentPrompt(){
-        return "Please enter your announcement below";
+    public String printMessageSent(){
+        return "Your announcement was sent";
     }
 
 

@@ -42,6 +42,13 @@ public class SpeEventMenu extends EventMenu {
     }
 
     /**
+     * Prompts user to enter eventName of the event want to send message to.
+     */
+    public String printChatNamePrompt() {
+        return "What is the name of the announcement?";
+    }
+
+    /**
      * Prompts user to enter an ArrayList of eventName(s) of the one or more events
      * that they want to send the message to.
      */
@@ -69,7 +76,7 @@ public class SpeEventMenu extends EventMenu {
      * @return Content following with the sentence: ["Contact me using this username:"]\newline
      *                                              [username of the SpeakerController]
      */
-    protected String addSpeUsername (String content){
+    protected String addSpeUsername(String content){
         return content + "\n" + "Contact me using this username:\n"
                 + persons.getCurrentUsername(currentUserID);
     }

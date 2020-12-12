@@ -13,12 +13,14 @@ import java.awt.event.ActionEvent;
 public class SpeEventView extends AccountView {
     SpeEventController controller;
     SpeEventMenu presenter;
-    private JLabel dialogPrompt, dialogPrompt2;
+    private JLabel dialogPrompt, nameOfEvent, nameOfChat;
     private final JTextField inputField = new JTextField(20);
+    private final JTextField inputChatName = new JTextField(20);
     private JButton selectButton, announcementButton;
     private JTextArea messageField;
     JComboBox<String> eventOptions;
     private final String[] menuOp;
+    String eventType;
 
     /**
      * The view for speaker users to see their convention event options.
@@ -37,15 +39,16 @@ public class SpeEventView extends AccountView {
     }
 
     private void setupPane() {
-        eventOptions = new JComboBox<>(presenter.getEventOptions());
-        initializeObject(eventOptions);
+
+        nameOfChat = new JLabel("");
+        initializeObject(nameOfChat);
+        initializeObject(inputChatName);
+
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
 
-        initializeObject(inputField);
-
-        dialogPrompt2 = new JLabel("");
-        initializeObject(dialogPrompt2);
+        eventOptions = new JComboBox<>(presenter.getEventOptions());
+        initializeObject(eventOptions);
 
         messageField = new JTextArea(5, 20);
         messageField.setPreferredSize(new Dimension(20, 20));
@@ -53,17 +56,21 @@ public class SpeEventView extends AccountView {
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
 
+        nameOfEvent = new JLabel("");
+        initializeObject(nameOfEvent);
+        initializeObject(inputField);
+
         selectButton = newButton("select");
         announcementButton = newButton("send announcement");
     }
 
     private void showConventionEvents() {
-
+        // TODO
     }
 
     private void showEventsSpeakingAt() {
         try {
-            new ListDisplayView(presenter.getOwnEventsTitle(), controller.getEvents());
+            new ListDisplayView(presenter.getOwnEventsTitle(), controller.getFormattedEvents());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.printException(e));
         } finally {
@@ -77,27 +84,60 @@ public class SpeEventView extends AccountView {
         eventOptions.setVisible(true);
         selectButton.setVisible(true);
         selectButton.setToolTipText("select what event(s) the announcement is for");
-    }
-
-    private void showMakeMultipleAnnouncements() {
-        dialogPrompt2.setText(presenter.printContentPrompt());
-        dialogPrompt2.setVisible(true);
-
-        messageField.setVisible(true);
-
-        announcementButton.setVisible(true);
         backButton.setVisible(true);
     }
 
-    private void showMakeSingleAnnouncement() {
-        dialogPrompt.setText(presenter.printEventNamePrompt());
+    private void showMakeMultipleAnnouncements() {
+        eventOptions.setVisible(false);
+        selectButton.setVisible(false);
+        
+        nameOfChat.setText(presenter.printChatNamePrompt());
+        nameOfChat.setVisible(true);
+        inputChatName.setText("");
+        inputChatName.setVisible(true);
+        
+        dialogPrompt.setText(presenter.printContentPrompt());
         dialogPrompt.setVisible(true);
+        messageField.setVisible(true);
+        announcementButton.setVisible(true);
+    }
 
-        inputField.setVisible(true);
+    private void showMakeSingleAnnouncement() {
         showMakeMultipleAnnouncements();
+        nameOfEvent.setText(presenter.printEventNamePrompt());
+        inputField.setText("");
+        inputField.setVisible(true);
+        nameOfEvent.setVisible(true);
     }
 
     private void sendAnnouncement() {
+        hideAll();
+        String[] eventList;
+        String nameOfChat = inputChatName.getText();
+        String message = messageField.getText();
+        try {
+            if (eventType.equals(presenter.getEventOptions()[0])) { // All Events
+                eventList = controller.getEvents();
+                controller.multipleEventsAnnouncement(eventList, nameOfChat, message);
+            }
+            if (eventType.equals(presenter.getEventOptions()[1])) { // Panel
+                eventList = controller.getPanels();
+                controller.multipleEventsAnnouncement(eventList, nameOfChat, message);
+            }
+            if (eventType.equals(presenter.getEventOptions()[2])) { // Non-Panel
+                eventList = controller.getNonPanels();
+                controller.multipleEventsAnnouncement(eventList, nameOfChat, message);
+            }
+            if (eventType.equals(presenter.getEventOptions()[3])) { // Specific
+                String specificEventName = inputField.getText();
+                controller.eventMessage(specificEventName, nameOfChat, message);
+            }
+            hideAll();
+            dialogPrompt.setText(presenter.printMessageSent());
+            okayButton.setVisible(true);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
 
     }
 
@@ -121,17 +161,14 @@ public class SpeEventView extends AccountView {
         if (eventName.equals("select")) {
             eventName = (String) eventOptions.getSelectedItem();
             assert eventName != null;
-            if (eventName.equals(presenter.getEventOptions()[0])) { // All Events
-
+            eventType = eventName;
+            if (eventName.equals(presenter.getEventOptions()[0]) || eventName.equals(presenter.getEventOptions()[1]) 
+                    || eventName.equals(presenter.getEventOptions()[2])) { 
+                showMakeMultipleAnnouncements();
             }
-            if (eventName.equals(presenter.getEventOptions()[1])) { // Panel Events
-
-            }
-            if (eventName.equals(presenter.getEventOptions()[2])) { // Non Panel Events
-
-            }
+            
             if (eventName.equals(presenter.getEventOptions()[3])) { // Specific Event
-
+                showMakeSingleAnnouncement();
             }
         }
 

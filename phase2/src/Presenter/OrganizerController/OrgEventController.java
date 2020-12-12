@@ -12,12 +12,14 @@ import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.InvalidFormatException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.Exceptions.OverwritingException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class OrgEventController extends SubMenu {
 
@@ -294,12 +296,30 @@ public class OrgEventController extends SubMenu {
      * @param eventName The name of the Event
      * @param chatName The name of the Chat
      */
-    private void eventMessage (String eventName, String chatName, String messageContent){
+    private boolean eventMessage (String eventName, String chatName, String messageContent){
         String eventID = eventManager.getEventID(eventName);
-        String chatID = eventManager.getEventChat(chatName);
-        String ev = eventManager.getEventChat(eventID);
-        String m = messageManager.createMessage(eventID, chatID, messageContent);
-        chatManager.addMessageIds(ev, m);
+        if (eventID != null) {
+            String chatID = eventManager.getEventChat(chatName);
+            String ev = eventManager.getEventChat(eventID);
+            String m = messageManager.createMessage(eventID, chatID, messageContent);
+            chatManager.addMessageIds(ev, m);
+        }
+    }
+
+    /**
+     * This is to send a message to all attendees of all of SpeakerController's events. For example, if SpeakerController wanted to
+     * announce, "download so and so application for the our talk today" to all talks, this method proves useful. This
+     * uses eventMessageForAttendees from above
+     * @param events ArrayList of Event Names hosted by the speaker
+     * @param messageContent String representing content of the message
+     */
+    public void multipleEventsAnnouncement (String[] events, String chatName, String messageContent) throws
+            InvalidChoiceException, InputMismatchException {
+        for (String event : events) {
+            if (!eventMessage(event, chatName, messageContent)) {
+                throw new NoDataException("event");
+            }
+        }
     }
 
     @Override

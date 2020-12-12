@@ -81,13 +81,11 @@ public class AttMessageView extends MessageView {
         dialogPrompt.setText(presenter.printContactUsernamePrompt());
         dialogPrompt.setVisible(true);
 
-        //inputField = new JTextField(50);
         inputField.setVisible(true);
 
         dialogPrompt2.setText("Enter the name of the chat you would like to create");
         dialogPrompt2.setVisible(true);
 
-        //inputField2 = new JTextField(50);
         inputField2.setVisible(true);
 
         createChatButton.setVisible(true);

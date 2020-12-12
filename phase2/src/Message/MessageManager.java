@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageManager implements Serializable {
-    private ArrayList<Message> messageList;
+    private final ArrayList<Message> messageList;
 
     public MessageManager() {
         messageList = new ArrayList<>();
