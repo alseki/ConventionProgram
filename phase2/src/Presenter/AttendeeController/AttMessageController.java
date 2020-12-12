@@ -69,10 +69,13 @@ public class AttMessageController extends MessageController {
                     InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
             //throw new InvalidFormatException("recipients", "You cannot create a chat with yourself!");
         }else {
+            if (!this.chatNameTaken(contactID, chatName)){
             String chatID = chatManager.createChat(currentUserID, contactID, chatName);
             attendeeManager.addChat(contactID, chatID);
             attendeeManager.addChat(currentUserID, chatID);
-            return presenter.printChatCreated(chatID);
+            return presenter.printChatCreated(chatID);}
+            else{return presenter.printChatNotCreated(new
+                    InvalidFormatException("chatName", "That chatName already exists for you or for your Chat members!"));}
         }
     }
 
@@ -137,12 +140,15 @@ public class AttMessageController extends MessageController {
             return presenter.printChatExists(chatID);
         }
         else {
+            if (!this.chatNameTaken(contactIDs, chatName)){
             String chatID = chatManager.createChat(currentUserID, contactIDs, chatName);
             personManager.addChat(currentUserID, chatID);
             for (String contact: contactIDs) {
                 personManager.addChat(contact, chatID);
             }
-            return presenter.printChatCreated(chatID);
+            return presenter.printChatCreated(chatID);}
+            else{return presenter.printChatNotCreated(new
+                    InvalidFormatException("chatName", "That chatName already exists for you or for your Chat members!"));}
         }
     }
 

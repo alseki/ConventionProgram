@@ -49,8 +49,9 @@ public class EmployeeController extends PersonController {
                 return null;
             }
         }
-        return this.chatManager.createChat(ownerId, guestIds, chatName);
+        if (!this.chatNameTaken(guestIds,chatName)){return this.chatManager.createChat(ownerId, guestIds, chatName);
     }
+        else{return null;}}
 
     /**
      * Returns ID of the Employee-exclusive Chat newly created
@@ -78,8 +79,9 @@ public class EmployeeController extends PersonController {
         for (String guest: guestIds){
             if (manager.typePerson(manager.getCurrentUsername(guest))!=2) {
                 return null;}}
-        return this.chatManager.createChat(ownerId, guestIds, chatName);
+        if (!this.chatNameTaken(guestIds, chatName)) {return this.chatManager.createChat(ownerId, guestIds, chatName);
     }
+        else{return null;}}
 
 
 
