@@ -353,7 +353,7 @@ public class OrgEventView extends AccountView {
             }
         } catch (InvalidChoiceException c) {
             exceptionDialogBox(presenter.printException(c));
-        } 
+        }
     }
 
     private void showMakeAnnouncement() {
