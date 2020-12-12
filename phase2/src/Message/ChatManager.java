@@ -270,10 +270,14 @@ public class ChatManager implements Serializable {
     private Chat getUnknownTypeChat(String chatId){
         for(Chat c: chatsList){
             if(c.getId().equals(chatId)){
-                return c;} }
+                return c;
+            }
+        }
         for(Chat ac: aChatsList){
             if(ac.getId().equals(chatId)){
-                return ac;} }
+                return ac;
+            }
+        }
         return null;
     }
 

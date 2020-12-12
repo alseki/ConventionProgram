@@ -72,11 +72,11 @@ public class MessageController extends SubMenu {
 
     /**
      * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
-     * @param chatName The chatName of the Chat the current user want's to send a Message to
+     * @param chatID The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      */
-    protected void sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
-        String chatID = chatManager.findChatByName(chatName);
+    public void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
+        //String chatID = chatManager.findChatByName(chatName);
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
