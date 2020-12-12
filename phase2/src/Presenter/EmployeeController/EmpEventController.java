@@ -29,7 +29,7 @@ public class EmpEventController extends SubMenu {
     private RoomManager roomManager;
 
 
-    private EmpEventMenu presenter;
+    private final EmpEventMenu presenter;
 
     public EmpEventController(SubMenu subMenu, String currentUserID, EmployeeManager employeeManager) {
         super(subMenu);
@@ -40,9 +40,6 @@ public class EmpEventController extends SubMenu {
         //currentUserID, roomManager, eventManager, attendeeManager
 
     }
-
-    // TODO change, delete and/or add to the methods below
-
 
     @Override
     public EmpEventMenu getPresenter() {

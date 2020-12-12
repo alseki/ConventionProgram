@@ -119,7 +119,6 @@ public class MessageView extends AccountView {
         backButton.setVisible(true);
     }
 
-    //FIXME: this method won't work until MessageController's send Message method is fixed
     private void sendMsg() {
         String chatName = inputField.getText();
         String msg = messageField.getText();

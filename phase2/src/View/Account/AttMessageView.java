@@ -156,15 +156,8 @@ public class AttMessageView extends MessageView {
                 "Message", JOptionPane.DEFAULT_OPTION);
     }
 
-//================
-//================
-//================
-    //================
-    //================
-
-
     private void showViewChat() {
-        dialogPrompt.setText(presenter.printContactUsernamesPrompt());//TODO
+        dialogPrompt.setText(presenter.printContactUsernamesPrompt());
         dialogPrompt.setVisible(true);
 
         new JTextField(50);
@@ -179,11 +172,6 @@ public class AttMessageView extends MessageView {
         createGroupChatButton.setVisible(true);
         backButton.setVisible(true);
     }
-
-
-
-
-
 
     @Override
     public void actionPerformed(ActionEvent event) {

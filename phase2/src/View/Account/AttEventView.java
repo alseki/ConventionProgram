@@ -43,7 +43,7 @@ public class AttEventView extends AccountView {
         chooseRoomButton = newButton("Choose room");
         chooseRoomButton.setToolTipText("choose selected room");
 
-        //FIXME: this has to be initialized first with all of the different room options!!!
+        // this has to be initialized first with all of the different room options!!!
         roomChoice = new JComboBox<>();
         initializeObject(roomChoice);
 
@@ -134,7 +134,6 @@ public class AttEventView extends AccountView {
      */
     private void viewOwnEvents() {
         try {
-            // TODO get rid of "eventlist ="
             eventList = new ListDisplayView(presenter.ownEventListTitle(), controller.getEventsSignedUpFor());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.printException(e));
