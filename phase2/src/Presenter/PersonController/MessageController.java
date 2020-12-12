@@ -72,11 +72,11 @@ public class MessageController extends SubMenu {
 
     /**
      * Creates new Message for existing Chat (1 to 1 chat or group chat both use this.)
-     * @param chatID The chatID of the Chat the current user want's to send a Message to
+     * @param chatName The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      */
-    public void sendMessage(String chatID, String messageContent) throws InvalidChoiceException {
-        //String chatID = chatManager.findChatByName(chatName);
+    public void sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
+        String chatID = chatManager.findChatByName(chatName);
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
         }
@@ -109,10 +109,10 @@ public class MessageController extends SubMenu {
      * If Chat contains 3 people, permanently delete Chat if there already exists private chat among rest of members, or
      * set the Chat type to Chat (not announcement Chat) otherwise.
      * If Chat contains more than 3 people, simply let the user exit Chat.
-     * @param chatId Id of the Chat the user wants to exit from
+     * @param chatName Name of the Chat the user wants to exit from
      */
-    public void deleteChat(String chatId){
-        //String chatId = chatManager.findChatByName(chatName);
+    public void deleteChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName);
         ArrayList<String> personIds = chatManager.getPersonIds(chatId);
         if (personIds.size() <= 2){
             for(String personId: personIds) {
@@ -136,11 +136,12 @@ public class MessageController extends SubMenu {
     }
 
     /**
-     * Add
-     * @param chatId
+     * Archive chat corresponding to input chatName
+     * @param chatName Name of the chat
      */
 
-    public void archiveChat(String chatId){
+    public void archiveChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName);
         for (String cId : personManager.getChats(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.archiveChatByPersonId(currentUserID, chatId);
@@ -149,7 +150,12 @@ public class MessageController extends SubMenu {
         }
     }
 
-    public void unArchiveChat(String chatId){
+    /**
+     * Restore archived chat corresponding to chatName inputted
+     * @param chatName Name of the archived chat
+     */
+    public void unArchiveChat(String chatName){
+        String chatId = chatManager.findChatByName(chatName);
         for (String cId : personManager.getCurrentArchivedChatList(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.removeArchiveChatByPersonId(currentUserID, chatId);

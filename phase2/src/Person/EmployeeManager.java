@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//Hi Paul, earlier, I didn't know that the error was called "missing symbol"
-// but for your bug in employee manager, it's saying you're calling methods that don't exist.
-// For example, individual.getAnnouncementChats() don't work bc such method doesn't exist in
-// Speaker class(individual is a variable with type Speaker)
+
 public class EmployeeManager extends PersonManager {
 
     // This account is created by organizer
 
     private ArrayList<String> requestIds;
 
+
     // dictionary of all employees; this is under the theme of creating a restricted chat for employees with employees only
     protected Map<String, Employee> usernameToEmployee = new HashMap<String, Employee>();
+
     protected ArrayList<String> employeeList = new ArrayList<>();
 
 
@@ -23,11 +22,14 @@ public class EmployeeManager extends PersonManager {
 
         super(usernameToPerson, idToPerson);
         this.requestIds = new ArrayList<String>();
-        this.employeeList = employeeList;
-
 
     }
 
+    /**
+     *
+     * @param userID
+     * @return a list of all employees working the convention
+     */
     public ArrayList getEmployeeList(String userID){
         return employeeList;
 
@@ -46,6 +48,11 @@ public class EmployeeManager extends PersonManager {
         return false;
     }
 
+    /**
+     *
+     * @param userID of the employee, should Organizer wish to cancel employee account wth Id
+     * @return true if employee account was cancelled
+     */
     public boolean cancelEmployeeAccount(String userID){
         if(idToPerson.containsKey((userID))){
             String username = getPerson(userID).getUsername();
@@ -60,9 +67,11 @@ public class EmployeeManager extends PersonManager {
         return false;
     }
 
-    // This was decided not to be used. But will kept for future. Organizer would have been able to cancel employee
-    // account with employee username.
-
+    /**
+     *
+     * @param username of the employee, should Organizer wish to cancel employee account with username
+     * @return true if employee account was cancelled
+     */
     public boolean cancelEmployeeAccountByUsername(String username){
         if(usernameToPerson.containsKey(getPerson(username))){
             String userID = getPerson(username).getID();
@@ -79,8 +88,8 @@ public class EmployeeManager extends PersonManager {
 
     /**
      * Adds a chat
-     * @param currentID
-     * @param chatID
+     * @param currentID of employee
+     * @param chatID of chat associated with announcement for which event
      */
     public void addAnChat(String currentID, String chatID) {
         Employee employee = (Employee)getPerson(currentID);
@@ -89,41 +98,69 @@ public class EmployeeManager extends PersonManager {
 
     /**
      * Removes a chat
-     * @param currentID
-     * @param chatID
+     * @param currentID of employee
+     * @param chatID of chat associated with announcement for which event
      */
     public void removeAnChat(String currentID, String chatID) {
         Employee employee = (Employee)getPerson(currentID);
         employee.addAnChat(chatID);
     }
 
+    /**
+     *
+     * @return map of employee's username to employee entity, which has all employee information
+     */
     public Map<String, Employee> getUsernameToEmployee(){
         return usernameToEmployee;
     }
 
-
+    /**
+     *
+     * @param username of employee
+     * @return the full name of the employee
+     */
     public String getFullName(String username) {
         Employee employee = (Employee) getPerson(username);
         return employee.getFullName();
 
     }
 
+    /**
+     *
+     * @param userID of employee
+     * @return the full name of the employee
+     */
     public String getFullNameWithID(String userID){
         Employee employee = (Employee) getPerson(userID);
         return employee.getFullName();
     }
 
+    /**
+     *
+     * @param userID of the employee
+     * @return the username of the employee
+     */
     public String getUserName(String userID) {
         Employee employee = (Employee) getPerson(userID);
         return employee.getUsername();
 
     }
 
+    /**
+     *
+     * @param userName of the employee
+     * @return the employee ID
+     */
     public String getEmployeeID(String userName) {
         Employee employee = (Employee) getPerson(userName);
         return employee.getID();
     }
 
+    /**
+     *
+     * @return a list of string in brackets, each of which contains employee info:
+     *              this is in order to see a more visual representation of list of all employees
+     */
     public ArrayList<String> getAllEmployees() {
         ArrayList<String> nameUsernamePassword = new ArrayList<>();
         Map<String, Employee> map = getUsernameToEmployee();
@@ -135,17 +172,27 @@ public class EmployeeManager extends PersonManager {
         return nameUsernamePassword;
     }
 
+    /**
+     *
+     * @param userID of employee
+     * @return list of all request entity ids on the request board
+     */
     public ArrayList<String> getRequestsIDs(String userID){
         return requestIds;
     }
 
 
+    /**
+     *
+     * @param userID of employee
+     * @return array list for the employee with announcement chats ids
+     */
     public ArrayList getAnChats(String userID){
         Employee employee = (Employee) getPerson(userID);
         return employee.getAnChatList();
     }
 
-    // Getting a list of all talks at the conference is available from the Employee event controller
+    // Getting a list of all talks at the conference is available from the EmployeeEventController
 
      }
 

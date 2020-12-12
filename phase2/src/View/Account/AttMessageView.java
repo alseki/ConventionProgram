@@ -46,6 +46,15 @@ public class AttMessageView extends MessageView {
         createChatButton = newButton("Create chat");
         createGroupChatButton = newButton("Create group chat");
         createChatButton.setToolTipText("create chat between you and entered user(s)");
+
+        createChatButton = newButton("Create chat");
+        createChatButton = newButton("Create chat");
+        createChatButton = newButton("Create chat");
+        createChatButton = newButton("Create chat");
+        createChatButton = newButton("Create chat");
+        createChatButton = newButton("Create chat");
+
+
     }
 
     private void showViewAnnouncementChannels() {
@@ -113,9 +122,9 @@ public class AttMessageView extends MessageView {
             exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(f));
             //presenter.printChatNotCreated(new
             //        InvalidFormatException("recipients", "You cannot create a chat with yourself!"));
-        }
+        }*/
 
-         */
+
 
 
     }
@@ -146,6 +155,34 @@ public class AttMessageView extends MessageView {
         JOptionPane.showConfirmDialog(null, controller.createGroupChat(participantUsernames, groupName),
                 "Message", JOptionPane.DEFAULT_OPTION);
     }
+
+//================
+//================
+//================
+    //================
+    //================
+
+
+    private void showViewChat() {
+        dialogPrompt.setText(presenter.printContactUsernamesPrompt());//TODO
+        dialogPrompt.setVisible(true);
+
+        new JTextField(50);
+        inputField.setVisible(true);
+
+        dialogPrompt2.setText("Enter the name of the chat you would like to view");
+        dialogPrompt2.setVisible(true);
+
+        new JTextField(50);
+        inputField2.setVisible(true);
+
+        createGroupChatButton.setVisible(true);
+        backButton.setVisible(true);
+    }
+
+
+
+
 
 
     @Override
@@ -182,6 +219,19 @@ public class AttMessageView extends MessageView {
             showMainDropDownMenu();
         }
 
+        if(eventName.equals(createGroupChatButton.getActionCommand())) {
+            createGroupChat();
+            showMainDropDownMenu();
+        }
+        //
+        //
+        //
+        //
+        // ==========================
+        if(eventName.equals(createGroupChatButton.getActionCommand())) {
+            createGroupChat();
+            showMainDropDownMenu();
+        }
         if(eventName.equals(createGroupChatButton.getActionCommand())) {
             createGroupChat();
             showMainDropDownMenu();

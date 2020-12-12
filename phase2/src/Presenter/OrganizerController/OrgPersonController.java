@@ -169,6 +169,8 @@ public class OrgPersonController extends SubMenu {
      * that they can no longer contact this user.
      * @param username The username of the Organizer whose account is to be deleted
      */
+
+    // replaced InvalidChoiceException  with OverWritingException : the bug in OrgPersonView is gone
     public void cancelOrganizerAccount(String username) throws OverwritingException {
         if(!personManager.findPerson(username)){
             String userID = personManager.getCurrentUserID(username);

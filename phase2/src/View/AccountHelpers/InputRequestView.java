@@ -3,6 +3,7 @@ package View.AccountHelpers;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.PersonController.MessageController;
 import Presenter.PersonController.MessageMenu;
+import View.Account.MessageView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class InputRequestView implements ActionListener {
     JTextArea messageField;
     String chatId;
 
-    public InputRequestView(String title, int operation){
+    public InputRequestView(String title, int operation) {
         this.operation = operation;
         frame = new JFrame(title); // Create and set up the frame
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
@@ -38,6 +39,7 @@ public class InputRequestView implements ActionListener {
 
         JTextField inputField = new JTextField(16);
         contentPane.add(inputField);
+        //initializeObject(inputField);
 
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
