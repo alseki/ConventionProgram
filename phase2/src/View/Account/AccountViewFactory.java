@@ -35,7 +35,6 @@ public class AccountViewFactory {
         else if (controller instanceof OrgEventController) {
             view = new OrgEventView(controller);
         }
-        //TODO OrgPersonView
         else if (controller instanceof OrgPersonController) {
             view = new OrgPersonView(controller);
         }

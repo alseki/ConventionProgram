@@ -65,7 +65,7 @@ public class SpeEventView extends AccountView {
     }
 
     private void showConventionEvents() {
-        // TODO
+        showMainDropDownMenu();
     }
 
     private void showEventsSpeakingAt() {

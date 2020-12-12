@@ -172,8 +172,6 @@ public class MessageMenu implements SubMenuPrinter {
 
 
     // Option 4 ----------------- VIEW MESSAGES IN A CHAT (NOT ANNOUNCEMENT) ---------------------
-    //TODO: Ran: want to move this feature as an option after the User viewing the chatList.
-    //TODO: make it as a button/textField in Option 3.
 
     public String getChatTitle(String chatName) {
         String chatID = chatManager.findChatByName(chatName);
@@ -370,6 +368,7 @@ public class MessageMenu implements SubMenuPrinter {
         String message = messageManager.getContent(messageId);
         if (messageManager.getReadStatus(messageId)) {
             return  "[Unread]" + "<br>" +
+                    "[ID]: " + messageId + "<br>" +
                     "From: " + sender + "[Username]" + "<br>" +
                     "To: " + receiver + "<br>" +
                     "Time sent:" + time + "<br>" +
