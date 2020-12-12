@@ -17,7 +17,7 @@ public class InputRequestView implements ActionListener {
     JLabel promptExitChat;
     JFrame frame;
     JPanel contentPane;
-    //JTextField textField;
+    JTextField textField;
     int operation;
     MessageController controller;
     MessageMenu presenter;
@@ -36,7 +36,7 @@ public class InputRequestView implements ActionListener {
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
         contentPane.setLayout(new FlowLayout());
 
-        JTextField textField = new JTextField(16);
+        textField = new JTextField(16);
         contentPane.add(textField);
 
         submitButton = new JButton("Submit");

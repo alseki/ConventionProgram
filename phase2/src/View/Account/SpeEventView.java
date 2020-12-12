@@ -13,9 +13,10 @@ import java.awt.event.ActionEvent;
 public class SpeEventView extends AccountView {
     SpeEventController controller;
     SpeEventMenu presenter;
-    private final JLabel dialog = new JLabel("");
+    private JLabel dialogPrompt, dialogPrompt2;
     private final JTextField inputField = new JTextField(20);
-    private JButton selectButton = newButton("select");
+    private JButton selectButton, announcementButton;
+    private JTextArea messageField;
     JComboBox<String> eventOptions;
     private final String[] menuOp;
 
@@ -31,17 +32,29 @@ public class SpeEventView extends AccountView {
         contentPane.setBackground(new Color(255, 10, 190));
         menuOp = presenter.getMenuOptions();
 
-        initializeObject(dialog);
-        eventOptions = new JComboBox<>(presenter.getEventOptions());
-        initializeObject(eventOptions);
+        setupPane();
 
     }
 
-    private void showMakeAnnouncement() {
-        dialog.setText(presenter.printEventNamePrompt());
-        dialog.setVisible(true);
-        eventOptions.setVisible(true);
+    private void setupPane() {
+        eventOptions = new JComboBox<>(presenter.getEventOptions());
+        initializeObject(eventOptions);
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
 
+        initializeObject(inputField);
+
+        dialogPrompt2 = new JLabel("");
+        initializeObject(dialogPrompt2);
+
+        messageField = new JTextArea(5, 20);
+        messageField.setPreferredSize(new Dimension(20, 20));
+        messageField.setLineWrap(true);
+        messageField.setWrapStyleWord(true);
+        initializeObject(messageField);
+
+        selectButton = newButton("select");
+        announcementButton = newButton("send announcement");
     }
 
     private void showConventionEvents() {
@@ -58,6 +71,36 @@ public class SpeEventView extends AccountView {
         }
     }
 
+    private void showChooseEvents() {
+        dialogPrompt.setText(presenter.printEventTypePrompt());
+        dialogPrompt.setVisible(true);
+        eventOptions.setVisible(true);
+        selectButton.setVisible(true);
+        selectButton.setToolTipText("select what event(s) the announcement is for");
+    }
+
+    private void showMakeMultipleAnnouncements() {
+        dialogPrompt2.setText(presenter.printContentPrompt());
+        dialogPrompt2.setVisible(true);
+
+        messageField.setVisible(true);
+
+        announcementButton.setVisible(true);
+        backButton.setVisible(true);
+    }
+
+    private void showMakeSingleAnnouncement() {
+        dialogPrompt.setText(presenter.printEventNamePrompt());
+        dialogPrompt.setVisible(true);
+
+        inputField.setVisible(true);
+        showMakeMultipleAnnouncements();
+    }
+
+    private void sendAnnouncement() {
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
@@ -72,7 +115,28 @@ public class SpeEventView extends AccountView {
         }
         if (eventName.equals(menuOp[2])) { // Make announcement
             hideMainDropDownMenu();
-            showMakeAnnouncement();
+            showChooseEvents();
+        }
+
+        if (eventName.equals("select")) {
+            eventName = (String) eventOptions.getSelectedItem();
+            assert eventName != null;
+            if (eventName.equals(presenter.getEventOptions()[0])) { // All Events
+
+            }
+            if (eventName.equals(presenter.getEventOptions()[1])) { // Panel Events
+
+            }
+            if (eventName.equals(presenter.getEventOptions()[2])) { // Non Panel Events
+
+            }
+            if (eventName.equals(presenter.getEventOptions()[3])) { // Specific Event
+
+            }
+        }
+
+        if (eventName.equals("send announcement")) {
+            sendAnnouncement();
         }
 
 

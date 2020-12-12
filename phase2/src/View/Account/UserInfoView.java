@@ -1,12 +1,9 @@
 package View.Account;
 
-import Presenter.AttendeeController.AttReqController;
-import Presenter.AttendeeController.AttReqMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.PersonController.UserInfoController;
 import Presenter.PersonController.UserInfoMenu;
-//import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

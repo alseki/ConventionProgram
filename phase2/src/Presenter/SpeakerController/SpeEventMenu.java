@@ -37,7 +37,7 @@ public class SpeEventMenu extends EventMenu {
     /**
      * Prompts user to enter eventName of the event want to send message to.
      */
-    public String printEventNamePrompt() {
+    public String printEventTypePrompt() {
         return "What would you like to make an announcement for?";
     }
 
@@ -45,22 +45,22 @@ public class SpeEventMenu extends EventMenu {
      * Prompts user to enter an ArrayList of eventName(s) of the one or more events
      * that they want to send the message to.
      */
-    public String printEventNamesPrompt(){
-        return "Enter the NAMES of Event that you want to send message to, using comma without space (,) to split.";
+    public String printEventNamePrompt(){
+        return "Enter the name of Event that you want to send an announcement to.";
     }
 
     /**
      * Prompts user to enter CONTENT of the message.
      */
     public String printContentPrompt() {
-        return "Enter the CONTENT of the message.";
+        return "Enter the content of the announcement.";
     }
 
     /**
      * Tell the User the message is sent.
      */
     public String printMessageSent() {
-        return"Message successfully sent!";
+        return"Announcement successfully sent!";
     }
 
     /**

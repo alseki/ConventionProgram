@@ -308,7 +308,8 @@ public class OrgPersonController extends SubMenu {
                     String existingChatID = chatManager.findChat(organizerID, fellowOrg);
                     messageManager.createMessage(organizerID, fellowOrg, existingChatID, messageContentToOrganizers);
                 } else {
-                    String newChatID = chatManager.createChat(organizerID, fellowOrg);
+                    // FIXME
+                    String newChatID = chatManager.createChat(organizerID, fellowOrg, "chatname");
                     personManager.addChat(organizerID, newChatID);
                     messageManager.createMessage(organizerID, fellowOrg, newChatID, messageContentToOrganizers);
                 }
