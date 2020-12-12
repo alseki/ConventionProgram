@@ -144,6 +144,7 @@ public abstract class AccountView extends Observable implements ActionListener {
             eventName = (String)dropDownMenu.getSelectedItem();
         }
 
+        assert eventName != null;
         if (eventName.equals(closeButton.getActionCommand())) {
             notifyObservers();
             frame.setVisible(false);

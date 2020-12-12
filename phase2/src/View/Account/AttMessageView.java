@@ -35,12 +35,12 @@ public class AttMessageView extends MessageView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
-        inputField = new JTextField(50);
+        inputField = new JTextField(20);
         initializeObject(inputField);
 
         dialogPrompt2 = new JLabel("");
         initializeObject(dialogPrompt2);
-        inputField2 = new JTextField(50);
+        inputField2 = new JTextField(20);
         initializeObject(inputField2);
 
         createChatButton = newButton("Create chat");

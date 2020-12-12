@@ -16,8 +16,8 @@ public abstract class Person implements Serializable {
     protected ArrayList<String> contactList = new ArrayList<>();
     protected ArrayList<String> eventList = new ArrayList<>();
     protected ArrayList<String> chatList = new ArrayList<>();
-    protected ArrayList<String> archivedChatList = new ArrayList<>(); //TODO: delete this comment.
-    protected ArrayList<String> favorites = new ArrayList<>(); //TODO: delete this comment. this list contains the archived messages' IDs.
+    protected ArrayList<String> archivedChatList = new ArrayList<>();
+    protected ArrayList<String> favorites = new ArrayList<>();
     protected ArrayList<String> anChatList = new ArrayList<>();
 
     public Person(String fullName, String username, String password, String email){
@@ -84,7 +84,7 @@ public abstract class Person implements Serializable {
 
     /**
      *
-     * @return
+     * @return the userType that user is: 1 - attendee; 2 - organizer; 3- speaker; 4 - employee
      */
     public int getTypePerson() {
         return this.typePerson;
@@ -117,7 +117,7 @@ public abstract class Person implements Serializable {
 
     /**
      * Adds a Chat to the list of the user's chats
-     * @param chatID
+     * @param chatID of the chatGroup
      */
     public void addChat(String chatID) {
         chatList.add(chatID);
@@ -125,7 +125,7 @@ public abstract class Person implements Serializable {
 
     /**
      * Removes a Chat from the list of the user's chats
-     * @param chatID
+     * @param chatID of the chatGroup
      */
     public void removeChat(String chatID) {
         if (chatList.contains(chatID)) {
@@ -141,13 +141,23 @@ public abstract class Person implements Serializable {
         return anChatList;
     }
 
+    /**
+     * This adds an announcement chat into anChatList
+     * @param anChatID which is the equivalent of the "eventChat" id; when an event is created, so is a chat group for the people who will
+     *                 join the event
+     */
     public void addAnChat(String anChatID) {
         this.anChatList.add(anChatID);
     }
 
-    public void removeAnChat(String chatID) {
-        if (anChatList.contains(chatID)) {
-            anChatList.remove(chatID);
+    /**
+     * This removes an announcement chat from anChatList
+     * @param anChatID which is the equivalent of the "eventChat" id; when an event is created, so is a chat group for the people who will
+     *                 join the event
+     */
+    public void removeAnChat(String anChatID) {
+        if (anChatList.contains(anChatID)) {
+            anChatList.remove(anChatID);
         }
     }
 

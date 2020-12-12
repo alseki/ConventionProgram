@@ -27,13 +27,31 @@ public class SpeEventController extends SubMenu {
     }
 
     /**
+     * Gets all the Events a speaker is speaking at and formats them for display
+     * @return An array of formatted events
+     */
+    public String[] getFormattedEvents() throws InvalidChoiceException{
+        String[] events = {};
+        if (speakerManager.getSpeakerInEvents(currentUserID) != null) {
+            events = speakerManager.getSpeakerInEvents(currentUserID).toArray(events);
+            return presenter.getEventList(events);
+        } else {
+            throw new NoDataException("such event");
+        }
+    }
+
+    /**
      * Gets all the Events a speaker is speaking at
-     * @return An array of Event IDs
+     * @return An array of eventIDs
      */
     public String[] getEvents() throws InvalidChoiceException{
         String[] events = {};
-        events = speakerManager.getSpeakerInEvents(currentUserID).toArray(events);
-        return presenter.getEventList(events);
+        if (speakerManager.getSpeakerInEvents(currentUserID) != null) {
+            events = speakerManager.getSpeakerInEvents(currentUserID).toArray(events);
+            return events;
+        } else {
+            throw new NoDataException("such event");
+        }
     }
 
     /**
@@ -42,8 +60,12 @@ public class SpeEventController extends SubMenu {
      */
     public String[] getPanels() throws InvalidChoiceException{
         String[] events = {};
-        events = speakerManager.getSpeakerInPanels(currentUserID).toArray(events);
-        return presenter.getEventList(events);
+        if (speakerManager.getSpeakerInPanels(currentUserID) != null) {
+            events = speakerManager.getSpeakerInPanels(currentUserID).toArray(events);
+            return events;
+        } else {
+            throw new NoDataException("such event");
+        }
     }
 
     /**
@@ -52,8 +74,12 @@ public class SpeEventController extends SubMenu {
      */
     public String[] getNonPanels() throws InvalidChoiceException{
         String[] events = {};
-        events = speakerManager.getSpeakerInNonPanels(currentUserID).toArray(events);
-        return presenter.getEventList(events);
+        if (speakerManager.getSpeakerInNonPanels(currentUserID) != null) {
+            events = speakerManager.getSpeakerInNonPanels(currentUserID).toArray(events);
+            return events;
+        } else {
+            throw new NoDataException("such event");
+        }
     }
 
     /**
@@ -61,17 +87,15 @@ public class SpeEventController extends SubMenu {
      * @param eventName The name of the Event
      * @param messageContent Content of the Message to be sent
      */
-    public String eventMessage(String eventName, String messageContent) {
+    public boolean eventMessage(String eventName, String chatName, String messageContent) throws InvalidChoiceException{
         String eID = eventManager.getEventID(eventName);
-        // FIXME
-        /*if (eID != null) {
-            String messageID = messageManager.createMessage(eID, presenter.addSpeUsername(messageContent));
+        if (eID != null) {
+            String messageID = messageManager.createMessage(eID, chatName, presenter.addSpeUsername(messageContent));
             String acID = eventManager.getEventChat(eID);
             chatManager.addMessageIds(acID, messageID);
-            return presenter.printMessageSent();
+            return true;
         }
-        return presenter.printException(new InvalidChoiceException("event"));*/
-        return null; // TODO delete this line after above is fixed
+        throw new InvalidChoiceException("event");
     }
 
     /**
@@ -81,35 +105,13 @@ public class SpeEventController extends SubMenu {
      * @param events ArrayList of Event Names hosted by the speaker
      * @param messageContent String representing content of the message
      */
-
-    public String multipleEventsAnnouncement (String[] events, String messageContent) {
-        try {
-            String sent = presenter.printException(new NoDataException("event"));
-            for (String event : events) {
-                sent =  eventMessage(event, messageContent);
-                if (!sent.equals(presenter.printMessageSent())) {
-                    return sent;
-                }
+    public void multipleEventsAnnouncement (String[] events, String chatName, String messageContent) throws
+        InvalidChoiceException, InputMismatchException {
+        for (String event : events) {
+            if (!eventMessage(event, chatName, messageContent)) {
+                throw new NoDataException("event");
             }
-            return sent;
-        } catch (InputMismatchException ime) {
-            return presenter.printException(new InvalidChoiceException("event"));
         }
-    }
-
-
-    /**
-     * This is the same method from above, but only using messageContent as a parameter instead of the list of all
-     * SpeakerController talks
-     * @param messageContent
-     */
-    public String allSpeakerEventsMessage (String messageContent){
-        ArrayList<String> allEvents_list = speakerManager.getSpeakerInEvents(currentUserID);
-        String[] allEvents = new String[allEvents_list.size()];
-        for(int j =0;j<allEvents_list.size();j++){
-            allEvents[j] = (String) allEvents_list.get(j);
-        }
-        return multipleEventsAnnouncement(allEvents, messageContent);
     }
 
     @Override

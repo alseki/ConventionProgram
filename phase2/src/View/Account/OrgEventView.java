@@ -5,6 +5,8 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgEventMenu;
+import Event.CapacityException;
+import Event.NotPanelException;
 import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
@@ -15,15 +17,17 @@ public class OrgEventView extends AccountView {
     OrgEventController controller;
     OrgEventMenu presenter;
     String[] menuOp;
-
-    // JLabel addRoomPrompt, roomNamePrompt, roomCapPrompt, addSpeakerPrompt, addSNamePrompt,
-    //         addSUsernamePrompt, addSPasswordPrompt, addSEmailPrompt;
     JLabel dpMain, dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8; // dp = "dialogue prompt"
-    JButton createRoomButton, createEventButton, makeAnnouncementButton;
+    JButton createRoomButton, createEventButton, cancelEventButton, addSpeakerToPanelButton,
+            removeSpeakerFromPanelButton, changeEventCapacityButton;
     JTextField input1, input2, input3, input4, input5, input6, input7, input8;
     JComboBox<String> allEvents;
     ListDisplayView allEventTypes, allRooms;
     JTextArea messageField;
+    private JLabel dialogPrompt, nameOfEvent, nameOfChat;
+    private final JTextField inputField = new JTextField(20);
+    private final JTextField inputChatName = new JTextField(20);
+    private JButton selectButton, announcementButton;
 
     /**
      * The view for organizer users to see their convention event options.
@@ -38,9 +42,12 @@ public class OrgEventView extends AccountView {
 
         contentPane.setBackground(new Color(200, 10, 150));
 
-        createRoomButton = newButton("Create room");
-        createEventButton = newButton("Create Event");
-        makeAnnouncementButton = newButton("Make Announcement");
+        createRoomButton = newButton("Create a new room");
+        createEventButton = newButton("Create a new event");
+        cancelEventButton = newButton("Cancel an existing event");
+        addSpeakerToPanelButton = newButton("Add a speaker to a panel");
+        removeSpeakerFromPanelButton = newButton("Remove a speaker from a panel");
+        changeEventCapacityButton = newButton("Change the capacity of an existing event");
 
         dpMain = new JLabel("");
         initializeObject(dpMain);
@@ -85,13 +92,26 @@ public class OrgEventView extends AccountView {
         input8 = new JTextField(20);
         initializeObject(input8);
 
+        nameOfChat = new JLabel("");
+        initializeObject(nameOfChat);
+        initializeObject(inputChatName);
+
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
+
         messageField = new JTextArea(5, 20);
         messageField.setPreferredSize(new Dimension(20, 20));
         messageField.setLineWrap(true);
         messageField.setWrapStyleWord(true);
         initializeObject(messageField);
-    }
 
+        nameOfEvent = new JLabel("");
+        initializeObject(nameOfEvent);
+        initializeObject(inputField);
+
+        selectButton = newButton("select");
+        announcementButton = newButton("send announcement");
+    }
 
     private void showCreateRoom() {
         backButton.setVisible(true);
@@ -165,10 +185,6 @@ public class OrgEventView extends AccountView {
         dp8.setVisible(true);
         input8.setVisible(true);
 
-        //dp8.setText(presenter.printChatNamePrompt());
-        //dp8.setVisible(true);
-        //input8.setVisible(true);
-
         createEventButton.setVisible(true);
     }
 
@@ -207,26 +223,172 @@ public class OrgEventView extends AccountView {
         }
     }
 
-    private void showMakeEventAnnouncement() {
+    private void showCancelEvent() {
         backButton.setVisible(true);
 
-        dpMain.setText(presenter.printEventMessageIntro());
+        dpMain.setText(presenter.cancelEventPrompt());
         dpMain.setVisible(true);
 
-        dp1.setText(presenter.printEventNamePrompt());
+        dp1.setText(presenter.printEventNameToCancelPrompt());
         dp1.setVisible(true);
         input1.setVisible(true);
 
-        dp2.setText(presenter.printChatNamePrompt());
+        cancelEventButton.setVisible(true);
+    }
+
+    private void cancelEvent() {
+        String eventName = input1.getText();
+        if(controller.cancelEvent(eventName)) {
+                JOptionPane.showConfirmDialog(null, "Event cancellation successful!",
+                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+                JOptionPane.showConfirmDialog(null, "Please enter valid information. An event "
+                                + "of this name does not exist.",
+                        "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            }
+    }
+
+    private void showAddSpeakerToPanel() {
+        backButton.setVisible(true);
+
+        dpMain.setText(presenter.addSpeakerToPanelPrompt());
+        dpMain.setVisible(true);
+
+        dp1.setText(presenter.speakerToAddPrompt());
+        dp1.setVisible(true);
+        input1.setVisible(true);
+
+        dp2.setText(presenter.panelToAddToPrompt());
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        dp3.setText(presenter.printMessageContentPrompt());
-        dp3.setVisible(true);
-        messageField.setVisible(true);
-
-        makeAnnouncementButton.setVisible(true);
+        addSpeakerToPanelButton.setVisible(true);
     }
+
+    private void addSpeakerToPanel() {
+        String speakerName = input1.getText();
+        String eventName = input2.getText();
+
+        try {
+            if(controller.addSpeakerToPanel(speakerName, eventName)) {
+                JOptionPane.showConfirmDialog(null, "Speaker sign-up successful!",
+                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Please enter valid information.",
+                        "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (InvalidChoiceException c) {
+            exceptionDialogBox(presenter.printException(c));
+        } catch (NotPanelException c) {
+            exceptionDialogBox(presenter.printException(c));
+        } catch (CapacityException c) {
+            exceptionDialogBox(presenter.printException(c));
+        }
+    }
+
+    private void showRemoveSpeakerFromPanel() {
+        backButton.setVisible(true);
+
+        dpMain.setText(presenter.removeSpeakerFromPanelPrompt());
+        dpMain.setVisible(true);
+
+        dp1.setText(presenter.speakerToRemovePrompt());
+        dp1.setVisible(true);
+        input1.setVisible(true);
+
+        dp2.setText(presenter.panelToRemoveFromPrompt());
+        dp2.setVisible(true);
+        input2.setVisible(true);
+
+        removeSpeakerFromPanelButton.setVisible(true);
+    }
+
+    private void removeSpeakerFromPanel() {
+        String speakerName = input1.getText();
+        String eventName = input2.getText();
+
+        try {
+            if(controller.removeSpeakerFromPanel(speakerName, eventName)) {
+                JOptionPane.showConfirmDialog(null, "Speaker removal successful!",
+                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Please enter valid information.",
+                        "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (InvalidChoiceException c) {
+            exceptionDialogBox(presenter.printException(c));
+        } catch (NotPanelException c) {
+            exceptionDialogBox(presenter.printException(c));
+        }
+    }
+
+    private void showChangeEventCapacity() {
+        backButton.setVisible(true);
+
+        dpMain.setText(presenter.changeEventCapacityPrompt());
+        dpMain.setVisible(true);
+
+        dp1.setText(presenter.eventToChangePrompt());
+        dp1.setVisible(true);
+        input1.setVisible(true);
+
+        dp2.setText(presenter.newCapacityPrompt());
+        dp2.setVisible(true);
+        input2.setVisible(true);
+
+        changeEventCapacityButton.setVisible(true);
+    }
+
+    private void changeEventCapacity() {
+        String eventName = input1.getText();
+        String capacity = input2.getText();
+
+        try {
+            if(controller.changeCapacity(eventName, Integer.parseInt(capacity))) {
+                JOptionPane.showConfirmDialog(null, "Speaker removal successful!",
+                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showConfirmDialog(null, "Please enter valid information.",
+                        "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (InvalidChoiceException c) {
+            exceptionDialogBox(presenter.printException(c));
+        }
+    }
+
+    private void showMakeAnnouncement() {
+        selectButton.setVisible(false);
+
+        nameOfChat.setText(presenter.printChatNamePrompt());
+        nameOfChat.setVisible(true);
+        inputChatName.setText("");
+        inputChatName.setVisible(true);
+
+        dialogPrompt.setText(presenter.printMessageContentPrompt());
+        dialogPrompt.setVisible(true);
+        messageField.setVisible(true);
+        announcementButton.setVisible(true);
+        nameOfEvent.setText(presenter.printEventNamePrompt());
+        inputField.setText("");
+        inputField.setVisible(true);
+        nameOfEvent.setVisible(true);
+    }
+
+    private void sendAnnouncement() {
+        hideAll();
+        String specificEventName = inputField.getText();
+        String nameOfChat = inputChatName.getText();
+        String message = messageField.getText();
+        try {
+            controller.eventMessage(specificEventName, nameOfChat, message);
+            hideAll();
+            dialogPrompt.setText(presenter.printMessageSent());
+            okayButton.setVisible(true);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -238,6 +400,22 @@ public class OrgEventView extends AccountView {
 
         if(eventName.equals(createEventButton.getActionCommand())) {
             createEvent();
+        }
+
+        if(eventName.equals(cancelEventButton.getActionCommand())) {
+            cancelEvent();
+        }
+
+        if(eventName.equals(addSpeakerToPanelButton.getActionCommand())) {
+            addSpeakerToPanel();
+        }
+
+        if(eventName.equals(removeSpeakerFromPanelButton.getActionCommand())) {
+            removeSpeakerFromPanel();
+        }
+
+        if(eventName.equals(changeEventCapacityButton.getActionCommand())) {
+            changeEventCapacity();
         }
 
         if(eventName.equals(menuOp[0])) {
@@ -252,7 +430,34 @@ public class OrgEventView extends AccountView {
 
         if(eventName.equals(menuOp[2])) {
             hideMainDropDownMenu();
-            showMakeEventAnnouncement();
+            showCancelEvent();
+        }
+
+        if(eventName.equals(menuOp[3])) {
+            hideMainDropDownMenu();
+            showAddSpeakerToPanel();
+        }
+
+        if(eventName.equals(menuOp[4])) {
+            hideMainDropDownMenu();
+            showRemoveSpeakerFromPanel();
+        }
+
+        if(eventName.equals(menuOp[5])) {
+            hideMainDropDownMenu();
+            showChangeEventCapacity();
+        }
+
+        if(eventName.equals(menuOp[6])) {
+            hideMainDropDownMenu();
+        }
+
+        if(eventName.equals(menuOp[6])) {
+            showMakeAnnouncement();
+        }
+
+        if(eventName.equals("send announcement")) {
+            sendAnnouncement();
         }
 
     }
