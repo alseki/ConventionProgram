@@ -21,43 +21,45 @@ public class AccountViewFactory {
      * Constructs a View based on the type of controller
      * @param controller a SubMenu controller
      */
-    public void construct(SubMenu controller) {
+    public AccountView construct(SubMenu controller) {
+        AccountView view;
         if (controller instanceof ContactController) {
-            new ContactView(controller);
+            view = new ContactView(controller);
         }
         else if (controller instanceof AttMessageController) {
-            new AttMessageView(controller);
+            view = new AttMessageView(controller);
         }
         else if (controller instanceof AttEventController) {
-            new AttEventView(controller);
+            view = new AttEventView(controller);
         }
         else if (controller instanceof OrgEventController) {
-            new OrgEventView(controller);
+            view = new OrgEventView(controller);
         }
         //TODO OrgPersonView
         else if (controller instanceof OrgPersonController) {
-            new OrgPersonView(controller);
+            view = new OrgPersonView(controller);
         }
         else if (controller instanceof OrgReqController) {
-            new OrgReqView(controller);
+            view = new OrgReqView(controller);
         }
         else if (controller instanceof MessageController) {
-            new MessageView(controller);
+            view = new MessageView(controller);
         }
         else if (controller instanceof SpeEventController) {
-            new SpeEventView(controller);
+            view = new SpeEventView(controller);
         }
         else if (controller instanceof EmpEventController) {
-            new EmpEventView(controller);
+            view = new EmpEventView(controller);
         }
         else if (controller instanceof UserInfoController) {
-            new UserInfoView(controller);
+            view = new UserInfoView(controller);
         }
         else if (controller instanceof EmpReqController) {
-            new OrgReqView(controller);
+            view = new OrgReqView(controller);
         }
-        else if (controller instanceof AttReqController) {
-            new AttReqView(controller);
+        else {
+            view = new AttReqView(controller);
         }
+        return view;
     }
 }

@@ -11,13 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 // Programmers: Cara McNeil,
 // Description: Prints the Main Menu options
 // Date Created: 11/11/2020
 // Date Modified: 13/11/2020
 
-public class Account implements ActionListener {
+public class Account implements ActionListener, Observer {
     PersonController controller;
     AccountViewFactory accountViewFactory = new AccountViewFactory();
     String[] menuOptions;
@@ -26,6 +28,8 @@ public class Account implements ActionListener {
     JComboBox<String> dropDownMenu;
     JButton logoutButton, submitButton;
     String menuSelection;
+
+
 
     /**
      * The view for the user's account main menu. Presents the user with a drop down menu of submenus they can visit,
@@ -111,8 +115,16 @@ public class Account implements ActionListener {
         if (event.getActionCommand().equals("submit")) {
             menuSelection = (String)dropDownMenu.getSelectedItem();
             SubMenu subAccountController = controller.createController(menuSelection);
-            accountViewFactory.construct(subAccountController);
+            AccountView view = accountViewFactory.construct(subAccountController);
+            view.addObserver(this);
         }
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof AccountView) {
+            AccountView view = (AccountView) o;
+            controller.update(view.unpack());
+        }
+    }
 }

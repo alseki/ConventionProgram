@@ -403,6 +403,7 @@ public class ChatManager implements Serializable {
     public void readChat(String chatId) {getUnknownTypeChat(chatId).markAsRead();}
 
     public void unreadChat(String chatId) {getUnknownTypeChat(chatId).markAsUnread();}
+
 }
 
 // CRC Card Definition

@@ -4,9 +4,9 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.OrganizerController.OrgReqController;
 import Presenter.OrganizerController.OrgReqMenu;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class OrgReqView extends AttReqView {
@@ -41,10 +41,9 @@ public class OrgReqView extends AttReqView {
 
             frame.setTitle(presenter.specificRequestTitle(reqID));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
             dialogPrompt.setVisible(false);
             frame.setTitle(presenter.getMenuTitle());
-            showMainDropDownMenu();
         }
     }
 
@@ -72,8 +71,7 @@ public class OrgReqView extends AttReqView {
 
             backButton.setVisible(true);
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 
@@ -83,8 +81,7 @@ public class OrgReqView extends AttReqView {
         try {
             reqsList = new ListDisplayView(presenter.viewRequestTitle(), presenter.allRequests());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

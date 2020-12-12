@@ -4,9 +4,9 @@ import Presenter.AttendeeController.AttReqController;
 import Presenter.AttendeeController.AttReqMenu;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class AttReqView extends AccountView {
@@ -23,7 +23,7 @@ public class AttReqView extends AccountView {
      * @param controller AttReqController for handling user input
      */
     public AttReqView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (AttReqController) controller;
         this.presenter = (AttReqMenu) controller.getPresenter();
 
@@ -99,10 +99,9 @@ public class AttReqView extends AccountView {
 
             frame.setTitle(presenter.specificRequestTitle(reqID));
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
+            exceptionDialogBox(presenter.printException(e));
             dialogPrompt.setVisible(false);
             frame.setTitle(presenter.getMenuTitle());
-            showMainDropDownMenu();
         }
     }
 
@@ -112,8 +111,7 @@ public class AttReqView extends AccountView {
         try {
             reqsList = new ListDisplayView(presenter.viewRequestTitle(), presenter.myRequests());
         } catch (InvalidChoiceException e) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(e));
-            showMainDropDownMenu();
+            exceptionDialogBox(presenter.printException(e));
         }
     }
 

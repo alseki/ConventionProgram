@@ -5,6 +5,7 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.NoDataException;
 import Presenter.OrganizerController.OrgEventController;
 import Presenter.OrganizerController.OrgEventMenu;
+import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +30,7 @@ public class OrgEventView extends AccountView {
      * @param controller OrgEventController for handling user input
      */
     public OrgEventView(SubMenu controller) {
-        super(controller.getPresenter());
+        super(controller);
         this.controller = (OrgEventController) controller;
         this.presenter = (OrgEventMenu) controller.getPresenter();
 
@@ -122,7 +123,7 @@ public class OrgEventView extends AccountView {
                         "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
             }
         } catch (InvalidChoiceException c) {
-            exceptionDialogBox(presenter.exceptionTitle(), c.getMessage());
+            exceptionDialogBox(presenter.printException(c));
         }
     }
 
@@ -188,7 +189,7 @@ public class OrgEventView extends AccountView {
                 try {
                     allRooms = new ListDisplayView("All Rooms", presenter.getRoomList());
                 } catch (NoDataException d) {
-                    exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(d));
+                    exceptionDialogBox(presenter.printException(d));
                 }
             } else if(eventType.equals("") && roomName.equals("")) {
                 JOptionPane.showConfirmDialog(null, presenter.exceptionTitle(), "Please enter information carefully",
@@ -202,7 +203,7 @@ public class OrgEventView extends AccountView {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
             }
         } catch (InvalidChoiceException c) {
-            exceptionDialogBox(presenter.exceptionTitle(), presenter.printException(c));
+            exceptionDialogBox(presenter.printException(c));
         }
     }
 

@@ -20,8 +20,8 @@ public class OrgPersonMenu extends EventMenu{
     @Override
     public String[] getMenuOptions() {
         return new String[]{"Create a speaker account", "Create an attendee account", "Create an employee account",
-                "Create an organizer account", "Cancel a speaker account", "Cancel an attendee account", "Cancel an employee account",
-                "Cancel a speaker account"};
+                "Create an organizer account"/*, "Cancel a speaker account", "Cancel an attendee account", "Cancel an employee account",
+                "Cancel a speaker account"*/};
     }
 
     // OPTION 1
