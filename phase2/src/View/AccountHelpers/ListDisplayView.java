@@ -21,7 +21,7 @@ public class ListDisplayView implements ActionListener {
     public ListDisplayView(String title, String[] options) {
         frame = new JFrame(title); // Create and set up the frame
         contentPane = new JPanel();// Create a content pane with a BoxLayout and empty borders
-        contentPane.setPreferredSize(new Dimension(400,660));
+        contentPane.setPreferredSize(new Dimension(600,800));
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
         //contentPane.setLayout(null);
         GridBagLayout layout = new GridBagLayout();

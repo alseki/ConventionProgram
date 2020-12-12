@@ -20,7 +20,7 @@ public class Chat implements Serializable {
     protected boolean announcementOrNot; // 1 is announcement which cannot reply and 0 for general chat.
 
     //Chat constructor. Input is arraylist of ID(s) of guest(s) that you (owner) want to form group chat with.
-    public Chat(String ownerId, String guestId){
+    public Chat(String ownerId, String guestId, String name){
         messageIds = new ArrayList<>();
         personIds = new ArrayList<>();
         personIds.add(ownerId);
@@ -29,6 +29,7 @@ public class Chat implements Serializable {
         this.readStatus = "unread";
         this.password = UUID.randomUUID().toString();
         this.announcementOrNot = false;
+        this.name = name;
     }
     public Chat(String ownerId, ArrayList <String> guestIds, String name){
         messageIds = new ArrayList<>();

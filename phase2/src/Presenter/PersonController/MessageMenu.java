@@ -230,6 +230,56 @@ public class MessageMenu implements SubMenuPrinter {
 
     // ---------------- FEATURES with location not decided. (in MessageMenu or Att/Org/Spe) ----------------
 
+    // -------option 99 see messages in a chat
+    /**
+     * Show all the messages in a chat
+     */
+    public String[] getMessagesInChat(String chatID) throws NoDataException{
+        try {
+            ArrayList<String> UnreadMessages = new ArrayList<>();
+            for (String message : chatManager.getMessageIds(chatID)) {
+                if (messageManager.getReadStatus(message)) {
+                    UnreadMessages.add(message);
+                }
+            }
+            ArrayList<String> Messages = new ArrayList<>();
+            for (String message : chatManager.getMessageIds(chatID)) {
+                if (!messageManager.getReadStatus(message)) {
+                    Messages.add(message);
+                }
+            }
+            Messages.addAll(UnreadMessages);
+            return formatMessages(Messages);
+        } catch (NullPointerException e) {
+            throw new NoDataException("message");
+        }
+    }
+
+    /**
+     * Show all the messages in a chat
+     */
+    public ArrayList<String> getMessageIdsInChat(String chatID) throws NoDataException{
+        try {
+            ArrayList<String> UnreadMessageIds = new ArrayList<>();
+            for (String message : chatManager.getMessageIds(chatID)) {
+                if (messageManager.getReadStatus(message)) {
+                    UnreadMessageIds.add(message);
+                }
+            }
+            ArrayList<String> MessageIds = new ArrayList<>();
+            for (String message : chatManager.getMessageIds(chatID)) {
+                if (!messageManager.getReadStatus(message)) {
+                    MessageIds.add(message);
+                }
+            }
+            MessageIds.addAll(UnreadMessageIds);
+            return MessageIds;
+        } catch (NullPointerException e) {
+            throw new NoDataException("message");
+        }
+    }
+
+
     // Option 100 -------------------- Archive chat -------------------
     // method in MessageController
     /**

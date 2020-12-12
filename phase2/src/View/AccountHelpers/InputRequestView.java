@@ -26,6 +26,7 @@ public class InputRequestView implements ActionListener {
     ListDisplayView msgList;
     JTextField inputField;
     JTextArea messageField;
+    String chatId;
 
     public InputRequestView(String title, int operation){
         this.operation = operation;
@@ -39,7 +40,6 @@ public class InputRequestView implements ActionListener {
         contentPane.add(textField);
 
         submitButton = new JButton("Submit");
-        //submitButton.setBounds(10, 600, 80, 30);
         submitButton.setActionCommand("submit");
         submitButton.addActionListener(this);
         submitButton.setToolTipText("click this button to submit the input text");
@@ -51,9 +51,62 @@ public class InputRequestView implements ActionListener {
         display();
     }
 
-    private void viewMessagesInChat() throws InvalidChoiceException {
-        msgList = new ListDisplayView("-- MESSAGES --", presenter.getChats(presenter.getChatList()));
+    public void setChatId(String Id) {
+        this.chatId = Id;
+    }
 
+    /**
+     * Create a new menu shows the formatted list of chats info.
+     */
+    private void viewMessagesInChat() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String chatID = presenter.getChatList().get(serialNumber - 1);
+        msgList = new MessageListDisplayView("-- MESSAGES --", presenter.getMessagesInChat(chatID), chatID);
+    }
+
+    /**
+     * Archive a Chat
+     */
+    private void archiveChosenChat() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String chatID = presenter.getChatList().get(serialNumber - 1);
+        controller.archiveChat(chatID);
+    }
+
+    /**
+     * exit a Chat
+     */
+    private void exitChosenChat() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String chatID = presenter.getChatList().get(serialNumber - 1);
+        controller.deleteChat(chatID);
+    }
+
+    /**
+     * Archive a message
+     */
+    private void archiveChosenMessage() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String msgId = presenter.getMessageIdsInChat(this.chatId).get(serialNumber - 1);
+        controller.archiveMessage(msgId);
+    }
+
+    /**
+     * mark a message as unread
+     */
+    private void unreadChosenMessage() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String msgId = presenter.getMessageIdsInChat(this.chatId).get(serialNumber - 1);
+        controller.unreadMessage(msgId);
+    }
+
+    /**
+     * mark a message as unread
+     */
+    private void readChosenMessage() throws InvalidChoiceException {
+        int serialNumber = Integer.parseInt(inputField.getText());
+        String msgId = presenter.getMessageIdsInChat(this.chatId).get(serialNumber - 1);
+        controller.readMessage(msgId);
     }
 
     /**
@@ -82,6 +135,55 @@ public class InputRequestView implements ActionListener {
             hide();
             try {
                 viewMessagesInChat();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (event.getActionCommand().equals("Archive") && this.operation == 2) {
+            hide();
+            try {
+                archiveChosenChat();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (event.getActionCommand().equals("exitChat") && this.operation == 3) {
+            hide();
+            try {
+                exitChosenChat();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        //TODO================================
+        if (event.getActionCommand().equals("sendMessage") && this.operation == 4) {
+            hide();
+            try {
+                exitChosenChat();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (event.getActionCommand().equals("Archive") && this.operation == 5) {
+            hide();
+            try {
+                archiveChosenMessage();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (event.getActionCommand().equals("Unread") && this.operation == 6) {
+            hide();
+            try {
+                unreadChosenMessage();
+            } catch (InvalidChoiceException e) {
+                e.printStackTrace();
+            }
+        }
+        if (event.getActionCommand().equals("Read") && this.operation == 7) {
+            hide();
+            try {
+                readChosenMessage();
             } catch (InvalidChoiceException e) {
                 e.printStackTrace();
             }
