@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestManager implements Serializable {
-    private ArrayList<RequestEntity> requestsList;
-    private Map<String, RequestEntity> idToRequest;
+    private final ArrayList<RequestEntity> requestsList;
+    private final Map<String, RequestEntity> idToRequest;
 
     /**
      * constructor for the request manager
@@ -28,7 +28,7 @@ public class RequestManager implements Serializable {
     }
 
     /**
-     * creates a reauest
+     * creates a request
      *
      * @param reqUserId  the user who is making the request
      * @param reqContent string fro the content of the request
@@ -123,7 +123,7 @@ public class RequestManager implements Serializable {
      * @param userID The user's ID
      * @return an arraylist of the user's requests
      */
-    public ArrayList getRequestsByUser(String userID) throws NullPointerException {
+    public ArrayList<String> getRequestsByUser(String userID) throws NullPointerException {
         ArrayList<String> userRequestIDs = new ArrayList<>();
         for (RequestEntity request : requestsList) {
             if (request.getRequestingUserId().equals(userID)) {
@@ -168,7 +168,7 @@ public class RequestManager implements Serializable {
 
     /**
      * way to get all the requesting user id's
-     * @return ArrrayList of requesting user id's
+     * @return ArrayList of requesting user id's
      */
     public ArrayList<String> getAllRequestUserIds(){
         ArrayList<String> lst = new ArrayList<>();

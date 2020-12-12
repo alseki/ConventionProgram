@@ -27,10 +27,10 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param name
-     * @param username
-     * @param password
-     * @param email
+     * @param name of the user
+     * @param username chosen by the user
+     * @param password chosen by the user
+     * @param email of the user
      * @return This is an abstract constructor for the Person object to be implemented
      *         in the other User-specific managers
      */
@@ -84,7 +84,7 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param currentUserID
+     * @param currentUserID of the person (same word for user)
      * 1 of the 2 overloaded methods under this method name
      * returns the Person object corresponding to currentUserId
      * @return Person
@@ -98,8 +98,8 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param username
-     * @param password
+     * @param username of the person (same word for user)
+     * @param password of the person
      * the second of the 2 overloaded methods under this method name
      * returns the Person object corresponding to username and password
      * @return Person, which will be used in the findPerson method, which is for authentication
@@ -172,9 +172,9 @@ public abstract class PersonManager {
 
 
     /**
-     *
-     * @param username
-     * @return
+     * This is to get the type of user - created when new user creates account as Att/Org/Speaker/Employee; 1,2,3,4 respectively
+     * @param username of the user
+     * @return the integer assigned to type of user: 1,2,3,4
      */
     public int typePerson(String username) {
         if(usernameToPerson.containsKey(username)) {
@@ -186,13 +186,13 @@ public abstract class PersonManager {
 
     /**
      * This is a helper function for LoginController in the login() method
-     * @param username
-     * @param password
+     * @param username of the user logging in
+     * @param password of the user logging in
      * @return true iff the password inputted by the user corresponds to username's password
      */
     public boolean confirmPassword(String username, String password) {
         Person person = getPersonByUsername(username);
-        if (person.getPassword().equals(password)) {
+        if(person.getPassword().equals(password)) {
             return true;
         }
         return false;
@@ -200,7 +200,7 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param username
+     * @param username of the user
      * returns a value that allows for account verificaton; whether accountUser exists or not
      * @return boolean, which allow user to login or not
      */
@@ -210,8 +210,8 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param currentUserID
-     * @param contactID
+     * @param currentUserID of the user
+     * @param contactID of another person at the conference to be added to user's contact list
      * returns the result (true/false) whether adding a new contact to User's list was successful
      * @return boolean, which indicates after checking for double contact (new or old contact)
      * whether adding contact exceuted or not
@@ -226,8 +226,8 @@ public abstract class PersonManager {
 
     /**
      * Adds a chat
-     * @param currentID
-     * @param chatID
+     * @param currentID of user
+     * @param chatID of chat group (1-1 or more)
      */
     public void addChat(String currentID, String chatID) {
         getPerson(currentID).addChat(chatID);
@@ -235,8 +235,8 @@ public abstract class PersonManager {
 
     /**
      * Removes a chat
-     * @param currentID
-     * @param chatID
+     * @param currentID of user
+     * @param chatID of chat group (1-1 or more)
      */
     public void removeChat(String currentID, String chatID) {
         getPerson(currentID).removeChat(chatID);
@@ -244,7 +244,7 @@ public abstract class PersonManager {
 
     /**
      *
-     * @param currentUserID
+     * @param currentUserID of user
      * @return ArrayList<String> of chatID of chats made by/inviting the User
      */
 
@@ -257,8 +257,8 @@ public abstract class PersonManager {
      * This checks that the user has not already booked the same event. Attendees cannot book
      * 2 spots at a given event.
      *
-     * @param username
-     * @param eventSession
+     * @param username of user
+     * @param eventSession of event user's wants to sign up for
      * @return boolean, as the whether the user has already signed up for a given event
      */
 
@@ -271,8 +271,8 @@ public abstract class PersonManager {
     /**
      * This checks that the user does not already have this contact in contactList
      *
-     * @param currentID
-     * @param contactID
+     * @param currentID of user
+     * @param contactID of another participant at convention
      * @return boolean, as the whether the user already has the contact in the contactList
      */
     public boolean doubleContact(String currentID, String contactID) {

@@ -12,21 +12,21 @@ import Person.SpeakerManager;
 import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.InvalidFormatException;
+import Presenter.Exceptions.NoDataException;
 import Presenter.Exceptions.OverwritingException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class OrgEventController extends SubMenu {
 
     private String currentUserID;
     private SpeakerManager speakerManager;
     private EmployeeManager employeeManager;
-    private OrganizerManager organizerManager;
     private EventPermissions eventPermissions;
-    private EventManager eventManager;
     private OrgEventMenu presenter;
 
     public OrgEventController(SubMenu subMenu, String currentUserID, SpeakerManager speakerManager,
@@ -179,7 +179,12 @@ public class OrgEventController extends SubMenu {
             eventManager.removeEvent(eventID);
             String messageContent = eventName + " has been cancelled. An announcement by the event organizer will be " +
                     "made shortly.";
-            this.eventMessage(eventName, chatName, messageContent);
+            try {
+                this.eventMessage(eventName, chatName, messageContent);
+            }
+            catch (InvalidChoiceException e) {
+                return false;
+            }
             String messageContentToSpeaker = eventName + " has been cancelled. This is organizer. Attendees have been "
                     + "notified. I will call you very soon.";
             String organizerID = this.currentUserID;
@@ -208,11 +213,12 @@ public class OrgEventController extends SubMenu {
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
      * @param speakerUsername   The username of the Speaker
-     * @param eventID     The ID of the Panel
+     * @param eventName     The name of the Panel
      * @return true iff the Speaker was signed up
      */
-    public void addSpeakerToPanel(String speakerUsername, String eventID) throws InvalidChoiceException, NotPanelException,
-            CapacityException {
+    public boolean addSpeakerToPanel(String speakerUsername, String eventName) throws InvalidChoiceException,
+            NotPanelException, CapacityException {
+        String eventID = eventManager.getEventID(eventName);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         if (event == null) {
@@ -222,18 +228,19 @@ public class OrgEventController extends SubMenu {
         } else {
             eventPermissions.signSpeakerUpForPanel(speakerID, eventID);
             speakerManager.addPanel(speakerID, eventID);
-
+            return true;
         }
     }
 
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
      * @param speakerUsername   The username of the Speaker
-     * @param eventID     The ID of the Panel
+     * @param eventName     The name of the Panel
      * @return true iff the Speaker was signed up
      */
-    public void removeSpeakerFromPanel(String speakerUsername, String eventID) throws InvalidChoiceException,
+    public boolean removeSpeakerFromPanel(String speakerUsername, String eventName) throws InvalidChoiceException,
             NotPanelException {
+        String eventID = eventManager.getEventID(eventName);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         Panel panel = (Panel) event;
@@ -246,9 +253,11 @@ public class OrgEventController extends SubMenu {
             if (panel.numberPanelists(eventID) == 1) {
                 speakerManager.deleteEvent(eventID);
                 this.cancelEvent(eventID);
+                return true;
             }
             else {
                 speakerManager.deleteEventFromSpeaker(speakerID, eventID);
+                return true;
             }
         }
     }
@@ -294,9 +303,12 @@ public class OrgEventController extends SubMenu {
      * @param eventName The name of the Event
      * @param chatName The name of the Chat
      */
-    private void eventMessage (String eventName, String chatName, String messageContent){
+    public void eventMessage (String eventName, String chatName, String messageContent) throws InvalidChoiceException{
         String eventID = eventManager.getEventID(eventName);
         String chatID = eventManager.getEventChat(chatName);
+        if (eventID == null || chatID == null) {
+            throw new InvalidChoiceException("event");
+        }
         String ev = eventManager.getEventChat(eventID);
         String m = messageManager.createMessage(eventID, chatID, messageContent);
         chatManager.addMessageIds(ev, m);

@@ -5,6 +5,8 @@ import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.Exceptions.OverwritingException;
 import Presenter.OrganizerController.OrgPersonController;
 import Presenter.OrganizerController.OrgPersonMenu;
+import Event.CapacityException;
+import Event.NotPanelException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -184,15 +186,17 @@ public class OrgPersonView extends AccountView {
     }
 
     private void cancelSpe() {
-        /*
         try {
             controller.cancelSpeakerAccount(input3.getText());
         } catch (InvalidChoiceException e) {
             exceptionDialogBox(presenter.printException(e));
+        } catch (NotPanelException e) {
+            exceptionDialogBox(presenter.printException(e));
+        } catch (CapacityException e) {
+            exceptionDialogBox(presenter.printException(e));
         } finally {
             showMainDropDownMenu();
         }
-         */
     }
 
 
