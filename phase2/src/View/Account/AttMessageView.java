@@ -19,7 +19,7 @@ public class AttMessageView extends MessageView {
     AttMessageMenu announcementPresenter;
     JButton createChatButton, createGroupChatButton;
     JLabel dialogPrompt, dialogPrompt2;
-    JTextField inputField2;
+    JTextField inputField, inputField2;
 
     /**
      * The view for attendee users to see their message options.
@@ -35,9 +35,13 @@ public class AttMessageView extends MessageView {
 
         dialogPrompt = new JLabel("");
         initializeObject(dialogPrompt);
+        inputField = new JTextField(50);
+        initializeObject(inputField);
 
         dialogPrompt2 = new JLabel("");
         initializeObject(dialogPrompt2);
+        inputField2 = new JTextField(50);
+        initializeObject(inputField2);
 
         createChatButton = newButton("Create chat");
         createGroupChatButton = newButton("Create group chat");
@@ -77,13 +81,13 @@ public class AttMessageView extends MessageView {
         dialogPrompt.setText(presenter.printContactUsernamePrompt());
         dialogPrompt.setVisible(true);
 
-        new JTextField(50);
+        //inputField = new JTextField(50);
         inputField.setVisible(true);
 
         dialogPrompt2.setText("Enter the name of the chat you would like to create");
         dialogPrompt2.setVisible(true);
 
-        new JTextField(50);
+        //inputField2 = new JTextField(50);
         inputField2.setVisible(true);
 
         createChatButton.setVisible(true);
