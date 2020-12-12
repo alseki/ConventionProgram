@@ -17,7 +17,7 @@ public class InputRequestView implements ActionListener {
     JLabel promptExitChat;
     JFrame frame;
     JPanel contentPane;
-    JTextField textField;
+    //JTextField textField;
     int operation;
     MessageController controller;
     MessageMenu presenter;
@@ -36,8 +36,8 @@ public class InputRequestView implements ActionListener {
         contentPane.setBackground(new Color(255, 255, 255));// Sets background colour to white
         contentPane.setLayout(new FlowLayout());
 
-        textField = new JTextField(16);
-        contentPane.add(textField);
+        JTextField inputField = new JTextField(16);
+        contentPane.add(inputField);
 
         submitButton = new JButton("Submit");
         submitButton.setActionCommand("submit");
@@ -110,6 +110,15 @@ public class InputRequestView implements ActionListener {
     }
 
     /**
+     * send a message
+     */
+    private void sendMessage() throws InvalidChoiceException {
+        String content = inputField.getText();
+        String chatID = this.chatId;
+        controller.sendMessage(chatID, content);
+    }
+
+    /**
      * Shows every component stored in contentPane
      */
     private void display() {
@@ -139,7 +148,7 @@ public class InputRequestView implements ActionListener {
                 e.printStackTrace();
             }
         }
-        if (event.getActionCommand().equals("Archive") && this.operation == 2) {
+        if (event.getActionCommand().equals("submit") && this.operation == 2) {
             hide();
             try {
                 archiveChosenChat();
@@ -147,7 +156,7 @@ public class InputRequestView implements ActionListener {
                 e.printStackTrace();
             }
         }
-        if (event.getActionCommand().equals("exitChat") && this.operation == 3) {
+        if (event.getActionCommand().equals("submit") && this.operation == 3) {
             hide();
             try {
                 exitChosenChat();
@@ -155,16 +164,15 @@ public class InputRequestView implements ActionListener {
                 e.printStackTrace();
             }
         }
-        //TODO================================
-        if (event.getActionCommand().equals("sendMessage") && this.operation == 4) {
+        if (event.getActionCommand().equals("submit") && this.operation == 4) {
             hide();
             try {
-                exitChosenChat();
+                sendMessage();
             } catch (InvalidChoiceException e) {
                 e.printStackTrace();
             }
         }
-        if (event.getActionCommand().equals("Archive") && this.operation == 5) {
+        if (event.getActionCommand().equals("submit") && this.operation == 5) {
             hide();
             try {
                 archiveChosenMessage();
@@ -172,7 +180,7 @@ public class InputRequestView implements ActionListener {
                 e.printStackTrace();
             }
         }
-        if (event.getActionCommand().equals("Unread") && this.operation == 6) {
+        if (event.getActionCommand().equals("submit") && this.operation == 6) {
             hide();
             try {
                 unreadChosenMessage();
@@ -180,7 +188,7 @@ public class InputRequestView implements ActionListener {
                 e.printStackTrace();
             }
         }
-        if (event.getActionCommand().equals("Read") && this.operation == 7) {
+        if (event.getActionCommand().equals("submit") && this.operation == 7) {
             hide();
             try {
                 readChosenMessage();
