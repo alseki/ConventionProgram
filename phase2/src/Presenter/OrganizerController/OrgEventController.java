@@ -208,11 +208,12 @@ public class OrgEventController extends SubMenu {
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
      * @param speakerUsername   The username of the Speaker
-     * @param eventID     The ID of the Panel
+     * @param eventName     The name of the Panel
      * @return true iff the Speaker was signed up
      */
-    public void addSpeakerToPanel(String speakerUsername, String eventID) throws InvalidChoiceException, NotPanelException,
-            CapacityException {
+    public boolean addSpeakerToPanel(String speakerUsername, String eventName) throws InvalidChoiceException,
+            NotPanelException, CapacityException {
+        String eventID = eventManager.getEventID(eventName);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         if (event == null) {
@@ -222,18 +223,19 @@ public class OrgEventController extends SubMenu {
         } else {
             eventPermissions.signSpeakerUpForPanel(speakerID, eventID);
             speakerManager.addPanel(speakerID, eventID);
-
+            return true;
         }
     }
 
     /**
      * Adds the Speaker with speakerID to the Panel with ID eventID
      * @param speakerUsername   The username of the Speaker
-     * @param eventID     The ID of the Panel
+     * @param eventName     The name of the Panel
      * @return true iff the Speaker was signed up
      */
-    public void removeSpeakerFromPanel(String speakerUsername, String eventID) throws InvalidChoiceException,
+    public boolean removeSpeakerFromPanel(String speakerUsername, String eventName) throws InvalidChoiceException,
             NotPanelException {
+        String eventID = eventManager.getEventID(eventName);
         String speakerID = speakerManager.getCurrentUserID(speakerUsername);
         Event event = eventManager.getEvent(eventID);
         Panel panel = (Panel) event;
@@ -246,9 +248,11 @@ public class OrgEventController extends SubMenu {
             if (panel.numberPanelists(eventID) == 1) {
                 speakerManager.deleteEvent(eventID);
                 this.cancelEvent(eventID);
+                return true;
             }
             else {
                 speakerManager.deleteEventFromSpeaker(speakerID, eventID);
+                return true;
             }
         }
     }

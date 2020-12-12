@@ -331,7 +331,8 @@ public class OrgPersonController extends SubMenu {
         int eventMinute = startTime.getMinute();
         if (eventHour < dayHour && eventMinute < dayMinute) {
             eventManager.removeEvent(eventID);
-            this.orgEventController.cancelEvent(eventID);
+            String name = eventManager.getEventName(eventID);
+            this.orgEventController.cancelEvent(name);
         }
     }
 
@@ -354,10 +355,12 @@ public class OrgPersonController extends SubMenu {
         int eventMinute = startTime.getMinute();
         if ((eventHour < dayHour) && (eventMinute < dayMinute) && isPanel && !isEmpty && isSpeaker) {
             if (panel.numberPanelists(eventID) == 1) {
-                orgEventController.removeSpeakerFromPanel(speakerID, eventID);
+                String name = eventManager.getEventName(eventID);
+                orgEventController.removeSpeakerFromPanel(speakerID, name);
                 orgEventController.cancelEvent(eventID);
             } else {
-                orgEventController.removeSpeakerFromPanel(speakerID, eventID);
+                String name = eventManager.getEventName(eventID);
+                orgEventController.removeSpeakerFromPanel(speakerID, name);
             }
             return true;
 
