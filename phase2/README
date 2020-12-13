@@ -1,0 +1,87 @@
+Welcome to Convention System! This program requires no additional libraries to be downloaded.
+
+
+~MANDATORY EXTENSIONS~
+------------------------------------------------------------------------------------------------------------------------
+-> There are now many types of events: "Talk", "Panel", "Party", and "Workshop".
+
+-> An event can be canceled by an Organizer (Login > View & edit convention event list > Cancel an existing event)
+
+-> Additional User: Employee Accounts. [ADD DESCRIPTION]
+
+-> An account can be created by an Organizer (Login > Create and Delete user accounts)
+
+-> The maximum number of people that can attend an event can be set by an Organizer when creating an event (Login >
+View & edit convention event list > Create a new event) and changed later (Login > View & edit convention event list >
+Change the capacity of an existing event)
+------------------------------------------------------------------------------------------------------------------------
+
+
+~OPTIONAL EXTENSIONS~
+------------------------------------------------------------------------------------------------------------------------
+-> The user's messaging experience has been enhanced by allowing them to "mark as unread", delete, or archive messages
+after reading them (Login > View your messages > Archive a chat || Archive a message || Leave a Chat || Mark a message
+as read || Mark a message as unread)
+
+-> Attendee's, Organizers and Employees have the ability to make Requests, with a status marked as "Pending" when
+created (Login > View the request board > Make a request). Organizers and Employees can see the full list of requests
+from all users and fulfill them (Login > View the request board > Fulfill a request). After successfully fulfilling a
+request, it's status is changed to "Fulfilled". This change is visible to the user who made the request (Login >
+View the request board > View yor requests || View a specific request) and to all Organizers and Employees (Login >
+View the request board > View all requests)
+
+-> The text UI has been replaced with a GUI. Model-View-Presenter architecture was implemented.
+Packages "Event", "Message", "Person" and "Request" are the Model.
+Package "Presenter" is the Presenter.
+Package "View" is the View (this package also contains the Main Method).
+
+It is an outside-inwards dependency: the View instantiates and interacts with presenters and controllers (all one
+Presenter layer), the controllers instantiate and interact with various manager classes (Use-Cases) and the manager
+classes instantiate and interact with Entity classes.
+
+-> User's have the ability to change their account information (Login > Change account settings)
+
+-> Button descriptors (ToolTipText) were added to various buttons and menus in the program. Hovering over certain
+buttons will provide a brief description of what they do.
+------------------------------------------------------------------------------------------------------------------------
+
+
+~DESIGN PATTERNS/PRINCIPLES~
+------------------------------------------------------------------------------------------------------------------------
+-> DEPENDENCY INVERSION: For the GUI, inverted dependency was considered for View-Presenter interactions but was
+eventually scrapped. Our previous design contained a hierarchy of controllers receiving input from presenters and
+delegating it to use-case classes. We attempted to create an interface for the presenter layer to instantiate view
+objects, thus allowing us to maintain the same structure as before. However, we found this caused less flexibility when
+designing the visual appearance of each menu frame. So instead we opted to update the structural hierarchy instead: the
+view listens for and receives input from the user and delegates it to the presenter layer to process.
+
+-> FACTORY: The "Account" class needed to be able to create various types of menus depending on what menu option the
+user submitted. The "AccountView" abstract class creates a basic frame and provides helper methods for any view the
+Account class would need to instantiate. Thus "AccountViewFactory" was created to instantiate a type of account menu for
+the Account class, depending on the user's submitted choice. This allowed for a standard Account user interface, with
+changes to types of menus being isolated to the Factory class.
+
+In the previous code, the Façade pattern was implemented in each subclass of "PersonController" to handle the
+responsibilities of their corresponding user accounts. Ex. if an Attendee wanted to view their contacts, the
+AttendeeController would instantiate and run a "ContactController" to delegate the responsibility to a single actor.
+This concept was adapted to fit the Factory pattern: the Account class now uses the subclasses of PersonController
+("AttendeeController", "OrganizerController", "SpeakerController", "EmployeeController") to instantiate and RETURN
+various controllers, based on user input. Thus each subclass of PersonController actually became factories for other
+types of controllers ("SubMenu"s) in the program.
+
+-> OBSERVER: The GUI implements java's built in "Action Listener" interface, which is used to relay information between
+JPanel components (being interacted with by the user) to the rest of the class.
+------------------------------------------------------------------------------------------------------------------------
+
+
+~SETUP~
+------------------------------------------------------------------------------------------------------------------------
+-> To get started, we have provided a special administrative Organizer account. Login as an Organizer with the username:
+"admin" and the password "admin". Only Organizer's can create other types of accounts, so if you wish to make Speakers,
+Employees, or more Organizer accounts, you must use this account first (Attendee accounts can be created by Organizers
+or through the welcome menu). IMPORTANT - after you have logged in, the first thing you should do is go to the
+"Change account settings" menu and change the username, password, and email to something secure.
+
+NOTE: when running the program on Mac or Unix software, an "ArrayIndexOutOfBoundsException" may occur when reading the
+saved files from the program. This is due to the way these systems store file pathways ("\" vs "/"). These errors do not
+interfere with the actual running of the program.
