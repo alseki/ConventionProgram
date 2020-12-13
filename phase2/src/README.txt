@@ -112,3 +112,4 @@ Below are the instruction on how to use this program base on different identity.
    Event system:
    -------------
    Employees are the people who will work to host an Event.
+

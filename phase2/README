@@ -85,3 +85,34 @@ or through the welcome menu). IMPORTANT - after you have logged in, the first th
 NOTE: when running the program on Mac or Unix software, an "ArrayIndexOutOfBoundsException" may occur when reading the
 saved files from the program. This is due to the way these systems store file pathways ("\" vs "/"). These errors do not
 interfere with the actual running of the program.
+
+
+~DIVISION OF WORK~
+------------------------------------------------------------------------------------------------------------------------
+-> The works were divided by forming teams corresponding to the functions. Each member usually focuses on classes that
+are relevant to their team (to avoid confusion / interfering with other team's design) but helped other members when
+they were asked for assistance. The basic structure of the program were discussed with all members in a Discord meeting,
+and detailed designs were decided among corresponding teams.
+
+-> Person team: Responsible for implementing the user accounts and deciding what each user type
+(Attendee/Organizer/Speaker/Employee) can do.
+- Allen
+- Paul
+- Shimmy
+
+-> Message team: Responsible for designing and implementing the message system (Message and Chats)
+- Ran
+- Karyn
+
+-> Event team: Responsible for deciding and implementing how the Events will be created/modified and how each types of .
+- Sarah
+- Eytan
+
+-> GUI team: Responsible for implementing graphic user interface (in Phase 1, we simply used presenter classes instead
+of View classes) that creates menu windows when the program is run.
+- Cara
+- Sarah
+- Allen
+
+We decided which optional extensions to implement by discussing in a Discord meeting (every member participated).
+
