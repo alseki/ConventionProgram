@@ -71,6 +71,16 @@ types of controllers ("SubMenu"s) in the program.
 
 -> OBSERVER: The GUI implements java's built in "Action Listener" interface, which is used to relay information between
 JPanel components (being interacted with by the user) to the rest of the class.
+
+Originally, we where planning on using the observer pattern for requests. In this we where planning on having two
+observers to every request, the person making the request, and an organizer request entity, which would have been stored
+in organizer manager. This would have concurrently implemented the facade pattern, as the organizer request entity
+information was originally planned to be stored in the request manger, but in order to properly implement single
+responsibility principle, we were going to use the facade pattern.
+By using the observer pattern, the access to the request information would have been through the respective
+managers, however we decided against this. The primary reason for this is because it made adding observers very
+difficult, and our current implementation of requests, makes it easier. Although, we considered it, we decided to not
+use the observer design pattern.
 ------------------------------------------------------------------------------------------------------------------------
 
 
