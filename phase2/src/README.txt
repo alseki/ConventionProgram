@@ -16,7 +16,7 @@ board (the optional extension introducing user requests), that is they handle re
 change the status of the request from pending to fulfilled. Employee accounts can only be created and deleted by
 organizers.
 
--> An account can be created by an Organizer (Login > Create and Delete user accounts)
+-> Any account can be created by an Organizer (Login > Create and Delete user accounts)
 
 -> The organizer can set maximum number of people that can attend an event when creating an event (Login >
 View & edit convention event list > Create a new event) and changed later (Login > View & edit convention event list >
