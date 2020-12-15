@@ -26,9 +26,9 @@ Change the capacity of an existing event)
 
 ~OPTIONAL EXTENSIONS~
 ------------------------------------------------------------------------------------------------------------------------
--> The user's messaging experience has been enhanced by allowing them to delete, archive, or mark messages as "unread" again
-after reading them (Login > View your messages > Archive a chat || Archive a message || Leave a Chat || Mark a message
-as read || Mark a message as unread)
+-> The user's messaging experience has been enhanced by allowing them to delete, archive, or mark messages as "unread"
+again after reading them (Login > View your messages > Archive a chat || Archive a message || Leave a Chat || Mark a
+message as read || Mark a message as unread)
 
 -> Attendees, Organizers and Employees have the ability to make Requests. Requests are initialized wiht status "Pending"
 (Login > View the request board > Make a request). Organizers and Employees can see the full list of requests
@@ -43,8 +43,8 @@ Package "Presenter" contains the Presenter. (This package contains both Controll
 traditional program architecture.)
 Package "View" contains the View. (This package also contains the Main Method.)
 
-All levels use an outside-inwards dependency: the View instantiates and interacts with presenters and controllers (all one
-Presenter layer), the controllers instantiate and interact with various manager classes (Use-Cases) and the manager
+All levels use an outside-inwards dependency: the View instantiates and interacts with presenters and controllers (all
+one Presenter layer), the controllers instantiate and interact with various manager classes (Use-Cases) and the manager
 classes instantiate and interact with Entity classes.
 
 -> Users have the ability to change their account information (Login > Change account settings)
@@ -56,36 +56,37 @@ buttons will provide a brief description of what they do.
 
 ~DESIGN PATTERNS/PRINCIPLES~
 ------------------------------------------------------------------------------------------------------------------------
--> DEPENDENCY INVERSION: For the GUI, we considered using inverted dependencies for View-Presenter interactions, but this idea
-was eventually scrapped. Our original (Phase 1) design contained a hierarchy of controllers receiving input from presenters and
-delegating metods to use-case classes. We attempted to create an interface to let the presenter layer instantiate view
-objects, thus allowing us to maintain the same overall structure. However, we found this caused less flexibility when we tried
-to design the visual appearance of each menu frame. Instead, we opted to update the structural hierarchy: the view listens for
-input it receives from the user and sends it to the presenter layer to be processed.
+-> DEPENDENCY INVERSION: For the GUI, we considered using inverted dependencies for View-Presenter interactions, but
+this idea was eventually scrapped. Our original (Phase 1) design contained a hierarchy of controllers receiving input
+from presenters and delegating metods to use-case classes. We attempted to create an interface to let the presenter
+layer instantiate view objects, thus allowing us to maintain the same overall structure. However, we found this caused
+less flexibility when we tried to design the visual appearance of each menu frame. Instead, we opted to update the
+structural hierarchy: the view listens for input it receives from the user and sends it to the presenter layer to be
+processed.
 
 -> FACTORY: The "Account" class needed to have the capability to create various types of menus with, potentially, very
 different  appearances, depending on what menu the user wanted to view. To allow for that, we created the "AccountView"
-abstract class to serve as a basic frame and provide helper methods for any view the Account class would need to instantiate.
-In addition, "AccountViewFactory" was created to instantiate an "AccountView" object of a type that depending on the
-choice the user submitted. (e.g. If a user wanted to open a "Message" page, their selection would be sent to the
-AccountViewFactory, which would create an instance of the subclass of AccountView that displays messaging options.)
-This allowed us to use a standard Account user interface for all users, with all differentiation between the different types
-of views isolated to the Factory class.
+abstract class to serve as a basic frame and provide helper methods for any view the Account class would need to
+instantiate. In addition, "AccountViewFactory" was created to instantiate an "AccountView" object of a type that
+depending on the choice the user submitted. (e.g. If a user wanted to open a "Message" page, their selection would be
+sent to the AccountViewFactory, which would create an instance of the subclass of AccountView that displays messaging
+options.) This allowed us to use a standard Account user interface for all users, with all differentiation between the
+different types of views isolated to the Factory class.
 
 In the original code (Phase 1), the Façade pattern was implemented in each subclass of "PersonController" to handle the
 responsibilities of its corresponding user accounts. (e.g if an Attendee wanted to view their contacts, the
-AttendeeController would instantiate and run a "ContactController", so that responsibility was isolated to a single actor.)
-This concept was adapted to fit the new Factory setup: the AccountViewFactory uses the PersonController it has been given
-to instantiate and return its component controllers, based on user input, which it uses to determine what kind of AccountView
-it is supposed to create. Thus, each subclass of PersonController has actually become a factory for its component controllers
-(all classes that inherit from "SubMenu").
+AttendeeController would instantiate and run a "ContactController", so that responsibility was isolated to a single
+actor.) This concept was adapted to fit the new Factory setup: the AccountViewFactory uses the PersonController it has
+been given to instantiate and return its component controllers, based on user input, which it uses to determine what
+kind of AccountView it is supposed to create. Thus, each subclass of PersonController has actually become a factory for
+its component controllers (all classes that inherit from "SubMenu").
 
 -> OBSERVER: The GUI implements Java's built-in "Action Listener" interface, which is used to relay information between
 JPanel components (the elements the user sees onscreen) to the rest of the class.
 
-Originally, we where planning on using the observer pattern for requests. We were planning on making both the person making
-the request and an organizer request-tracking entity (stored in "OrganizerManager) Observers for each request. This setup
-would also have included an implementation of the facade pattern, as the organizer request-tracking entity's
+Originally, we where planning on using the observer pattern for requests. We were planning on making both the person
+making the request and an organizer request-tracking entity (stored in "OrganizerManager) Observers for each request.
+This setup would also have included an implementation of the facade pattern, as the organizer request-tracking entity's
 information was originally planned to be stored in the request manger, but in order to properly implement single
 responsibility principle, we were going to use the facade pattern.
 
@@ -98,8 +99,8 @@ we're currently using - that ended up being a lot simpler.
 
 ~SETUP~
 ------------------------------------------------------------------------------------------------------------------------
--> When the program runs for the first time, it already contains one instance of an Organizer account. To access it, login
-with the following information:
+-> When the program runs for the first time, it already contains one instance of an Organizer account. To access it,
+login with the following information:
 
 Username: admin
 Password: admin
@@ -121,11 +122,11 @@ interfere with the actual running of the program.
 
 ~DIVISION OF WORK~
 ------------------------------------------------------------------------------------------------------------------------
--> The work was divided between teams, each of which focused on one aspect of the program. Although members mostly worked on
-classes within their team's domain, to avoid confusion / interfering with other teams' designs, we also helped with other teams'
-workload occasionally when asked for assistance. The basic structure of the program was discussed by all members in meetings held
-within a Discord planning server, and detailed designs for various sections of the program were decided by each of the individual
-teams.
+-> The work was divided between teams, each of which focused on one aspect of the program. Although members mostly
+worked on classes within their team's domain, to avoid confusion / interfering with other teams' designs, we also helped
+with other teams' workload occasionally when asked for assistance. The basic structure of the program was discussed by
+all members in meetings held within a Discord planning server, and detailed designs for various sections of the program
+were decided by each of the individual teams.
 
 -> Person team: Responsible for implementing the user accounts and deciding what each user type
 (Attendee/Organizer/Speaker/Employee) can do.
@@ -159,6 +160,6 @@ of View classes) that creates menu windows when the program is run.
         - Allen
 
 
-We decided which optional extensions to implement by discussing them Discords meetings in which all members participated.
+We decided which optional extensions to implement by discussing them Discord meetings in which all members participated.
 ------------------------------------------------------------------------------------------------------------------------
 
