@@ -18,8 +18,9 @@ public class OrgEventView extends AccountView {
     OrgEventMenu presenter;
     String[] menuOp;
     JLabel dpMain, dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8; // dp = "dialogue prompt"
-    JButton createRoomButton, createEventButton, cancelEventButton, addSpeakerToPanelButton,
-            removeSpeakerFromPanelButton, changeEventCapacityButton;
+    JButton continueButton;
+    //JButton createRoomButton, createEventButton, cancelEventButton, addSpeakerToPanelButton,
+    //        removeSpeakerFromPanelButton, changeEventCapacityButton;
     JTextField input1, input2, input3, input4, input5, input6, input7, input8;
     JComboBox<String> allEvents;
     ListDisplayView allEventTypes, allRooms;
@@ -42,13 +43,38 @@ public class OrgEventView extends AccountView {
 
         contentPane.setBackground(new Color(200, 10, 150));
 
-        createRoomButton = newButton("Create a new room");
-        createEventButton = newButton("Create a new event");
-        cancelEventButton = newButton("Cancel an existing event");
-        addSpeakerToPanelButton = newButton("Add a speaker to a panel");
-        removeSpeakerFromPanelButton = newButton("Remove a speaker from a panel");
-        changeEventCapacityButton = newButton("Change the capacity of an existing event");
+        setupTextFields();
 
+        continueButton = newButton("continue");
+
+        nameOfChat = new JLabel("");
+        initializeObject(nameOfChat);
+        initializeObject(inputChatName);
+
+        dialogPrompt = new JLabel("");
+        initializeObject(dialogPrompt);
+
+        messageField = new JTextArea(5, 20);
+        messageField.setPreferredSize(new Dimension(20, 20));
+        messageField.setLineWrap(true);
+        messageField.setWrapStyleWord(true);
+        initializeObject(messageField);
+
+        nameOfEvent = new JLabel("");
+        initializeObject(nameOfEvent);
+        initializeObject(inputField);
+
+        selectButton = newButton("select");
+        announcementButton = newButton("send announcement");
+    }
+
+    private void showContinue(String command) {
+        continueButton.setActionCommand(command);
+        continueButton.addActionListener(this);
+        continueButton.setVisible(true);
+    }
+
+    private void setupTextFields() {
         dpMain = new JLabel("");
         initializeObject(dpMain);
 
@@ -91,26 +117,6 @@ public class OrgEventView extends AccountView {
         initializeObject(dp8);
         input8 = new JTextField(20);
         initializeObject(input8);
-
-        nameOfChat = new JLabel("");
-        initializeObject(nameOfChat);
-        initializeObject(inputChatName);
-
-        dialogPrompt = new JLabel("");
-        initializeObject(dialogPrompt);
-
-        messageField = new JTextArea(5, 20);
-        messageField.setPreferredSize(new Dimension(20, 20));
-        messageField.setLineWrap(true);
-        messageField.setWrapStyleWord(true);
-        initializeObject(messageField);
-
-        nameOfEvent = new JLabel("");
-        initializeObject(nameOfEvent);
-        initializeObject(inputField);
-
-        selectButton = newButton("select");
-        announcementButton = newButton("send announcement");
     }
 
     private void showCreateRoom() {
@@ -127,7 +133,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        createRoomButton.setVisible(true);
+        showContinue("newroom");
     }
 
     private void createRoom() {
@@ -185,7 +191,7 @@ public class OrgEventView extends AccountView {
         dp8.setVisible(true);
         input8.setVisible(true);
 
-        createEventButton.setVisible(true);
+        showContinue("newevent");
     }
 
     private void createEvent() {
@@ -233,7 +239,7 @@ public class OrgEventView extends AccountView {
         dp1.setVisible(true);
         input1.setVisible(true);
 
-        cancelEventButton.setVisible(true);
+        showContinue("cancelevent");
     }
 
     private void cancelEvent() {
@@ -262,7 +268,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        addSpeakerToPanelButton.setVisible(true);
+        showContinue("addspeaker");
     }
 
     private void addSpeakerToPanel() {
@@ -300,7 +306,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        removeSpeakerFromPanelButton.setVisible(true);
+        showContinue("removespeaker");
     }
 
     private void removeSpeakerFromPanel() {
@@ -336,7 +342,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        changeEventCapacityButton.setVisible(true);
+        showContinue("changecap");
     }
 
     private void changeEventCapacity() {
@@ -394,27 +400,27 @@ public class OrgEventView extends AccountView {
     public void actionPerformed(ActionEvent event) {
         super.actionPerformed(event);
 
-        if(eventName.equals(createRoomButton.getActionCommand())) {
+        if(eventName.equals("newroom")) {
             createRoom();
         }
 
-        if(eventName.equals(createEventButton.getActionCommand())) {
+        if(eventName.equals("newevent")) {
             createEvent();
         }
 
-        if(eventName.equals(cancelEventButton.getActionCommand())) {
+        if(eventName.equals("cancelevent")) {
             cancelEvent();
         }
 
-        if(eventName.equals(addSpeakerToPanelButton.getActionCommand())) {
+        if(eventName.equals("addspeaker")) {
             addSpeakerToPanel();
         }
 
-        if(eventName.equals(removeSpeakerFromPanelButton.getActionCommand())) {
+        if(eventName.equals("removespeaker")) {
             removeSpeakerFromPanel();
         }
 
-        if(eventName.equals(changeEventCapacityButton.getActionCommand())) {
+        if(eventName.equals("changecap")) {
             changeEventCapacity();
         }
 
