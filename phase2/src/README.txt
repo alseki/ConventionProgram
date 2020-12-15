@@ -7,14 +7,15 @@ Welcome to Convention System! This program does not require that you download an
 
 -> An event can be canceled by an Organizer (Login > View & edit convention event list > Cancel an existing event)
 
--> Additional User: Employee Accounts. Employees are people who are working at the convention who manage the actual
-logistics. They work under organizers to handle all the tasks for the convention's functioning. They have an account
-in the application, but they cannot sign up for events and their communication (chat groups and messages) is restricted
-to organizers and fellow employees. You can imagine employees as being those people with black pants and black
-t-shirts at a large conference event (but they are not volunteers this time). Employees work closely with the Request
-board (the optional extension introducing user requests), that is they handle requests (signalling this to others) and
-change the status of the request from pending to fulfilled. Employee accounts can only be created and deleted by
-organizers.
+-> Additional User: Employee. Employees are people who are working at the convention who manage the actual
+logistics. Their accounts don't allow them to sign up for events and their communication (via chat groups and messages) 
+is restricted to organizers and to fellow employees. (You can imagine them as being those people with neutral-looking 
+clothing doing all the behind-the-scenes work at the conference, or as caterers/janitors/information booth staffers/etc.) 
+Employees work closely with the Request board (see the Optional extension entry for more details about Requests). They 
+can handle requests (in which case, their name is recorded along with the request, so any further concerns can be forwarded
+to them - this differs from Organizers, who can fulfill requests without their name being recorded). This changes the status 
+of the request from pending to fulfilled. 
+Employee accounts can only be created and deleted by organizers.
 
 -> Any account can be created by an Organizer (Login > Create and Delete user accounts)
 
@@ -30,12 +31,12 @@ Change the capacity of an existing event)
 again after reading them (Login > View your messages > Archive a chat || Archive a message || Leave a Chat || Mark a
 message as read || Mark a message as unread)
 
--> Attendees, Organizers and Employees have the ability to make Requests. Requests are initialized wiht status "Pending"
-(Login > View the request board > Make a request). Organizers and Employees can see the full list of requests
-made by all users and fulfill them (Login > View the request board > Fulfill a request). After successfully fulfilling a
-request, its status is changed to "Fulfilled". This change is visible to the user who made the request (Login >
-View the request board > View yor requests || View a specific request) and to all Organizers and Employees (Login >
-View the request board > View all requests)
+-> Attendees, Organizers and Employees have the ability to make Requests (Login > View the request board > Make a request). 
+Requests are initialized with status "Pending". Organizers and Employees can see the full list of requests
+made by all users and fulfill any of them (Login > View the request board > Fulfill a request). After a request has been 
+successfully fulfilled, its status is changed to "Fulfilled". This change is visible to the user who made the request 
+(Login > View the request board > View yor requests || View a specific request) and to all Organizers and Employees 
+(Login > View the request board > View all requests)
 
 -> The text UI has been replaced with a GUI. The GUI was implemented with Model-View-Presenter-style architecture.
 Packages "Event", "Message", "Person" and "Request" contain the Model.
@@ -84,11 +85,8 @@ its component controllers (all classes that inherit from "SubMenu").
 -> OBSERVER: The GUI implements Java's built-in "Action Listener" interface, which is used to relay information between
 JPanel components (the elements the user sees onscreen) to the rest of the class.
 
-Originally, we where planning on using the observer pattern for requests. We were planning on making both the person
+Originally, we were planning on using the observer pattern for requests. We were planning on making both the person
 making the request and an organizer request-tracking entity (stored in "OrganizerManager) Observers for each request.
-This setup would also have included an implementation of the facade pattern, as the organizer request-tracking entity's
-information was originally planned to be stored in the request manger, but in order to properly implement single
-responsibility principle, we were going to use the facade pattern.
 
 By using the observer pattern, request information would have been accessed through Use Case classes that observed the
 requests - but we decided against this model. The primary reason for this was that we found it difficult to pass around
