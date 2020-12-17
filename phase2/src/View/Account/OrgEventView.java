@@ -141,9 +141,14 @@ public class OrgEventView extends AccountView {
         String roomCap = input2.getText();
 
         try {
-            if(controller.addRoom(roomName, Integer.parseInt(roomCap))) {
-                JOptionPane.showConfirmDialog(null, "Room creation successful!",
-                        "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if(!roomCap.equals("")) {
+                if(controller.addRoom(roomName, Integer.parseInt(roomCap))) {
+                    JOptionPane.showConfirmDialog(null, "Room creation successful!",
+                            "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showConfirmDialog(null, "Something went wrong. Please try again",
+                            "Success", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 JOptionPane.showConfirmDialog(null, "Please enter valid information.",
                         "Warning!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -458,9 +463,6 @@ public class OrgEventView extends AccountView {
 
         if(eventName.equals(menuOp[6])) {
             hideMainDropDownMenu();
-        }
-
-        if(eventName.equals(menuOp[6])) {
             showMakeAnnouncement();
         }
 
