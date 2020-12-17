@@ -57,17 +57,6 @@ abstract public class PersonController extends SubMenu implements SubMenuPrinter
 
     public abstract SubMenu createController(String choice);
 
-    public boolean chatNameTaken(ArrayList<String> personIDs, String chatName){
-        ArrayList <String> userIDs = new ArrayList<>(personIDs);
-        userIDs.add(currentUserID);
-        for (String userID: userIDs){
-            ArrayList <String> userChatIDs = personManager.getChats(userID);
-            for (String chatID: userChatIDs){
-                if (chatManager.getChatName(chatID).equals(chatName)) {return true;}
-            }
-        }
-        return false;}
-
     @Override
     public String getMenuTitle() {
         return "----- Main Menu -----";

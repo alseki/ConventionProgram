@@ -33,58 +33,6 @@ public class EmployeeController extends PersonController {
         this.manager = manager;
     }
 
-    /**
-     * Returns ID of the Employee-exclusive Chat newly created
-     * @param ownerId  ID of the Employee user trying to create this Chat
-     * @param guestIds ArrayList of IDs of the Employee that wants to join the Chat
-     * @param chatName Name of the Chat being created
-     * @return ID of the newly created Chat
-     */
-    public String createEmpChat(String ownerId, ArrayList<String> guestIds, String chatName) {
-        if (manager.typePerson(manager.getCurrentUsername(ownerId)) != 4) {
-            return null;
-        }
-        for (String guest : guestIds) {
-            if (manager.typePerson(manager.getCurrentUsername(guest)) != 4) {
-                return null;
-            }
-        }
-        if (!this.chatNameTaken(guestIds,chatName)){return this.chatManager.createChat(ownerId, guestIds, chatName);
-    }
-        else{return null;}}
-
-    /**
-     * Returns ID of the Employee-exclusive Chat newly created
-     *
-     * @param ownerId  ID of the Employee user trying to create this Chat
-     * @param guestId An ID of the Employee that wants to join the Chat
-     * @param chatName Name of the Chat being created
-     * @return ID of the newly created Chat. If Chat was not created, returns null.
-     */
-    public String createEmpChat(String ownerId, String guestId, String chatName) {
-        ArrayList<String> guest = new ArrayList<>();
-        guest.add(guestId);
-        return createEmpChat(ownerId, guest, chatName);
-    }
-
-    /**
-     * Returns ID of the Organizer-exclusive Chat newly created
-     * @param ownerId ID of the Employee user trying to create this Chat
-     * @param guestIds ArrayList of IDs of the Organizers that wants to join the Chat
-     * @param chatName Name of the Chat being created
-     * @return ID of the newly created Chat
-     */
-    public String createEmpChatOrganizer(String ownerId, ArrayList<String> guestIds, String chatName) {
-        if (manager.typePerson(manager.getCurrentUsername(ownerId))!=2){return null;}
-        for (String guest: guestIds){
-            if (manager.typePerson(manager.getCurrentUsername(guest))!=2) {
-                return null;}}
-        if (!this.chatNameTaken(guestIds, chatName)) {return this.chatManager.createChat(ownerId, guestIds, chatName);
-    }
-        else{return null;}}
-
-
-
     @Override
     public SubMenu createController(String choice){
         String[] options = getMenuOptions();

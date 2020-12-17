@@ -15,7 +15,7 @@ public class Message implements Serializable {
     private String recipientId;
     private LocalDateTime dateTime;
     private String content;
-    private boolean readStatus; // read is 0, unread is 1.
+    private boolean readStatus; // read is false, unread is true
     private String chatId; // the chat this message belongs to.
 
     public Message(String senderId, String recipientId, String chatId, String content){
@@ -88,7 +88,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * @return the status of the message. 1 is unread, 0 is read.
+     * @return the status of the message. true is unread, false is read.
      */
     public boolean getReadStatus() {
         return this.readStatus;

@@ -58,21 +58,12 @@ public class MessageMenu implements SubMenuPrinter {
      */
     public String[] getInBox() throws NoDataException{
         try {
-            ArrayList<String> receivedUnreadMessages = new ArrayList<>();
-            for (String message : messageManager.getMessageIDs()) {
-                if (messageManager.getRecipientId(message).equals(currentUserID) &&
-                        messageManager.getReadStatus(message)) {
-                    receivedUnreadMessages.add(message);
-                }
-            }
             ArrayList<String> receivedMessages = new ArrayList<>();
             for (String message : messageManager.getMessageIDs()) {
-                if (messageManager.getRecipientId(message).equals(currentUserID) &&
-                        !messageManager.getReadStatus(message)) {
+                if (messageManager.getRecipientId(message).equals(currentUserID)) {
                     receivedMessages.add(message);
                 }
             }
-            receivedMessages.addAll(receivedUnreadMessages);
             return formatMessages(receivedMessages);
         } catch (NullPointerException e) {
                 throw new NoDataException("message");
@@ -179,7 +170,7 @@ public class MessageMenu implements SubMenuPrinter {
         ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
         participants.append(personManager.getCurrentUsername(personIDs.get(0)));
         if (personIDs.size() > 1) {
-            for (int i = 1; i <= personIDs.size(); i++) {
+            for (int i = 0; i < personIDs.size(); i++) {
                 participants.append(", ").append(personManager.getCurrentUsername(personIDs.get(i)));
             }
         }

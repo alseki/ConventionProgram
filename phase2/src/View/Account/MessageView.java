@@ -96,6 +96,7 @@ public class MessageView extends AccountView {
 
         chooseChat.setText("choose chat");
         chooseChat.setActionCommand("choose chat");
+        chooseChat.addActionListener(this);
         chooseChat.setVisible(true);
         backButton.setVisible(true);
     }
@@ -130,7 +131,7 @@ public class MessageView extends AccountView {
         String msg = messageField.getText();
 
         try {
-            JOptionPane.showConfirmDialog(null, controller.sendMessageChoice(chatName, msg),
+            JOptionPane.showConfirmDialog(null, controller.sendMessage(chatName, msg),
                     "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         } catch (InvalidChoiceException e){
             exceptionDialogBox(presenter.printException(e));

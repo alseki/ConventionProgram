@@ -22,14 +22,6 @@ public class MessageController extends SubMenu {
         this.currentUserID = currentUserID;
     }
 
-    /**
-     * Sends a new Message
-     */
-    public String sendMessageChoice(String chatName, String content) throws InvalidChoiceException {
-        this.sendMessage(chatName, content);
-        return presenter.messageSent();
-    }
-
 
 
     // Option 1
@@ -75,7 +67,7 @@ public class MessageController extends SubMenu {
      * @param chatName The chatID of the Chat the current user want's to send a Message to
      * @param messageContent The contents of the message the current user wants to send
      */
-    public void sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
+    public String sendMessage(String chatName, String messageContent) throws InvalidChoiceException {
         String chatID = chatManager.findChatByName(chatName);
         if (chatManager.isEmpty()) {
             throw new NoDataException("chat");
@@ -83,13 +75,15 @@ public class MessageController extends SubMenu {
         if (chatManager.isChatIDNull(chatID)) {
             throw new InvalidChoiceException("chat");
         }
-        for (String receiverID : chatManager.getPersonIds(chatID)){
+        ArrayList<String> personIDs = chatManager.getPersonIds(chatID);
+        for (String receiverID : personIDs){
             if (!receiverID.equals(currentUserID)){
-                String messageID = messageManager.createMessage(currentUserID, receiverID, messageContent);
+                String messageID = messageManager.createMessage(currentUserID, receiverID, chatID, messageContent);
                 chatManager.addMessageIds(chatID,messageID);
                 presenter.printMessageSent();
             }
         }
+        return presenter.messageSent();
     }
 
     /**

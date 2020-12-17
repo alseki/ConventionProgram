@@ -63,6 +63,7 @@ public class MessageManager implements Serializable {
         for (Message m : messageList) {
             if (m.getMessageId().equals(MessageId)) {
                 curMessage = m;
+                break;
             }
         }
         return curMessage;

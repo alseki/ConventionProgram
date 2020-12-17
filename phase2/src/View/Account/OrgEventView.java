@@ -18,7 +18,7 @@ public class OrgEventView extends AccountView {
     OrgEventMenu presenter;
     String[] menuOp;
     JLabel dpMain, dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8; // dp = "dialogue prompt"
-    JButton continueButton;
+    JButton nextButton;
     //JButton createRoomButton, createEventButton, cancelEventButton, addSpeakerToPanelButton,
     //        removeSpeakerFromPanelButton, changeEventCapacityButton;
     JTextField input1, input2, input3, input4, input5, input6, input7, input8;
@@ -45,7 +45,7 @@ public class OrgEventView extends AccountView {
 
         setupTextFields();
 
-        continueButton = newButton("continue");
+        nextButton = newButton("continue");
 
         nameOfChat = new JLabel("");
         initializeObject(nameOfChat);
@@ -68,10 +68,10 @@ public class OrgEventView extends AccountView {
         announcementButton = newButton("send announcement");
     }
 
-    private void showContinue(String command) {
-        continueButton.setActionCommand(command);
-        continueButton.addActionListener(this);
-        continueButton.setVisible(true);
+    private void showNext(String command) {
+        nextButton.setActionCommand(command);
+        nextButton.addActionListener(this);
+        nextButton.setVisible(true);
     }
 
     private void setupTextFields() {
@@ -133,7 +133,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        showContinue("newroom");
+        showNext("newroom");
     }
 
     private void createRoom() {
@@ -198,7 +198,7 @@ public class OrgEventView extends AccountView {
         dp8.setVisible(true);
         input8.setVisible(true);
 
-        showContinue("newevent");
+        showNext("newevent");
     }
 
     private void createEvent() {
@@ -246,7 +246,7 @@ public class OrgEventView extends AccountView {
         dp1.setVisible(true);
         input1.setVisible(true);
 
-        showContinue("cancelevent");
+        showNext("cancelevent");
     }
 
     private void cancelEvent() {
@@ -275,7 +275,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        showContinue("addspeaker");
+        showNext("addspeaker");
     }
 
     private void addSpeakerToPanel() {
@@ -313,7 +313,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        showContinue("removespeaker");
+        showNext("removespeaker");
     }
 
     private void removeSpeakerFromPanel() {
@@ -349,7 +349,7 @@ public class OrgEventView extends AccountView {
         dp2.setVisible(true);
         input2.setVisible(true);
 
-        showContinue("changecap");
+        showNext("changecap");
     }
 
     private void changeEventCapacity() {
