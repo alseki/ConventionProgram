@@ -9,7 +9,6 @@ import Presenter.Central.SubMenu;
 import Presenter.Exceptions.InvalidChoiceException;
 import Presenter.PersonController.MessageController;
 import Presenter.PersonController.MessageMenu;
-import View.AccountHelpers.ChatListDisplayView;
 import View.AccountHelpers.ListDisplayView;
 
 import javax.swing.*;
@@ -103,6 +102,7 @@ public class MessageView extends AccountView {
 
     private void showViewMsgsInChat() {
         String chatName = inputField.getText();
+        inputField.setText("");
         try {
             msgList = new ListDisplayView(presenter.getChatTitle(chatName), presenter.getChat(chatName));
             showMainDropDownMenu();
@@ -128,7 +128,9 @@ public class MessageView extends AccountView {
 
     private void sendMsg() {
         String chatName = inputField.getText();
+        inputField.setText("");
         String msg = messageField.getText();
+        messageField.setText("");
 
         try {
             JOptionPane.showConfirmDialog(null, controller.sendMessage(chatName, msg),
@@ -145,13 +147,19 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
 
         archiveChatButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void archiveChat() {
-        controller.archiveChat(inputField.getText());
+        try {
+            controller.archiveChat(inputField.getText());
+            inputField.setText("");
 
-        JOptionPane.showConfirmDialog(null, "This chat has been archived",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "This chat has been archived",
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
     }
 
     private void showLeaveChat() {
@@ -161,13 +169,19 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
 
         leaveButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void leave() {
-        controller.deleteChat(inputField.getText());
+        try {
+            controller.deleteChat(inputField.getText());
+            inputField.setText("");
 
-        JOptionPane.showConfirmDialog(null, "You have left this chat",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "You have left this chat",
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
     }
 
     private void showArchiveMsg() {
@@ -177,13 +191,19 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
 
         archiveMsgButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void archiveMsg() {
-        controller.archiveMessage(inputField.getText());
+        try {
+            controller.archiveMessage(inputField.getText());
+            inputField.setText("");
 
-        JOptionPane.showConfirmDialog(null, "This message has been archived",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "This message has been archived",
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
     }
 
     private void showMsgUnread() {
@@ -193,13 +213,19 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
 
         unreadMsgButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void msgUnread() {
-        controller.unreadMessage(inputField.getText());
+        try {
+            controller.unreadMessage(inputField.getText());
+            inputField.setText("");
 
-        JOptionPane.showConfirmDialog(null, "This message has been marked as unread",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "This message has been marked as unread",
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
     }
 
     private void showMsgRead() {
@@ -209,13 +235,20 @@ public class MessageView extends AccountView {
         inputField.setVisible(true);
 
         readMsgButton.setVisible(true);
+        backButton.setVisible(true);
     }
 
     private void msgRead() {
-        controller.readMessage(inputField.getText());
+        try {
+            controller.readMessage(inputField.getText());
+            inputField.setText("");
 
-        JOptionPane.showConfirmDialog(null, "This message has been marked as read",
-                "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "This message has been marked as read",
+                    "Message", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        } catch (InvalidChoiceException e) {
+            exceptionDialogBox(presenter.printException(e));
+        }
+
     }
 
 
@@ -273,9 +306,6 @@ public class MessageView extends AccountView {
             showMsgRead();
         }
 
-
-
-
         if (eventName.equals(chooseChat.getActionCommand())) {
             showViewMsgsInChat();
             showMainDropDownMenu();
@@ -288,22 +318,27 @@ public class MessageView extends AccountView {
 
         if(eventName.equals(archiveChatButton.getActionCommand())) {
             archiveChat();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(leaveButton.getActionCommand())) {
             leave();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(archiveMsgButton.getActionCommand())) {
             archiveMsg();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(unreadMsgButton.getActionCommand())) {
             msgUnread();
+            showMainDropDownMenu();
         }
 
         if(eventName.equals(readMsgButton.getActionCommand())) {
             msgRead();
+            showMainDropDownMenu();
         }
 
     }

@@ -45,16 +45,8 @@ public class AttMessageView extends MessageView {
 
         createChatButton = newButton("Create chat");
         createGroupChatButton = newButton("Create group chat");
-        createChatButton.setToolTipText("create chat between you and entered user(s)");
-
-        createChatButton = newButton("Create chat");
-        createChatButton = newButton("Create chat");
-        createChatButton = newButton("Create chat");
-        createChatButton = newButton("Create chat");
-        createChatButton = newButton("Create chat");
-        createChatButton = newButton("Create chat");
-
-
+        createChatButton.setToolTipText("create chat between you and entered user");
+        createGroupChatButton.setToolTipText("create chat between you and entered users");
     }
 
     private void showViewAnnouncementChannels() {
@@ -211,11 +203,6 @@ public class AttMessageView extends MessageView {
             createGroupChat();
             showMainDropDownMenu();
         }
-        //
-        //
-        //
-        //
-        // ==========================
 
     }
 }

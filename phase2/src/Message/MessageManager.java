@@ -70,6 +70,15 @@ public class MessageManager implements Serializable {
     }
 
     /**
+     * Checks if msgID is a valid message ID
+     * @param msgID the ID of the message we're checking
+     * @return true iff the message ID is vaild
+     */
+    public boolean checkMessageID(String msgID) {
+        return getMessage(msgID) != null;
+    }
+
+    /**
      * @return the list of IDs of the messages stored in this MessageManager.
      */
     public ArrayList<String> getMessageIDs() {

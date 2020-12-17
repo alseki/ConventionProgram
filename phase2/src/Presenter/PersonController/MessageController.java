@@ -105,8 +105,11 @@ public class MessageController extends SubMenu {
      * If Chat contains more than 3 people, simply let the user exit Chat.
      * @param chatName Name of the Chat the user wants to exit from
      */
-    public void deleteChat(String chatName){
+    public void deleteChat(String chatName) throws InvalidChoiceException{
         String chatId = chatManager.findChatByName(chatName);
+        if (chatId == null) {
+            throw new InvalidChoiceException("chat");
+        }
         ArrayList<String> personIds = chatManager.getPersonIds(chatId);
         if (personIds.size() <= 2){
             for(String personId: personIds) {
@@ -134,8 +137,12 @@ public class MessageController extends SubMenu {
      * @param chatName Name of the chat
      */
 
-    public void archiveChat(String chatName){
+    public void archiveChat(String chatName) throws InvalidChoiceException{
         String chatId = chatManager.findChatByName(chatName);
+        if (chatId == null) {
+            throw new InvalidChoiceException("chat");
+        }
+
         for (String cId : personManager.getChats(currentUserID)) {
             if (chatId.equals(cId)) {
                 personManager.archiveChatByPersonId(currentUserID, chatId);
@@ -158,20 +165,29 @@ public class MessageController extends SubMenu {
         }
     }
 
-    public void archiveMessage(String msgId){
-        personManager.addCurrentFavorites(currentUserID, msgId);
+    public void archiveMessage(String msgId) throws InvalidChoiceException{
+        if (messageManager.checkMessageID(msgId)) {
+            personManager.addCurrentFavorites(currentUserID, msgId);
+        }
+        throw new InvalidChoiceException("message");
     }
 
     public void unArchiveMessage(String msgId){
         personManager.removeCurrentFavorites(currentUserID, msgId);
     }
 
-    public void unreadMessage(String msgId) {
-        messageManager.changeStatusUnread(msgId);
+    public void unreadMessage(String msgId) throws InvalidChoiceException{
+        if (messageManager.checkMessageID(msgId)) {
+            messageManager.changeStatusUnread(msgId);
+        }
+        throw new InvalidChoiceException("message");
     }
 
-    public void readMessage(String msgId) {
-        messageManager.changeStatusRead(msgId);
+    public void readMessage(String msgId) throws InvalidChoiceException{
+        if (messageManager.checkMessageID(msgId)) {
+            messageManager.changeStatusRead(msgId);
+        }
+        throw new InvalidChoiceException("message");
     }
 
     /**
