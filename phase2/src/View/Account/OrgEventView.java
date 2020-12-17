@@ -150,6 +150,8 @@ public class OrgEventView extends AccountView {
             }
         } catch (InvalidChoiceException c) {
             exceptionDialogBox(presenter.printException(c));
+        } catch (NumberFormatException e) {
+            exceptionDialogBox("Please enter an integer!");
         }
     }
 
